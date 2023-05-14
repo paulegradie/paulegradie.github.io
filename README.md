@@ -1,20 +1,42 @@
-# Welcome
+# Spotlight
 
-Hi there! Welcome to the github repository for my personal website. This is where I'll keep a record my personal history, provide interesting stories about myself, and maintain a few blogs that I think are worthwhile.
+Spotlight is a [Tailwind UI](https://tailwindui.com) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
 
-## About the repo
+## Getting started
 
-This website is built using NextJS/Mantine Components/MUI5/MDX and is a pretty good example for a lot of useful little things if you're looking to create a static website with nextJS and publish it using a custom domain name via github actions.
+To get started with this template, first install the npm dependencies:
 
-You can find basic examples of things like:
+```bash
+npm install
+```
 
-    - React Image Gallery
-    - Swipwer for React
-    - Technical blog posts on varoius topics
-    - Blog posts about a .NET library I created called Sailfish
-    - configuration for tailwindcss and mantine
-    - over time, much more
+Next, create a `.env.local` file in the root of your project and set the `NEXT_PUBLIC_SITE_URL` variable to your site's public URL:
 
-You are welcome to explore this repository as you'd like. If you copy anything directly, just give me a mention somehwere with a link back.
+```
+NEXT_PUBLIC_SITE_URL=https://example.com
+```
 
-Cheers!
+Next, run the development server:
+
+```bash
+npm run dev
+```
+
+Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+
+## Customizing
+
+You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
+
+## License
+
+This site template is a commercial product and is licensed under the [Tailwind UI license](https://tailwindui.com/license).
+
+## Learn more
+
+To learn more about the technologies used in this site template, see the following resources:
+
+- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
+- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
+- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
+- [MDX](https://mdxjs.com) - the MDX documentation
