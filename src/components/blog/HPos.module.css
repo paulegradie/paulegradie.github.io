@@ -1,0 +1,20 @@
+.hpos {
+    width: 100%;
+}
+
+.hposcenter {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.hposleft {
+    text-align: left;
+    float: left;
+}
+
+.hposright {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    float: right;
+}

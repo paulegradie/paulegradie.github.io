@@ -1,0 +1,163 @@
+---
+title: "To use Autowired properties or not - that is the question"
+snippet: "Autowired properties in Autofac are tempting, but are they a good idea?"
+date: "2022-01-26"
+author: "Paul Gradie"
+author_img: "/org/paulgradie.jpg"
+image: "/blog_images/autowire.jpg"
+tags:
+    - Autofac
+    - Autowired Properties
+    - Design Patterns
+---
+
+# Server design is difficult.
+
+Most developers that work on servers of any significant size will probably agree with that statement, and each developer will probably give a partially unique set of reasons as to why. The primary reason server development is difficult is that they tend to be complex things.
+
+If you’re developing a server from scratch (a so-called ‘greenfield’ project), then you - the individual - have the advantage of being familiar with every single aspect of that server. And if you take that server forward through time, you’re probably well positioned to maintain context on the design and various implementations within that server for a time.
+
+But, all projects are either put down and forgotten, or taken far enough into the future that one simply loses context on the various details that were once taken for granted. Some of which are probably critical to the functionality of the server.
+
+# Remembering context and sharing context are both expensive
+
+Whether you are a solo developer trying to fire up a new startup, or a developer working at a company, the energy it takes to try and maintain context on system components is expensive. This is a truth that goes beyond server design. It applies to any kind of software.
+
+For example, if you’re a solo developer (especially one with limited time, e.g. you have kids or the project is a side hustle), then every minute you have to spend trying to remembering how something works or debugging some mysterious problem is a minute that you lose that could be better spend developing a new attractive feature.
+
+If you are working at a company, then having to spend time assembling design context is equally as tedious. And a message to the wise running said company - the more complex the software you are selling, the more time your engineers will need to spend gathering, maintaining, and sharing context. And engineers are not cheap.
+
+# ASP.NET Core with Autofac
+
+A great example of how a complex design can befuddle engineers is the application of Autowired properties when using Autofac as a dependency injection solution. Take for example the following code snippet that one might use to autowire some properties:
+
+```csharp showLineNumbers
+public class ClassWithPropertyDependency
+{
+    public AutoWiredDependency AutoWiredDependency { get; set; }
+}
+
+public class AutoWiredDependency
+{
+    public void SomeMethod()
+    {
+        Console.WriteLine("Hello");
+    }
+}
+
+public class GeneralModule : Module
+{
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder
+            .RegisterType<ClassWithPropertyDependency>()
+            .AsSelf()
+            .PropertiesAutowired();
+        builder
+            .RegisterType<AutoWiredDependency>()
+            .AsSelf();
+
+    }
+}
+```
+
+Since early versions of Autofac, we have had the option of resolving dependencies from Autofac containers following the “D” principle from SOLID, i.e. Dependency Inversion. That is to say - where possible, let the software you are developing new up and provide classes for you via constructor injection (or the like) instead of newing up those classes yourself in your code. This technique is powerful and has the potential to save you an incredible amount of work when making changes to your code base. There is much to say about this, but we’ll leave that for another post.
+
+# But is Autowiring a good idea?
+
+We think not.
+
+Palavyr recently had a use case for autowiring a property on the base controller class that is used on every controller and we made the decision to not use this feature. Here’s why.
+
+We recently introduced the mediator pattern using (MediatR) to help take all core logic out of the asp.net core mvc controllers - of which there are about 120. This was no small effort, so minimizing the amount of code written was a high priority. The requirements for any given controller went from taking whatever dependencies were required to satisfy the functionality of the controller and implementing any ‘outer’ logic, to simply requiring the injection of the Mediator class and a send or publish method call.
+
+```csharp showLineNumbers
+public class SomeApiController : PalavyrBaseController
+{
+    private readonly IMediator mediator;
+    public const string Route = "some-route";
+
+    public SomeApiController(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
+    [HttpGet(Route)]
+    public async Task<SomeReturnType> Create(CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(
+            new Request(),
+            cancellationToken);
+        return response.Response;
+    }
+}
+```
+
+One way to minimize the number of changes that were required to be made to the controllers was to use Autofac to automatically resolve the Mediator used in the controller on a property that was set on the base controller used by controllers.
+
+```csharp showLineNumbers
+[Route("api")]
+[ApiController]
+public abstract class PalavyrBaseController : ControllerBase
+{
+    public IMediator Mediator { get; set; }
+}
+```
+
+At first glance, this feels like an obvious or even perhaps ‘elegant’ solution. The pro’s are that no controller will ever need to take any dependencies (unless it's doing something unusual - and no, injecting a logger is not needed since logging of requests will be performed in middleware). That would make for a sleek and very slim controller.
+
+```csharp showLineNumbers
+public class SomeApiController : PalavyrBaseController
+{
+    public const string Route = "some-route";
+
+    [HttpGet(Route)]
+    public async Task<SomeReturnType> Create(
+        CancellationToken cancellationToken)
+    {
+        var response = await Mediator.Send(
+            new Request(),
+            cancellationToken);
+        return response.Response;
+    }
+
+}
+```
+
+You might be thinking - Whats the big deal? You’re saving having to inject IMediator into 120 controllers. Well, yes - that is true. What what we’ve also done is committed two no-nos that should be forcefully avoided as much as possible.
+
+## When you introduce layers of indirection, you cost you and your team mental energy
+
+No matter how simple it seems at the time, no amount of indirection is worth the mental energy that you will spend later on either remembering how it works, or that you will spend explaining it to someone else (and don't forget, they will have to pay that energy spent forward).
+
+The cost you pay to avoid that indirection now is a one-time spend (though it might be somewhat larger now). The cost you will eat paying forward the indirection over time goes to infinity since it will always exist in your codebase (even though the cost is relatively low in the moment).
+
+That is the trade off you are making. Pay a slightly larger one-time cost now. Or pay a series of slightly smaller costs forever.
+
+## The patterns you set now, will be taken forward.
+
+Design patterns that are introduced to software tend to spread. For better or worse. Oftentimes we want our patterns to spread. The spread of a pattern indicates the success of that pattern.
+
+But remember:
+
+<Quote>
+    The successful spread of a pattern is an indicator of how effectively it is consumed by other minds. Nothing more.
+</Quote>
+
+Just because something spreads, doesn’t make it “good” (even if it seems good at the time). For example - cancerous cells tend to be very successful… to the detriment of the organism that hosts them. Stem cells tend to also be very successful - but these are the cells that replenish the host to the advantage of the host.
+
+So we want our patterns to be both successful and provide a net positive gain to the software in which they reside.
+
+Applying this to the Autowire pattern provided by Autofac, it should now be clear that while this can be successfully applied for short term gains and spread with ease, this pattern should probably be avoided.
+
+# But there are always exceptions
+
+There are of course exceptions to this rule. I can think of two to present here.
+
+First - legacy code. If you are developing code that was written before you began developing on it, then you are developing legacy code. And if this pattern is already pervasive, then you may have no other choice than to continue with it. Oftentimes, the cost of refactoring away from a pattern exceeds a budget allowance for such things (if we again employ the biology analogy, this relates to an activation energy curve).
+
+Second - there is simply no other way to achieve the desired behavior given the context of the codebase. I would imagine this would be quite rare, so don’t count on ever reaching for this one as an excuse. :P
+
+Hopefully this helps guide you and your team when making decisions about the design patterns you use in your code, and in particular whether or not to use Autowired Properties in C#.
+
+Thanks for reading!

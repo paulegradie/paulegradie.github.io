@@ -1,0 +1,10 @@
+a {
+    display: inline-flex;
+    text-decoration: none;
+    align-items: center;
+    gap: 4px;
+}
+a.active {
+    font-weight: bolder;
+    text-decoration: underline;
+}

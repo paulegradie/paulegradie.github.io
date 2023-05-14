@@ -1,0 +1,206 @@
+---
+title: 'Iterations on the Palavyr API - Part 1'
+snippet: 'Part 1: The three phases of the Palavyr API surface'
+date: '2022-04-20'
+author: 'Paul Gradie'
+author_img: '/org/paulgradie.jpg'
+image: 'blog_images/evo.jpg'
+tags:
+    - Design Patterns
+    - SOLID
+---
+# Introduction
+
+The Palavyr chatbot configuration service has evolved a great deal since it was first written in 2020. The Palavyr API currently has nearly 100 endpoints that perform a wide variety of functions, including updating configuration, returning conversation nodes to the Palavyr Widget App, and much more. As it has grown from a single endpoint into the dozens that it is now, the API surface has undergone multiple transformations. In addition, much of the core has been transformed as well.
+
+This is the first part of a 3 part series on how we took the Palavyr API from a prototype to a piece of software that is ready for production.
+
+# Part 1: The three phases of the Palavyr API surface
+
+## It began with a single controller
+
+The beginning of any project usually involves a lot of uncertainty. If you’ve got experience, you’ve probably tried to mitigate this by doing a bit of planning. Either way, working through ideas, implementations, contracts, and system level design involves some exploration. Palavyr was no exception to this, which is reflected in its early implementations of MVC controllers.
+
+These controllers essentially held all of the code that would be used when invoking that endpoint.
+
+A little bit like this:
+
+```csharp showLineNumbers
+[ApiController]
+public class ExampleController : ControllerBase
+{
+    public SomeDBContext SomeContext { get; set; }
+    public SomeType SomeType { get; set; }
+    public Mapper Mapper { get; set; }
+
+    public ExampleController(
+        SomeContext someContext,
+        SomeType someType,
+        Mapper<Resource, TOut> mapper)
+    {
+        SomeContext = someContext;
+        SomeType = someType;
+        Mapper = mapper;
+    }
+
+    [HttpGet]
+    public Task<Resource> Put(Resource resource)
+    {
+        var details = await resource.CompileDetails();
+        await someType.Emit(details);
+
+        var someEntity = await SomeContext.SomeEntity.Find(resource.Id);
+        await mapper.Map(resource, someEntity);
+        await SomeContext.SaveChangesAsync();
+    }
+}
+```
+
+## Next came components
+
+Over time, the number of controllers grew and functionality began to be shared between them. Once the sharing of functionality begins - in particular if it is critical functionality or oft repeated functionality - software engineers usually invoke the D-R-Y principle. That is, code where you Don’t Repeat Yourself. Palavyr thus began to be refactored to more abstract shared components, which would be injected directly into controllers.
+
+This allowed for more control over component lifetime scopes, and allowed for the writing of unit tests.
+
+```csharp showLineNumbers
+
+[ApiController]
+public class Controller : ControllerBase
+{
+
+    public Handler handler { get; set; }
+
+    public Controller(Handler handler)
+    {
+        this.handler = handler;
+    }
+
+    [HttpGet]
+    public Task<Resource> Put(Resource resource)
+    {
+        await handler.Handle(resource);
+    }
+}
+
+public class Handler
+{
+    public SomeDBContext SomeContext { get; set; }
+    public SomeType SomeType { get; set; }
+    public Mapper Mapper { get; set; }
+
+    public Handler(
+        SomeContext someContext,
+        SomeType someType,
+        Mapper<Resource, TOut> mapper
+    )
+    {
+        SomeContext = someContext;
+        SomeType = someType;
+        Mapper = mapper;
+    }
+    public void handle(Resource resource)
+    {
+        var details = await resource.CompileDetails();
+        await someType.Emit(details);
+
+        var someEntity = await SomeContext.SomeEntity.Find(resource.Id);
+        await mapper.Map(resource, someEntity);
+        await SomeContext.SaveChangesAsync();
+    }
+}
+```
+
+## Finally, design principles
+
+Over time, the API has evolved to take on a more thought out structure guided by SOLID and domain driven design principles. When we think about the S in SOLID - the single responsibility principle, we must remember that this principle can be applied to all things in a piece of software. When it comes to the API, controllers, and the code they call, the single responsibility principle can be applied to all of them.
+
+Domain driven design provided the concept of domain boundaries. A domain boundary is the architectual seam that connects your applications domain logic with whatever sits outside of that logic. I admit, its somewhat conceptual. But it is a very important concept since it is the reason that the controller should use a protocol that establishes a clear domain boundary.
+
+With these things in mind, the API took the following shape.
+
+```csharp showLineNumbers
+[ApiController]
+public class ExampleController : ControllerBase
+{
+    public DomainBoundaryCommunicationProtocol CommunicationProtocol { get; set; }
+
+    public ExampleController(
+        DomainBoundaryCommunicationProtocol communicationProtocol)
+    {
+        CommunicationProtocol = communicationProtocol;
+    }
+
+    [HttpGet]
+    public Task<Resource> Put(TResource resource)
+    {
+        communicationProtocol.CrossBoundaryMethod(resource);
+    }
+}
+
+public class DomainBoundaryCommunicationProtocol
+{
+    public Protocol Protocol { get; set; }
+
+    public SomeType(Protocol<TResource> protocol)
+    {
+        Protocol = protocol;
+    }
+
+    public void CrossBoundaryMethod(resource)
+    {
+        protocol.Handle(resource);
+    }
+}
+
+public class Handler
+{
+    public SomeDBContext SomeDBContext { get; set; }
+    public Mapper<TResource, TOut> Mapper { get; set; }
+
+    public SomeType(
+        SomeDBContext someDBContext,
+        Mapper<TResource, TOut> mapper)
+    {
+        SomeDBContext = someDBContext;
+        Mapper = mapper;
+    }
+
+    public void Handle(resource)
+    {
+        var someEntity = SomeDBContext.SomeEntity.Find(resource.Id);
+        await mapper.Map(resource, someEntity);
+        someDBContext.SomeEntity.Update(someEntity);
+        await someDBContext.SaveChanges();
+    }
+}
+```
+
+So to recap, we went from a single bloated controller that held all of our domain logic right at the surface of the API, to a layered design where we decouple domain logic from the API surface. This provides an avenue to call domain logic without needing to call the api surface - we simply use the domain interface protocol and we get the same result. There are three basic layers to the API.
+
+#### HTTP layer
+
+This layer of the API receives requests from over the internet and is responsible for translating request data into C# data. Since data transmitted over http has to be serialized (i.e. into an arbitrary structure that is transmittable over the internet), communication over the wire needs to be standardized. Since this is standardized (the HTTP protocol), every app within a framework will translate the requests in the same way. And because of this, the .net asp.net cor framework builds this into the framework. The HTTP layer is implemented for us when using asp.net core.
+
+#### Controller
+
+In controllers, the framework delivers to us data from the route (including query string parameters, route parameters), and body data. These are HTTP concerns. Once this data is translated to C# code, it moves to the domain. The controller is responsible for defining the relationship between a route and an HTTP level configurations, and the code that sits between it.
+
+And nothing else.
+
+A controller should have one single responsibility - translating data from the network into C# and passing it off to the next thing.
+
+#### Domain
+
+The controller hands the CLR transformed network data to the protocol that mediates between the controller and domain. The thing that begins exercising domain logic is the handler. It handles requests to modify or get from the domain.
+
+One thing I don't show in the code but is worth noting:
+
+<Quote>
+    Domain entities, that is, the objects that map directly to the database, should never cross the domain boundary.
+    Domain entities are a part of the internal private contracts you establish to build your API. You must not couple
+    these contracts to external clients by exposing them.
+</Quote>
+
+Designing the API outer shell in this way lays the groundwork for straightforward extension of the surface and facilitates a much easier way to test.
+
+I hope you’ve enjoyed this article!
