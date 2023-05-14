@@ -4,13 +4,13 @@
     "private": true,
     "scripts": {
         "devold": "next dev",
-        "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+        "dev": "npm i && cross-env NODE_OPTIONS='--inspect' next dev",
         "build": "next build",
         "start": "next start",
         "export": "next export",
         "lint": "next lint",
         "_clean": "rimraf .next",
-        "preview": "yarn run _clean && yarn run build && npx next start"
+        "preview": "npm  run _clean && npm run build && npx next start"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",
