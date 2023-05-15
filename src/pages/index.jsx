@@ -19,6 +19,11 @@ import uconnLogo from '@/images/logos/uconn-logo.svg'
 import putnamLogo from '@/images/logos/putnam-logo.svg'
 import schoolIcon from '@/images/logos/school-icon.svg'
 
+import image1 from '@/images/photos/about/1-image.jpg'
+import image2 from '@/images/photos/about/2-image.jpg'
+import image3 from '@/images/photos/about/3-image.jpg'
+import portraitImage from '@/images/portrait.jpg'
+
 import { formatDate } from '@/lib/formatDate'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles, getGalleryPhotos } from '@/lib/getAllArticles'
@@ -292,7 +297,7 @@ function Photos() {
     return (
         <div className="mt-16 sm:mt-20">
             <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-                {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
+                {[image1, image2, image3].map((image, imageIndex) => (
                     <div
                         key={image.src}
                         className={clsx(
@@ -326,29 +331,39 @@ export default function Home({ articles, images }) {
                 />
             </Head>
             <Container className="mt-9">
-                <div className="max-w-2xl">
-                    <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-                        Paul Gradie, PhD
-                    </h1>
-                    <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                        Software Engineer, Entrepreneur, and Inventor based in Melbourne, Aus.
-                    </p>
-                    <div className="mt-6 flex gap-6">
-                        <SocialLink
-                            href="https://github.com/paulegradie"
-                            aria-label="Follow on GitHub"
-                            icon={GitHubIcon}
-                        />
-                        <SocialLink
-                            href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
-                            aria-label="Follow on LinkedIn"
-                            icon={LinkedInIcon}
-                        />
+                <div className="flex flex-row items-center">
+                    <div className="max-w-2xl">
+                        <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+                            Paul Gradie, PhD
+                        </h1>
+                        <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+                            Software Engineer, Entrepreneur, and Inventor based in Melbourne, Aus.
+                        </p>
+                        <div className="mt-6 flex gap-6">
+                            <SocialLink
+                                href="https://github.com/paulegradie"
+                                aria-label="Follow on GitHub"
+                                icon={GitHubIcon}
+                            />
+                            <SocialLink
+                                href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
+                                aria-label="Follow on LinkedIn"
+                                icon={LinkedInIcon}
+                            />
+                        </div>
+                    </div>
+                    {/* <div className="lg:pl-20 w-1/2"> */}
+                        <div className="max-w-xs px-2.5 lg:max-w-none lg:pl-20 w-1/2">
+                            <Image
+                                src={portraitImage}
+                                alt=""
+                                sizes="(min-width: 720px) 24rem, 15rem"
+                                className="aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
+                            />
+                        {/* </div> */}
                     </div>
                 </div>
             </Container>
-            {/* <Photos /> */}
-            {/* <ImageGallery items={images} /> */}
             <Container className="mt-24 md:mt-28">
                 <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
                     <div className="flex flex-col gap-16">

@@ -5,8 +5,6 @@ const galleryDirectory = path.join(process.cwd(), "src", "images", "about");
 
 export function getGalleryPhotos() {
     const files = fs.readdirSync(galleryDirectory);
-    console.log("==========Images=============")
-    console.log(files)
     const galleryPhotoList = files.map((file) => {
         return {
             original: `/aboutimages/${file}`,

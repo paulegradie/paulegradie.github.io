@@ -70,10 +70,10 @@ export default function About() {
                                 eventually landed on software engineering. I began writing code at 24 years old as part of my PhD and I have been loving it ever since.
                             </p>
                             <p>
-                                I started my long joureny of self disovery beating on my dad's guitar case with wooden spoons.
+                                I started my long joureny of self disovery beating on my dad&apos;s guitar case with wooden spoons.
                                 In my early days, my dream was to be a studio drummer for the likes of Steely Dan. Most of you probably
-                                have no idea who that is. Kudos if you do. I wasn't too bad a drummer - I was even awarded a partial scholarship
-                                to the prestigious Berklee College of Music. It wasn't meant to be, though - and it would be my first in a long
+                                have no idea who that is. Kudos if you do. I wasn&apos;t too bad a drummer - I was even awarded a partial scholarship
+                                to the prestigious Berklee College of Music. It wasn&apos;t meant to be, though - and it would be my first in a long
                                 string of failures.
                             </p>
                             <p>
@@ -82,7 +82,7 @@ export default function About() {
                             <p>
                                 My University years were spent diving deeply into the inner workings of life. I studied the hard sciences - biology,
                                 chemistry, physics, and a dabble in a bit of research. This was to support an attempt at a career in Dentistry - a
-                                goal for which I can't honestly say I any fundamental reason for choosing. I just always liked my dentist visits. This world was not
+                                goal for which I can&apos;t honestly say I any fundamental reason for choosing. I just always liked my dentist visits. This world was not
                                 for me though, and I failed to gain admission to any dental schools. And so transpired my second great failure.
                             </p>
                             <p>
@@ -103,7 +103,7 @@ export default function About() {
                                 research, analytical research, programming, and statistical modeling, and what people tend to tell me is a
                                 very likeable personality, that I was able to land my first job a generally well thought of company called Zendesk.
                                 There I learned about the tech industry, developed large multilingual language models, and helped to invented
-                                new artifically intelligent systems - one of which for I now hold a co-authored patent. But by then I'd peered into the future
+                                new artifically intelligent systems - one of which for I now hold a co-authored patent. But by then I&apos;d peered into the future
                                 and realized the fleeting nature of the field of data science. I failed to see, and thus failed to realize a future in Data Science.
                                 And so ended my fourth great failure.
                             </p>
@@ -116,7 +116,7 @@ export default function About() {
                                 challenging problems.
                             </p>
                             <p>I have been many things:</p>
-                            <ul>
+                            <ul className="list-disc">
                                 <li>Musician</li>
                                 <li>Biologist</li>
                                 <li>Researcher</li>
