@@ -4,6 +4,8 @@ import { Justify } from '@/components/blog/Justify'
 import { Quote } from '@/components/blog/Quote'
 import { BlogImage } from '@/components/blog/BlogImage'
 import { BlogLink } from '@/components/blog/BlogLink'
+import filesystem from './file_asset_system.png'
+import cohesion from './cohesion_coupling.png'
 
 export const meta = {
   author: 'Paul Gradie',
@@ -37,7 +39,7 @@ Palavyr currently uses AWS S3 as its cloud storage solution. That could change i
 
 Each of these behaviors is a responsibility of the application. Uploading the file to S3 is one such responsibility. Saving the record to the database is another. Associating the file is yet another. Each of these responsibilities can be encapsulated within a component - which in this case would likely be a class.
 
-<BlogImage src="/blog_images/file_asset_system.png" />
+<BlogImage src={filesystem} />
 
 This diagram flows from left to right. There are four entry points:
 
@@ -70,7 +72,7 @@ The smaller your components are, the fewer dependencies they must take. And the 
 
 If you want to be able to compose components (which is the fun part of software design and engineering), then you need to be creating composable components. If your components do too many things, then you become limited in what exactly that thing can be used for. Ultimately, if the component becomes too specific then it loses its cohesiveness and becomes coupled. In general we want to increase cohesion and reduce coupling, where cohesion is where things fit together nicely and coupling is where thigns are linked internally.
 
-<BlogImage src="/blog_images/cohesion_coupling.png" />
+<BlogImage src={cohesion} />
 
 The challenge of applying the S in SOLID comes in two parts. First - knowing or being able to come up with patterns that facilitate keeping components to a single responsibility. Second - recognizing when and how to correctly apply these patterns to achieve an excellent code base. To do this successfully, you need a repertoire of design patterns, a sharp eye, and a good imagination. If you can do this successfully, you will find that your code is not only much more maintainable, but it will also feel cleaner.
 
