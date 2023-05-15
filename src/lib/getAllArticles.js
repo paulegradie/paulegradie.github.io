@@ -1,5 +1,24 @@
 import glob from 'fast-glob'
 import * as path from 'path'
+import fs from "fs";
+
+const galleryDirectory = path.join(process.cwd(), "src", "images", "photos", "about");
+
+export function getGalleryPhotos() {
+    const files = fs.readdirSync(galleryDirectory);
+    console.log("=======================")
+    console.log(files)
+    const galleryPhotoList = files.map((file) => {
+        return {
+            original: `/aboutimages/${file}`,
+            thumbnail: `/aboutimages/${file}`,
+            thumbnailWidth: "25%",
+        };
+    });
+
+    return galleryPhotoList;
+}
+
 
 async function importArticle(articleFilename) {
   let { meta, default: component } = await import(
@@ -21,3 +40,5 @@ export async function getAllArticles() {
 
   return articles.sort((a, z) => new Date(z.date) - new Date(a.date))
 }
+
+

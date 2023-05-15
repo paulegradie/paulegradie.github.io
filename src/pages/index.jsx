@@ -14,14 +14,22 @@ import {
 } from '@/components/SocialIcons'
 import octopusLogo from '@/images/logos/octopus-logo.svg'
 import zekdeskLogo from '@/images/logos/zendesk-logo.svg'
-import image1 from '@/images/photos/image-1.jpg'
-import image2 from '@/images/photos/image-2.jpg'
-import image3 from '@/images/photos/image-3.jpg'
-import image4 from '@/images/photos/image-4.jpg'
-import image5 from '@/images/photos/image-5.jpg'
+
 import { formatDate } from '@/lib/formatDate'
 import { generateRssFeed } from '@/lib/generateRssFeed'
-import { getAllArticles } from '@/lib/getAllArticles'
+import { getAllArticles, getGalleryPhotos } from '@/lib/getAllArticles'
+import ImageGallery from "react-image-gallery";
+
+// const CustomImageGallery = ({ images }) => {
+//   return (
+//     // <div className="w-full h-1/2">
+//     //   <div className="flex mb-12 w-full">
+//         <ImageGallery items={images} />
+//     //   </div>
+//     // </div>
+//   );
+// };
+
 
 function MailIcon(props) {
   return (
@@ -193,9 +201,8 @@ function Resume() {
               <dt className="sr-only">Date</dt>
               <dd
                 className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-                aria-label={`${role.start.label ?? role.start} until ${
-                  role.end.label ?? role.end
-                }`}
+                aria-label={`${role.start.label ?? role.start} until ${role.end.label ?? role.end
+                  }`}
               >
                 <time dateTime={role.start.dateTime ?? role.start}>
                   {role.start.label ?? role.start}
@@ -244,7 +251,7 @@ function Photos() {
   )
 }
 
-export default function Home({ articles }) {
+export default function Home({ articles, images }) {
   return (
     <>
       <Head>
@@ -265,16 +272,6 @@ export default function Home({ articles }) {
             Software engineer, Entrepreneur, and Inventor based in Melbourne, Aus.
           </p>
           <div className="mt-6 flex gap-6">
-            {/* <SocialLink
-              href="https://twitter.com"
-              aria-label="Follow on Twitter"
-              icon={TwitterIcon}
-            />
-            <SocialLink
-              href="https://instagram.com"
-              aria-label="Follow on Instagram"
-              icon={InstagramIcon}
-            /> */}
             <SocialLink
               href="https://github.com/paulegradie"
               aria-label="Follow on GitHub"
@@ -288,7 +285,8 @@ export default function Home({ articles }) {
           </div>
         </div>
       </Container>
-      <Photos />
+      {/* <Photos /> */}
+      {/* <ImageGallery items={images} /> */}
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
@@ -297,7 +295,7 @@ export default function Home({ articles }) {
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <Newsletter />
+            {/* <Newsletter /> */}
             <Resume />
           </div>
         </div>
@@ -306,13 +304,16 @@ export default function Home({ articles }) {
   )
 }
 
+
 export async function getStaticProps() {
   if (process.env.NODE_ENV === 'production') {
     await generateRssFeed()
   }
 
+  const galleryPhotoList = getGalleryPhotos();
   return {
     props: {
+      images: galleryPhotoList,
       articles: (await getAllArticles())
         .slice(0, 4)
         .map(({ component, ...meta }) => meta),
