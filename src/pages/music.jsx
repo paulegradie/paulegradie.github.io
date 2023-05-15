@@ -4,9 +4,6 @@ import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import Link from 'next/link'
 import { SoundCloudIcon } from '@/components/SocialIcons'
-import clsx from 'clsx'
-
-const soundCloud = "https://soundcloud.com/paulgradie"
 
 let playlists = [
   {
@@ -27,6 +24,7 @@ let playlists = [
 
 ]
 
+const soundCloud = "https://soundcloud.com/paulgradie"
 function MusicSection({ children, ...props }) {
   return (
     <Section {...props}>
@@ -67,7 +65,7 @@ export default function Music() {
   return (
     <>
       <Head>
-        <title>Speaking - Paul Gradie</title>
+        <title>Music - Paul Gradie</title>
         <meta
           name="description"
           content="I regularly compose electronic music as a hobby and creative outlet"
@@ -75,7 +73,7 @@ export default function Music() {
       </Head>
       <SimpleLayout
         title="My Music"
-        intro="I regularly compose electronic music as a hobby and creative outlet. Every year I release a small number of tunes in order to satisfy a deeply rooted creative desire the simply will not leave me. Here are listed my published collections by year"
+        intro="I regularly compose electronic music as a hobby and creative outlet. Every year I release a small number of tunes in order to satisfy a deeply rooted creative desire the simply will not leave me. Here are listed my published collections by year."
       >
         <SoundCloudLink />
         <div className="mt-12 space-y-20">
