@@ -6,10 +6,10 @@ import rehypePrism from '@mapbox/rehype-prism'
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx'],
   reactStrictMode: true,
-  images: {
-    loader: "akamai",
-    path: "",
-  },
+  // images: {
+  //   loader: "akamai",
+  //   path: "",
+  // },
 }
 
 const withMDX = nextMDX({

@@ -116,7 +116,7 @@ export default function About() {
                                 challenging problems.
                             </p>
                             <p>I have been many things:</p>
-                            <ul classname="list-disc">
+                            <ul className="list-disc">
                                 <li>Musician</li>
                                 <li>Biologist</li>
                                 <li>Researcher</li>
