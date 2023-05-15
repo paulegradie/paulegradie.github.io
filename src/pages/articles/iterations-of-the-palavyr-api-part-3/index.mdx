@@ -1,0 +1,612 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+import filesystem from './file_asset_system.png'
+import cohesion from './cohesion_coupling.png'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2022-05-16',
+  title: 'Iterations on the Palavyr API - Part 3',
+  description: 'Part 3: Applying SOLID for a clean file management abstraction',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+# Introduction
+
+The Palavyr chatbot configuration service has evolved a great deal since it was first written in 2020. The Palavyr API currently has nearly 100 endpoints that perform a wide variety of functions, including updating configuration, returning conversation nodes to the Palavyr Widget App, and much more. As it has grown from a single endpoint into the dozens that it is now, the API surface has undergone multiple transformations. In addition, much of the core has been transformed as well.
+
+This is the third part of a 3 part series on how we took the Palavyr API from a prototype to a piece of software that is ready for production.
+
+# Part 3: Applying SOLID for a clean file management abstraction
+
+## The Palavyr File Management abstraction
+
+The first iteration of the file management abstraction began with a really strange idea for keeping track of files. This approach coupled the code badly to… file extensions, of all things. It also tended to overfill methods used to manage files with far too much code. All of the code used to save the file to S3, save to the database, and even generate S3 file links were cobbled together.
+
+When refactoring this system for production, we made design choices as well as product decisions. First of all, we originally had the intention of limiting uploads to images one might want to share in the chat. It later became obvious that it would be necessary to support displaying not only images, but pdfs, documents, and other file types as well. So, we now accept many kinds of files.
+
+### The File Asset Abstraction
+
+To support this, we introduced the FileAsset abstraction and redesigned the abstractions used to connect files that have been uploaded (i.e. file assets) to the things they are associated with. This abstraction not only allows for super easy file management via the code, it also abstracts away much of the concerns of other components within the main calling code. If you want to upload a file, you should have to only say ‘uploader.upload(file)’. The lifetime scope of the current request should be in turn scoped to a specific account by one component. The receiving of the file to be uploaded is handled by another. The associated processes that must be executed upon saving a file should be handled by yet others.
+
+Palavyr currently uses AWS S3 as its cloud storage solution. That could change in the future. When a file is uploaded via the UI, that file is transmitted to the Palavyr Server. That file needs to be given an id, it needs to be uploaded to S3, a database record needs to be created, and it might need to be associated with a conversation node or an intent response as an attachment. When it comes time to access the file, that file needs to be retrieved, downloaded temporarily to the server, and then transmitted - either back to the UI, or to an email address.
+
+Each of these behaviors is a responsibility of the application. Uploading the file to S3 is one such responsibility. Saving the record to the database is another. Associating the file is yet another. Each of these responsibilities can be encapsulated within a component - which in this case would likely be a class.
+
+<BlogImage src={filesystem} />
+
+This diagram flows from left to right. There are four entry points:
+
+-   The Logo Uploader endpoint (used to upload a logo)
+-   The Attachment Uploader endpoint (used to upload an attachment)
+-   The Node File Asset Uploader endpoint (used to upload a node file)
+-   The General File Asset Uploader endpoint (used to upload a general file without linking it to any other entity)
+
+Once the API receives the file, it passes through a series of decorated components that perform the following tasks:
+
+-   The file is saved to S3
+-   The file record is saved to the databse
+-   (Optional - if called from a linking endpoint) The file is associated with the entity that is being linked to
+
+You might be wondering if its possible to link a file that has already been uploaded. The answer is of course, yes. That is done via a separate endpoint not discussed here.
+
+## The S in SOLID
+
+Notice how we've layered the core logic of the abstraction. This is the single responsibility principle of SOLID in action. Any component you build should really only have one responsibility. If you’re a software engineer, then your job is to compose software that doesn’t invest too much logic into any one component. You should design systems that intelligently spread the logic around, so to speak. Here are a couple good reasons for doing this:
+
+### Reducing maintenance overhead
+
+Reasoning about very large software components kinda sucks if you have to do it a lot. If you’re writing your own code base, it's just lag time before you can deploy. If you’re at a company, it can be… let’s just say less than exciting. Okay, I’ll say it: painful.
+
+### Reducing reasons for change
+
+The smaller your components are, the fewer dependencies they must take. And the fewer dependencies your components take, the fewer reasons that component will ever have to change. If you are testing your code, and you write gigantic classes with huge methods, then any time you try to change anything, you are going to end up having to change your test code. If you are refactoring or otherwise changing any of these components, then you will almost inevitably have to change an associated part of your codebase. In the Palavyr Server, we ran into this problem a great deal - in particular related to the PDF generating logic.
+
+### Improved composability
+
+If you want to be able to compose components (which is the fun part of software design and engineering), then you need to be creating composable components. If your components do too many things, then you become limited in what exactly that thing can be used for. Ultimately, if the component becomes too specific then it loses its cohesiveness and becomes coupled. In general we want to increase cohesion and reduce coupling, where cohesion is where things fit together nicely and coupling is where thigns are linked internally.
+
+<BlogImage src={cohesion} />
+
+The challenge of applying the S in SOLID comes in two parts. First - knowing or being able to come up with patterns that facilitate keeping components to a single responsibility. Second - recognizing when and how to correctly apply these patterns to achieve an excellent code base. To do this successfully, you need a repertoire of design patterns, a sharp eye, and a good imagination. If you can do this successfully, you will find that your code is not only much more maintainable, but it will also feel cleaner.
+
+## The D in SOLID
+
+The Dependency Inversion principle (the D in SOLID) tells us that we should try and let our systems and frameworks manage instance creation and thus provide those instances to us on demand. If you write a class, then your framework should have some kind of container in which your types are registered, and from which can be resolved by constructor injection. In other words, you should never do the following:
+
+```csharp showLineNumbers
+public class Example
+{
+    public void SomeMethod()
+    {
+        var dependency = new Dependency(); // <-- This is a big no-no
+        dependency.DoSomething();
+    }
+}
+```
+
+Instead, you should have a DI Container that lets you do this:
+
+```csharp showLineNumbers
+public class Example
+{
+    private readonly Dependency dependency;
+
+    public Example(Dependency dependency)
+    {
+        this.dependency = dependency;
+    }
+
+    public void SomeMethod()
+    {
+        dependency.DoSomething(); // <-- Tight. Tight. Tight.
+    }
+}
+```
+
+## Gimme some examples
+
+We’re going to go on a bit of a journey. If you’d like to see a completed version, you can skip to the last image.
+
+Let’s say we have an endpoint in some asp.net core code that accepts a file. This endpoint needs to receive the file, then save it to some place (preferably not the server) as well as save a record to a database.
+
+```csharp showLineNumbers
+[ApiController]
+public class Controller : ControllerBase
+{
+    private readonly Saver saver;
+    private readonly DbContext dbContext;
+
+    public Controller(Saver saver, DbContext dbContext)
+    {
+        Saver = saver;
+        DbContext = dbContext;
+    }
+
+    [HttpPost(Route)]
+    [ActionName("Decode")]
+    public async Task Create(
+        [FromForm(Name = "files")]
+        List<IFormFile> files,
+        string linkId,
+        CancellationToken cancellationToken)
+    {
+        await Saver.SaveToCloud(files, cancellationToken);
+
+        var newRecords = FileAssets.CreateMany(files);
+        await DbContext.FilesAssets.Add(newRecords);
+
+        await linker.link(entity.Id, request.LinkId);
+
+        await DbContext.SaveChangesAsync(cancellationToken);
+    }
+}
+```
+
+This endpoint is doing pretty much everything, so let's at least take away the mvc logic and focus just on the code that does stuff with the file. In other words, we’ll leave the responsibility of receiving and returning things to the component that is designed to receive and return things. That thing can call another piece of code that can handle the other stuff.
+// code - controller calls a handler class that is injected
+
+```csharp showLineNumbers
+[ApiController]
+public class UploadExample : ControllerBase
+{
+    public readonly Mediator mediator;
+
+    public Example(IMediator mediator)
+    {
+        mediator = mediator;
+    }
+
+    [HttpPost(Route)]
+    [ActionName("Decode")]
+    public async Task Create(
+        [FromForm(Name = "files")]
+        List<IFormFile> files,
+        string linkId,
+        CancellationToken cancellationToken)
+    {
+        // Do ONE thing. Receive a request, parse it, and give it to the handler.
+        await mediator.Send(new UploadRequest(files, linkId), cancellationToken);
+    }
+}
+```
+
+Now this other thing, let's call that a handler (since it handles the saving behavior).
+
+```csharp showLineNumbers
+public class UploadHandler : IHandleRequest<UploadRequest> // <-- a handler interface
+{
+    private readonly ISaver saver;
+    private readonly DbContext dbContext;
+
+    public UploadHandler(ISaver saver, DbContext dbContext)
+    {
+        this.saver = saver;
+        this.dbContext = dbContext;
+    }
+
+    public async Task Handle(
+        UploadRequest request,
+        CancellationToken cancellationToken)
+    {
+
+        // save to storage
+        await saver.SaveToCloud(files, cancellationToken);
+
+        // save to db
+        var newRecords = dbContext.FileAssets.CreateMany(request.files);
+        await dbContext.FilesAssets.Add(newRecords);
+
+        await linker.link(entity.Id, request.LinkId);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+}
+
+public UploadRequest : IRequest
+{
+    [FromForm(Name = "files")]
+    List<IFormFile> files = new List<IFormFile>();
+
+    public string LinkId { get; set; }
+
+}
+```
+
+---
+
+I'd like to point out two urgent things with this code and go on a brief tangent.
+
+First, the use of the dbContext in this example is not ideal. Exposing the dbContext like this in your application and using it to return data from your API is something that is often cited in tutorials and blogs (like this one), and when you don't have a better pattern locked into your mind, is something that you will probably do in your application code early on.
+
+**Let me warn you**: Doing this will leave you in a position where your entire codebase is tightly coupled to your database. This is very bad because applications grow and change over time, and coupling your business / application logic to your database logic means you have to change your codebase whenever you change your database. It will also be the cause of a lot of repitition.
+
+Second, I'll mention that returning models (that is, those classes that define, directly map to, or otherwise get used to modify data in your database tables) from your API is, in essence establishing a semi-permanent (if private) or perhaps even permanent (if public) contract between your API and its consumers. To change this contract requires a database schema migration, and most likely a data migration to change that contract.
+
+Remember, applications (when developed) grow and change over time. If you are developing a new app, you might decide to change your schema from time to time to facilitate new features, or even just new thinking or product terminology. If you couple your database to your application, and then to your client - then if you want to change the way your client interacts with the data returned from the database, you will have to change the database. (e.g. no renaming json properties when GETting / POSTing data to the API - if you pick the wrong name, you are stuck with it).
+
+You should always map your models onto a new object (for example, a resource) in order to avoid this kind of contract. Your resources are free to change with the contract, so its best to use those as your point of entry to the data you need to work with. Don't expose the core (not the API core - that should be functional, the API surface is where you should endeavor to deal with the imperative logic, i.e. the database).
+
+Lets rewrite this code to make use of an EntityStore. We'll also move the call to save the database changes to middleware so that we close out the transaction only when the request is complete (i.e. a unit of work is complete).
+
+```csharp showLineNumbers
+[ApiController]
+public class UploadHandler : IHandleRequest<UploadRequest> // <-- a handler interface
+{
+    private readonly ISaver saver;
+    private readonly  IEntity<MyEntity> store;
+    private readonly  ILinker linker;
+
+
+    public UploadHandler(
+        ISaver saver,
+        IEntity<MyEntity> store,
+        ILinker linker)
+    {
+        this.saver = saver;
+        this.store = store;
+        this.linker = linker;
+    }
+
+    public async Task Handle(
+        UploadRequest request,
+        CancellationToken cancellationToken)
+    {
+        // save to storage
+        await saver.SaveToCloud(files, cancellationToken);
+
+        // save to db
+        var entity = await store.CreateMany(request.files);
+
+        // linker
+        await linker.link(entity.Id, request.LinkId);
+    }
+
+}
+
+public UploadRequest : IRequest
+{
+    [FromForm(Name = "files")]
+    List<IFormFile> files = new List<IFormFile>();
+
+    public string LinkId { get; set; }
+}
+```
+
+## Tangent over :D
+
+At this point, it might start becoming apparent what we must next do.
+
+Calling the code in this order like this is okay, but remember - applications change over time. What if you move these around and something breaks? What if you delete a line of code? What if you need to test this handler?
+
+There is an important relationship between these components, but right now, this code is all coupled together. We need to start thinking about how to design this code that decouples the handler from the internals and keeps each component with a single responsibility. This handler has at least four responsibilities as it is.
+
+Instead, lets refactor the handler so that it has just one responsibility.
+
+```csharp showLineNumbers
+public class UploadHandler : IHandleRequest<UploadRequest> // <-- a handler interface
+{
+    private readonly IFileSaver saver;
+
+
+    public UploadHandler(IFileSaver saver)
+    {
+        this.saver = saver;
+    }
+
+    public async Task Handle(
+        UploadRequest request,
+        CancellationToken cancellationToken)
+    {
+        // do one thing... and do it well.
+        await saver.Save(files, cancellationToken);
+    }
+
+}
+
+public class Saver : ISaver
+{
+
+    private readonly IEntity<MyEntity> store;
+    private readonly ILinker linker;
+    private readonly ICloudSaver cloudSaver;
+    public Saver(
+        ICloudSaver cloudSaver,
+        IEntity<MyEntity> store,
+        ILinker linker
+    )
+    {
+        this.cloudSaver = cloudSaver;
+        this.store = store;
+        this.linker = linker;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // save to storage
+        await cloudSaver.saveToCloud(files, cancellationToken);
+
+        // save to db
+        var entity = await store.CreateMany(request.files);
+
+        // linker
+        await linker.link(entity.Id, request.LinkId);
+
+        // save and quit
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+}
+```
+
+So what do you think? This code certainly leaves the handler doing just one thing... but it also leaves the Saver type doing _everything_. We've started down the right path though.
+
+Lets take this a step further though and introduce a design pattern that gives us a better fit with the single responsibility principle and saves us from having to manage various different classes with various different methods and their signatures. We can introduce a **decorator**.
+
+```csharp showLineNumbers
+public Saver : ISaver
+{
+    private readonly  IEntity<MyEntity> store;
+    private readonly  ILinker linker;
+
+    public Saver(
+        IEntity<MyEntity> store,
+        ILinker linker
+    ) // streams to cloud storage
+    {
+        this.store = store;
+        this.linker = linker;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // moved the cloud saver code to the decorator
+
+        // save to db
+        var entity = await store.CreateMany(request.files);
+
+        // linker
+        await linker.link(entity.Id, request.LinkId);
+    }
+}
+
+public class CloudSaverDecorator : ISaver
+{
+    private readonly ICloudSaver cloudSaver;
+    private readonly ISaver inner;
+
+
+    public CloudSaverDecorator(ISaver inner, ICloudSaver cloudSaver)
+    {
+        this.inner = inner;
+        this.cloudSaver = cloudSaver;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // save to storage
+        await cloudSaver.saveToCloud(files, cancellationToken);
+        await inner.save(files, cancellationToken);
+    }
+}
+```
+
+Decorators are great when there is a direct and necessary relationship between two components that you want to keep decoupled - each with their own responsibility, but want that code to flow together. In other words, they are appropriate when you wish to simply extend the functionality of a class using composition instead of inheritence. A decorator implements the interface of another class, injects that other class, and calls all of its methods. Before or after it calls those inner methods, it can implement additional logic that ‘decorates’ the inner class’s logic. In this way, you can split apart classes and layer them, so to speak. The decorator itself must be registered with the container for dependency injection.
+
+Lets take this all the way to the end.
+
+```csharp showLineNumbers
+public Saver : ISaver
+{
+    private readonly  IEntity<MyEntity> store;
+    private readonly  ILinker linker;
+
+    public Saver(
+        IEntity<MyEntity> store
+    )
+    {
+        this.store = store;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // moved the cloud saver code to the decorator
+
+        // save to db
+        var entity = await store.CreateMany(request.files);
+
+        // linker moved to decorator
+    }
+}
+
+public class LinkingDecorator : ISaver
+{
+    private readonly ISaver inner;
+    private readonly IEntityStore<MyEntity> store;
+
+    public class LinkingDecorator(ISaver inner, IEntity<MyEntity> store)
+    {
+        this.inner = inner;
+        this.store = store;
+    }
+
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        await inner.save(files, cancellationToken);
+        await linker.link(entity.Id, request.LinkId);
+    }
+
+public class CloudSaverDecorator : ISaver
+{
+    private readonly ICloudSaver cloudSaver;
+    private readonly ISaver inner;
+
+
+    public CloudSaverDecorator(ISaver inner, ICloudSaver cloudSaver)
+    {
+        this.inner = inner;
+        this.cloudSaver = cloudSaver;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // maybe you need to do something else here as well
+        var keys = GenerateKeys(files);
+
+        // save to storage
+        await cloudSaver.saveToCloud(files, keys, cancellationToken);
+        await inner.save(files, cancellationToken);
+    }
+
+    private List<string> GenerateKeys(List<IFormFile> files)
+    {
+        return files.Select(f => Guid.NewGuid().ToString()).ToList();
+    }
+}
+```
+
+This pattern is particularly useful for any code that needs to do something extra anytime a method is called, but that extra stuff doesn’t quite belong to the calling code. For example, perhaps you need to raise an event, or log something useful.
+
+When these various concepts are put together, you get something that looks a bit like this.
+
+```csharp showLineNumbers
+public class AutofacModule
+{
+    public override void Load(ContainerBuilder builder)
+    {
+        builder.RegisterType<Saver>().As<ISaver>();
+        builder.RegisterType<CloudSaver>().As<ICloudSaver>();
+        builder.RegisterType<Linker>().As<ILinker>();
+        builder.RegisterType<Mediator>().As<IMediator>();
+        builder.RegisterType<UploadHandler>().As<IHandleRequest<UploadHandler>();
+
+        builder.RegisterGeneric(typeof(IEntityStore<>)).As(typeof(IEntityStore<>));
+
+        builder.RegisterDecorator(typeof(CloudSaverDecorator), typeof(ISaver));
+        builder.RegisterDecorator(typeof(LinkingDecorator), typeof(ISaver));
+
+    }
+}
+
+[ApiController]
+public class Controller : ControllerBase
+{
+    public readonly Mediator mediator;
+
+    public Example(IMediator mediator)
+    {
+        mediator = mediator;
+    }
+
+    [HttpPost(Route)]
+    [ActionName("Decode")]
+    public async Task Create(
+        [FromForm(Name = "files")]
+        List<IFormFile> files,
+        string linkId,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(new UploadRequest(files, linkId), cancellationToken);
+    }
+}
+
+public UploadRequest : IRequest
+{
+    [FromForm(Name = "files")]
+    List<IFormFile> files = new List<IFormFile>();
+
+    public string LinkId { get; set; }
+
+}
+
+public class UploadHandler : IHandleRequest<UploadRequest>
+{
+    private readonly IFileSaver saver;
+
+
+    public UploadHandler(IFileSaver saver)
+    {
+        this.saver = saver;
+    }
+
+    public async Task Handle(
+        UploadRequest request,
+        CancellationToken cancellationToken)
+    {
+        // do one thing... and do it well.
+        await saver.Save(files, cancellationToken);
+    }
+}
+
+public class Saver : ISaver
+{
+    private readonly  IEntity<MyEntity> store;
+
+    public Saver(IEntity<MyEntity> store)
+    {
+        this.store = store;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        var entity = await store.CreateMany(request.files);
+    }
+}
+
+public class LinkingDecorator : ISaver
+{
+    private readonly ISaver inner;
+    private readonly ILinker linker;
+
+    public class LinkingDecorator(ISaver inner, ILinker linker)
+    {
+        this.inner = inner;
+        this.linker = linker;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        await inner.save(files, cancellationToken);
+        await linker.link(entity.Id, request.LinkId);
+    }
+}
+
+public class CloudSaverDecorator : ISaver
+{
+    private readonly ICloudSaver cloudSaver;
+    private readonly ISaver inner;
+
+
+    public CloudSaverDecorator(ISaver inner, ICloudSaver cloudSaver)
+    {
+        this.inner = inner;
+        this.cloudSaver = cloudSaver;
+    }
+
+    public async Task Save(List<IFormFile> files, CancellationToken cancellationToken)
+    {
+        // maybe you need to do something else here as well
+        var keys = GenerateKeys(files);
+
+        // save to storage
+        await cloudSaver.saveToCloud(files, keys, cancellationToken);
+        await inner.save(files, cancellationToken);
+    }
+
+    private List<string> GenerateKeys(List<IFormFile> files)
+    {
+        return files.Select(f => Guid.NewGuid().ToString()).ToList();
+    }
+}
+
+```
+
+That’s a pretty tidy way to manage files in the way that Palavyr needs to.
+
+We hope you enjoyed this article!

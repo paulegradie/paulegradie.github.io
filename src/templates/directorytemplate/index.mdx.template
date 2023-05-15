@@ -1,0 +1,18 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import template from './template.png'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2022-09-05',
+  title: '',
+  description: '',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+// Write your post below

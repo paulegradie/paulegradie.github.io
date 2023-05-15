@@ -1,0 +1,327 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2022-05-30',
+  title: 'Generic Abstractions in ASP.NET core using MediatR',
+  description: 'An abstraction pattern to simplify the creation of new endpoints that have the same base abstract logic',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+# Introduction
+
+In this post, I will show you how I created a generic base controller abstraction in ASP.NET core, and then how we created and registered our own generic handlers (with generic requests) using MediatR.
+This is the Jay Bogard MediatR package.
+
+# The problem this approach solved for Palavyr
+
+<h1>Background</h1>
+
+The Palavyr business domain has a concept we refer to as pricing strategies. A pricing strategy is one of a several ways to calculate the price of a product, each of which depend on input from the user. For example, a product may have a fixed price, or a price based on the weight of the product, or a price based on the weight and size of the product. A good example from one customer is the square meter size of a roof. The customer of Palavyr in this situation wanted to provide a service fee estimate that would be based on the size of the roof.
+
+When we implement the domain entities to represent a pricing strategy, its comes in two parts. There is an entity that represents the table called the pricing strategy meta entity (i.e. this table exists, it of type blah, it has other common properties...), and there is an entity that represents the table itself. This table may be relationally linked to other tables as well.
+
+Along with each pricing strategy is a set of operations that need to be performed in order to provide a single interface to the logic that handleds creating and modifying these records. The single interface is the IPricingStrategyCommandExecutor - it provides four CRUD-like operations to Get, GetTemplate, Save, and Delete.
+
+The Palavyr API surface is decoupled from the domain logic by use of the MediatR package, which provides an abstraction to mediate between the domain and the API. We send request objects populated with data to a handler, and that handler executes and returns a response.
+
+<h3>The problem</h3>
+
+There are currently 5 different pricing strategies available with Palavyr. Every time we need to add a new pricing strategy, we need to add a new entity and a new command handler. We also need to add a new endpoint for that pricing strategy so that we can preserve the strong typing that C# provides. To achieve this, we also need to re-implement the same four CRUD-like operations for each pricing strategy. With only three pricing strategy this became extremely unwieldly for a single person and very error prone when creating new strategies.
+
+Ultimately, what we wanted was a way to abstract the CRUD-like operations for each pricing strategy, and then have a single set of four endpoints that can be used to perform all of the CRUD-like operations.
+
+### The Solution
+
+To achieve this ideal solution, we turned to generics and some useful properties of the ASP.NET core mvc framework. Consider the following implementation:
+
+```csharp
+[ApiController]
+public abstract class GenericEntityControllerBase<TEntity, TResource>
+    : ControllerBase, IDynamicTableController<TEntity, TResource>
+    where TEntity : class, IDynamicTable<TEntity>, new()
+    where TResource : IResource, new()
+{
+    private readonly IMediator mediator;
+    public const string BaseRoute = "api/";
+    public GenericEntityControllerBase(IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
+    [HttpGet("intent/{intentId}/table/{tableId}")]
+    public async Task<ExtendedResource<TResource>> Get(
+        [FromRoute] string intentId,
+        [FromRoute] string tableId)
+    {
+        var response = await mediator.Send(
+            new GetRequest<TEntity, TResource>
+            {
+                IntentId = intentId,
+                TableId = tableId
+            });
+        return response.Resource;
+    }
+
+    [HttpPut("intent/{intentId}/table/{tableId}")]
+    public async Task<IEnumerable<TResource>> Put(
+        [FromRoute] string intentId,
+        [FromRoute] string tableId,
+        [FromBody] DynamicTable<TEntity> dynamicTable)
+    {
+        var resource = await mediator.Send(
+            new PutRequest<TEntity, TResource>()
+            {
+                TableId = tableId,
+                IntentId = intentId,
+                DynamicTable = dynamicTable
+            });
+        return resource.Resource;
+    }
+}
+```
+
+There is a lot going on in this example to be sure. So lets break it down a bit.
+
+First, this is an abstract class, so no instance of this class can be created. This is a good thing, because we don't want to have to implement the same logic for each pricing strategy. Instead we want to inherit from this class and implement a bit of specific logic for each derived class.
+
+Second, this is a generic base class. In other words, we're asking the developer to provide a specific type when inheriting from this class. We use this type all through the internals of the logic that is called from this endpoint (via the mediator) to perform, essentially, the same CRUD-like operations.
+
+Next, we provide generic constraints that are used to restrict the types that developers may attempt to pass as generic arguments.
+
+This constraint: `where TEntity : class, IDynamicTable<TEntity>, new()` means that developers may only pass a class that implements the `IDynamicTable<TEntity>` interface. This is a good way to ensure that developers are not passing a class that is not intended to be used as a table.
+
+This other constraint `where TResource : IResource, new()` means that devs can only pass a type that implements IResource.
+
+Next, we set a base route that is made public, so that derived classes can all use the same leading route component. For example,
+
+`/api/leading-route-component/PricingStrategyTableName/intent/{intentId}/table/{tableId}`
+
+This is a fully qualified route, which provides the pricing strategy table name, as well as the intent and table ids. An interesting thing to note is that the pricing strategy table name is part of the route. From the client's perspective, we want to be able to make API calls that act on specific pricing strategy tables - so we have at least two options:
+
+1. Take a parameter that tells us how to route the request to the correct pricing strategy table (using a single endpoint)
+1. Use a unique endpoint for each pricing strategy.
+
+The first option doesn't fit well with a single generic base class, becuase we'd need a way to determine the type of the pricing strategy table. We might try and map a string from the body or route using reflection... but that is both slow, and frankly kind of gross. Reflection is awesome... but its also gross.
+
+The second option allows us to specify a type along with the endpoint... especially if the endpoint takes a generic type parameter.
+
+Finally, we define two methods (for demonstration purposes) - a GET and a PUT. These endpoints issue requests to a mediator, which then handles those requests. Since the handler needs to interact with the database in some capacity, it needs to know which type of `EntityStore<>` to resolve. This is where the generic type parameter on the mediator request will come in.
+
+### Defining the Derived Controller
+
+The derived controller is much more simple. So simple in fact, that it doesn't even define any methods! All of the methods for all of the actual controllers is defined on the base class - the derived controller is simply there to provide:
+
+1. A unique endpoint route component, which uses the name of the entity.
+2. The generic type parameters to the base class.
+
+To assemble the route, we provide it as
+
+`BaseRoute + nameof(GenericEntity)` from the derived class, which gets prepended to `intent/{intentId}/table/{tableId}` from the base class. That yields: `/api/GenericEntity/intent/{intentId}/table/{tableId}`
+
+Each entity has a corresponding entity resource, which is allowed to leave the domain (which is code beneath the layer of the handlers). Each entity also has a mapper that allows us to transcribe entities (i.e. models) to resources. Everything is decoupled and flexible.
+
+Furthermore, anytime we need to add a new pricing strategy, we only need to add a new derived controller as shown below (Of course there are other speicific implementations that need to be provided deeper in the core of the application, but we've come up with clever ways to prevent copy-pasta madness there too.)
+
+```csharp showLineNumbers
+namespace Example
+{
+    [Route(BaseRoute + nameof(EntityType))]
+    public class GenericEntityController : GenericEntityControllerBase<EntityType, EntityResourceType>
+    {
+        public GenericEntityController(IMediator mediator) : base(mediator)
+        {
+        }
+    }
+}
+```
+
+In practice, what we are doing here is effectively mapping the route to the `EntityType` and `GenericEntityResource`.
+
+Next is the handler. This is where the actual logic is defined. The handler is responsible for handling the request, and then returning the response - and in this case, carrying through the generic type arguments to the so call 'executor' which resolves different depending on which generic type is passed to it as well as the mapper. The executor will effectively just interface with the database, and wraps the `EntityStore<>`, which itself takes the generic argument.
+
+Note the generic contraints that are applied here as well.
+
+```csharp showLineNumbers
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+public class Handler<T, TR> : IRequestHandler<GetRequest<T, TR>, Response<TR>>
+    where T : class, IDynamicTable<T>, new()
+    where TR : IResource
+{
+    private readonly IExecutor<T> executor;
+    private readonly IMapToNew<T, TR> mapper;
+
+    public Handler(
+        IExecutor<T> executor,
+        IMapToNew<T, TR> mapper
+    )
+    {
+        this.executor = executor;
+        this.mapper = mapper;
+    }
+
+    public async Task<Response<TR>> Handle(
+        GetRequest<T, TR> request,
+        CancellationToken cancellationToken)
+    {
+        var data = await executor.GetData(request.IntentId, request.TableId);
+        var resources = await mapper.MapMany(data);
+        return new Response<TR>(resources);
+    }
+}
+
+public class GetRequest<T, TR> : IRequest<Response<TR>>
+    where TR : IResource
+{
+    public string IntentId { get; set; }
+    public string TableId { get; set; }
+}
+
+public class Response<TR> where TR : IResource
+{
+    public Response(IEnumerable<TR> resources) => Resources = resources;
+    public IEnumerable<TR> Resources { get; set; }
+}
+```
+
+## Registering everything with the DI Container
+
+Finally, we must consider the registration story. To register everything that is needed for this to work with Autofac (sorry to everyone not using autofac. But consoder using Autofac. The concepts will be the same probably in other DI containers, but I can't say how different the implementations are), there are a few different things we need to do. In particular, we'll need to register the controller, executor, the mapper, and the handler.
+
+```csharp showLineNumbers
+// Controler - startup.cs
+public virtual void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers().AddControllersAsServices();
+    MediatorRegistry.RegisterMediator(services);
+}
+
+// Executor - AutofacModules.cs
+builder
+    .RegisterGeneric(typeof(DynamicTableCommandExecutor<>))
+    .As(typeof(IDynamicTableCommandExecutor<>)).InstancePerLifetimeScope();
+
+// Mapper - AutofacModules.cs
+builder
+    .RegisterAssemblyTypes(assemblies)
+    .AsClosedTypesOf(typeof(IMapToNew<,>))
+    .AsImplementedInterfaces()
+    .InstancePerLifetimeScope();
+
+// Handler - AutofacModules.cs
+public static void RegisterMediator(IServiceCollection serviceCollection)
+{
+    var assemblies = AppDomain
+    .CurrentDomain
+    .GetAssemblies()
+    .Where(x => YouCanUseAFilter(x));
+
+    serviceCollection
+        .AddMediatR(assemblies.ToArray())
+        .AddTransient<ITypeConverter, TypeConverter>()
+        .AddTransient(
+            sp =>
+                Iterator
+                    .Wrap(
+                        sp.GetService,
+                        sp.GetServices<ITypeConverter>()))
+        .AddTransient(typeof(GetPricingStrategyTableRowsHandler<,>))
+        .AddTransient(typeof(GetPricingStrategyTableRowTemplateHandler<,>))
+        .AddTransient(typeof(DeletePricingStrategyTableHandler<,>))
+        .AddTransient(typeof(SavePricingStrategyTableHandler<,>))
+        .BuildServiceProvider();
+}
+```
+
+For the most part, these are straightforward (though clearly more than your baseline `.RegisterType`). For the Handler registration, this became tricky.
+
+Since the container doesn't know to resolve the handler as a generic (since MediatR doesn't register them that way), we can provide a custom service provider, which will iterate through all of the handler types (reflecting over their implemented generic interfaces, since this is how they were registered) and plucking out any that match the type specified in the `MakeGenericType` method.
+
+```csharp showLineNumbers
+public class TypeConverter : ITypeConverter
+{
+    public Type Convert(Type sourceType, ConverterDelegate next)
+    {
+        if (!IsItAHandlerType(sourceType)) return next();
+
+        var requestType = sourceType.GenericTypeArguments[0];
+        if (!ShouldItThenBeConverted(requestType)) return next();
+
+        GetGenericTypesFromTheRequest(requestType, out var tEntity, out var tResource);
+
+        return MakeGenericType(requestType, tEntity, tResource);
+    }
+
+    private static Type MakeGenericType(Type requestType, Type tEntity, Type tResource)
+    {
+        if (requestType.GetGenericTypeDefinition() == typeof(GetRequest<,>))
+        {
+            return typeof(Handler<,>).MakeGenericType(tEntity, tResource);
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private static void GetGenericTypesFromTheRequest(
+        Type requestType,
+        out Type returnTypeA,
+        out Type returnTypeB)
+    {
+        returnTypeA = requestType.GenericTypeArguments[0];
+        returnTypeB = requestType.GenericTypeArguments[1];
+    }
+
+    private static bool ShouldItThenBeConverted(Type requestType)
+    {
+        return requestType.IsGenericType &&
+                (
+                    requestType.GetGenericTypeDefinition()
+                        == typeof(GetRequest<,>)
+                );
+    }
+
+    private static bool IsItAHandlerType(Type sourceType)
+    {
+        return sourceType.IsGenericType &&
+                (sourceType.GetGenericTypeDefinition()
+                    == typeof(IRequestHandler<,>));
+    }
+}
+```
+
+Additionally, you'll need to provide a means to actually iterate over the types inside the service provider when resolving the handler.
+
+```csharp showLineNumbers
+public static class Iterator
+{
+    public static ServiceFactory Wrap(
+        ServiceFactory serviceFactory,
+        IEnumerable<ITypeConverter> converters)
+    {
+        return serviceType =>
+        {
+            Type NoConversion() => serviceType;
+            var convertServiceType = converters
+                .Reverse()
+                .Aggregate((ConverterDelegate)NoConversion, (next, c) => () => c.Convert(serviceType, next));
+            return serviceFactory(convertServiceType());
+        };
+    }
+}
+
+public delegate Type Delegate();
+
+public interface ITypeConverter
+{
+    Type Convert(Type sourceType, Delegate next);
+}
+```
+
+When you can use generic requests with your mediator implementations (whether you're using the `MediatR` or `Mediator` implementations), an entirely new avenue for application design is opened up. In the case of Palavyr, we used this approach to convert the pricing strategy controllers (which were previously coupled to the API) into decoupled endpoints with the sole purpose of binding requests, and passing that data to the mediator. This augmented the Palavyr API that significantly improves the extensability of the application by providing a fully decoupled api surface. With an decoupled API surface, integrations are much easier to implement, and the application is much more flexible.
+
+Thanks very much for reading!
