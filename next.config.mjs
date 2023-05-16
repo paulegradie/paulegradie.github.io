@@ -5,8 +5,10 @@ const isProd = process.env.NODE_ENV === 'production'
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
+  extension: /\.(md|mdx)$/,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   reactStrictMode: true,
+
 }
 
 if (isProd) {
