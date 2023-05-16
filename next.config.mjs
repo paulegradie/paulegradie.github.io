@@ -7,7 +7,6 @@ import rehypePrism from '@mapbox/rehype-prism'
 let nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
-  target: 'serverless',
   images: {
     loader: 'akamai',
     path: '',
