@@ -14,13 +14,35 @@ let nextConfig = {
 if (isProd) {
   nextConfig = {
     ...nextConfig,
-    experimental: {
-      mdxRs: true,
-    },
     images: {
-      loader: 'akamai',
-      path: '',
+      unoptimized: true,
     },
+    webpack: config => {
+
+      return {
+        ...config,
+        rules: [
+          // …
+          {
+            test: /\.mdx?$/,
+            use: [
+              {
+                loader: '@mdx-js/loader',
+                /** @type {import('@mdx-js/loader').Options} */
+                options: {}
+              }
+            ]
+          }
+        ]
+      }
+    }
+    // experimental: {
+    //   mdxRs: true,
+    // },
+    // images: {
+    //   loader: 'akamai',
+    //   path: '',
+    // },
   }
 }
 
