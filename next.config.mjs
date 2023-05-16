@@ -5,8 +5,6 @@ import rehypePrism from '@mapbox/rehype-prism'
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
-  basePath: "",
-  assetPrefix: "",
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   target: 'serverless',
