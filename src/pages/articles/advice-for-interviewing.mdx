@@ -1,0 +1,58 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Graie',
+  date: '2023-01-05',
+  title: 'Some advice for breaking into a new field',
+  description: 'Interviewing can be stressful and intimidating - but its does not have to be',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+I have changed direction in career no fewer than 3 times (that 3 edges between 4 nodes, or 4 different career trajectories).
+
+Every time I have ever had to force a transition from one field to another, its always been a leap of faith. But there have also been a few deliberate actions I've taken that I saw as critical for giving the leap at least some hope of success. In the remainder of this post, I'll try and list those things off from the perspective of someone who had to enter a field with little to no formal training.
+
+### Proving my value
+
+The first thing you should be considering how you think you're going to prove that you are better qualified both technically and interpersonally than any of the other applicants vying for this position. There has been a myth, perpetuated for quite some time now, that you companies out there do, or at least ought, to take on anyone willing to try their hand at being a software developer.
+
+<strong>To some extent, there is truth behind this myth - but it is a myth nonetheless.</strong>
+
+When you enter into an interview - its true that its an opportunity for you to interview the company you're applying to as much as they are interviewing you. But you have got to remember that the company will always have the leverage in the negotiation.
+
+In the earlier days of software, this wasn't so much the case. Universities were still producing competant people and there really were more ideas than there were people to implement them (well). But that is not the world of today.
+
+If you're coming into software from outside the traditional route - i.e. a multi-year rigorous program that develops your fundamental understanding of core concepts to not only software design and implementation, but the surrounding fields of mathematics and computer science theory that are required to master the craft - then you will need to find other means to prove that you have a deeper understanding of these concepts. One reason for this is because you will need this understanding to do the thing that companies actually NEED you to do: SOLVE PROBLEMS. But you will also need it to find optimized (or optimizable) solutions to problems, recognize potential solutions that are not optimal, and simply be able to participate in the shared language of software engineering.
+
+There is nothing worse than trying to work with someone who bullshits their way through this. Its obvious, and unbearable.
+
+So build things of substance. Things where no-one has shown you how, or even what, to do. Sizable things - spend months building out a codebase that is 30,000 lines worth of frontend and backend code and take note of what was difficult, what kinds of abstractions you developed to produce reusable code, how you scaled things (or more importantly, what prevented you from doing so), and what interesting patters you discovered or invented to solve a problem you came across. Build something that other people can use (even if they don't), and think about what you have to do make sure you don't make their experience bad whilst using it -- OVER TIME (e.g. how will you version your deliverable and make it extendible or backwards compatible).
+
+In other words - Prove IT. Prove that you've experienced these things.
+
+When you do that, you will feel good about putting them on your resume. And when they see that, you will be asked about it. The conversations you will have around that particular topic will reveal you as someone who knows what they are talking about - because you've actually done what you're talking about. No bullshit - real truths.
+
+<Justify position="center">
+    And admit when you realized you hit a problem you weren't able to solve. That is the clearest indication of someone
+    who has truly pushed themselves to grow - and it is by this measure that those assessing your application will gain
+    an understanding of how far you have actually come.
+</Justify>
+
+### Manage your expectations
+
+Transitioning into a new field is difficult. You are years behind everyone else and you have an absolute mountain of knowledge to absorb. Not facts to be memorized, but knowledge to be absorbed and internalized. To the point where it become second nature and can be leveraged to power creativity and fluency. In other words, you need to become comfortable enough with the common knowledge of your new field so that you can talk to people, be productive, and deliver value to those around you.
+
+The truth out there is that teams looking to hire someone new would rather hire no-one than someone who isn't a good fit. No one cares if you've put out a 1000 applications. The company doesn't even care if it has received 1000 applications. It will filter these out as efficiently as it can, and then it will STILL prefer to hire nobody over 1 applicant that might not be a good fit. Finding the right fit for a team is simply THAT important.
+
+You know the old saying, "One bad apple can spoil the bunch"? This is applicable here. A bad addition to a team can really bring the team down, kill productivity and communication, put people on edge, and ultimately cause the team to fail to deliver. I have seen entire pods of engineers quit their cushy jobs because of a single individual. Whether its a poor team mate, lead, manager - any of them can sink the organization if its small enough. So finding someone who will be able to contribute whilst also not deteriorating team performance is an absolute critical decision teams make.
+
+You must realize this coming in. If you are not proven, if you are not educated, if you are not trusted, and if you, on top of it all, do not bring something that 999 other applicants do not bring - then chances are you will not get the job.
+
+Accept that, and then plan accordingly.
