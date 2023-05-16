@@ -1,0 +1,19 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2022-01-26',
+  title: 'To use Autowired properties or not - that is the question',
+  description: 'Autowired properties in Autofac are tempting, but are they a good idea?',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+# Server design is difficult.
+
+Most developers that work on servers of any significant size will probably agree with that statement, and each developer will probably give a partially unique set of reasons as to why. The primary reason server development is difficult is that they tend to be complex things.
