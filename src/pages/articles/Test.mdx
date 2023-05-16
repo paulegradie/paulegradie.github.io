@@ -1,10 +1,3 @@
-import { ArticleLayout } from '@/components/ArticleLayout'
-import Image from 'next/image'
-import { Justify } from '@/components/blog/Justify'
-import { Quote } from '@/components/blog/Quote'
-import { BlogImage } from '@/components/blog/BlogImage'
-import { BlogLink } from '@/components/blog/BlogLink'
-
 export const meta = {
   author: 'Paul Gradie',
   date: '2022-01-26',
@@ -13,6 +6,14 @@ export const meta = {
 }
 
 export default (props) => <ArticleLayout meta={meta} {...props} />
+
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
 
 # Server design is difficult.
 
