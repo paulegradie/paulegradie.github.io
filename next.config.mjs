@@ -1,33 +1,20 @@
 import nextMDX from '@next/mdx'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
-const isProd = process.env.NODE_ENV === 'production'
+// const isProd = process.env.NODE_ENV === 'production'
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
-  extension: /\.(md|mdx)$/,
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  basePath: "",
+  assetPrefix: "",
   reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   target: 'serverless',
-
+  images: {
+    loader: 'akamai',
+    path: '',
+  },
 }
-
-if (isProd) {
-  nextConfig = {
-    ...nextConfig,
-    images: {
-      unoptimized: true,
-    },
-    // experimental: {
-    //   mdxRs: true,
-    // },
-    // images: {
-    //   loader: 'akamai',
-    //   path: '',
-    // },
-  }
-}
-
 
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
