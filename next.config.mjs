@@ -7,6 +7,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx'],
   reactStrictMode: true,
+  future: { webpack5: true },
   images: {
     loader: 'akamai',
     path: '',
