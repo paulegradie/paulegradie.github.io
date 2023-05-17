@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
 import sailfishBanner from '@/images/photos/sailfish.png'
+import palavyrLogo from "@/images/logos/palavyr-logo2.png"
+import palavyrWidgetLogo from "@/images/logos/palavyr-chat-widget-logo.png"
+import catPirate from "@/images/logos/cat-pirate-quotes-logo.png"
+import seqpyplot from "@/images/logos/seqpyplot-logo.png"
 
 const projects = [
   {
@@ -15,9 +14,36 @@ const projects = [
     description: 'Sailfish - a user friendly performance test runner for .NET',
     link: { href: 'https://paulgradie.com/Sailfish', label: 'Sailfish' },
     logo: sailfishBanner,
-    containerClassName: "relative z-10 flex items-center justify-center rounded-lg bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0",
+    className: "w-64 rounded-lg m-2",
+  },
+  {
+    name: 'CatPirateQuotes',
+    description: 'A cheeky repo to hold the code for making automated AI generated posts to LinkedIn',
+    link: { href: 'https://github.com/paulegradie/CatPirateQuotes', label: 'Cat Pirate Quotes' },
+    logo: catPirate,
+    className: "w-16 rounded-lg m-2",
+  },
+  {
+    name: 'Palavyr',
+    description: 'A open-source full stack application that lets users create their own chatbots that provide information, take information, and even compute cost estimates based on inputs',
+    link: { href: 'https://github.com/Palavyr/Palavyr', label: 'Palavyr' },
+    logo: palavyrLogo,
+    className: "w-16 rounded-lg m-2",
+  },
+  {
+    name: 'Palavyr Chat Widget',
+    description: 'An NPM package letting you embed a widget used to load content. Build for Palavyr',
+    link: { href: 'https://github.com/Palavyr/palavyr-chat-widget', label: 'palavyr-chat-widget' },
+    logo: palavyrWidgetLogo,
     className: "w-32 rounded-lg m-2",
-  }
+  },
+  {
+    name: 'SeqPyPlot',
+    description: 'A package for generating descriptive analysis of replicate-free time series RNA-seq data.',
+    link: { href: 'https://github.com/paulegradie/SeqPyPlot', label: 'SeqPyPlot' },
+    logo: seqpyplot,
+    className: "w-32 rounded-lg m-2",
+  },
 ]
 
 function LinkIcon(props) {
@@ -51,13 +77,15 @@ export default function Projects() {
         >
           {projects.map((project) => (
             <Card as="li" key={project.name}>
-              <div className={project.containerClassName}>
-                <Image
-                  src={project.logo}
-                  alt=""
-                  className={project.className}
-                  unoptimized
-                />
+              <div className="relative z-10 flex items-center justify-center rounded-lg bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                {project.logo && (
+                  <Image
+                    src={project.logo}
+                    alt="no logo for this project"
+                    className={project.className}
+                    unoptimized
+                  />
+                )}
               </div>
               <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
                 <Card.Link href={project.link.href}>{project.name}</Card.Link>
