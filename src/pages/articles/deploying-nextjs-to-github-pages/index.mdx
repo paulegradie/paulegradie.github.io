@@ -1,0 +1,252 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import chan from './chan.jpg'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-05-18',
+  title: 'Error building mdx page with NextJS in github actions',
+  description:
+    'I encountered an annoying error when building a nextJS app that uses nextMDX using github actions',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+<BlogImage src={chan} />
+
+I don't typically write tutorials. More often then not, for anything I might share,
+there are already about a million tutorials out there. Insteady, I prefer to share
+deeper insights into problems that can only be expressed through stories.
+
+However, in setting up this iteration of my personal website, I came across a simple error so infuriating that I am compelled to share it here.
+
+# Take care when deploying NextJS static sites with nextMDX
+
+Okay - I'll get right to the point. When settings up this website, I decided to use github actions to deploy the static site. Github provides a default standard action template for this:
+
+```yml
+# Sample workflow for building and deploying a Next.js site to GitHub Pages
+#
+# To get started with Next.js see: https://nextjs.org/docs/getting-started
+#
+name: Deploy Next.js site to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        with:
+          # Automatically inject basePath in your Next.js configuration file and disable
+          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          #
+          # You may remove this line if you want to manage the configuration yourself.
+          static_site_generator: next
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            .next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Static HTML export with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./out
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
+
+I'm not going to go through this action line by line or anything, but I do want to call out one particular section:
+
+```yml
+- name: Setup Pages
+  uses: actions/configure-pages@v3
+  with:
+    # Automatically inject basePath in your Next.js configuration file and disable
+    # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+    #
+    # You may remove this line if you want to manage the configuration yourself.
+    static_site_generator: next
+```
+
+This section is a bit nefarious - if you don't know what its doing, or what the specific requirements of your application are.
+
+This website uses `nextMDX`. That requires some specific next.config.js configuration to get working correctly.
+
+What this step `Setup Pages` above does is - when used - is it will overwrite your next.config.js configuration. It tries to inject / override the image optimization settings (which is not available atm for nextJS app exported as static sites) - but instead will blow away all of your custom configuration! Here are the logs from the github action:
+
+```text
+Using default blank configuration
+Injecting property=basePath and value= in:
+// Default Pages configuration for Next
+const nextConfig = {}
+module.exports = nextConfig
+
+Found configuration object in indirect module export
+Injection successful, new configuration:
+// Default Pages configuration for Next
+const nextConfig = {basePath: ""}
+module.exports = nextConfig
+
+Injecting property=experimental.images.unoptimized and value=true in:
+// Default Pages configuration for Next
+const nextConfig = {basePath: ""}
+module.exports = nextConfig
+
+Found configuration object in indirect module export
+Injection successful, new configuration:
+// Default Pages configuration for Next
+const nextConfig = {experimental: {images: {unoptimized: true}},basePath: ""}
+module.exports = nextConfig
+
+Injecting property=images.unoptimized and value=true in:
+// Default Pages configuration for Next
+const nextConfig = {experimental: {images: {unoptimized: true}},basePath: ""}
+module.exports = nextConfig
+
+Found configuration object in indirect module export
+Injection successful, new configuration:
+// Default Pages configuration for Next
+const nextConfig = {images: {unoptimized: true},experimental: {images: {unoptimized: true}},basePath: ""}
+module.exports = nextConfig
+```
+
+So the error result from this overwrite manifested as a webpack error, which was very confusing:
+
+```text
+info  - Linting and checking validity of types...
+info  - Creating an optimized production build...
+Failed to compile.
+
+./src/pages/articles/advice-for-changing-fields.mdx
+Module parse failed: Unexpected token (14:26)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+| }
+|
+> export default (props) => <ArticleLayout meta={meta} {...props} />
+|
+|
+
+Import trace for requested module:
+./src/pages/articles/advice-for-changing-fields.mdx
+./src/pages/articles/ lazy ^\.\/.*$ namespace object
+./src/lib/getAllArticles.js
+
+> Build failed because of webpack errors
+Error: Process completed with exit code 1.
+```
+
+## The Solution
+
+To fix this - when using nextMDX - you need manage your `next.config.js` configuration yourself. So basicaly -- delete this step.
+
+Of course, the configuration I use in this site is:
+
+```js
+import nextMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
+import rehypePrism from '@mapbox/rehype-prism'
+
+const isProd = process.env.NODE_ENV === 'production'
+
+/** @type {import('next').NextConfig} */
+let nextConfig = {
+  reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+}
+
+if (isProd) {
+  nextConfig = {
+    ...nextConfig,
+    images: {
+      loader: 'akamai',
+      path: '',
+    },
+  }
+}
+
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    providerImportSource: '@mdx-js/react',
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypePrism],
+  },
+})
+
+export default withMDX(nextConfig)
+```
+
+With that in place, the github action was able to build, and the site deployed.
+
+I hope you found that helpful.
