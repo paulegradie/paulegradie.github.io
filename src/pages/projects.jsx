@@ -7,6 +7,7 @@ import palavyrLogo from "@/images/logos/palavyr-logo2.png"
 import palavyrWidgetLogo from "@/images/logos/palavyr-chat-widget-logo.png"
 import catPirate from "@/images/logos/cat-pirate-quotes-logo.png"
 import seqpyplot from "@/images/logos/seqpyplot-logo.png"
+import queryStudio from "@/images/logos/qwerkystudio-logo.png"
 
 const projects = [
   {
@@ -18,9 +19,16 @@ const projects = [
   },
   {
     name: 'CatPirateQuotes',
-    description: 'A cheeky repo to hold the code for making automated AI generated posts to LinkedIn',
+    description: 'A cheeky repo to hold code for making automated AI generated posts to LinkedIn',
     link: { href: 'https://github.com/paulegradie/CatPirateQuotes', label: 'Cat Pirate Quotes' },
     logo: catPirate,
+    className: "w-16 rounded-lg m-2",
+  },
+  {
+    name: 'Qwerky Studio',
+    description: 'An application used to create and manage artwork, using ChatGPT and Dall-E',
+    link: { href: 'https://github.com/QwerkyDesigns/studio-portal', label: 'Qwerky Studio' },
+    logo: queryStudio,
     className: "w-16 rounded-lg m-2",
   },
   {
