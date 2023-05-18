@@ -229,16 +229,15 @@ if (isProd) {
   nextConfig = {
     ...nextConfig,
     images: {
-      loader: 'akamai',
-      path: '',
-    },
+      unoptimized: true,
+    }
   }
 }
 
 const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
-    providerImportSource: '@mdx-js/react',
+    providerImportSource: "@mdx-js/react",
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypePrism],
   },

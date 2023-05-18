@@ -14,9 +14,8 @@ if (isProd) {
   nextConfig = {
     ...nextConfig,
     images: {
-      loader: 'akamai',
-      path: '',
-    },
+      unoptimized: true,
+    }
   }
 }
 
