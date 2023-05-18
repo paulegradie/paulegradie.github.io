@@ -1,0 +1,148 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-05-18',
+  title: 'Syntax behind sorted(key=lambda: ...)',
+  description: 'A record of a semi-popular stack overflow answer I gave to a question',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
+## Stack Overflow.com is kind of stupid
+
+I wrote an answer on stack overflow some years ago about understanding the key argument for the `sorted` method in python, and how to use lambda functions to implement them (lambdas aren't required, but they are useful here).
+
+From time to time, people like to try and change the content of this somewhat popular answer, and the question has recently been marked as duplicate - despite being much older / original than others, and being viewed over 330 thousand times. 🤷
+
+So I'm keeping a record of the question and my response here.
+
+
+## Question: Syntax behind sorted(key=lambda: ...)
+
+## Answer:
+
+I think all of the answers here cover the core of what the lambda function does in the context of sorted() quite nicely, however I still feel like a description that leads to an intuitive understanding is lacking, so here is my two cents.
+
+For the sake of completeness, I'll state the obvious up front: sorted() returns a list of sorted elements and if we want to sort in a particular way or if we want to sort a complex list of elements (e.g. nested lists or a list of tuples) we can invoke the key argument.
+
+For me, the intuitive understanding of the key argument, why it has to be callable, and the use of lambda as the (anonymous) callable function to accomplish this comes in two parts.
+
+Using lamba ultimately means you don't have to write (define) an entire function. Lambda functions are created, used, and immediately destroyed - so they don't funk up your code with more code that will only ever be used once. This, as I understand it, is the core utility of the lambda function and its application for such a role is broad. Its syntax is purely a convention, which is in essence the nature of programmatic syntax in general. Learn the syntax and be done with it.
+Lambda syntax is as follows:
+
+`lambda input_variable(s): tasty one liner`
+
+where lambda is a python keyword.
+
+e.g.
+```python
+In [1]: f00 = lambda x: x/2
+
+In [2]: f00(10)
+Out[2]: 5.0
+
+In [3]: (lambda x: x/2)(10)
+Out[3]: 5.0
+
+In [4]: (lambda x, y: x / y)(10, 2)
+Out[4]: 5.0
+
+In [5]: (lambda: 'amazing lambda')() # func with no args!
+Out[5]: 'amazing lambda'
+```
+
+The idea behind the key argument is that it should take in a set of instructions that will essentially point the 'sorted()' function at those list elements which should be used to sort by. When it says key=, what it really means is: As I iterate through the list, one element at a time (i.e. for e in some_list), I'm going to pass the current element to the function specifed by the key argument and use that to create a transformed list which will inform me on the order of the final sorted list.
+Check it out:
+
+```python
+In [6]: mylist = [3, 6, 3, 2, 4, 8, 23]  # an example list
+# sorted(mylist, key=HowToSort)  # what we will be doing
+Base example:
+
+# mylist = [3, 6, 3, 2, 4, 8, 23]
+In [7]: sorted(mylist)
+Out[7]: [2, 3, 3, 4, 6, 8, 23]
+# all numbers are in ascending order (i.e.from low to high).
+Example 1:
+
+# mylist = [3, 6, 3, 2, 4, 8, 23]
+In [8]: sorted(mylist, key=lambda x: x % 2 == 0)
+
+# Quick Tip: The % operator returns the *remainder* of a division
+# operation. So the key lambda function here is saying "return True
+# if x divided by 2 leaves a remainer of 0, else False". This is a
+# typical way to check if a number is even or odd.
+
+Out[8]: [3, 3, 23, 6, 2, 4, 8]
+# Does this sorted result make intuitive sense to you?
+```
+
+Notice that my lambda function told sorted to check if each element e was even or odd before sorting.
+
+BUT WAIT! You may (or perhaps should) be wondering two things.
+
+First, why are the odd numbers coming before the even numbers? After all, the key value seems to be telling the sorted function to prioritize evens by using the mod operator in `x % 2 == 0`.
+
+Second, why are the even numbers still out of order? `2` comes before `6`, right?
+
+By analyzing this result, we'll learn something deeper about how the 'key' argument really works, especially in conjunction with the anonymous lambda function.
+
+Firstly, you'll notice that while the odds come before the evens, the evens themselves are not sorted. Why is this?? Lets read the docs:
+
+Key Functions Starting with Python 2.4, both list.sort() and sorted() added a key parameter to specify a function to be called on each list element prior to making comparisons.
+
+We have to do a little bit of reading between the lines here, but what this tells us is that the sort function is only called once, and if we specify the key argument, then we sort by the value that key function points us to.
+
+So what does the example using a modulo return? A boolean value: True == 1, False == 0. So how does sorted deal with this key? It basically transforms the original list to a sequence of 1s and 0s.
+
+`[3, 6, 3, 2, 4, 8, 23]` becomes `[0, 1, 0, 1, 1, 1, 0]`
+
+Now we're getting somewhere. What do you get when you sort the transformed list?
+
+`[0, 0, 0, 1, 1, 1, 1]`
+
+Okay, so now we know why the odds come before the evens. But the next question is: Why does the `6` still come before the `2` in my final list? Well that's easy - it is because sorting only happens once! Those 1s still represent the original list values, which are in their original positions relative to each other. Since sorting only happens once, and we don't call any kind of sort function to order the original even numbers from low to high, those values remain in their original order relative to one another.
+
+The final question is then this: How do I think conceptually about how the order of my boolean values get transformed back in to the original values when I print out the final sorted list?
+
+Sorted() is a built-in method that (fun fact) uses a hybrid sorting algorithm called Timsort that combines aspects of merge sort and insertion sort. It seems clear to me that when you call it, there is a mechanic that holds these values in memory and bundles them with their boolean identity (mask) determined by (...!) the lambda function. The order is determined by their boolean identity calculated from the lambda function, but keep in mind that these sublists (of one's and zeros) are not themselves sorted by their original values. Hence, the final list, while organized by Odds and Evens, is not sorted by sublist (the evens in this case are out of order). The fact that the odds are ordered is because they were already in order by coincidence in the original list. The takeaway from all this is that when lambda does that transformation, the original order of the sublists are retained.
+
+So how does this all relate back to the original question, and more importantly, our intuition on how we should implement sorted() with its key argument and lambda?
+
+That lambda function can be thought of as a pointer that points to the values we need to sort by, whether its a pointer mapping a value to its boolean transformed by the lambda function, or if its a particular element in a nested list, tuple, dict, etc., again determined by the lambda function.
+
+Lets try and predict what happens when I run the following code.
+
+```python
+In [9]: mylist = [(3, 5, 8), (6, 2, 8), (2, 9, 4), (6, 8, 5)]
+In[10]: sorted(mylist, key=lambda x: x[1])
+```
+
+My sorted call obviously says, "Please sort this list". The key argument makes that a little more specific by saying, 'for each element x in mylist, return the second index of that element, then sort all of the elements of the original list mylist by the sorted order of the list calculated by the lambda function. Since we have a list of tuples, we can return an indexed element from that tuple using the lambda function.
+
+The pointer that will be used to sort would be:
+
+```python
+[5, 2, 9, 8] # the second element of each tuple
+Sorting this pointer list returns:
+
+[2, 5, 8, 9]
+```
+
+Applying this to mylist, we get:
+
+```python
+Out[10]: [(6, 2, 8), (3, 5, 8), (6, 8, 5), (2, 9, 4)]
+# Notice the sorted pointer list is the same as the second index of each tuple in this final list
+```
+
+Run that code, and you'll find that this is the order. Try sorting a list of integers using this key function and you'll find that the code breaks (why? Because you cannot index an integer of course).
+
+This was a long winded explanation, but I hope this helps to sort your intuition on the use of lambda functions - as the key argument in sorted(), and beyond.
