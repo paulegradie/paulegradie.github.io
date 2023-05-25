@@ -66,65 +66,40 @@ export default function About() {
                         </h1>
                         <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
                             <p>
-                                I have a storied experience which <strong>began in music</strong>, drifted into biology, advanced to research, merged with data science, and
-                                eventually landed on software engineering. I began writing code at 24 years old as part of my PhD and I have been loving it ever since.
+                                I have so far had an incredible journey filled with diverse experiences that have shaped who I am today.
                             </p>
                             <p>
-                                I started my long joureny of self disovery beating on my dad&apos;s guitar case with wooden spoons.
-                                In my early days, my dream was to be a studio drummer for the likes of Steely Dan. Most of you probably
-                                have no idea who that is. Kudos if you do. I wasn&apos;t too bad a drummer - I was even awarded a partial scholarship
-                                to the prestigious Berklee College of Music. It wasn&apos;t meant to be, though - and it would be my first in a long
-                                string of failures.
+                                It all began with my deep passion for music, which began with tapping on my dad&apos;s guitar case with wooden spoons. I dreamed of becoming a studio drummer, envisioning myself playing alongside legendary bands like Steely Dan. Music was my world, and I even earned a audition-based scholarship to the prestigious Berklee College of Music. While my dream of becoming a drummer didn&apos;t materialize, those early musical pursuits were the first of many valuable experiences. And the first of many transitions that would ultimately give me a unique perspective on life, change, and knowledge itself.
                             </p>
                             <p>
-                                And so I moved on to <strong>Biology</strong>.
+                                Following my musical aspirations, I transitioned into the field of biology. During my university years, I delved into the intricate workings of life itself, studying biology, chemistry, physics, and even conducting some research. At the time, I had aspirations of becoming a dentist.. although I can&apos;t quite pinpoint the exact reason for choosing that career path. It was more of an intuitive inclination, fueled by my enjoyment of dental visits. However, fate had other plans, and I faced rejection from dental schools - which became probably the most pivotable failure of my life.
                             </p>
                             <p>
-                                My University years were spent diving deeply into the inner workings of life. I studied the hard sciences - biology,
-                                chemistry, physics, and a dabble in a bit of research. This was to support an attempt at a career in Dentistry - a
-                                goal for which I can&apos;t honestly say I any fundamental reason for choosing. I just always liked my dentist visits. This world was not
-                                for me though, and I failed to gain admission to any dental schools. And so transpired my second great failure.
+                                As they say - what one door closes, another opens.
                             </p>
                             <p>
-                                And so I moved on to a <strong>PhD in Developmental Genetics</strong>.
+                                As chance would have it, I crossed paths with a remarkable mentor who became my PhD advisor and opened a new door setting me on a captivating journey in the realm of research on developmental genetics. Six years of passionate exploration and discovery followed, but by the end, I realized that the academic realm and traditional research paths didn&apos;t align with my aspirations. While completing my PhD was a significant accomplishment, it felt like another setback. I could not find a clear path to leverage my doctoral experience in a way that would ultimately leave me feeling satisfied with both the current state of my life, as well as my long term trajectory.
                             </p>
                             <p>
-                                As fate would have it - my university death throws (as it were) lead me in an unexpected direction. Through a series of very fortunate
-                                events, I met who would become my PhD adviser. And so I embarked upon a 6 year love affair with research in developmental genetics. By the
-                                end, I was thoroughlyl dissatisfied with the propspects offered by academia, and so I left. I succeeded, in part by happenchance, to
-                                earn a PhD... but failed to continue down the road of academic research or find any other segue that directly leveraged my PhD experience.
-                                Thus was concluded my third great failure.
+                                It was during this time that I found myself drawn towards the world of Artificial Intelligence. Through a fortunate combination of timing, the skills I honed during my PhD — such as research, analytics, programming, and statistical modeling - I secured my first job at a reputable company called Zendesk. There, I immersed myself in the tech industry, working on the development of large multilingual language models and contributing to the invention of new artificially intelligent systems. The culmination of this work resulted in a co-authored patent and a large amount of industry software development experience. However, as I looked ahead, I began to recognize the transient nature of the data science field, leading me to conclude that it wasn&apos;t the long-term stable future I sought.
                             </p>
                             <p>
-                                And so I moved on to <strong>Artificial Intelligence</strong>.
+                                That realization prompted my pivot towards software engineering, which brings me to where I am today — writing this to you. This career path feels like the most natural fit for me, as it allows me to draw upon all my previous experiences and failures to tackle complex and challenging problems. I&apos;ve embraced the diverse roles I&apos;ve held throughout my life — musician, biologist, researcher, data scientist, AI researcher, inventor — and they have collectively shaped me into the person I am now.
+
                             </p>
                             <p>
-                                I then pivoted. It was through a mixture of fortuitous timing, experience during my PhD involving
-                                research, analytical research, programming, and statistical modeling, and what people tend to tell me is a
-                                very likeable personality, that I was able to land my first job a generally well thought of company called Zendesk.
-                                There I learned about the tech industry, developed large multilingual language models, and helped to invented
-                                new artifically intelligent systems - one of which for I now hold a co-authored patent. But by then I&apos;d peered into the future
-                                and realized the fleeting nature of the field of data science. I failed to see, and thus failed to realize a future in Data Science.
-                                And so ended my fourth great failure.
-                            </p>
-                            <p>
-                                And so I moved on to <strong>Software Engineering</strong>
-                            </p>
-                            <p>
-                                And here I am now - writing this to you - with all of the experiences and failures that have led me to what is probably
-                                the most fitting career for me. A career where I can, have, and continue to leverage all of my experiences to solve complex and
-                                challenging problems.
+                                I approach life with an open mind and a wealth of experience. I&apos;m curious yet cautious, adventurous yet wise, critical yet friendly, and intelligent yet humble. These qualities, born from my journey, guide me as I navigate this fulfilling career.
                             </p>
                             <p>I have been many things:</p>
-                            <ul className="list-disc">
-                                <li>Musician</li>
-                                <li>Biologist</li>
-                                <li>Researcher</li>
-                                <li>Data Scientist / AI Researcher / Inventor</li>
-                                <li>Engineer</li>
+                            <ul className="list-none">
+                                <li className="">Musician</li>
+                                <li className="ml-3">Biologist</li>
+                                <li className="ml-6">Researcher</li>
+                                <li className="ml-9">Data Scientist / AI Researcher / Inventor</li>
+                                <li className="ml-12">Software Engineer</li>
                             </ul>
                             <p>
-                                All of these experiences, and failures, make me who I am today. Open-minded but experienced. Curiuos but cautious.
+                                All of these experiences, and failures, make me who I am today. Open-minded but experienced. Curious but cautious.
                                 Adventurous but wise. Critical but friendly. Intelligent but humble.
                             </p>
                         </div>
@@ -137,13 +112,13 @@ export default function About() {
                             <SocialLink href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/" icon={LinkedInIcon} className="mt-4">
                                 Connect on LinkedIn
                             </SocialLink>
-                            <SocialLink
+                            {/* <SocialLink
                                 href="mailto:paulegradie@gmail.com"
                                 icon={MailIcon}
                                 className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
                             >
                                 paulegradie@gmail.com
-                            </SocialLink>
+                            </SocialLink> */}
                         </ul>
                     </div>
                 </div>

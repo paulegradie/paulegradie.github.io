@@ -65,14 +65,15 @@ export default function Mentoring() {
                             I am a teacher, tutor, and mentor
                         </h1>
                         <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+
                             <p>
-                                From time to time I meet people who need guidance or assistance in their life. Since my life has been filled to brim with a wide range of experiences and education, others have oft found it useful to use me as a resource for their own development and progression.
+                                From time to time, I have the pleasure of meeting individuals seeking valuable guidance and support in their personal journeys. Drawing upon my extensive array of experiences and educational background, I have become a sought-after resource for those seeking personal development and progress.
                             </p>
                             <p>
-                                Depending on the individual and their circumstances, I am often make myself available to advice seekers, students in need of tutelage and mentorship, as well as collegues who need someone to bounce their thoughts and desires off of.
+                                Tailoring my approach to suit the unique circumstances of each person, I am pleased to offer my assistance to advice seekers, students in need of mentoring, and colleagues seeking a trusted confidant to explore their ideas and aspirations.
                             </p>
                             <p>
-                                If you find yourself in need of such help - please do not hesitate to reach out to me on social media or my public email.
+                                If you are in search of such support, reach out to me on LinkedIn. Together, we can embark on a transformative journey.
                             </p>
                         </div>
                     </div>
@@ -84,13 +85,13 @@ export default function Mentoring() {
                             <SocialLink href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/" icon={LinkedInIcon} className="mt-4">
                                 Connect on LinkedIn
                             </SocialLink>
-                            <SocialLink
+                            {/* <SocialLink
                                 href="mailto:paulegradie@gmail.com"
                                 icon={MailIcon}
                                 className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
                             >
                                 paulegradie@gmail.com
-                            </SocialLink>
+                            </SocialLink> */}
                         </ul>
                     </div>
                 </div>
