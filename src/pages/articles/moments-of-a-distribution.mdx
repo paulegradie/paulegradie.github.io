@@ -1,0 +1,59 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-07-26',
+  title: 'Why are descriptive statistics of a distribution called "moments"?',
+  description: '',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+Descriptive statistics like 'mean', 'skewness', and 'standard deviation' are called 'moments' because they are part of a concept known as the "moments of a distribution." Moments are mathematical measures used to describe various characteristics or properties of a probability distribution.
+
+The term "moment" comes from mathematics, specifically from the field of statistics and probability theory. The moments of a distribution are derived from the probability density function (pdf) or probability mass function (pmf) of the random variable. They provide important information about the shape, center, and spread of the distribution.
+
+The moments of a distribution are defined as follows:
+
+1. First Moment: The first moment is the mean, often denoted as μ. It provides information about the central tendency of the distribution.
+
+2. Second Moment: The second moment is the variance, denoted as σ^2. It gives a measure of the spread or dispersion of the distribution.
+
+3. Third Moment: The third moment is the skewness, denoted as γ. It measures the asymmetry of the distribution. Positive skewness indicates a longer tail on the right side of the distribution, while negative skewness indicates a longer tail on the left side.
+
+4. Fourth Moment: The fourth moment is the kurtosis, denoted as κ. It quantifies the shape of the distribution and tells us about the thickness of the tails relative to the center. High kurtosis implies heavy tails and more extreme values.
+
+These moments are useful in understanding and comparing different distributions, which is why they are fundamental in statistics and data analysis. By calculating the moments, researchers can gain insights into the underlying characteristics of a dataset and make informed decisions or draw conclusions based on the properties of the distribution.
+
+But why are they numbers like first, second, third and fourth. Is there a reason?
+
+The names "first moment," "second moment," "third moment," and "fourth moment" are based on the order of the mathematical equations used to calculate these measures of a distribution. Each moment is associated with a specific order of the underlying mathematical formula, which determines its name.
+
+Let's break it down:
+
+1. First Moment: The first moment is the mean (μ), which is calculated as the sum of all data points divided by the total number of data points. The formula for the mean is:
+   μ = (Σ x) / n
+   where Σ x is the sum of all data points, and 'n' is the total number of data points.
+
+2. Second Moment: The second moment is the variance (σ^2), which measures the dispersion of data points around the mean. The formula for variance is:
+   σ^2 = Σ ((x - μ)^2) / n
+   where (x - μ)^2 is the squared difference between each data point (x) and the mean (μ).
+
+3. Third Moment: The third moment is the skewness (γ), which quantifies the asymmetry of the distribution. The formula for skewness is:
+   γ = (Σ ((x - μ)^3) / (n * σ^3)
+   where (x - μ)^3 is the cubed difference between each data point (x) and the mean (μ), and σ^3 is the cube of the standard deviation.
+
+4. Fourth Moment: The fourth moment is the kurtosis (κ), which measures the "tailedness" of the distribution. The formula for kurtosis is:
+   κ = (Σ ((x - μ)^4) / (n * σ^4)
+   where (x - μ)^4 is the fourth power of the difference between each data point (x) and the mean (μ), and σ^4 is the fourth power of the standard deviation.
+
+As you can see, each moment's name corresponds to the power of the differences between data points and the mean used in the calculation. The higher the power, the higher the moment's order. These moments provide increasingly detailed information about the distribution's characteristics, which is why they are ordered in this way.
+
+Higher-order moments, such as the fifth, sixth, and so on, are less commonly used in most statistical analyses and are usually reserved for specific applications or more specialized investigations of data properties.
+
+Thanks for reading!
