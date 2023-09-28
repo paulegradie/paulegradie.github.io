@@ -12,6 +12,12 @@ export const meta = {
   description: '',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
+
+
 <Image src="" alt="" />
 // Write your post below

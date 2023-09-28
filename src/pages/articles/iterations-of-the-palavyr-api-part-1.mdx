@@ -12,7 +12,12 @@ export const meta = {
   description: 'Part 1: The three phases of the Palavyr API surface',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
+
 
 # Introduction
 

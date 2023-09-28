@@ -9,15 +9,19 @@ export const meta = {
   author: 'Paul Gradie',
   date: '2023-09-27',
   title: 'How did matter scatter across the universe?',
-  description: 'If the Big Bang took only milliseconds to disperse all the galaxies light years apart, then how did the matter get there faster than the speed of light?',
+  description:
+    'If the Big Bang took only milliseconds to disperse all the galaxies light years apart, then how did the matter get there faster than the speed of light?',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
 I recently answered a question on quora that has become quite popular.
 
 ## If the Big Bang took only milliseconds to disperse all the galaxies light years apart, then how did the matter get there faster than the speed of light?
-
 
 The following is my response.
 
@@ -59,6 +63,8 @@ For some reason people like to use the balloon analogy to describe the inflation
 
 If you found this interesting, feel free to confirm what I’ve said from the original publications.
 
-<BlogLink href="https://wmap.gsfc.nasa.gov/universe/bb_cosmo_infl.html">WMAP Inflation Theory</BlogLink>
+<BlogLink href="https://wmap.gsfc.nasa.gov/universe/bb_cosmo_infl.html">
+  WMAP Inflation Theory
+</BlogLink>
 
 Thanks for reading. Hope you found that enjoyable and illuminating.

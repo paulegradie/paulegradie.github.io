@@ -7,6 +7,10 @@ export const meta = {
   description: 'An abstraction pattern to simplify the creation of new endpoints that have the same base abstract logic',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
 # Introduction

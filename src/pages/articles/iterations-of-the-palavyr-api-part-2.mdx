@@ -12,6 +12,10 @@ export const meta = {
   description: 'Part 2: Palavyr Persistence Abstractions',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
 # Introduction

@@ -12,6 +12,10 @@ export const meta = {
   description: 'A record of a semi-popular stack overflow answer I gave to a question',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
 

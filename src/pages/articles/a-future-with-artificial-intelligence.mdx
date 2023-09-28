@@ -11,25 +11,27 @@ export const meta = {
   title: 'A Future with Artifical Intelligence',
   description: 'What does a future with AI look like?',
 }
-
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
-
 
 Artificial intelligence (AI) has existed conceptually since the time of antiquity (McCorduck 4-5) evidenced by descriptions of Talos, an ancient humanoid automaton used to protect the shores of Europa. You will perhaps remember the portrayal of <BlogLink href="https://en.wikipedia.org/wiki/Talos">Talos</BlogLink> from the movie <BlogLink href="https://youtu.be/dD9qc44oMqU">Jason and the Argonauts</BlogLink> - when all of the men are running scared on the beach. AI of course wasn’t formally described theoretically until Alan Turing published his seminal paper “<BlogLink href="https://academic.oup.com/mind/article/LIX/236/433/986238">Computing Machinery And Intelligence</BlogLink>” in 1950, where the famous ‘Turing Test’ was first introduced. The idea of using AI to solve our problems has been around for a long time.
 
 We have come extraordinarily far in the field of AI since the 50s - so far that we almost don’t recognize it anymore. In antiquity, AI was an imaginary mechanical owl or humanoid. Later it became a pretend robot helping a little boy named Will Robinson or one helping the Jetsons. Over the years, AI has been depicted in countless ways. Sometimes helpful, sometimes horrifying, but always imaginary. It became <BlogLink href="https://www.youtube.com/watch?v=CNvxCDSSVfo&ab_channel=ThePlanetClips">The Iron Giant</BlogLink>, <BlogLink href="https://www.youtube.com/watch?v=XPtVZ69lomk&ab_channel=FlashbackFM">The Terminator</BlogLink>, the robot from <BlogLink href="https://www.youtube.com/watch?v=Ouht1xip9NQ&ab_channel=Movieclips">I,Robot</BlogLink>, it became <BlogLink href="https://www.youtube.com/watch?v=JrBdYmStZJ4&ab_channel=BrianR">The Matrix</BlogLink>. And then out of nowhere, it became real - but not like anything we recognized.
 
-The emergence of, lets call it ‘practical AI has come in the form of web apps like ChatGPT, computer vision systems that enable <BlogLink href="https://www.tesla.com/en_AU/autopilot">Tesla autopilot</BlogLink>, image editing tools used in film and photo editing software like <BlogLink href="https://www.adobe.com/au/sensei/generative-ai/firefly.html">that provided by adobe</BlogLink>, and art generation tools such as <BlogLink href="https://openai.com/dall-e-2">Dall-E</BlogLink>. Perhaps you’ve seen an advertisement or heard about these technologies on the news. AI has also been applied in countless places that normal people perhaps wouldn’t expect. Farming equipment, customer support software, building air conditioning systems, your phone’s touch screen - and all manner of other random places you might not expect.  The reality is that AI is actually already everywhere in this modern digital age. We are all just becoming more and more aware, which has revitalized the imaginations of everyday people for better and for worse.
+The emergence of, lets call it ‘practical AI has come in the form of web apps like ChatGPT, computer vision systems that enable <BlogLink href="https://www.tesla.com/en_AU/autopilot">Tesla autopilot</BlogLink>, image editing tools used in film and photo editing software like <BlogLink href="https://www.adobe.com/au/sensei/generative-ai/firefly.html">that provided by adobe</BlogLink>, and art generation tools such as <BlogLink href="https://openai.com/dall-e-2">Dall-E</BlogLink>. Perhaps you’ve seen an advertisement or heard about these technologies on the news. AI has also been applied in countless places that normal people perhaps wouldn’t expect. Farming equipment, customer support software, building air conditioning systems, your phone’s touch screen - and all manner of other random places you might not expect. The reality is that AI is actually already everywhere in this modern digital age. We are all just becoming more and more aware, which has revitalized the imaginations of everyday people for better and for worse.
 
 Like most (if not all) technology, Artificial Intelligence is a double edged sword. If wielded responsibly, it can be an unbelievably useful tool that defines a new phase in the general technological advancement of the human species. If wielded irresponsibly or in malice, it could destroy us all. And like any technology, it is impossible to entirely regulate its use across all borders - there is no way to fully prevent the abuse of AI by hostile individuals or even nation states. And despite how incredible some of these modern tools may seem - we are currently still in the absolute infancy of AI - like a baby who has just grown from a helpless blob to one that can begin to track an object held before their eyes.
 
-And yet, an enormous number of people have found great benefit from using tools such as ChatGPT. This tool in particular has proven itself to be an incredible productivity tool when used to generate ideas, provide explanations, and even collaborate with. I myself recently found great success in using ChatGPT when authoring the C# computer programming language library <BlogLink href="https://paulgradie.com/Sailfish/">Sailfish</BlogLink> - a tool that is now available to and used by companies to test how quickly their applications run.  Popular productivity tools such as <BlogLink href="https://whimsical.com/ai-mind-maps">Whimsical.com</BlogLink> use AI to help generate ideas and mind maps, <BlogLink href="https://blogs.microsoft.com/blog/2023/02/07/reinventing-search-with-a-new-ai-powered-microsoft-bing-and-edge-your-copilot-for-the-web/">Microsoft has integrated AI</BlogLink> into its core search product offering Bing. AI has found applications in industry, the military, art, and just about anywhere else you can imagine.
+And yet, an enormous number of people have found great benefit from using tools such as ChatGPT. This tool in particular has proven itself to be an incredible productivity tool when used to generate ideas, provide explanations, and even collaborate with. I myself recently found great success in using ChatGPT when authoring the C# computer programming language library <BlogLink href="https://paulgradie.com/Sailfish/">Sailfish</BlogLink> - a tool that is now available to and used by companies to test how quickly their applications run. Popular productivity tools such as <BlogLink href="https://whimsical.com/ai-mind-maps">Whimsical.com</BlogLink> use AI to help generate ideas and mind maps, <BlogLink href="https://blogs.microsoft.com/blog/2023/02/07/reinventing-search-with-a-new-ai-powered-microsoft-bing-and-edge-your-copilot-for-the-web/">Microsoft has integrated AI</BlogLink> into its core search product offering Bing. AI has found applications in industry, the military, art, and just about anywhere else you can imagine.
 
 The advantage that AI gives us is that it has the potential to outperform us in nearly every way. Some of these ways will be obvious. AI may give us faster, more reliable medical diagnostics or give us a faster, more intuitive human-like experience when searching for information. But artificial intelligence may also be the key to unlocking faster scientific progress in ways that are not obvious. AI can distill gaps in our knowledge across entire domains - tens of thousands of recent scientific publications - and inform us where we need to investigate further faster than any PhD student ever could. AI can likely form new insightful conclusions based on existing data, finding information we may already be overlooking. AI can literally invent new technologies for us to manage global issues like carbon-capture to prevent global warming. We have already begun using AI to optimize control in historically unstable, and therefore unusable, fusion reaction experiments. AI can help us design new medical compounds by seeing things that we have either overlooked, or by performing data analysis in a way that is impossibly complex for a human.
 
 The reason for this is because AI is a technology that allows computers to do what humans do - approximate things. AI is built using digital <BlogLink href="https://en.wikipedia.org/wiki/Neural_network">Neural Networks</BlogLink> - and neural networks satisfy the Universal Approximation Theorem - in the same way the human brain does. This is what gives AI the potential to learn like a human, and create outputs like a human.
 
-It is perhaps this human element to AI that has caused it to also become the source of fear and anxiety for those who are uncertain about how AI will evolve. We know that it may be used for great good. (See Appendix 1 for an AI-generated  non-exhaustive list of ways that AI can or currently does benefit humanity) But we also know it could be used for great evil. And while we’re not anywhere near the level of, say, The Terminator - there are a large and growing number of obvious and insidious ways that AI could be used to harm others. (See Appendix 2 for an AI-generated non-exhaustive list of  ways AI can hurt us)
+It is perhaps this human element to AI that has caused it to also become the source of fear and anxiety for those who are uncertain about how AI will evolve. We know that it may be used for great good. (See Appendix 1 for an AI-generated non-exhaustive list of ways that AI can or currently does benefit humanity) But we also know it could be used for great evil. And while we’re not anywhere near the level of, say, The Terminator - there are a large and growing number of obvious and insidious ways that AI could be used to harm others. (See Appendix 2 for an AI-generated non-exhaustive list of ways AI can hurt us)
 
 One popular way that AI has been abused is through the creation of unsolicited deep fakes, where someone takes a video of one person and uses it to superimpose that person’s appearance on the face or body of someone in another video. This has been demonstrated to be used effectively in a range of scenarios both good and bad - from fun face swaps or putting yourself into your favorite movie… to maliciously putting someone in a pornographic video against their will or creating false but incredibly convincing impersonation videos of global leaders. You can easily imagine how deep fakes could be abused to destroy the reputation of someone, or even create mass confusion for millions of people.
 
@@ -37,11 +39,11 @@ There are perhaps even more insidious ways that AI can negatively impact the wor
 
 So what is being done about this incredible, and perhaps incredibly dangerous technology? Is it being regulated? Is it being controlled? What kind of protections do the normal people have against such a looming potential economic catastrophe?
 
-AI is already regulated to various degrees implicitly, but the US government does not (yet) have any explicit laws regulating the application of AI. For example, deep fakes can be made by anyone who knows how to use the internet - and yet their more heinous applications are completely unregulated. Fortunately, we have seen regulators limit the pace at which things like autonomous vehicles have been adopted and some existing laws can be interpreted by the judiciary with AI in mind. Furthermore, there are good reasons to believe that more deliberate <BlogLink href="https://hbr.org/2021/09/ai-regulation-is-coming">regulation is coming</BlogLink>. For example, we saw <BlogLink href="https://www.forbes.com/sites/jodiecook/2023/05/17/what-openai-ceo-sam-altmans-congress-testimony-means-for-entrepreneurs-5-key-takeaways/?sh=15d9cc932a97">recent testimony</BlogLink> from the CEO of  ChatGPTs owner company OpenAI who himself made the case for the regulation of AI.
+AI is already regulated to various degrees implicitly, but the US government does not (yet) have any explicit laws regulating the application of AI. For example, deep fakes can be made by anyone who knows how to use the internet - and yet their more heinous applications are completely unregulated. Fortunately, we have seen regulators limit the pace at which things like autonomous vehicles have been adopted and some existing laws can be interpreted by the judiciary with AI in mind. Furthermore, there are good reasons to believe that more deliberate <BlogLink href="https://hbr.org/2021/09/ai-regulation-is-coming">regulation is coming</BlogLink>. For example, we saw <BlogLink href="https://www.forbes.com/sites/jodiecook/2023/05/17/what-openai-ceo-sam-altmans-congress-testimony-means-for-entrepreneurs-5-key-takeaways/?sh=15d9cc932a97">recent testimony</BlogLink> from the CEO of ChatGPTs owner company OpenAI who himself made the case for the regulation of AI.
 
 So where does that leave us, the people?
 
-It is critical to recognize and accept that AI is not going away. It is too valuable as a tool for good, and it is too effective as a weapon of evil.  We’ll all also need to accept sooner or later that most of the things we think are possible with AI - both exciting and freighting - are eventually going to be possible. We may never have the futuristic materials used to create the robots of I,Robot, but we’ll certainly be capable of producing robotic automatons like Talos that exhibit human-like capabilities. Indeed, <BlogLink href="https://arxiv.org/ftp/arxiv/papers/2212/2212.06721.pdf">some are arguing</BlogLink> that existing generative tools such as ChatGPT already demonstrate that human-like spark.
+It is critical to recognize and accept that AI is not going away. It is too valuable as a tool for good, and it is too effective as a weapon of evil. We’ll all also need to accept sooner or later that most of the things we think are possible with AI - both exciting and freighting - are eventually going to be possible. We may never have the futuristic materials used to create the robots of I,Robot, but we’ll certainly be capable of producing robotic automatons like Talos that exhibit human-like capabilities. Indeed, <BlogLink href="https://arxiv.org/ftp/arxiv/papers/2212/2212.06721.pdf">some are arguing</BlogLink> that existing generative tools such as ChatGPT already demonstrate that human-like spark.
 
 The only way for humanity to navigate this new, unbelievable, world alongside AI is for us all to first try and understand it. AI, at its most fundamental, is nothing more than a marriage between computer science and mathematics. When applied, it is deployed through applications which are also built with programming languages. When it interacts with the real world, it does this through machines like robotics. So for the people to understand AI in order to regulate it and protect ourselves from it, it is absolutely necessary that we develop a general level of literacy in these domains. That is a difficult problem in and of itself. If our legislators are going to be effective at understanding how, why, and when to regulate AI, then they are going to need to understand what is possible with AI and more or less how it works as well. Ignorance is not an option.
 
@@ -49,13 +51,12 @@ Ultimately, the coexistence of AI and humanity necessitates a balance between ha
 
 By the way - did you realize that last paragraph was written entirely by AI?
 
-
-
 ## Additional Work Cited
+
 McCorduck, Pamela. Machines Who Think: A Personal Inquiry Into the History and Prospects of Artificial Intelligence. Taylor & Francis, 2004.
 
-
 ## Appendix 1
+
 The following are two prompts with their responses. Taken from https://chat.openai.com/
 
 ### Prompt
@@ -100,7 +101,6 @@ These are just a few examples of how AI can positively impact humanity. The pote
 
 List the ways that AI is currently being used
 
-
 ChatGPT Response
 
 AI is already being employed in numerous real-world applications across various industries. Here are some of the ways AI is currently being used:
@@ -135,10 +135,10 @@ AI is already being employed in numerous real-world applications across various 
 
 These are just a few examples of how AI is currently being used in various sectors. The applications of AI continue to grow and evolve as technology advances and new opportunities arise.
 
-
-
 ## Appendix 2
+
 ### Prompt
+
 What are the ways that AI could be used maliciously?
 
 ChatGPT Response:

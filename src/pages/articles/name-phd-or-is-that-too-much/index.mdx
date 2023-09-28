@@ -13,13 +13,18 @@ export const meta = {
   description: 'I once had someone ask me what I thought about using my PhD title in my profile name because they were wondering if they should as well',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
+
 
 <BlogImage src={superNova} alt='supernova' />
 
 I was once asked by a collegueue if I thought it wise to place a PhD suffix on my LinkedIn profile name. Does this sound like a strange question to you? It felt like a strange question to me at the time - my immediate thought was 'obviously yes'.
 
-Since then, I've had some time to reflect on this question. Just because that question is obvious to me, doesn't mean its ovbious to everyone else. Some people might have legitimate unresolved reasons why they believe using their title is not a good idea. And that would be totally okay. I'll preface this entire post by saying that its completely fine to use or not use the title. I do personally use it though, so I'll share some thoughts about why that is as well as some additional reason you should consider it.
+Since then, I've had some time to reflect on this question. Just because that question is obvious to me, doesn't mean its ovbious to everyone else. Some people might have legitimate unresolved reasons for why they believe using their title is not a good idea. And that would be totally okay. I'll preface this entire post by saying that its completely fine to use or not use the title. I do personally use it though, so I'll share some thoughts about why that is as well as some additional reason you should consider it.
 
 I will also add that I realize that not everyone holds a degree title - thats completely fine as well. This post is inspired by my PhD, but you can simply substitute that for any degree or title that you have.
 

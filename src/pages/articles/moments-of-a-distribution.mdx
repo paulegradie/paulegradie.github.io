@@ -12,6 +12,10 @@ export const meta = {
   description: '',
 }
 
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
 Descriptive statistics like 'mean', 'skewness', and 'standard deviation' are called 'moments' because they are part of a concept known as the "moments of a distribution." Moments are mathematical measures used to describe various characteristics or properties of a probability distribution.

@@ -25,19 +25,7 @@ import image3 from '@/images/photos/about/3-image.jpg'
 import portraitImage from '@/images/portrait.jpg'
 
 import { formatDate } from '@/lib/formatDate'
-import { generateRssFeed } from '@/lib/generateRssFeed'
-import { getAllArticles, getGalleryPhotos } from '@/lib/getAllArticles'
-import ImageGallery from "react-image-gallery";
-
-// const CustomImageGallery = ({ images }) => {
-//   return (
-//     // <div className="w-full h-1/2">
-//     //   <div className="flex mb-12 w-full">
-//         <ImageGallery items={images} />
-//     //   </div>
-//     // </div>
-//   );
-// };
+import { getAllArticles } from '@/lib/getAllArticles'
 
 
 function MailIcon(props) {
@@ -172,7 +160,7 @@ function Resume() {
         },
     ]
 
-    let education = [
+    const education = [
         {
             degree: "PhD",
             school: "University of Melbourne",
@@ -318,7 +306,7 @@ function Photos() {
     )
 }
 
-export default function Home({ articles, images }) {
+export default function Home({ articles }) {
     return (
         <>
             <Head>
@@ -352,15 +340,13 @@ export default function Home({ articles, images }) {
                             />
                         </div>
                     </div>
-                    {/* <div className="lg:pl-20 w-1/2"> */}
-                        <div className="max-w-xs px-2.5 lg:max-w-none lg:pl-20 w-1/2">
-                            <Image
-                                src={portraitImage}
-                                alt=""
-                                sizes="(min-width: 720px) 24rem, 15rem"
-                                className="aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
-                            />
-                        {/* </div> */}
+                    <div className="max-w-xs px-2.5 lg:max-w-none lg:pl-20 w-1/2">
+                        <Image
+                            src={portraitImage}
+                            alt=""
+                            sizes="(min-width: 720px) 24rem, 15rem"
+                            className="aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
+                        />
                     </div>
                 </div>
             </Container>
@@ -372,7 +358,6 @@ export default function Home({ articles, images }) {
                         ))}
                     </div>
                     <div className="space-y-10 lg:pl-16 xl:pl-24">
-                        {/* <Newsletter /> */}
                         <Resume />
                     </div>
                 </div>
@@ -383,14 +368,8 @@ export default function Home({ articles, images }) {
 
 
 export async function getStaticProps() {
-    if (process.env.NODE_ENV === 'production') {
-        await generateRssFeed()
-    }
-
-    const galleryPhotoList = getGalleryPhotos();
     return {
         props: {
-            images: galleryPhotoList,
             articles: (await getAllArticles())
                 .slice(0, 4)
                 .map(({ component, ...meta }) => meta),

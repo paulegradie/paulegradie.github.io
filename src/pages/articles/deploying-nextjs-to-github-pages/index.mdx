@@ -13,8 +13,12 @@ export const meta = {
   description:
     'I encountered an annoying error when building a nextJS app that uses nextMDX using github actions',
 }
-
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
 export default (props) => <ArticleLayout meta={meta} {...props} />
+
 
 <BlogImage src={chan} />
 
