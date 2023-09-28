@@ -66,9 +66,6 @@ export default function About() {
                         </h1>
                         <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
                             <p>
-                                I have so far had an incredible journey filled with diverse experiences that have shaped who I am today.
-                            </p>
-                            <p>
                                 It all began with my deep passion for music, which began with tapping on my dad&apos;s guitar case with wooden spoons. I dreamed of becoming a studio drummer, envisioning myself playing alongside legendary bands like Steely Dan. Music was my world, and I even earned a audition-based scholarship to the prestigious Berklee College of Music. While my dream of becoming a drummer didn&apos;t materialize, those early musical pursuits were the first of many valuable experiences. And the first of many transitions that would ultimately give me a unique perspective on life, change, and knowledge itself.
                             </p>
                             <p>
@@ -112,13 +109,6 @@ export default function About() {
                             <SocialLink href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/" icon={LinkedInIcon} className="mt-4">
                                 Connect on LinkedIn
                             </SocialLink>
-                            {/* <SocialLink
-                                href="mailto:paulegradie@gmail.com"
-                                icon={MailIcon}
-                                className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
-                            >
-                                paulegradie@gmail.com
-                            </SocialLink> */}
                         </ul>
                     </div>
                 </div>

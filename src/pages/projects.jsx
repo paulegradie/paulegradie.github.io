@@ -33,7 +33,7 @@ const projects = [
   },
   {
     name: 'Palavyr',
-    description: 'A open-source full stack application that lets users create their own chatbots that provide information, take information, and even compute cost estimates based on inputs',
+    description: 'An open-source full stack application that lets users create their own chatbots that provide information, take information, and even compute cost estimates based on inputs',
     link: { href: 'https://github.com/Palavyr/Palavyr', label: 'Palavyr' },
     logo: palavyrLogo,
     className: "w-16 rounded-lg m-2",
