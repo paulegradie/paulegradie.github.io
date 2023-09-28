@@ -39,7 +39,7 @@ export function ArticleLayout({
             {previousPathname && (
               <button
                 type="button"
-                onClick={() => router.back()}
+                onClick={() => router.push("/articles")}
                 aria-label="Go back to articles"
                 className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-background-dark dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
               >
@@ -76,8 +76,8 @@ export function ArticleLayout({
 
 function NavCard(props) {
 
-  return <div onClick={props.onClick} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{props.article.title}</h5>
+  return <div onClick={props.onClick} className="block max-w-sm p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer">
+    <h5 className="mb-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">{props.article.title}</h5>
     <p className="font-normal text-gray-700 dark:text-gray-400">{props.article.date}</p>
   </div>
 }
