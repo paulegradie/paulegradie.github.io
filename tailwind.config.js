@@ -72,7 +72,7 @@ module.exports = {
           '--tw-prose-links-hover': theme('colors.teal.600'),
           '--tw-prose-underline': theme('colors.teal.500 / 0.2'),
           '--tw-prose-underline-hover': theme('colors.teal.500'),
-          '--tw-prose-bold': theme('colors.zinc.900'),
+          '--tw-prose-bold': theme('colors.zinc.200'),
           '--tw-prose-counters': theme('colors.zinc.300'),
           '--tw-prose-bullets': theme('colors.zinc.200'),
           '--tw-prose-hr': theme('colors.zinc.100'),
