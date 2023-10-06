@@ -45,8 +45,8 @@ export default function ArticlesIndex({ articles }) {
         />
       </Head>
       <SimpleLayout
-        title="Paul Gradie's personal and professional blog"
-        intro="My voice on leadership, building software, artificial intelligence, world events, and much more."
+        title="My Voice"
+        intro="on leadership, building software, artificial intelligence, world events, and more."
       >
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
           <div className="flex max-w-3xl flex-col space-y-16">

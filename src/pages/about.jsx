@@ -1,41 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
-import clsx from 'clsx'
-
+import { SocialLink } from '@/components/SocialLink'
 import { Container } from '@/components/Container'
-import {
-    GitHubIcon,
-    LinkedInIcon,
-} from '@/components/SocialIcons'
+import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import portraitImage from '@/images/portrait.jpg'
 
-function SocialLink({ className, href, children, icon: Icon }) {
-    return (
-        <li className={clsx(className, 'flex')}>
-            <Link
-                href={href}
-                className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
-            >
-                <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
-                <span className="ml-4">{children}</span>
-            </Link>
-        </li>
-    )
-}
-
-function MailIcon(props) {
-    return (
-        <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-            <path
-                fillRule="evenodd"
-                d="M6 5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H6Zm.245 2.187a.75.75 0 0 0-.99 1.126l6.25 5.5a.75.75 0 0 0 .99 0l6.25-5.5a.75.75 0 0 0-.99-1.126L12 12.251 6.245 7.187Z"
-            />
-        </svg>
-    )
-}
-
 export default function About() {
+
     return (
         <>
             <Head>
@@ -57,16 +28,28 @@ export default function About() {
                             />
                         </div>
                     </div>
+                    <div className="lg:pl-20 mt-6 flex gap-6 justify-center md:justify-start">
+                        <SocialLink
+                            href="https://github.com/paulegradie"
+                            aria-label="Follow on GitHub"
+                            icon={GitHubIcon}
+                        />
+                        <SocialLink
+                            href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
+                            aria-label="Follow on LinkedIn"
+                            icon={LinkedInIcon}
+                        />
+                    </div>
                     <div className="lg:order-first lg:row-span-2">
-                        <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-4xl">
-                            I’m Paul Gradie.
+                        <h1 className="text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-4xl">
+                            I`m Paul Gradie.
                         </h1>
-                        <h1 className="text-2xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-2xl">
+                        <h1 className="text-2xl font-bold tracking-tight text-zinc-400 dark:text-zinc-100 sm:text-2xl">
                             Here is the short version of my story.
                         </h1>
-                        <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+                        <div className="mt-6 space-y-7 text-base text-zinc-400 dark:text-zinc-400 text-justify">
                             <p>
-                                It all began with my deep passion for music, which began with tapping on my dad&apos;s guitar case with wooden spoons. I dreamed of becoming a studio drummer, envisioning myself playing alongside legendary bands like Steely Dan. Music was my world, and I even earned a audition-based scholarship to the prestigious Berklee College of Music. While my dream of becoming a drummer didn&apos;t materialize, those early musical pursuits were the first of many valuable experiences. And the first of many transitions that would ultimately give me a unique perspective on life, change, and knowledge itself.
+                                It all began with a deep passion for music, which began with tapping on my dad&apos;s guitar case with wooden spoons. I dreamed of becoming a studio drummer, envisioning myself playing alongside legendary bands like Steely Dan. Music was my world, and I even earned a audition-based scholarship to the prestigious Berklee College of Music. While my dream of becoming a drummer didn&apos;t materialize, those early musical pursuits were the first of many valuable experiences. And the first of many transitions that would ultimately give me a unique perspective on life, change, and knowledge itself.
                             </p>
                             <p>
                                 Following my musical aspirations, I transitioned into the field of biology. During my university years, I delved into the intricate workings of life itself, studying biology, chemistry, physics, and even conducting some research. At the time, I had aspirations of becoming a dentist.. although I can&apos;t quite pinpoint the exact reason for choosing that career path. It was more of an intuitive inclination, fueled by my enjoyment of dental visits. However, fate had other plans, and I faced rejection from dental schools - which became probably the most pivotable failure of my life.
@@ -100,16 +83,6 @@ export default function About() {
                                 Adventurous but wise. Critical but friendly. Intelligent but humble.
                             </p>
                         </div>
-                    </div>
-                    <div className="lg:pl-20">
-                        <ul role="list">
-                            <SocialLink href="https://github.com/paulegradie" icon={GitHubIcon} className="mt-4">
-                                Follow on GitHub
-                            </SocialLink>
-                            <SocialLink href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/" icon={LinkedInIcon} className="mt-4">
-                                Connect on LinkedIn
-                            </SocialLink>
-                        </ul>
                     </div>
                 </div>
             </Container>

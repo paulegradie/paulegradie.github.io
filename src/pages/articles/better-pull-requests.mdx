@@ -1,0 +1,72 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import { Justify } from '@/components/blog/Justify'
+import { Quote } from '@/components/blog/Quote'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-10-02',
+  title: 'Crafting Friendly but Effective Pull Requests',
+  description: 'A Guide for Making Code Reviews Easier for you and your Peers',
+}
+
+import { getArticlesProps } from '@/lib/getArticlesProps'
+export async function getStaticProps() {
+  return await getArticlesProps()
+}
+export default (props) => <ArticleLayout meta={meta} {...props} ></ArticleLayout>
+
+# Intro
+
+Understanding how to submit effective Pull Requests (PRs) or Merge Requests (MRs) is a crucial skill for new software engineers. Far from being a mere formality, a well-crafted PR serves as a communication medium between you and your team, fostering collective decision-making and ensuring the codebase evolves in a healthy manner. This post aims to deepen your understanding of the process and offers practical tips to elevate your PR game.
+
+## Setting the Context: The Lifecycle of Code Shipping
+
+### Where PRs Fit In
+
+A PR is not an isolated event but a core component in the broader software development lifecycle. PRs are typically the middle step, preceded by planning phases like architectural discussions and feature design, and followed by final testing and deployment. Understanding this can guide you in crafting PRs that are aligned with the project’s broader objectives.
+
+### The Team's Role
+
+Your teammates are not just reviewers but collaborators who bring valuable context to your changes. In an ideal setup, teams have a hierarchy where more experienced engineers guide less experienced ones. These sub-teams often work together to make granular implementation decisions and ensure that the PR serves its purpose: to introduce a change or addition to the codebase.
+
+### Deciding on the Type of Pull Request
+
+Not all PRs are created equal, and the nature of your change dictates the kind of PR you should create. This could range from implementing a new feature or fixing a bug, to refactoring code for better maintainability. You could also be updating documentation, improving performance, adding test cases, or even addressing security vulnerabilities.
+
+### Importance of Contextualization
+
+Each type of PR requires its unique context for your teammates to understand its nuances. That's where the 'Description' and 'Comments' sections come into play. Make sure you use them wisely to contextualize your work, stating not just what changes you’ve made but also why you made them.
+
+## Crafting Your PR: Key Components for Success
+
+### The Art of Description
+
+Writing an effective description is critical. It’s the first thing your teammates see, and it should offer an at-a-glance understanding of what the PR is about. Strive for clarity and conciseness, but don't leave out necessary details. Remember, a good description not only outlines what you did but also why you did it.
+
+## In-Code Comments and Annotations
+
+Adding inline comments or annotations can serve as breadcrumbs, guiding your reviewers through the logic of your changes. They fill in gaps that the PR description might not cover and can significantly speed up the review process.
+
+## Building Confidence Through Evidence
+
+The primary aim of any PR is to get merged, and that happens through a successful review. Your job is not just to submit a change, but to convince your team of its merit.
+
+Automated Tests: If your changes include logic or behavior, include automated tests that prove they work as intended.
+Supplementary Notes: Sometimes the code changes aren't self-explanatory. In such cases, supplement your PR with additional notes explaining your exploration or thought process.
+
+## The Review: What to Keep in Mind
+
+### The Reviewer's Perspective
+
+When setting your PR up for review, try to think like a reviewer. What would make it easy for them to understand your changes? What would make them confident enough to approve the PR? Be proactive in providing this information.
+
+### Avoiding Assumptions
+
+Never assume that your reviewers know what you know. Provide enough context and clarification to ensure that even those less familiar with the codebase can follow your changes and the reasoning behind them.
+
+## Conclusion
+
+Pull Requests are a multifaceted tool in the toolkit of a software engineer. When done correctly, they serve as checkpoints for quality, collaboration, and ongoing learning. They are not just technical necessities but also communicative instruments that, when used effectively, contribute to a healthier, more productive software development process.

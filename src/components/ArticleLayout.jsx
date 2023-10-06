@@ -35,20 +35,21 @@ export function ArticleLayout({
       </Head>
       <Container className="mt-16 lg:mt-32">
         <div className="xl:relative">
-          <div className="mx-auto max-w-2xl">
+          {/* Can modify the margin with ml-8 or so to push the text over for a list of years on the right to link to blogs later */}
+          <div className="mx-auto max-w-[46rem]">
             {previousPathname && (
               <button
                 type="button"
                 onClick={() => router.push("/articles")}
                 aria-label="Go back to articles"
-                className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-background-dark dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
+                className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-background-dark dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
               >
                 <ArrowLeftIcon className="h-4 w-4 stroke-zinc-500 transition group-hover:stroke-zinc-700 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-400" />
               </button>
             )}
             <article>
               <header className="flex flex-col">
-                <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+                <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-5xl">
                   {meta.title}
                 </h1>
                 <time
@@ -59,7 +60,7 @@ export function ArticleLayout({
                   <span className="ml-3">{formatDate(meta.date)}</span>
                 </time>
               </header>
-              <Prose className="mt-8">{children}</Prose>
+              <Prose className="mt-6 text-justify">{children}</Prose>
             </article>
           </div>
           <Divider />
@@ -75,17 +76,16 @@ export function ArticleLayout({
 }
 
 function NavCard(props) {
-
-  return <div onClick={props.onClick} className="block max-w-sm p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer">
-    <h5 className="mb-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">{props.article.title}</h5>
-    <p className="font-normal text-gray-700 dark:text-gray-400">{props.article.date}</p>
+  return <div onClick={props.onClick} className="block max-w-sm p-6 bg-secondary border border-gray-200 rounded-lg shadow hover:shadow-slate-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer hover:text-gray-800">
+    <h5 className="mb-2 text-l font-bold tracking-tight text-gray-200 dark:text-white">{props.article.title}</h5>
+    <p className="font-normal text-gray-300  hover:text-gray dark:text-gray-200">{props.article.date}</p>
   </div>
 }
 
 function Divider() {
   return (<div className="relative flex py-5 items-center">
     <div className="flex-grow border-t border-gray-400"></div>
-    <span className="flex-shrink mx-4 text-gray-400">View More</span>
+    <span className="flex-shrink mx-4 text-gray-400">More from me</span>
     <div className="flex-grow border-t border-gray-400"></div>
   </div>)
 }

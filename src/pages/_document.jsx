@@ -51,7 +51,7 @@ export default function Document() {
           href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss/feed.json`}
         />
       </Head>
-      <body className="flex h-full flex-col bg-primary dark:bg-secondary-dark">
+      <body className="flex h-full flex-col bg-background dark:bg-background-dark">
         <Main />
         <NextScript />
       </body>

@@ -8,25 +8,28 @@ module.exports = {
   plugins: [require('@tailwindcss/typography')],
   theme: {
     extend: {
+
       colors: {
-        primary: "#B7E4C7",
-        secondary: "#95D5B2",
-        background: "#D8F3DC",
-        success: "#74C69D",
-        text: "#081C15",
-        "primary-dark": "#DE639A",
-        "secondary-dark": "#1B4332",
-        "background-dark": "#081C15",
-        "success-dark": "#2D6A4F",
-        "text-dark": "#D8F3DC",
+        'primary': '#1E293B',  // Dark Blue Gray - slightly darker
+        'secondary': '#475569',  // Cool Gray - slightly darker
+        'background': '#E5E7EB',  // Nearly White
+        'text': '#E0E0E0',  // Dark Blue Gray - slightly darker
+        'success': '#568568',  // Emerald Green - slightly darker
+        'error': '#C53030',  // Red - slightly darker
+        'primary-dark': '#1B1D22',  // Cool Gray - unchanged
+        'secondary-dark': '#A0AEC0',  // Light Gray - unchanged
+        'background-dark': '#121212',  // Almost Black - darker
+        'text-dark': '#000000',  // Light Gray - brighter
+        'success-dark': '#2F855A',  // Emerald Green - slightly darker
+        'error-dark': '#C53030'  // Red - slightly darker
       }
     },
     fontSize: {
-      xs: ['0.8125rem', { lineHeight: '1.5rem' }],
-      sm: ['0.875rem', { lineHeight: '1.5rem' }],
-      base: ['1rem', { lineHeight: '1.75rem' }],
-      lg: ['1.125rem', { lineHeight: '1.75rem' }],
-      xl: ['1.25rem', { lineHeight: '2rem' }],
+      'xs': ['0.8125rem', { lineHeight: '1.5rem' }],
+      'sm': ['0.875rem', { lineHeight: '1.5rem' }],
+      'base': ['1rem', { lineHeight: '1.75rem' }],
+      'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+      'xl': ['1.25rem', { lineHeight: '2rem' }],
       '2xl': ['1.5rem', { lineHeight: '2rem' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
       '4xl': ['2rem', { lineHeight: '2.5rem' }],
@@ -63,19 +66,19 @@ module.exports = {
       },
       DEFAULT: {
         css: {
-          '--tw-prose-body': theme('colors.zinc.600'),
-          '--tw-prose-headings': theme('colors.zinc.900'),
-          '--tw-prose-links': theme('colors.teal.500'),
+          '--tw-prose-body': theme('colors.zinc.400'),
+          '--tw-prose-headings': theme('colors.zinc.200'),
+          '--tw-prose-links': theme('colors.teal.100'),
           '--tw-prose-links-hover': theme('colors.teal.600'),
           '--tw-prose-underline': theme('colors.teal.500 / 0.2'),
           '--tw-prose-underline-hover': theme('colors.teal.500'),
           '--tw-prose-bold': theme('colors.zinc.900'),
-          '--tw-prose-counters': theme('colors.zinc.900'),
-          '--tw-prose-bullets': theme('colors.zinc.900'),
+          '--tw-prose-counters': theme('colors.zinc.300'),
+          '--tw-prose-bullets': theme('colors.zinc.200'),
           '--tw-prose-hr': theme('colors.zinc.100'),
           '--tw-prose-quote-borders': theme('colors.zinc.200'),
           '--tw-prose-captions': theme('colors.zinc.400'),
-          '--tw-prose-code': theme('colors.zinc.700'),
+          '--tw-prose-code': theme('colors.zinc.200'),
           '--tw-prose-code-bg': theme('colors.zinc.300 / 0.2'),
           '--tw-prose-pre-code': theme('colors.zinc.100'),
           '--tw-prose-pre-bg': theme('colors.zinc.900'),
@@ -116,9 +119,16 @@ module.exports = {
           },
 
           // Headings
-          'h2, h3': {
+          'h1, h2, h3': {
             color: 'var(--tw-prose-headings)',
             fontWeight: theme('fontWeight.semibold'),
+          },
+
+          h1: {
+            fontSize: theme('fontSize.3xl')[0],
+            lineHeight: theme('lineHeight.7'),
+            marginTop: theme('spacing.20'),
+            marginBottom: theme('spacing.4'),
           },
           h2: {
             fontSize: theme('fontSize.xl')[0],
@@ -318,3 +328,89 @@ module.exports = {
     }),
   },
 }
+
+// const defaultTheme = require('tailwindcss/defaultTheme');
+
+// module.exports = {
+//   // Activate purge to eliminate unused classes in production
+//   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+//   darkMode: 'class', // Enables the dark mode feature, activated by a 'dark' class
+//   theme: {
+//     extend: {
+//       // Add the new colors, while retaining the existing
+//       colors: {
+//         'primary': '#B7E4C7',
+//         'secondary': '#95D5B2',
+//         'background': '#D8F3DC',
+//         'success': '#74C69D',
+//         'text': '#081C15',
+//         'primary-dark': '#DE639A',
+//         'secondary-dark': '#1B4332',
+//         'background-dark': '#081C15',
+//         'success-dark': '#2D6A4F',
+//         'text-dark': '#D8F3DC'
+//       },
+//       // Merge these font families with the default ones
+//       fontFamily: {
+//         'sans': ['Graphik', 'sans-serif', ...defaultTheme.fontFamily.sans],
+//         'serif': ['Merriweather', 'serif'],
+//       },
+//       // Extend existing typography for 'dark' mode
+//       typography: (theme) => ({
+//         dark: {
+//           css: {
+//             color: theme('colors.gray.300'),
+//             '[class~="lead"]': {
+//               color: theme('colors.gray.400'),
+//             },
+//             a: {
+//               color: theme('colors.gray.100'),
+//             },
+//             strong: {
+//               color: theme('colors.gray.100'),
+//             },
+//             'ol > li::before': {
+//               color: theme('colors.gray.400'),
+//             },
+//             'ul > li::before': {
+//               backgroundColor: theme('colors.gray.600'),
+//             },
+//             hr: {
+//               borderColor: theme('colors.gray.700'),
+//             },
+//           },
+//         },
+//       }),
+//     },
+//     // Your existing fontSize, height, etc can stay here
+//     fontSize: {
+//       'xs': '12px',
+//       'sm': '14px',
+//       'base': '16px',
+//       'lg': '18px',
+//       'xl': '20px',
+//       '2xl': '24px',
+//       '3xl': '30px',
+//       '4xl': '36px',
+//       '5xl': '48px',
+//       '6xl': '64px'
+//     },
+//     height: {
+//       '1/4': '25%',
+//       '1/2': '50%',
+//       '3/4': '75%',
+//       'full': '100%'
+//     }
+//   },
+//   variants: {
+//     // You can specify variants
+//     extend: {
+//       typography: ['dark'],
+//     },
+//   },
+//   plugins: [
+//     require('@tailwindcss/typography'),
+//     // Add this plugin if you need form styling
+//     // require('@tailwindcss/forms'),
+//   ],
+// }
