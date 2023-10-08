@@ -126,21 +126,24 @@ module.exports = {
 
           h1: {
             fontSize: theme('fontSize.3xl')[0],
-            lineHeight: theme('lineHeight.7'),
-            marginTop: theme('spacing.20'),
-            marginBottom: theme('spacing.4'),
+            lineHeight: theme('lineHeight.8'),
+            marginTop: theme('spacing.10'),
+            marginBottom: theme('spacing.2'),
+            textAlign: "left"
           },
           h2: {
             fontSize: theme('fontSize.xl')[0],
-            lineHeight: theme('lineHeight.7'),
-            marginTop: theme('spacing.20'),
+            lineHeight: theme('lineHeight.4'),
+            marginTop: theme('spacing.8'),
             marginBottom: theme('spacing.4'),
+            textAlign: "left"
           },
           h3: {
             fontSize: theme('fontSize.base')[0],
-            lineHeight: theme('lineHeight.7'),
-            marginTop: theme('spacing.16'),
+            lineHeight: theme('lineHeight.8'),
+            marginTop: theme('spacing.8'),
             marginBottom: theme('spacing.4'),
+            textAlign: "left"
           },
           ':is(h2, h3) + *': {
             marginTop: 0,

@@ -1,9 +1,15 @@
 import Head from 'next/head'
+import { React, useRef, useState, useEffect } from 'react';
+
 import { useRouter } from 'next/router'
 import { Container } from '@/components/Container'
 import { Prose } from '@/components/Prose'
 import { formatDate } from '@/lib/formatDate'
 import { findPreviousAndNext } from '@/lib/findPreviousAndNext'
+import { floor, round } from "lodash";
+
+const WORDS_READ_PER_MINUTE_FOR_A_TYPICAL_HUMAN = 200;
+
 
 function ArrowLeftIcon(props) {
   return (
@@ -27,6 +33,21 @@ export function ArticleLayout({
   let router = useRouter()
   const { previousArticle, nextArticle } = findPreviousAndNext(articles, meta.date)
 
+  const divRef = useRef(null);
+  const [readTime, setReadTime] = useState(15);
+  useEffect(() => {
+
+    if (divRef.current) {
+      const textContent = divRef.current.innerText;
+      const words = textContent.split(/\s/).filter(Boolean);
+
+      const time = round(floor(words.length / WORDS_READ_PER_MINUTE_FOR_A_TYPICAL_HUMAN, 0));
+
+
+      setReadTime(time)
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -49,9 +70,6 @@ export function ArticleLayout({
             )}
             <article>
               <header className="flex flex-col">
-                <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-5xl">
-                  {meta.title}
-                </h1>
                 <time
                   dateTime={meta.date}
                   className="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
@@ -59,8 +77,15 @@ export function ArticleLayout({
                   <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
                   <span className="ml-3">{formatDate(meta.date)}</span>
                 </time>
+                <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-5xl">
+                  {meta.title}
+                </h1>
+                <div className="mt-3">
+                  <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
+                  <span className="text-zinc-400 dark:text-zinc-500">~{readTime} minute read</span>
+                </div>
               </header>
-              <Prose className="mt-6 text-justify">{children}</Prose>
+              <Prose countRef={divRef} className="mt-6 text-justify">{children}</Prose>
             </article>
           </div>
           <Divider />
