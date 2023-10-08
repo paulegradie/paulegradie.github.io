@@ -16,13 +16,13 @@ export const meta = {
   author: 'Paul Gradie',
   date: '2023-10-06',
   title:
-    'The DNA of Software: The Parallels Between Biological Evolution and Software Development',
+    'The DNA of Software',
   description:
-    'Small incremental changes do more for us than make changes digestbile - they keep our products alive',
+    'The Parallels Between Biological Evolution and Software Development',
 }
 export default (props) => <ArticleLayout meta={meta} {...props}></ArticleLayout>
 
-# Introduction
+# The Parallels Between Biological Evolution and Software Development
 
 <BlogImage src={dnaheader} />
 
@@ -40,13 +40,13 @@ This article aims to explore the fascinating parallels between these two domains
 
 In the grand tapestry of life, evolution acts as the master weaver, intricately stitching together incremental changes across generations. While it's tempting to view each generation as merely a newer version of its predecessors, the reality is far more nuanced. Each generation is a unique blend of its ancestral genetic material, shaped by a complex interplay of mechanisms.
 
-One such mechanism is <BlogLink href="https://en.wikipedia.org/wiki/Genetic_drift">genetic drift</BlogLink>, a random process that can lead to the loss or fixation of particular genetic variants within a population. Unlike natural selection, which favors traits that enhance survival and reproduction, genetic drift operates independently of an organism's fitness. It's akin to the random bugs or refactors that may be introduced in a software system, neither beneficial nor detrimental but still capable of affecting the system's overall behavior.
+One such mechanism is <BlogLink href="https://en.wikipedia.org/wiki/Genetic_drift">genetic drift</BlogLink>, a random process that can lead to the loss or fixation of particular genetic variants within a population. Unlike natural selection, which favors traits that enhance survival and reproduction, genetic drift operates independently of an organism's fitness. It's similar to the random bugs or refactors that may be introduced in a software system, neither beneficial nor detrimental but still capable of affecting the system's overall behavior.
 
 Another key player is <BlogLink href="https://en.wikipedia.org/wiki/Gene_flow">gene flow</BlogLink>, the transfer of genetic material between separate populations. This process can introduce new genetic variants, much like how open-source / cross-team contributions or new team members can bring fresh perspectives and solutions to a software project.
 
 These mechanisms set the stage for <BlogLink href="https://en.wikipedia.org/wiki/Evolutionary_pressure">selection pressures</BlogLink>, which act as the discerning judges of evolutionary change. Whether environmental, social, or otherwise, these pressures filter genetic variants based on their contribution to an organism's survival and reproductive success. In a way, they serve as the 'user reviews' of the biological world, determining which traits get passed onto future generations.
 
-## The Code of Life: DNA Mutations and Their Role in Evolutionary Adaptation
+## DNA Mutations and Their Role in Evolutionary Adaptation
 
 If evolution is the master weaver of life's tapestry, then <BlogLink href="https://en.wikipedia.org/wiki/DNA">Deoxyribonucleic Acid (DNA)</BlogLink> serves as its foundational thread. DNA is more than just a biological source code; it's a dynamic repository of genetic instructions that shape every aspect of an organism, from physical traits like eye color to susceptibility to diseases. Each time a cells replicates through the processes of <BlogLink href="https://en.wikipedia.org/wiki/Mitosis">mitosis</BlogLink>, and entire copy of the <BlogLink href="https://en.wikipedia.org/wiki/Genome">genome</BlogLink> is made. During the reproductive oriented process of <BlogLink href="https://en.wikipedia.org/wiki/Meiosis">meiosis</BlogLink>, DNA is shuffled together to create new versions of the DNA that will be passed on.
 
@@ -64,19 +64,19 @@ Just like in software development, not all mutations are beneficial. However, th
 
 <BlogImage src={tree} />
 
-## The Lifecycle of Software: Evolution, Technical Debt, and Sustainability
+## Evolution, Technical Debt, and Sustainability
 
 In the realm of software, evolution is not just a theoretical concept but a practical reality. Software systems are in a constant state of flux. New features being added, existing ones modified, and bugs fixed. These changes, akin to biological mutations, are introduced through updates or new releases. The survival of these changes determined by a form of artificial selection pressures: peer code review, user satisfaction, market needs, and business objectives.
 
 While the ability to adapt and evolve is crucial for the longevity of a software system, it comes with its own set of challenges. One such challenge is the accumulation of "technical debt." Much like financial debt, technical debt refers to the long-term costs incurred by opting for quick-and-dirty solutions or postponing necessary updates. Over time, this debt can accumulate to unsustainable levels, making the system increasingly difficult to maintain and evolve.
 
-In biological terms, this could be likened to various phenomena observed in specialized human populations. For example, the <BlogLink href="https://pubmed.ncbi.nlm.nih.gov/1828838/#:~:text=Tay%2DSachs%20disease%20is%20a,than%20in%20the%20general%20population.">Ashkenazi Jewish community has a higher prevalence of certain genetic diseases like Tay-Sachs due to historical isolation and inbreeding</BlogLink>. Another example is the prevalence of Sickle Cell Anemia in African and Mediterranean populations, which confers some resistance to malaria but also leads to the risk of severe disease. Just as these genetic factors can impact the long-term health and adaptability of human populations, market pressures can render a software system with high technical debt obsolete. For instance, older technologies like <BlogLink href="https://www.digitalocean.com/resources/article/what-is-technical-debt">Adobe Flash accumulated significant technical debt over the years, becoming increasingly difficult to maintain and secure</BlogLink>. Eventually, this led to its obsolescence as it was phased out in favor of more modern, adaptable technologies.
+In biological terms, this could be likened to various phenomena observed in specialized human populations. For example, the <BlogLink href="https://pubmed.ncbi.nlm.nih.gov/1828838/#:~:text=Tay%2DSachs%20disease%20is%20a,than%20in%20the%20general%20population.">Ashkenazi Jewish community has a higher prevalence of certain genetic diseases like Tay-Sachs due to historical isolation and inbreeding</BlogLink>. Just as genetic factors can impact the long-term health and adaptability of human populations, market pressures can render a software system with high technical debt obsolete. For instance, older technologies like <BlogLink href="https://www.digitalocean.com/resources/article/what-is-technical-debt">Adobe Flash accumulated significant technical debt over the years, becoming increasingly difficult to maintain and secure</BlogLink>. Eventually, this led to its obsolescence as it was phased out in favor of more modern, adaptable technologies.
 
 Therefore, managing technical debt is similar to genetic housekeeping in biological systems. It involves regular 'refactoring' — the process of restructuring existing code to improve its design without changing its functionality. This ensures that the software remains adaptable and sustainable in the long run, capable of meeting new challenges just as biological organisms must adapt to changing environmental conditions.
 
-## The Backbone of Software Evolution: Version Control and Branching Strategies
+## Version Control and Branching Strategies
 
-Version control systems like Git serve as the unsung heroes in the realm of software evolution. They provide a structured environment that enables developers to make isolated changes—akin to biological mutations—in a controlled manner. These changes, or 'commits,' are then subject to rigorous testing and review before being merged into the main codebase, much like how advantageous mutations are propagated through natural selection.
+Version control systems like Git serve as the unsung heroes in the realm of software evolution. They provide a structured environment that enables developers to make isolated changes — similar to biological mutations — in a controlled manner. These changes, or 'commits,' are then subject to rigorous testing and review before being merged into the main codebase, much like how advantageous mutations are propagated through natural selection.
 
 However, Git offers more than just a linear history of changes. It allows for branching, where developers can create separate 'branches' to work on different features or fixes simultaneously. These branches can later be merged back into the main codebase, bringing their changes with them.
 
@@ -88,19 +88,19 @@ Moreover, just as phylogenetic trees can help biologists understand the evolutio
 
 <BlogImage src={blueprint} />
 
-## SOLID Principles: The Genetics of Good Software Architecture
+## The Genetics of Good Software Architecture
 
-In the realm of software development, the <BlogLink href="">SOLID</BlogLink> principles serve as a set of guidelines for designing maintainable, understandable, and extendable code. The acronym SOLID stands for Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion. While these principles are consciously applied by software engineers, it's worth noting that nature, in its own way, automatically figures out its organizational and architectural rules through the process of evolution.
+In the realm of software development, the <BlogLink href="">SOLID</BlogLink> principles serve as a set of guidelines for designing maintainable, understandable, and extendable code. While these principles are consciously applied by software engineers, it's worth noting that nature, in its own way, automatically figures out its organizational and architectural rules through the process of evolution.
 
-In biological systems, the organization of genetic material and cellular functions has been honed over millions of years. Genes are specialized, proteins have specific roles, and cellular pathways are optimized for efficiency—each serving a 'single responsibility,' so to speak. Similarly, the SOLID principles advocate for such specialization and single-responsibility in code to make it more maintainable and adaptable. And just as in our applications, there are violoations or exceptions - where architectural design principles are not always strictly followed.
+In biological systems, the organization of genetic material and cellular functions has been honed over millions of years. Genes are specialized, proteins have specific roles, and cellular pathways are optimized for efficiency—each serving a 'single responsibility,' so to speak. Similarly, the SOLID principles advocate for such specialization and single-responsibility in code to make it more maintainable and adaptable. And just as in our applications, there are violations and exceptions where architectural design principles are not  strictly followed.
 
-Unlike nature, which evolves these rules over long timescales, humans have the task of consciously designing software architecture. The SOLID principles act as a toolkit for this design, helping engineers avoid 'code smells'—indicators of deeper issues in the code, much like certain genetic markers can indicate susceptibility to diseases.
+Nature has evolved its own rules over long timescales (hundreds of millions, or even billions of years) by having the fitness of each version tested. The SOLID principles have been distilled through decades of practice and experience by practicing software engineers. Humans have historically had the task of consciously designing software architecture and developing principles for other engineers to follow based on their experience. Innevitably, these principles (whether consciously known or simply inherited) act as a toolkit for design, helping organisms survive and engineers avoid 'code smells' — indicators of deeper issues in the code, much like certain genetic markers can indicate susceptibility to diseases.
 
-By adhering to these principles, software can achieve a form of 'genetic fitness,' becoming more robust, adaptable, and ultimately, sustainable. Just as advantageous genetic traits propagate through natural selection, well-designed software gains longevity and adaptability, enabling it to meet new challenges and survive in a competitive landscape.
+Software can achieve a form of 'genetic fitness' by adhering to these principles to becoming more robust, adaptable, and ultimately, sustainable. Just as advantageous genetic traits propagate through natural selection, well-designed software gains longevity and adaptability, enabling it to meet new challenges and survive in a competitive landscape.
 
-## Domain-Driven Design: Navigating the Complex Ecosystem of Code
+## Navigating the Complex Ecosystem of Code
 
-<BlogLink href="https://en.wikipedia.org/wiki/Domain-driven_design">Domain-Driven Design</BlogLink>is a software development approach that focuses on creating a shared 'ubiquitous language' between technical experts and domain experts. This ensures that the software model corresponds closely to the business domain, making it more maintainable and adaptable. In biological terms, this can be likened to the way organisms adapt to their ecological niches, each occupying a specialized role within a broader ecosystem.
+<BlogLink href="https://en.wikipedia.org/wiki/Domain-driven_design">Domain-Driven Design</BlogLink> is a software development approach that focuses on creating a shared 'ubiquitous language' between technical experts and domain experts. This ensures that the software model corresponds closely to the business domain, making it more maintainable and adaptable. In biological terms, this can be likened to the way organisms adapt to their ecological niches, each occupying a specialized role within a broader ecosystem.
 
 The parallels don't stop at the ecosystem level; they extend to the organization of genetic information within an individual organism. Just as genes are organized into chromosomes with each serving a specific function and interacting in specific contexts, DDD advocates for the use of 'bounded contexts' to define the boundaries within which software components interact. These bounded contexts help to isolate different aspects of the system, making it easier to manage complexity.
 
@@ -108,34 +108,38 @@ Interestingly, both software systems and biological organisms can experience vio
 
 Software developers can create systems that are both robust and flexible through understanding and applying these principles and being aware of their limitations, much like how biological systems have evolved to be adaptable yet stable.
 
-## From Code to Deployment: The CI/CD Pipeline as Nature's Reproductive Cycle
+## Delivering the Next Generation through CI/CD
 
 <BlogLink href="https://en.wikipedia.org/wiki/CI/CD">Continuous Integration/Continuous Deployment</BlogLink> (CI/CD) pipelines serve as the operational machinery that takes software
 from code to deployment. Much like the complex biological processes that govern reproduction,
 CI/CD pipelines ensure that new 'organisms'—in this case, versions of software—are
-successfully introduced into the 'real world,' or production environment.
+successfully introduced into the 'real world' (i.e. their production environment).
 
 In biology, the reproductive cycle involves a series of carefully coordinated steps, from genetic recombination to gestation and finally, birth. Each new organism is essentially a 'version' that carries a mix of genetic traits, optimized for survival and adaptability. Similarly, CI/CD pipelines automate a series of stages—from code compilation and testing to deployment—ensuring that each new version of the software is robust, functional, and ready for real-world challenges.
 
-Just as successful organisms go on to reproduce and spawn new generations, successful software releases pave the way for future updates and improvements. Each 'birth' in the CI/CD pipeline is essentially a test of the software's 'fitness,' with market reception and user satisfaction serving as the selection pressures that determine its success or failure.
+Successful software releases pave the way for future updates and improvements just as successful organisms go on to reproduce and spawn new generations. Each 'birth' in the CI/CD pipeline is essentially a test of the software's 'fitness,' with market reception and user satisfaction serving as the selection pressures that determine its success or failure.
 
-## Survival of the Fittest Code: The Crucial Role of Testing
+## Survival of the Fittest Code
 
 Natural selection acts as the ultimate testing ground in the biological world, filtering out organisms with traits that are less advantageous for survival. Similarly, in the realm of software development, rigorous testing serves as a critical filter that determines the 'fitness' of code changes.
 
 Automated testing suites, including performance benchmarks, serve as the computational counterpart to biological selection mechanisms. Just as environmental factors like predators, food availability, and climate act as selection pressures in nature, factors such as user satisfaction, performance, and security serve as selection pressures in the software world.
 
-However, unlike natural selection, which operates over long timescales and across generations, software testing is a much more immediate process. It allows developers to quickly identify and rectify issues, ensuring that only the most 'fit' versions of the software are deployed. This rapid feedback loop is akin to a sped-up version of natural selection, enabling software to adapt and improve at a much faster rate.
+Unlike natural selection, which operates over long timescales and across generations, software testing is a much more immediate process. It allows developers to quickly identify and rectify issues, ensuring that only the most 'fit' versions of the software are deployed. This rapid feedback loop is like a sped-up version of natural selection, enabling software to adapt and improve at a much faster rate.
 
 # Drawing Inspiration from Biology to Distill New Principles
 
 <BlogImage src={biospire} />
 
-Considering the amount of overlap between biology and software engineering we've discussed so far, it may have become apparent that there may yet be un-realized software engineering principles we can distil from what we have learned from the study of life. In the next section, I'd like to explore this idea with you in the hope that you might be inspired to distill principles from your own understanding or backgrounds in biology and software engineering. For those who don't have this overlap (which will likely be most people) - this is a good practical lesson in why we should all become multidisciplinary in as many disciplines as we can - each discipline has something of value that can be brought to another discipline.
+It may have become apparent that there may yet be un-realized software engineering principles we can distil from what we have learned from the study of life, considering the amount of overlap between biology and software engineering we've discussed so far. In the next section, I'd like to explore this idea with you in the hope that you might be inspired to distill principles from your own understanding or backgrounds in biology and software engineering.
 
-The following three principles attempt to exemplify this idea.
+For those who don't have this overlap (which will likely be most people) - this is a good practical lesson in why we should all become multi-disciplinary, collectively across as many disciplines as we can. In other words, this is why incorporating software engineers who have transitioned from other disciplines is valuable. **Each discipline has something of value that can be brought to another discipline**.
 
-## Principle 1 - Quorum Sensing: Decentralized Decision-Making
+The following four principles attempt to exemplify this idea.
+
+---
+
+## Decentralized Decision-Making (Quorum Sensing)
 
 ### Biological Inspiration:
 
@@ -159,7 +163,9 @@ The beauty of quorum sensing lies in its simplicity and scalability. It allows f
 
 By adopting a quorum sensing approach, software engineers can design systems that are not only more resilient but also capable of self-organization and rapid adaptation to changing conditions, much like their biological counterparts.
 
-## Principle 2 - Symbiotic Relationships: Cross-Functional Collaboration
+---
+
+## Cross-Functional Collaboration (Symbiotic Relationships)
 
 ### Biological Inspiration:
 
@@ -185,7 +191,9 @@ Moreover, just like in biological symbiosis, the relationship must be carefully 
 
 By adopting the principle of Symbiotic Relationships, software development processes can become more dynamic, efficient, and innovative. This mirrors the resilience and adaptability seen in biological systems, where symbiotic relationships have evolved to tackle complex challenges that individual species could not overcome alone.
 
-## Principle 3 - Mutualistic Coevolution: Interdependent System Development
+---
+
+## Interdependent System Development (Mutualistic Coevolution)
 
 ### Biological Inspiration:
 
@@ -211,7 +219,9 @@ However, this interdependence also introduces challenges, such as managing compa
 
 By embracing Mutualistic Coevolution, developers can create software ecosystems that are not only more robust but also more adaptable to the rapid changes that characterize modern technology landscapes.
 
-## Principle 4 - Facultative Mutualism: Conditional Interdependencies in Software
+---
+
+## Conditional Interdependencies in Software (Facultative Mutualism)
 
 ### Biological Inspiration:
 
@@ -237,13 +247,15 @@ However, implementing facultative mutualism in software does introduce complexit
 
 By adopting the principle of Facultative Mutualism, developers can build more resilient and adaptable software systems that are better equipped to handle the uncertainties and variabilities of the real world.
 
+---
+
 # Conclusion
 
 <BlogImage src={dnabranch} />
 
 The worlds of biological evolution and software development, at first glance, may seem disparate. However, as we've explored in this article, they share striking similarities in their approaches to complexity, adaptability, and long-term success. The concept of incremental change serves as a foundational principle in both domains, whether it's the subtle mutations that drive biological diversity or the iterative updates that keep software systems relevant.
 
-Architectural strategies also offer compelling parallels. In biology, the organization of genetic material and cellular functions has evolved to be highly specialized and efficient, akin to the SOLID principles that guide well-designed software. Domain-Driven Design in software, with its focus on bounded contexts and a shared ubiquitous language, mirrors the specialized roles and interactions seen in biological ecosystems and even within the genetic makeup of individual organisms.
+Architectural strategies also offer compelling parallels. In biology, the organization of genetic material and cellular functions has evolved to be highly specialized and efficient, similar to the SOLID principles that guide well-designed software. Domain-Driven Design in software, with its focus on bounded contexts and a shared ubiquitous language, mirrors the specialized roles and interactions seen in biological ecosystems and even within the genetic makeup of individual organisms.
 
 Operational aspects provide another layer of similarity. The CI/CD pipelines in software development can be likened to the reproductive cycles in biology, each serving as a mechanism for introducing new, tested, and refined entities into their respective environments. Testing in software serves a role similar to natural selection, acting as a filter to ensure that only the most 'fit' entities survive and propagate.
 
