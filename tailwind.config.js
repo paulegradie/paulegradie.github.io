@@ -133,7 +133,7 @@ module.exports = {
           },
           h2: {
             fontSize: theme('fontSize.xl')[0],
-            lineHeight: theme('lineHeight.4'),
+            lineHeight: theme('lineHeight.8'),
             marginTop: theme('spacing.8'),
             marginBottom: theme('spacing.4'),
             textAlign: "left"
