@@ -5,6 +5,41 @@ import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
 
+
+export default function ArticlesIndex({ articles }) {
+	return (
+		<>
+			<Head>
+				<title>Articles - Paul Gradie</title>
+				<meta
+					name="description"
+					content="My voice on building software, artificial intelligence, life, and much more."
+				/>
+			</Head>
+			<SimpleLayout
+				title="In My Own Words"
+				intro="Software, Artificial Intelligence, Personal Experiences, and more."
+			>
+				<div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
+					<div className="flex max-w-3xl flex-col space-y-16">
+						{
+							groupByYear(articles).map((group, i) => {
+								return (
+									<>
+										<Divider key={i} year={group[0].date.split("-")[0]} />
+										{group.map((article, i) => (<Article key={article.slug} article={article} />))}
+									</>
+								)
+							})
+						}
+					</div>
+				</div>
+			</SimpleLayout>
+		</>
+	)
+}
+
+
 function Article({ article }) {
 	return (
 		<article className="md:grid md:grid-cols-4 md:items-baseline">
@@ -43,7 +78,6 @@ function groupByYear(arr) {
 
 	// Step 3: Iterate through the sorted array
 	for (const obj of arr) {
-		console.log(obj)
 		// Step 4: Extract the year from the date property
 		const year = new Date(obj.date).getFullYear();
 
@@ -64,46 +98,11 @@ function groupByYear(arr) {
 function Divider(props) {
 	return (<div className="relative flex py-5 items-center">
 		<div className="flex-grow border-t border-gray-400"></div>
-		<span className="flex-shrink mx-4 text-gray-400">{props.year}</span>
+		<span className="flex-shrink mx-4 text-4xl text-gray-400">{props.year}</span>
 		<div className="flex-grow border-t border-gray-400"></div>
 	</div>)
 }
 
-
-export default function ArticlesIndex({ articles }) {
-
-	const articleGroups = groupByYear(articles);
-	return (
-		<>
-			<Head>
-				<title>Articles - Paul Gradie</title>
-				<meta
-					name="description"
-					content="My voice on building software, artificial intelligence, life, and much more."
-				/>
-			</Head>
-			<SimpleLayout
-				title="In My Own Words"
-				intro="Software, Artificial Intelligence, Personal Experiences, and more."
-			>
-				<div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
-					<div className="flex max-w-3xl flex-col space-y-16">
-						{
-							articleGroups.map((group, i) => {
-								return (
-									<>
-										<Divider key={i} year={group[0].date.split("-")[0]} />
-										{group.map((article, i) => (<Article key={article.slug} article={article} />))}
-									</>
-								)
-							})
-						}
-					</div>
-				</div>
-			</SimpleLayout>
-		</>
-	)
-}
 
 export async function getStaticProps() {
 	return {

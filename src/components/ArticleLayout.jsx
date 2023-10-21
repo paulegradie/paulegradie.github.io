@@ -40,10 +40,7 @@ export function ArticleLayout({
     if (divRef.current) {
       const textContent = divRef.current.innerText;
       const words = textContent.split(/\s/).filter(Boolean);
-
       const time = round(floor(words.length / WORDS_READ_PER_MINUTE_FOR_A_TYPICAL_HUMAN, 0));
-
-
       setReadTime(time)
     }
   }, []);
