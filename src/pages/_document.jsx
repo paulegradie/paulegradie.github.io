@@ -50,6 +50,18 @@ export default function Document() {
           type="application/feed+json"
           href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss/feed.json`}
         />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-W2FKLDHMXG`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-W2FKLDHMXG');
+          `
+          }}
+        />
       </Head>
       <body className="flex h-full flex-col bg-background dark:bg-background-dark">
         <Main />
@@ -58,3 +70,4 @@ export default function Document() {
     </Html>
   )
 }
+
