@@ -1,0 +1,89 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+import growth from './growth.png'
+import thumb5 from './thumb5.png'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-10-21',
+  title: 'A Career Story: How I Turned a Rejection into a Triumph',
+  description: 'My first job was not easily won, and I was vastly underestimated. This is a story about how I turned that around.'
+}
+export default (props) => <ArticleLayout meta={meta} {...props}></ArticleLayout>
+
+
+# The Interview & Rejection
+
+<BlogImage src={thumb5} />
+
+In June 2017, I found myself in a paradox of a building on Collins Street. Its exterior was reminiscent of a bygone era—almost gothic in its appeal. But as I stepped inside, the story changed. The building was an epitome of modern minimalism—white walls, clear glass doors, keycard access, and a sea of desks occupied by engineers.
+
+My journey to this place actually began over the phone. A recruiter reached out just a day after I had submitted my resume and cover letter. This initial phone screening was simple yet nerve-wracking. I was on edge, acutely aware that the recruiter was my gateway to an opportunity that could transform my career. I even took a shot of vodka minutes before the call, hoping it would dampen my anxiety. The recruiter, on the other hand, was friendly and casual, a reassuring presence on the other end of the line. By the end of our conversation, he seemed satisfied enough to schedule a technical screening interview with me. A new level of excitement—and anxiety—flooded over me.
+
+I knew my chances were slim. I hadn't even technically graduated from my Ph.D. My previous six months were a blur of writing a dissertation while binge-learning linear algebra, machine learning, and other computational skills through online courses. I had realized that the landscape of AI was undergoing a seismic shift and wanted to be part of it.
+
+My technical screening was scheduled for the next day. I met the person who would later become my manager, and we kicked off with a coding challenge. I was tasked with parsing a string and accounting for various edge cases. In the midst of the exercise, my nerves got the best of me. I had to pause, close my eyes, and take a deep breath to clear my mind. Once I had recomposed myself, the fog of anxiety lifted, and the solution became clear. Although my code wasn't perfect, it was functional.
+
+Feeling cautiously optimistic, I moved to the next stage—a "homework challenge" to test my skills further. Succeeding in that earned me an invitation to an on-site interview.
+
+That's when I found myself in that sleek, minimalist conference room on Collins Street, sitting across from two data scientists. They dissected my homework challenge, quizzed me on various scenarios, and evaluated my problem-solving approach. Some questions I answered easily, while others tested the limits of my preparation.
+
+The final act of this day-long interview saga was a two-hour pair coding session. My performance here was less than stellar, to say the least. I was drenched in sweat, my nerves affecting my ability to recall even basic algorithms. I fumbled through the questions, and by the end, I knew that I had barely scratched the surface of what was required. The session was abruptly concluded, and I was escorted out, feeling a mix of disappointment and resignation.
+
+The rejection call came the next day, confirming what I already suspected. It was a sobering end to an intense interview process, but little did I know, it was only the beginning of a much longer, transformative journey.
+
+## The Second Chance
+
+Just when I had come to terms with my initial rejection and was focusing on other avenues—continuing my Ph.D. work and exploring alternative opportunities—an unexpected email landed in my inbox. It was from the same company, inviting me for a second on-site interview. I was both surprised and thrilled; it seemed they were willing to reevaluate my candidacy.
+
+This time around, I met with some of the engineers on the team. Our conversation revolved around software engineering principles and the latest trends in deep learning. But this wasn't a typical technical interview. Rather, it became an engaging discussion, peppered with stories that I used to elucidate my understanding and views. This storytelling approach is something that I've since recognized as one of my strengths. While it can be time-consuming, it allows me to captivate my audience, provided they are open to my narrative style.
+
+The latter part of the interview shifted gears to a brief pair-programming session. While I can't be entirely certain, I've always suspected that my holistic approach to solving the challenge—focusing on the 'big picture' rather than just the technicalities—played a significant role in my ultimate recommendation for the job. But it wasn't just my analytical skills that made an impression; it was my general likability and the persona I projected—one of a relentless problem solver who could overcome any challenge in a reasonable timeframe.
+
+Walking out of that enigmatic building on Collins Street, I felt different. This time, I was buoyed by hope and the palpable sense that I had connected on a deeper level with the team.
+
+Two days later, I received the call I had been yearning for—I was offered the position. The elation I felt was indescribable, a validation not just of my skills but of my potential to grow and adapt.
+
+# The Metamorphosis: Tenacity, Growth, and Impact
+
+<BlogImage src={growth} />
+
+During the subsequent two years, I threw myself into a whirlwind of challenges and opportunities. I wasn't just a cog in the machine; I was an engine driving multiple facets of our AI initiatives. I had my hands on everything from redesigning and rebuilding internal tools to spearheading complex research plans. Each day was a blend of the theoretical and the practical, the innovative and the foundational.
+
+I also emerged as a leader in sharing knowledge. I organized study groups, facilitated internal talks, and became a conduit for the exchange of information within the team. This was not confined to our local office either; I found myself crossing borders, representing our AI team on international platforms. In doing so, I metamorphosed from a tentative new hire into a seasoned data scientist, deeply involved in both the technologies underpinning our AI products and the systems that delivered them to end-users.
+
+While I had initially been considered a wild card, my relentless work ethic and consistent delivery turned skepticism into respect. This transformation wasn't confined to merely completing tasks or meeting benchmarks. Instead, it demonstrated a unique aptitude for grasping new concepts, synthesizing information, and delivering unexpected but impactful outcomes. Even I was surprised by how far I had come and what I had achieved.
+
+My journey culminated in a significant milestone: I became part of a research group within the team that was granted a patent. This not only cemented my place in the organization but also deeply influenced how my team perceived me. I was no longer the underdog; I was an invaluable asset.
+
+## The Walk That Changed Perspectives: A Moment of Reckoning and Recognition
+
+It was a typical weekday when one of my colleagues, a co-author on the patent we had been awarded, invited me for a one-on-one walk through the city. Walking meetings were a staple in our organizational culture.
+
+We strolled through the labyrinth of streets, crossing cobblestones and dodging pedestrians, as the city unfurled around us. At a certain point, my colleague turned to me and revealed a truth that seemed to weigh heavily on them: **they had been the primary reason behind my initial rejection**.
+
+They explained that during my first round of interviews, I had left an indelible impression on the team. There was a unanimous agreement that I was someone everyone wanted to work with. However, according to this individual, my technical skills—or the lack thereof—were the bottleneck. Believing it would be too expensive and time-consuming to bring me up to speed, they had been the voice that tipped the scales toward my initial rejection.
+
+But that was not the end of what they had to say. With palpable sincerity, they admitted that their initial judgment had been grossly inaccurate. Over the two years we'd worked together, I had utterly invalidated all their reservations about my technical proficiency, my apptitude for climbing learning curves, and my ability to contribute value to the team. In essence, I had turned their skepticism into regret. They concluded with an apology for not having believed in me from the get-go.
+
+## Lessons and Reflections
+This moment crystallizes the journey I've made and the professional I've become. It is a testament to both the fallibility of initial judgments and the incredible potential for growth that each of us carries. I am a living example of how initial impressions can be deceptive, how they can undersell one's true capabilities and promise.
+
+My story is one that says, 'Don't underestimate what lies beneath the surface.' While my relaxed demeanor or style of storytelling might initially give off an air of casualness or that I lack a clear grasp, they mask a deeply driven person who actually aspires to transfer their type and level of understanding to others. My unique set of skills, derived from a rich and varied educational background, enables me to quickly dissect complex problems—be they technical or interpersonal—and come up with sound, reasoned insights and solutions.
+
+I believe that everyone has a high ceiling of potential; the difference lies in the circumstances we're placed in and the will we have to reach for it. Some people get there more easily than others, either due to the situations they find themselves in or the opportunities that come their way. But when it comes to me, know that even if you doubt my abilities at first glance, I will consistently prove you wrong, turning your skepticism into admiration.
+
+## The Takeaway: Growth Knows No Boundaries
+
+As we walked back to the office, I felt a myriad of emotions: vindication, happiness, but most of all, gratefulness for the opportunity to grow and contribute. His confession and apology meant a lot, but the journey of getting there meant even more to me. It was an emotional yet professional acknowledgment that my contributions were valuable—something we all seek in our careers.
+
+Being initially rejected and then invited back for the job taught me that first impressions don't define your worth. What truly matters is your ability to grow, adapt, and consistently bring value to those around you.
+
+In life and work, you can't control others' perceptions of you, but you can control your actions. Work hard, keep learning, and be the best version of yourself—your worth will become evident to those around you, even if it takes them a while to see it.
+
+**And that's how I went from being the underestimated candidate to an invaluable team member**. Trust me; if I can do it, so can you.
