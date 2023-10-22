@@ -24,9 +24,10 @@ export default function ArticlesIndex({ articles }) {
 					<div className="flex max-w-3xl flex-col space-y-16">
 						{
 							groupByYear(articles).map((group, i) => {
+								const year = group[0].date.split("-")[0];
 								return (
 									<>
-										<Divider key={i} year={group[0].date.split("-")[0]} />
+										<Divider key={`${year}-${i}`} year={year} />
 										{group.map((article, i) => (<Article key={article.slug} article={article} />))}
 									</>
 								)

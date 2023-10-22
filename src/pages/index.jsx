@@ -17,11 +17,11 @@ export default function Home({ articles }) {
         <>
             <Head>
                 <title>
-                    Paul Gradie - Software designer, founder, and amateur astronaut
+                    Paul Gradie - software engineer based in Melbourne, Aus.
                 </title>
                 <meta
                     name="description"
-                    content="I`m Paul, a software designer and entrepreneur based in Melbourne, Aus."
+                    content="I`m Paul, a software engineer based in Melbourne, Aus."
                 />
             </Head>
             <Container className="mt-9 w-full">
