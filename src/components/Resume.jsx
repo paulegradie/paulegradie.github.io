@@ -49,15 +49,15 @@ export function Resume() {
         {
             degree: "Bachelor of Science",
             school: "University of Connecticut",
-            start: '2014',
-            end: '2017',
+            start: '2005',
+            end: '2010',
             logo: uconnLogo
         },
         {
             degree: "High School Diploma",
             school: "Putnam High School ",
-            start: '2014',
-            end: '2017',
+            start: '2000',
+            end: '2004',
             logo: putnamLogo
         },
     ];
@@ -138,9 +138,9 @@ export function Resume() {
                     </li>
                 ))}
             </ol>
-            <Button href="https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing" target={'_blank'} variant="secondary" className="group mt-6 w-full">
+            <Button href="https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing" target={'_blank'} variant="secondary" className="group mt-6 w-full dark:bg-slate-200 dark:text-slate-600 dark:hover:border-slate-200 hover:border-slate-900">
                 Download CV
-                <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+                <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50  dark:group-active:stroke-zinc-50" />
             </Button>
         </div>
     );
