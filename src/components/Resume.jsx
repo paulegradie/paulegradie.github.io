@@ -138,9 +138,13 @@ export function Resume() {
                     </li>
                 ))}
             </ol>
-            <Button href="https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing" target={'_blank'} variant="secondary" className="group mt-6 w-full dark:bg-slate-200 dark:text-slate-600 dark:hover:border-slate-200 hover:border-slate-900">
+            <Button
+                href="https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing"
+                target={'_blank'}
+                variant="secondary"
+                className="group mt-6 w-full">
                 Download CV
-                <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50  dark:group-active:stroke-zinc-50" />
+                <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 dark:stroke-zinc-800 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-600 dark:group-active:stroke-zinc-50" />
             </Button>
         </div>
     );
