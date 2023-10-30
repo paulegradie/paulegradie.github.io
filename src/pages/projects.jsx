@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import sailfishBanner from '@/images/photos/Sailfish.png'
+import sailfishBanner from '@/images/photos/Sailfish2.png'
 import palavyrLogo from "@/images/logos/palavyr-logo2.png"
 import palavyrWidgetLogo from "@/images/logos/palavyr-chat-widget-logo.png"
 import catPirate from "@/images/logos/cat-pirate-quotes-logo.png"
