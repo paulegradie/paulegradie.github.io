@@ -18,18 +18,19 @@ export default function ArticlesIndex({ articles }) {
 			</Head>
 			<SimpleLayout
 				title="In My Own Words"
-				intro="Software, Artificial Intelligence, Personal Experiences, and more."
+				subtitle='...with a little help from AI'
+				intro="On Software, Artificial Intelligence, Personal Experiences, and more."
 			>
-				<div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
+				<div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-l md:dark:border-zinc-100 md:dark:border-zinc-200/40">
 					<div className="flex max-w-3xl flex-col space-y-16">
 						{
 							groupByYear(articles).map((group, i) => {
 								const year = group[0].date.split("-")[0];
 								return (
-									<>
+									<div key={`${group[0]}-${i}`}>
 										<Divider key={`${year}-${i}`} year={year} />
 										{group.map((article, i) => (<Article key={article.slug} article={article} />))}
-									</>
+									</div>
 								)
 							})
 						}
@@ -43,8 +44,8 @@ export default function ArticlesIndex({ articles }) {
 
 function Article({ article }) {
 	return (
-		<article className="md:grid md:grid-cols-4 md:items-baseline">
-			<Card className="md:col-span-3">
+		<article className="md:grid md:grid-cols-4 md:items-baseline ">
+			<Card className="md:col-span-3 mt-3 mb-3 ">
 				<Card.Title href={`/articles/${article.slug}`}>
 					{article.title}
 				</Card.Title>

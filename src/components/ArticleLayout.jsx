@@ -87,9 +87,13 @@ export function ArticleLayout({
           </div>
           <Divider />
           <div className="flex flex-row flex-grow-1 justify-between">
-            {previousArticle ? <NavCard direction="Previous" article={previousArticle} onClick={() => router.push(previousArticle?.slug)} /> : <div />}
+            {
+              previousArticle
+                ? <NavCard direction="Previous" article={previousArticle} onClick={() => router.push(`/articles/${previousArticle?.slug}`)} />
+                : <div />
+            }
             <div />
-            {nextArticle ? <NavCard direction="Next" article={nextArticle} onClick={() => router.push(nextArticle?.slug)} /> : <div />}
+            {nextArticle ? <NavCard direction="Next" article={nextArticle} onClick={() => router.push(`/articles/${nextArticle?.slug}`)} /> : <div />}
           </div>
         </div>
       </Container>

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/Button';
 import octopusLogo from '@/images/logos/octopus-logo.svg';
+import palavyr from '@/images/logos/palavyr-logo.png';
 import zekdeskLogo from '@/images/logos/zendesk-logo.svg';
 import unimelbLogo from '@/images/logos/unimelb-logo.svg';
 import uconnLogo from '@/images/logos/uconn-logo.svg';
@@ -21,6 +22,13 @@ export function Resume() {
                 label: "Present",
                 dateTime: new Date().getFullYear()
             },
+        },
+        {
+            company: 'Palavyr - Self Employed',
+            title: 'Software Engineer',
+            logo: palavyr,
+            start: '2020',
+            end: '2022',
         },
         {
             company: 'Zendesk',

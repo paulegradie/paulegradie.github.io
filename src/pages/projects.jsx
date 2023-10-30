@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import sailfishBanner from '@/images/photos/sailfish.png'
+import sailfishBanner from '@/images/photos/Sailfish.png'
 import palavyrLogo from "@/images/logos/palavyr-logo2.png"
 import palavyrWidgetLogo from "@/images/logos/palavyr-chat-widget-logo.png"
 import catPirate from "@/images/logos/cat-pirate-quotes-logo.png"
@@ -95,7 +95,7 @@ export default function Projects() {
                   />
                 )}
               </div>
-              <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
+              <h2 className="mt-6 text-base font-semibold text-zinc-200 dark:text-zinc-100">
                 <Card.Link href={project.link.href}>{project.name}</Card.Link>
               </h2>
               <Card.Description>{project.description}</Card.Description>

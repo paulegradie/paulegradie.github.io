@@ -1,0 +1,93 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
+
+import devs from './devs.png'
+import devs2 from './devs2.png'
+import pit from './pit.png'
+import needs from './needs.png'
+import transition from './transition.png'
+import win from './win.png'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2023-10-30',
+  title: 'Need-Driven Conversations',
+  description:
+    'Time can be an expensive commodity - so sometimes it pays to focus on the need before anything else',
+}
+export default (props) => <ArticleLayout meta={meta} {...props}></ArticleLayout>
+
+<BlogImage src={devs2} />
+
+In the ever-evolving domain of technology and engineering, challenges and solutions often seem to emerge in parallel. Engineers, armed with their intellectual curiosity and problem-solving skills, are eager to tackle these obstacles. However, in this whirlwind of innovation, there's a crucial, sometimes overlooked step: determining the need. The goal of this blog post is to underscore the importance of pausing, stepping back, and critically assessing whether a problem merits our attention and resources before diving into finding a solution.
+
+## The Pitfalls of Premature Problem-Solving
+
+<BlogImage src={pit} />
+
+We've all been there—jumping headfirst into solving a problem, fueled by initial excitement, only to find out that the issue was not as critical as initially perceived. I've recently seen this mistake made twice - once by myself, and once by a collegue. In both cases, we were attempting to accomplish some work in order to support a higher level narrative.
+
+For me, it was seeking to enable/support a specific usecase for a system that I'd been working on. If we could get this internal customer using the system successfully, it would demonstrate to the organization the value of the system, get that principal engineer in our corner, and elevate the status of the team. Wins all around.
+
+In the case of my collegue, it was accomplishing a block of work that would set a technical direction/precendent for the company, which would be tied back to them as well as the team. That would be a significant outcome. In both scenarios, we lost sight of what actually mattered - the real needs of the customers and realistic value that tackling these solutions (in the way we would have wanted) would actually deliver.
+
+This mistake can lead to several setbacks:
+
+- **Wasted Resources**: The expenditure of time, energy, and capital on a non-essential problem is a resource drain.
+
+- **Missed Opportunities**: Focusing on the wrong issue can mean overlooking more pressing challenges that could have made a substantial impact.
+
+- **Misallocation of Talent**: Your best engineers may be engaged in solving problems that don't drive much value, creating a talent mismatch.
+
+## The Framework for Establishing Need
+
+<BlogImage src={needs} />
+
+Before proceeding with solutions, consider employing a high-level, potentially structured approach to determine the problem's importance is vital. The framework can include:
+
+- **Understanding the Problem**: Delve into its roots, identify its scale, and consider whether it's symptomatic of more significant issues.
+
+- **Assessing Impact**: Examine both the immediate and long-term repercussions across different areas—be it the company, customer experience, or the broader ecosystem.
+
+- **Estimating Urgency**: Is the problem a ticking time bomb requiring immediate attention, or is it something that can wait?
+  Weighing Cost vs. Value: What will be the cost of solving this problem? And how does that compare with the anticipated benefits? In addition, consider if there is additional work that would need be completed to facilitate the solution.
+
+## Benefits of Determining Need First
+
+When the need is established before embarking on the problem-solving journey, several benefits accrue:
+
+- **Resource Efficiency**: Teams can allocate their skills more effectively, targeting areas that yield the greatest ROI.
+- **Clarity and Focus**: Brainstorming and ideation become more targeted, leading to solutions that are aligned with objectives.
+- **Stakeholder Alignment**: When everyone agrees on the problem's importance, it's easier to get buy-in for the resources and strategies needed for resolution.
+
+## Techniques to Facilitate Need-Based Conversations
+
+Engaging in constructive conversations around the need can significantly improve decision-making. Some techniques include:
+
+- **Open-Ended Questions**: Encourage discussions that dive deep into the problem's nuances.
+
+- **Impact Analysis**: Utilize your experience/judgement, or even analytical tools (if appropriate) to quantify the problem's reach, thereby lending more weight to discussions.
+
+- **Historical Context**: Look back at past problems and their solutions to inform the current situation.
+
+- **Feedback Loops**: Maintain channels for continuous input from team members and stakeholders to ensure that your understanding of the problem remains fresh and relevant.
+
+## Recognizing When to Transition to Solutions
+
+<BlogImage src={transition} />
+
+Once there is a collective understanding of the problem's magnitude, it becomes a natural segue to shift towards ideation and problem-solving. The journey from acknowledging the issue to devising solutions is a delicate balance, but with a shared understanding of the problem's weight, solution-driven discussions are more productive.
+
+On the other hand - the outcomes from the approach described in this post may result in a 'no-go' decision, which can be just as valuable, if not more valuable, than a 'go' decision.
+
+## Conclusion
+
+<BlogImage src={win} />
+
+In the multifaceted world of engineering, discernment is often as valuable as technical skill. A disciplined approach to assessing the significance of challenges can mean the difference between impactful solutions and solutions in search of a problem.
+
+We all thrive on collective wisdom. So, I encourage you to write about your own experiences in this space. Have you encountered situations where establishing the need upfront made a significant difference? Your stories and insights could benefit the community at large.
