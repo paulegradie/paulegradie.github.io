@@ -31,21 +31,21 @@ Modern software applications are immensely more complex and larger in scope comp
 
 In this blog post, I'll focus on delivery, how we can frame it in terms of iterations, how we can draw from biology to help inform what those iterations should look like, and some things I've learned through recent experience.
 
-## Section 1: Understanding Acceptable States of Evolvable Deliverables
+## Section 1: Acceptable States of Evolvable Deliverables
 
 In a <BlogLink href="https://paulgradie.com/articles/2023/incremental-changes">previous discussion</BlogLink>, I delved into the concept of software evolution, drawing parallels between the development of software and biological evolution. I highlighted how changes in software mirror the gradual, incremental adaptations seen in living organisms.
 
 A deeper appreciation emerges when we realize that evolution operates both at the micro and macro levels. Just as subtle shifts in DNA accumulate over generations to create significant changes in organisms, similar gradual transformations occur in software. Furthermore, it's crucial to recognize that each version or iteration of software represents a complete entity in itself. This understanding is vital for defining what I term as **Acceptable States of Evolvable Deliverables**.
 
-Let's explore this concept more deeply.
+Lets establish a foundational definition: An acceptable state for a successfully delivered software product is one that offers an improvement in value compared to its previous iteration.
 
-First - a foundational definition: An acceptable state for a successfully delivered software product is one that offers an improvement in value compared to its previous iteration.
-
-From this definition, we can infer that a truly 'acceptable' finished product cannot be undeliverable. Real-world scenarios do not favor half-finished, partially functional prototypes as final products, especially not for paying customers (barring specific contexts like educational courses or experimental studies). Therefore, the only acceptable states for a deliverable software product are those that provide incremental value enhancements, ensuring some level of successful functionality.
+From this definition, we can first infer that an 'acceptable' state must be fully functional. Real-world scenarios do not favor half-finished, partially functional prototypes as final products, especially not for paying customers (barring specific contexts like educational courses or experimental studies).
 
 In essence, your product needs to be operational, it must offer improvements over previous versions, and it should be ready for customer use.
 
-This perspective can significantly shift the way we approach product delivery, a topic I will delve into in the following section.
+If we consider a greenfield product - i.e. something new - the first deliverable must achieve that minimal viable product (MVP) state. If we consider modifications to an existing product - i.e. a brownfield product - the first deliverable must be an improvement over the previous version. In both cases, the deliverable must be fully functional and ready for use by the customer.
+
+This perspective can significantly shift the way we approach product delivery.
 
 ## Section 2: Iterative Planning
 
@@ -60,13 +60,13 @@ The process of building and delivering products can be approached in at least tw
 
 The image above (borrowed from Henrik Knilberg) shows the two approaches I'd like to discuss. (Btw - I strongly recommend this post - its an excellent read!)
 
-**The High Risk Approach (Top Approach)**
+### All or Nothing Approach (Top of image)
 
 On the top, we have the assembly of a car - and only a car - where a wheel is created, then a chassis, then a body, and then the final car.
 
-This approach, while ambitious, carries significant risk and offers limited immediate value. Its major drawback is the absence of a valuable product at any stage until completion - a process that can span months or years.
+This approach, while ambitious, carries significant risk and offers limited immediate value. Its major drawback is the absence of a valuable product at any stage until completion - a process that can span months or years. This is inherently risky - what if a technical roadblock is encountered? What if you lose funding? What if your timeline blows out? What if the product is no longer relevant by the time it's finished? What if the product is not what the customer wants? There are a lot of ways this approach can fail.
 
-**The Iterative Approach**
+### The Iterative Approach (Bottom of image)
 
 On the bottom, we see an evolution of the product which finally becomes a car.
 
@@ -74,7 +74,7 @@ This approach involves developing product in such a way that each iteration resu
 
 This is the **Iterative Planning** approach.
 
-**The Advantages of Iterative Planning**
+### The Advantages of Iterative Planning
 
 Each approach has its own set of advantages and disadvantages, requiring careful consideration of the context in which they are applied. For instance, small tactical tasks, bug fixes, or minor refactors might not necessitate iterations over Acceptable States of the Evolvable Deliverable. It's also worth noting that producing a finished deliverable in each iteration may lead to some components being discarded in subsequent iterations.
 
