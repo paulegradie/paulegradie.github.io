@@ -1,8 +1,10 @@
 import { ArticleLayout } from '@/components/ArticleLayout'
 import { getArticlesProps } from '@/lib/getArticlesProps'
 import { BlogImage } from '@/components/blog/BlogImage'
+import { BlogLink } from '@/components/blog/BlogLink'
 
 import original from './original.png'
+import header from './header.png'
 
 export const getStaticProps = async () => await getArticlesProps()
 
@@ -16,44 +18,64 @@ export default (props) => <ArticleLayout meta={meta} {...props}></ArticleLayout>
 
 
 # Applying Evolution to Software Development: Iterative Planning in Software Projects
+<BlogImage src={header} />
 
 ## Introduction:
 
-Software engineering is a field steeped in discipline and grounded in principles. Over the years, it has developed a rich tapestry of approaches, styles, and guidelines, all aimed at improving the way we write and deliver software. These methodologies, emerging from the collective experiences of the field, are often seen as vital to the success of software implementation and delivery.
+Software engineering is a field steeped in discipline and grounded in principles. Over the years, the field has developed a rich tapestry of methodologies: approaches, styles, and guidelines, all aimed at improving the way we write and deliver software. These methodologies emerge from the collective experiences of the field and are often seen as vital to the success of software implementation and delivery.
 
-The evolution of software engineering reflects a journey of continuous learning and adaptation. Early programming efforts, while simpler, laid the foundation for understanding the complexity and scale of software development. This progression from simplicity to complexity has been marked by an increasing sophistication in our tools and methods for coding and execution. Today, we are able to create and integrate software on a scale and with a complexity that marks a significant departure from our beginnings.
+The evolution of the field itself reflects a journey of continuous learning and adaptation. Early, more simple, programming efforts laid the foundation for understanding the complexity and scale of software development. This progression from simplicity to complexity has been marked by an increasing sophistication in our tools and methods for coding and execution. Today, we are able to create and integrate software on a scale and with a complexity that marks a significant departure from our beginnings.
 
 Modern software applications are immensely more complex and larger in scope compared to their early counterparts. When tackling important and valuable software projects, we typically lean on the wisdom of experienced professionals. Their years of navigating the intricacies of software architecture and project management are invaluable in guiding successful outcomes.
 
-In this blog post, my focus will be on the delivery aspect of software engineering. I plan to highlight the critical importance of maintaining flexibility and ensuring clarity throughout the project management process. I will also share strategies and insights that I have found particularly effective in enhancing the success rate of larger software projects.
+In this blog post, my focus will be on the delivery aspect of software engineering. I plan to highlight the critical importance of maintaining flexibility and ensuring clarity throughout the project management process. I will also share strategies and insights that I have found particularly effective in enhancing the success rate of larger projects.
 
 ## Section 1: Understanding Acceptable States of Evolvable Deliverables
 
-In a previous discussion, I delved into the concept of software evolution, drawing parallels between the development of software and biological evolution. I highlighted how changes in software mirror the gradual, incremental adaptations seen in living organisms.
+In a <BlogLink href="https://paulgradie.com/articles/2023/incremental-changes" alt="">previous discussion</BlogLink>, I delved into the concept of software evolution, drawing parallels between the development of software and biological evolution. I highlighted how changes in software mirror the gradual, incremental adaptations seen in living organisms.
 
-A deeper appreciation emerges when we realize that evolution operates both at the micro and macro levels. Just as subtle shifts in DNA accumulate over generations to create significant changes in organisms, similar gradual transformations occur in software. Furthermore, it's crucial to recognize that each version or iteration of software represents a complete entity in itself. This understanding is vital for defining what I term as 'Acceptable States of Evolvable Deliverables.' Let's explore this concept more deeply.
+A deeper appreciation emerges when we realize that evolution operates both at the micro and macro levels. Just as subtle shifts in DNA accumulate over generations to create significant changes in organisms, similar gradual transformations occur in software. Furthermore, it's crucial to recognize that each version or iteration of software represents a complete entity in itself. This understanding is vital for defining what I term as **Acceptable States of Evolvable Deliverables**.
 
-Let's establish a foundational definition: An acceptable state for a successfully delivered software product is one that offers an improvement in value compared to its previous iteration.
+Let's explore this concept more deeply.
+
+First - a foundational definition: An acceptable state for a successfully delivered software product is one that offers an improvement in value compared to its previous iteration.
 
 From this definition, we can infer that a truly 'acceptable' finished product cannot be undeliverable. Real-world scenarios do not favor half-finished, partially functional prototypes as final products, especially not for paying customers (barring specific contexts like educational courses or experimental studies). Therefore, the only acceptable states for a deliverable software product are those that provide incremental value enhancements, ensuring some level of successful functionality.
 
 In essence, your product needs to be operational, it must offer improvements over previous versions, and it should be ready for customer use.
 
-This perspective significantly shifts the way we approach product delivery, a topic I will delve into in the following section.
+This perspective can significantly shift the way we approach product delivery, a topic I will delve into in the following section.
 
 ## Section 2: Iterative Planning
-When we consider the evolution of software in the context of product creation, it's useful to draw a parallel with the natural world. Think of the development of animal species: they didn't appear overnight in their current forms, nor did they exist as incomplete fragments at any stage. From the earliest biochemical interactions that eventually led to life, every stage represented a complete, functional system within its context.
 
-This applies to the evolutionary stages of life – from self-replicating genetic molecules to the early, barely sighted fish, from the mighty dinosaurs to humans with their technological achievements. Each stage in the evolutionary ladder was a functional, deliverable unit in its own right. Let's now refocus this perspective on product development.
+When we consider the evolution of software in the context of product creation, it's useful to draw a parallel with the natural world.
 
-The process of building and delivering products can be approached in two distinct ways.
-<BlogImage src={original} />
+Think of the development of animal species: they didn't appear overnight in their current forms, nor did they exist as incomplete fragments at any stage. Each time an animal is born, its a fully functional complete animal. This has applied to all evolutionary stages of life – from the primordial self-replicating genetic molecules, to the early worms and fish... to the the mighty dinosaurs and eventually humans with their technological achievements. Each stage in the evolutionary ladder was a functional, deliverable unit in its own right.
 
-One method involves constructing individual, non-functional components across several iterations, with the end goal of assembling these into a final, optimized product that fulfills the original vision. This approach, while ambitious, carries significant risk and offers limited immediate value. Its major drawback is the absence of a valuable product at any stage until completion.
+Let's refocus this perspective on product development.
 
-The alternative method involves developing your product in such a way that each iteration results in a fully functional and deliverable state. This is achieved by defining the final product and then planning iterations that each contribute an incremental, evolutionary improvement in value.
+The process of building and delivering products can be approached in at least two distinct ways.
+<BlogImage src={original} link="https://bluenotes.anz.com/posts/2017/11/testing-learning-and-finding-your-skateboard" />
 
-Each approach has its own set of advantages and disadvantages, requiring careful consideration of the context in which they are applied. For instance, small tactical tasks, bug fixes, or minor refactors might not necessitate iterations over Acceptable States of Evolvable Deliverables. It's also worth noting that producing a finished deliverable in each iteration may lead to some components being discarded in subsequent iterations.
+The image above (borrowed from Henrik Knilberg) shows the two approaches I'd like to discuss.
+
+**The High Risk Approach (Top Approach)**
+
+On the top, we have the assembly of a car - and only a car - where a wheel is created, then a chassis, then a body, and then the final car.
+
+This approach, while ambitious, carries significant risk and offers limited immediate value. Its major drawback is the absence of a valuable product at any stage until completion - a process that can span months or years.
+
+**The Iterative Approach**
+
+On the bottom, we see an evolution of the product which finally becomes a car.
+
+This approach involves developing product in such a way that each iteration results in a fully functional and deliverable state. For example, a fully functioning skateboard, then a scooter, and so on. This is achieved by defining the final product and then planning iterations that each contribute an incremental, evolutionary improvement in value. The challege of course is to be able to envision the final product and then plan the iterations that will lead to it, where each iteration is a **acceptatable deliverable state**.
+
+This is the **Iterative Planning** approach.
+
+**The Advantages of Iterative Planning**
+
+Each approach has its own set of advantages and disadvantages, requiring careful consideration of the context in which they are applied. For instance, small tactical tasks, bug fixes, or minor refactors might not necessitate iterations over Acceptable States of the Evolvable Deliverable. It's also worth noting that producing a finished deliverable in each iteration may lead to some components being discarded in subsequent iterations.
 
 However, when iterations are beneficial, one key advantage is the clarity in choosing a stopping point. Engineering and product teams can collaboratively assess the value of proceeding to the next iteration at any time.
 
@@ -71,24 +93,28 @@ In summary, iterative planning in software development offers a robust framework
 
 
 ## Section 3: Knowing When to Apply Iterative Planning
+
 Understanding when to employ iterative planning is as crucial as the methodology itself. It's essential to remember that no single approach is absolute or universally applicable. Sometimes, iterative planning may not be the most efficient path, especially considering that planning itself incurs overhead. Applying this method to tasks that are overly simple, for instance, can create unnecessary complexity and waste valuable resources.
 
 Some good guidelines on when to apply iterative planning include:
 
-Complex Projects: Iterative planning is particularly effective for complex projects where the end goal might evolve over time. It allows for flexibility and adaptability, essential in managing intricate or multifaceted tasks.
+**Complex Projects**: Iterative planning is particularly effective for complex projects where the end goal might evolve over time. It allows for flexibility and adaptability, essential in managing intricate or multifaceted tasks.
 
-Projects with Uncertain Requirements: If you're dealing with a project where requirements are expected to change or are not fully defined from the start, iterative planning can help. It allows for regular reassessment and realignment with evolving needs.
+**Projects with Uncertain Requirements**: If you're dealing with a project where requirements are expected to change or are not fully defined from the start, iterative planning can help. It allows for regular reassessment and realignment with evolving needs.
 
-Long-Term Projects: For projects that span a considerable duration, iterative planning helps in maintaining momentum and clarity. It breaks down the overwhelming scope into manageable parts, making progress more tangible and measurable.
+**Long-Term Projects**: For projects that span a considerable duration, iterative planning helps in maintaining momentum and clarity. It breaks down the overwhelming scope into manageable parts, making progress more tangible and measurable.
 
-High-Risk Projects: In scenarios where there's a high risk of failure or uncertainty, iterative planning allows for regular evaluation and course correction. This minimizes risk by avoiding long periods of work without review or testing.
+**High-Risk Projects**: In scenarios where there's a high risk of failure or uncertainty, iterative planning allows for regular evaluation and course correction. This minimizes risk by avoiding long periods of work without review or testing.
 
-Customer-Focused Projects: When a project's success is heavily dependent on user feedback or market trends, iterative planning is invaluable. It facilitates early and continuous user engagement, ensuring the product remains aligned with user needs and preferences.
+**Customer-Focused Projects**: When a project's success is heavily dependent on user feedback or market trends, iterative planning is invaluable. It facilitates early and continuous user engagement, ensuring the product remains aligned with user needs and preferences.
 
-Projects Requiring Team Collaboration: Iterative planning can enhance collaboration in teams, especially in cross-functional setups. It provides regular checkpoints for team members to sync up, review progress, and align on goals.
+**Projects Requiring Team Collaboration**: Iterative planning can enhance collaboration in teams, especially in cross-functional setups. It provides regular checkpoints for team members to sync up, review progress, and align on goals.
 
 However, it’s important to be judicious in applying iterative planning. For straightforward tasks with clear objectives and known outcomes, a more linear approach might be more efficient. The key is to assess each project on its own merits and choose the methodology that optimizes time, resources, and effort while delivering the best possible outcome.
-Section 4: Preconceptions
+
+
+## Section 4: Addressing Preconceptions and Biases from the start
+
 Addressing preconceptions is crucial in any project, especially when these biases may affect our perception of its potential success or failure. A personal experience of mine with a signal detection project highlights this point. Despite significant doubts about achieving the necessary sensitivity for detecting a benchmark signal, I realized my concerns were, to a large extent, personal preconceptions. My reservations, mostly unrecognized by others, influenced my contributions more than they should have.
 
 It’s essential to distribute such concerns across the team. The team as a whole should actively engage in identifying potential obstacles, contemplating their implications, and devising strategies to mitigate them. By sharing these issues, they become collective challenges rather than individual burdens.
@@ -98,6 +124,7 @@ The real power in this approach lies in not having to ‘own’ problems alone. 
 This method of distributing concerns and responsibilities fosters a more collaborative, less stressful environment. It encourages open communication and shared problem-solving, ensuring that challenges are approached with collective wisdom rather than isolated efforts.
 
 ## Conclusion
+
 The journey of software development, much like any creative or innovative process, is filled with complexities and nuances. This blog post has navigated through the essential facets of iterative planning, understanding its application, and addressing preconceptions within team dynamics. We've seen how iterative planning is not a one-size-fits-all solution but rather a strategic approach best suited for complex, long-term, and high-risk projects. It emphasizes the importance of adaptability, frequent reassessment, and the value of incremental progress.
 
 Equally important is the understanding of when and how to apply iterative planning. By recognizing the specific contexts and projects where this approach yields the most benefit, teams can avoid unnecessary overhead and focus their energies where it matters most. This discernment is key to efficient and effective software development.
