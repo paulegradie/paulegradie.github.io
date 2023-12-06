@@ -66,6 +66,8 @@ On the top, we have the assembly of a car - and only a car - where a wheel is cr
 
 This approach, while ambitious, carries significant risk and offers limited immediate value. Its major drawback is the absence of a valuable product at any stage until completion - a process that can span months or years. This is inherently risky - what if a technical roadblock is encountered? What if you lose funding? What if your timeline blows out? What if the product is no longer relevant by the time it's finished? What if the product is not what the customer wants? There are a lot of ways this approach can fail.
 
+This is the **All or Nothing** approach.
+
 ### The Iterative Approach (Bottom of image)
 
 On the bottom, we see an evolution of the product which finally becomes a car.
@@ -74,26 +76,41 @@ This approach involves developing product in such a way that each iteration resu
 
 This is the **Iterative Planning** approach.
 
-### The Advantages of Iterative Planning
+Each of these approaches has its own set of advantages and disadvantages, requiring careful consideration of the context in which they are applied. For instance, small tactical tasks, bug fixes, or minor refactors might not necessitate iterations.
 
-Each approach has its own set of advantages and disadvantages, requiring careful consideration of the context in which they are applied. For instance, small tactical tasks, bug fixes, or minor refactors might not necessitate iterations over Acceptable States of the Evolvable Deliverable. It's also worth noting that producing a finished deliverable in each iteration may lead to some components being discarded in subsequent iterations.
+## Section 3: The Advantages of Iterative Planning
 
-However, when iterations are beneficial, one key advantage is the clarity in choosing a stopping point. Engineering and product teams can collaboratively assess the value of proceeding to the next iteration at any time.
+In scenarios where iterations are beneficial - there are numerous advantages to be had.
 
-Additionally, this iterative approach allows for earlier customer engagement and feedback, which can be managed through feature toggles or early access programs. This is particularly valuable for ensuring the product develops in the right direction. As iterations are delivered, options like A/B testing between current and upcoming versions, or between two competing alternatives for the next iteration, become available.
+**Clear Stopping Points**
 
-A noticeable benefit of this method is the overall reduction in waste over the project's lifespan. Despite some elements being discarded during the evolution of the product or feature, each component contributes towards a functional product at the end of each iteration.
+When iterations produce fully viable incremental deliverables - engineering and product teams can collaboratively assess the value of proceeding to the next iteration at any time. Iterabtive planning incidently produces a series of clear stopping points. This is in contrast to the 'All or Nothing' approach where the only stopping point is the final product.
 
-One of the most significant benefits of iterative planning and delivery is the composability of work. In this approach, each piece of work, or module, is designed to be both independent and integrable. This means that every iteration results in a functional module that can be combined with others to enhance the overall product. This modular approach not only simplifies the development process but also provides flexibility. If a certain module needs to be modified or replaced in future iterations, it can be done without disrupting the entire system, ensuring a smoother evolution of the product.
+**Early Customer Feedback**
+
+Early customer engagement and feedback is often vital to the success of a product because it allows teams to ensure the product develops in the right direction. As iterations are delivered, options like A/B testing between current and upcoming versions, or between two competing alternatives for the next iteration, become available.
+
+**Reduction of overall waste**
+
+A noticeable benefit of this method is the overall reduction in waste over the project's lifespan. Despite some elements being discarded during the evolution of the product or feature, each component contributes towards a functional product at the end of each iteration. There is lower potential for the development of unnecessary pieces or features that may not be used in the final product.
+
+**Composability of Work**
+
+Planned work should typically be decomposed into units of composable work in a way that doesn't encapsulate too much work in a single unit. There is an art to decomposing work into a units of appropriate granularity, however when done well, you're able to recompose your work in ways that make sense as you move through iterations. Having clear iterations give you a platform to re-evaluate and re-compose your work as you go.
+
+**Visibility of Work**
 
 Iterative development enhances the visibility of work progress. By breaking down the project into smaller, manageable iterations, it becomes easier to track and measure the flow rate of work. This visibility is crucial for project management as it allows for better forecasting, resource allocation, and identifying bottlenecks early in the process. With each iteration, the team can evaluate its pace, efficiency, and effectiveness, making necessary adjustments to improve subsequent iterations.
 
-Adopting an iterative approach also significantly boosts team morale and satisfaction. When work is broken down into smaller, achievable goals, teams experience the satisfaction of completing tasks and ‘moving them across the board’ more frequently. This sense of progress is essential for maintaining high levels of motivation and engagement among team members. Furthermore, seeing tangible results at the end of each iteration validates their effort and fosters a sense of accomplishment.
+**Enhanced Team Satisfaction**
+
+Adopting an iterative approach can also significantly boost team morale and satisfaction. When work is broken down into smaller, achievable goals, teams experience the satisfaction of completing tasks and ‘moving them across the board’ more frequently. This sense of progress is essential for maintaining high levels of motivation and engagement among team members. Furthermore, seeing tangible results at the end of each iteration validates their effort and fosters a sense of accomplishment.
+
 
 In summary, iterative planning in software development offers a robust framework for delivering products that are not only high in quality but also aligned with customer needs and market demands. By focusing on creating deliverable and functional units at every stage, ensuring the composability of work, maintaining visibility of the workflow, and enhancing team satisfaction, this approach paves the way for a more efficient, flexible, and successful software development process.
 
 
-## Section 3: Knowing When to Apply Iterative Planning
+## Section 4: Knowing When to Apply Iterative Planning
 <BlogImage src={thinking} />
 Understanding when to employ iterative planning is as crucial as the methodology itself. It's essential to remember that no single approach is absolute or universally applicable. Sometimes, iterative planning may not be the most efficient path, especially considering that planning itself incurs overhead. Applying this method to tasks that are overly simple, for instance, can create unnecessary complexity and waste valuable resources.
 
@@ -113,10 +130,9 @@ Some good guidelines on when to apply iterative planning include:
 
 However, it’s important to be judicious in applying iterative planning. For straightforward tasks with clear objectives and known outcomes, a more linear approach might be more efficient. The key is to assess each project on its own merits and choose the methodology that optimizes time, resources, and effort while delivering the best possible outcome.
 
+## Section 5: Addressing Preconceptions and Biases from the start
 
-## Section 4: Addressing Preconceptions and Biases from the start
-
-Addressing preconceptions is crucial in any project, especially when these biases may affect our perception of its potential success or failure. A personal experience of mine with a signal detection project highlights this point. Despite significant doubts about achieving the necessary sensitivity for detecting a benchmark signal, I realized my concerns were, to a large extent, personal preconceptions. My reservations, mostly unrecognized by others, influenced my contributions more than they should have.
+Addressing preconceptions and biases you or the team have about the project is crucial in any project, especially when they may affect our perception of its potential success or failure. A personal experience of mine with a signal detection project highlights this point. Despite significant doubts about achieving the necessary sensitivity for detecting a benchmark signal, I realized my concerns were, to a large extent, personal preconceptions. My reservations, mostly unrecognized by others, influenced my contributions more than they should have.
 
 It’s essential to distribute such concerns across the team. The team as a whole should actively engage in identifying potential obstacles, contemplating their implications, and devising strategies to mitigate them. By sharing these issues, they become collective challenges rather than individual burdens.
 
