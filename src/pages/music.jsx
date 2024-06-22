@@ -8,19 +8,19 @@ import { SoundCloudIcon } from '@/components/SocialIcons'
 let playlists = [
   {
     year: "2023",
-    title: "Around the Sun",
+    title: "Shoot For The Stars",
     iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1622034748&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
   },
-  {
-    year: "2022",
-    title: "We Done Made Yo Heat",
-    iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1344579439&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
-  },
-  {
-    year: "2016",
-    title: "International Love",
-    iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/285687511&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
-  },
+  // {
+  //   year: "2022",
+  //   title: "We Done Made Yo Heat",
+  //   iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1344579439&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+  // },
+  // {
+  //   year: "2016",
+  //   title: "International Love",
+  //   iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/285687511&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+  // },
 
 ]
 
