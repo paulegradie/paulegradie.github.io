@@ -55,17 +55,15 @@ export default function About() {
                                 This approach is informed by experience - both from in the realm of software as well as previous disciplines that I’ve worked in.
                             </p>
                             <p>
-                                Before I transitioned into software engineering, I was a biologist. I have a PhD in developmental genetics from the University of Melbourne, where I employed a mixture of wet lab and computational skills to answer research questions about the develop of reproductive systems. I became deeply interested and familiar with the process of evolution during this phase of my career - which has had a substantial impact on how I understand not only change, but the risks associated with it.
+                                Before I transitioned into software engineering, I was a biologist. I have a PhD in developmental genetics from the University of Melbourne, where I employed a mixture of wet lab and computational techniques to answer research questions about the develop of reproductive systems. I became deeply interested and familiar with the process of evolution during this phase of my career - which has had a substantial impact on how I understand not only change, but the risks associated with it.
                             </p>
                             <p>
-
-                                I’m also interested in understanding how to effectively build strong, functional teams. Teams are just people, and people are complex. People come with infinite variation in their experience, skills, personalities, needs, triggers, motivations, and much more. I enjoy learning about people, understanding their strengths and weaknesses, and how to combine them to achieve outstanding results. I also understand that people have their limits, so I also think about how to achieve this without causing burnout.
+                                I’m also interested in understanding how to effectively build strong, functional teams. Teams are people, and people are complex. People come with infinite variation in their experience, skills, personalities, needs, triggers, motivations, and much more. I enjoy learning about people, understanding their strengths and weaknesses, and how to combine them to achieve outstanding results. I also understand that people have their limits, so I also think about how to achieve this without causing burnout.
                             </p>
                             <p>
                                 I’m not selective about the people I work with, but I do have high expectations for those whom I do. Why? I invest a lot into being the best that I can be. That doesn’t mean I expect people to do more than is required (like working out of hours), but it does mean that I expect people to be engaged.
                             </p>
                             <p>
-
                                 I hope this gives you a little bit of insight into the type of person I am. There is far more to my story, so if you’re interested to know more - don’t hesitate to get in touch.
                             </p>
                         </div>
