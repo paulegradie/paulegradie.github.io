@@ -29,10 +29,7 @@ export function Resume() {
             title: 'Software Engineer',
             logo: octopusLogo,
             start: '2020',
-            end: {
-                label: "Present",
-                dateTime: new Date().getFullYear()
-            },
+            end: '2024'
         },
         {
             company: 'Palavyr - Self Employed',
