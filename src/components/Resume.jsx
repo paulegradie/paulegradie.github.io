@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/Button';
-import empowerLogo from '@/images/logos/empowerFinance.png';
+import empowerLogo from '@/images/logos/empower-finance.png';
 import octopusLogo from '@/images/logos/octopus-logo.svg';
 import palavyr from '@/images/logos/palavyr-logo.png';
 import zekdeskLogo from '@/images/logos/zendesk-logo.svg';
