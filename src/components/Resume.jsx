@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/Button';
+import empowerLogo from '@/images/logos/empowerFinance.png';
 import octopusLogo from '@/images/logos/octopus-logo.svg';
 import palavyr from '@/images/logos/palavyr-logo.png';
 import zekdeskLogo from '@/images/logos/zendesk-logo.svg';
@@ -13,6 +14,16 @@ import { SchoolIcon } from '@/components/SchoolIcon';
 
 export function Resume() {
     let resume = [
+        {
+            company: 'Empower Finance',
+            title: 'Senior Software Engineer',
+            logo: empowerLogo,
+            start: '2024',
+            end: {
+                label: "Present",
+                dateTime: new Date().getFullYear()
+            },
+        },
         {
             company: 'Octopus Deploy',
             title: 'Software Engineer',
