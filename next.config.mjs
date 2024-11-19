@@ -8,6 +8,15 @@ const isProd = process.env.NODE_ENV === 'production'
 let nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  async redirects() {
+    return [
+      {
+        source: '/Party-Bots',
+        destination: 'https://coin-party.github.io/Party-Bots/',
+        permanent: true,
+      },
+    ];
+  },
 }
 
 if (isProd) {
