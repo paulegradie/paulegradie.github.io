@@ -8,8 +8,16 @@ import palavyrWidgetLogo from "@/images/logos/palavyr-chat-widget-logo.png"
 import catPirate from "@/images/logos/cat-pirate-quotes-logo.png"
 import seqpyplot from "@/images/logos/seqpyplot-logo.png"
 import queryStudio from "@/images/logos/qwerkystudio-logo.png"
+import partybots from "@/images/logos/partybots-logo.png"
 
 const projects = [
+  {
+    name: 'Party Bots!',
+    description: 'Party Bots! Lets get ready to party!',
+    link: { href: 'https://coin-party.github.io/Party-Bots/', label: 'Party Bots' },
+    logo: partybots,
+    className: "w-64 rounded-lg m-2",
+  },
   {
     name: 'Sailfish',
     description: 'Sailfish - a user friendly performance test runner for .NET',
