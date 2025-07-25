@@ -98,11 +98,15 @@ function groupByYear(arr) {
 }
 
 function Divider(props) {
-	return (<div className="relative flex py-5 items-center">
-		<div className="flex-grow border-t border-gray-400"></div>
-		<span className="flex-shrink mx-4 text-4xl text-gray-400">{props.year}</span>
-		<div className="flex-grow border-t border-gray-400"></div>
-	</div>)
+	return (
+		<div className="relative flex py-8 items-center">
+			<div className="flex-grow border-t border-zinc-200/20"></div>
+			<div className="flex-shrink mx-6 px-6 py-3 bg-zinc-50/5 backdrop-blur-sm rounded-2xl border border-zinc-200/10">
+				<span className="text-3xl font-bold text-zinc-300">{props.year}</span>
+			</div>
+			<div className="flex-grow border-t border-zinc-200/20"></div>
+		</div>
+	);
 }
 
 
