@@ -63,6 +63,141 @@ The document also preserved all our valuable improvements:
 - Support for complex variable providers
 - Robust error handling throughout the codebase
 
+## The Complete Context Transition Document
+
+Here's the actual context transition document that was generated for this debugging session. This serves as a concrete example of what an effective handoff document looks like:
+
+```markdown
+# Context Transition Document for Sailfish Test Discovery Issue
+
+## Problem Summary
+The Sailfish test framework is experiencing a test discovery issue where many test classes are showing as "Pending" (ignored) in the test runner, with only the `AllTheFeatures` test class actually running. The user has identified that `SailfishVariablesClassExample.cs` is specifically problematic.
+
+## Key Findings
+
+### 1. Issue is Pre-Existing
+- **Confirmed**: The issue exists on the `main` branch (122 test cases from 1 class)
+- **Confirmed**: The issue persists on `pg/support-complex-variables` branch (200 test cases from 1 class)
+- **Conclusion**: This is NOT caused by our recent complex variables feature work
+
+### 2. Test Discovery Behavior
+- Only `AllTheFeatures` test class is being discovered and executed
+- Other test classes like `MultipleSailfishVariablesExample`, `SailfishVariablesClassExample`, `OrderingExample`, etc. are ignored
+- The user specifically identified `SailfishVariablesClassExample.cs` as problematic
+
+### 3. Investigation Results
+- **Assembly Loading**: Not a `ReflectionTypeLoadException` issue in test adapter context
+- **Source Code Analysis**: `RetrieveClassFullName` method was improved but didn't resolve the issue
+- **Exception Handling**: Added robust exception handling throughout test discovery pipeline
+- **Disabled Tests**: Some tests are explicitly disabled, but that doesn't explain all missing tests
+
+## Current Branch State: `pg/support-complex-variables`
+
+### Valuable Improvements Made (KEEP THESE):
+1. **TypeLoader.cs**: ReflectionTypeLoadException handling + disabled test filtering
+2. **TestDiscovery.cs**: Exception handling for test case assembly failures
+3. **DiscoveryAnalysisMethods.cs**: Support for both namespace declaration types
+4. **PropertySetGenerator.cs**: Use SailfishException instead of generic Exception
+5. **IterationVariableRetriever.cs**: Duplicate variable detection + SailfishException
+6. **Core complex variables feature**: All the main feature work (TestCaseVariables.cs, IVariableProvider.cs, etc.)
+
+### Files Modified:
+```
+source/Sailfish.TestAdapter/Discovery/DiscoveryAnalysisMethods.cs
+source/Sailfish.TestAdapter/Discovery/TestDiscovery.cs
+source/Sailfish.TestAdapter/Discovery/TypeLoader.cs
+source/Sailfish/Contracts.Public/Models/TestCaseVariables.cs
+source/Sailfish/Execution/IVariableProvider.cs
+source/Sailfish/Execution/IterationVariableRetriever.cs
+source/Sailfish/Execution/PropertySetGenerator.cs
+```
+
+## Specific Problem File
+**`source/PerformanceTests/ExamplePerformanceTests/SailfishVariablesClassExample.cs`**
+- This file uses the new complex variables feature (`SailfishVariables<T, TProvider>`)
+- User confirmed this specific file causes test discovery issues
+- This is likely the key to understanding the root cause
+
+## Test Discovery Pipeline
+The test discovery process involves:
+1. **TypeLoader.LoadSailfishTestTypesFrom**: Load types from assembly
+2. **DiscoveryAnalysisMethods.CompilePreRenderedSourceMap**: Analyze source code and match with loaded types
+3. **TestCaseItemCreator.AssembleTestCases**: Generate test cases for each class
+4. Matching logic: `performanceTestType = performanceTestTypes.SingleOrDefault(x => x.FullName == classFullName)`
+
+## Complex Variables Feature Context
+We've been implementing support for complex object instances in Sailfish variables using the pattern:
+```csharp
+public SailfishVariables<MyType, MyTypeProvider> Variables { get; set; }
+```
+
+This allows users to define complex variable providers that return lists of complex objects for performance testing.
+
+## Repository Information
+- **Repository**: `G:\code\Sailfish`
+- **Current Branch**: `pg/support-complex-variables`
+- **Remote**: `git@github.com:paulegradie/Sailfish.git`
+- **Main Branch**: `main`
+
+## Next Steps for New Agent
+1. **Examine `SailfishVariablesClassExample.cs`** - This is the smoking gun
+2. **Test the specific file** - Run tests targeting just this class to reproduce the issue
+3. **Compare with working test class** - Analyze differences between this and `AllTheFeatures.cs`
+4. **Focus on complex variables implementation** - The issue likely relates to our new feature
+5. **Check variable provider instantiation** - May be an issue with how complex variable providers are being instantiated during test discovery
+
+---
+
+# My Hypothesis
+
+## Primary Hypothesis: Complex Variable Provider Instantiation Issue
+
+I believe the issue is in how the test discovery process handles the new `SailfishVariables<T, TProvider>` pattern during test case generation. Here's my reasoning:
+
+### 1. **Timing of the Discovery**
+The user identified that `SailfishVariablesClassExample.cs` specifically causes the issue. This file uses our new complex variables feature, which suggests the problem occurs during the variable generation phase of test discovery.
+
+### 2. **Variable Provider Instantiation**
+The test discovery process needs to instantiate variable providers to determine how many test cases to generate. For complex variables, this means:
+- Instantiating the `TProvider` class
+- Calling the provider's method to get the variable list
+- This could fail if the provider has dependencies or constructor requirements
+
+### 3. **Exception Swallowing**
+Even with our improved exception handling, there might be a place where exceptions during variable provider instantiation are being caught and causing the entire test class to be silently skipped.
+
+### 4. **Type Loading vs Runtime Context**
+The complex variable providers might require a different runtime context than what's available during test discovery. The test discovery happens in the test adapter process, which might not have the same dependency injection or runtime setup as the actual test execution.
+
+### 5. **Specific Failure Point**
+I suspect the issue occurs in:
+- `PropertySetGenerator.GenerateSailfishVariableSets()` when it tries to instantiate complex variable providers
+- Or in `IterationVariableRetriever.GetComplexVariables()` when it tries to resolve the provider types
+
+### 6. **Why AllTheFeatures Works**
+`AllTheFeatures` might work because it either:
+- Doesn't use complex variables
+- Uses simpler variable patterns that don't require complex instantiation
+- Has different dependency injection setup that works in the test discovery context
+
+## Recommended Investigation Path
+1. **Add detailed logging** to the complex variable instantiation code
+2. **Test with minimal complex variable example** to isolate the issue
+3. **Compare the variable types** used in `AllTheFeatures` vs `SailfishVariablesClassExample`
+4. **Check if the issue is provider instantiation** or something else in the complex variables pipeline
+
+The fix will likely involve making the complex variable provider instantiation more robust during test discovery, possibly by adding better error handling or changing how providers are instantiated in the discovery context.
+```
+
+This document demonstrates several key principles of effective context transitions:
+
+1. **Comprehensive Problem Context**: It captures not just what the issue is, but what has been tried and ruled out
+2. **Preserved Progress**: All valuable improvements are documented to prevent losing work
+3. **Specific Focus Areas**: It identifies the exact files and components that need attention
+4. **Technical Architecture**: It explains the relevant system components and their relationships
+5. **Actionable Hypothesis**: It provides a concrete theory with reasoning and next steps
+6. **Repository State**: It captures the exact branch, files modified, and current state
+
 ## The Successful Handoff
 
 Armed with this context document, I started a fresh conversation with a new AI agent. The transition was seamless:

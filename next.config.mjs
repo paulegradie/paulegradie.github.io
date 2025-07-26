@@ -8,6 +8,8 @@ const isProd = process.env.NODE_ENV === 'production'
 let nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  output: 'export',
+  trailingSlash: true,
   async redirects() {
     return [
       {
