@@ -16,6 +16,7 @@ function ArrowLeftIcon(props) {
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
       <path
         d="M7.25 11.25 3.75 8m0 0 3.5-3.25M3.75 8h8.5"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -51,7 +52,7 @@ export function ArticleLayout({
         <title>{`${meta.title} - Paul Gradie`}</title>
         <meta name="description" content={meta.description} />
       </Head>
-      <Container className="mt-16 lg:mt-32">
+      <Container className="mt-24 lg:mt-40">
         <div className="xl:relative">
           <div className="flex flex-col xl:flex-row xl:gap-12">
             {/* Main content */}
@@ -61,9 +62,9 @@ export function ArticleLayout({
                   type="button"
                   onClick={() => router.push("/articles")}
                   aria-label="Go back to articles"
-                  className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition dark:border dark:border-zinc-700/50 dark:bg-background-dark dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20 lg:absolute lg:left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
+                  className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-50/10 backdrop-blur-sm shadow-lg shadow-zinc-800/10 ring-1 ring-zinc-200/20 transition-all duration-200 hover:bg-teal-500/10 hover:ring-teal-400/30 hover:shadow-teal-500/20 dark:bg-zinc-800/50 dark:ring-zinc-700/50 dark:hover:bg-teal-500/10 dark:hover:ring-teal-400/30 lg:absolute lg:left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
                 >
-                  <ArrowLeftIcon className="h-4 w-4 stroke-zinc-500 transition group-hover:stroke-zinc-700 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-400" />
+                  <ArrowLeftIcon className="h-4 w-4 stroke-teal-500 transition group-hover:stroke-teal-400 dark:stroke-teal-400 dark:group-hover:stroke-teal-300" />
                 </button>
               )}
               <article>
@@ -91,7 +92,7 @@ export function ArticleLayout({
             <BlogSidebar articles={articles} currentArticle={meta} />
           </div>
           <Divider />
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-between items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {previousArticle && (
               <NavCard
                 direction="Previous"
@@ -104,6 +105,7 @@ export function ArticleLayout({
                 direction="Next"
                 article={nextArticle}
                 onClick={() => router.push(`/articles/${nextArticle?.slug}`)}
+                className={!previousArticle ? "md:col-start-2" : ""}
               />
             )}
           </div>
@@ -114,20 +116,20 @@ export function ArticleLayout({
 }
 
 function NavCard(props) {
-  const { direction, article, onClick } = props;
+  const { direction, article, onClick, className = "" } = props;
   const isPrevious = direction === "Previous";
 
   return (
     <div
       onClick={onClick}
-      className="group relative flex flex-col justify-between p-6 bg-zinc-50/5 backdrop-blur-sm border border-zinc-200/10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:bg-zinc-50/10 hover:border-zinc-200/20 hover:-translate-y-1 max-w-sm min-h-[140px]"
+      className={`group relative flex flex-col justify-between p-6 bg-zinc-50/5 backdrop-blur-sm border border-zinc-200/10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:bg-zinc-50/10 hover:border-teal-400/20 hover:-translate-y-1 hover:shadow-teal-500/10 min-h-[140px] ${className}`}
     >
       {/* Direction indicator */}
       <div className="flex items-center gap-2 mb-3">
         {isPrevious ? (
-          <ArrowLeftIcon className="h-4 w-4 text-teal-400 group-hover:text-teal-300 transition-colors" />
+          <ArrowLeftIcon className="h-4 w-4 text-teal-500 group-hover:text-teal-400 transition-colors" />
         ) : (
-          <ArrowRightIcon className="h-4 w-4 text-teal-400 group-hover:text-teal-300 transition-colors" />
+          <ArrowRightIcon className="h-4 w-4 text-teal-500 group-hover:text-teal-400 transition-colors" />
         )}
         <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors">
           {direction}
@@ -230,10 +232,10 @@ function BlogSidebar({ articles, currentArticle }) {
 
 function Divider() {
   return (
-    <div className="relative flex py-8 items-center">
+    <div className="relative flex py-12 items-center">
       <div className="flex-grow border-t border-zinc-200/20"></div>
-      <div className="flex-shrink mx-6 px-4 py-2 bg-zinc-50/5 backdrop-blur-sm rounded-full border border-zinc-200/10">
-        <span className="text-sm font-medium text-zinc-300">More from me</span>
+      <div className="flex-shrink mx-6 px-4 py-2 bg-gradient-to-r from-teal-500/10 to-teal-400/10 backdrop-blur-sm rounded-full border border-teal-400/20 shadow-lg shadow-teal-500/5">
+        <span className="text-sm font-medium text-teal-300">Continue Reading</span>
       </div>
       <div className="flex-grow border-t border-zinc-200/20"></div>
     </div>

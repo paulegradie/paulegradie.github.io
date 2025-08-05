@@ -2,14 +2,15 @@ import nextMDX from '@next/mdx'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
 
-const isProd = process.env.NODE_ENV === 'production'
-
 /** @type {import('next').NextConfig} */
 let nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   output: 'export',
   trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
   async redirects() {
     return [
       {
@@ -19,15 +20,6 @@ let nextConfig = {
       },
     ];
   },
-}
-
-if (isProd) {
-  nextConfig = {
-    ...nextConfig,
-    images: {
-      unoptimized: true,
-    }
-  }
 }
 
 const withMDX = nextMDX({
