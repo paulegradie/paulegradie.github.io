@@ -116,7 +116,7 @@ function RecruiterContent() {
         </div>
         <h2 className="text-3xl font-bold text-zinc-200 mb-4">Welcome, Recruiter!</h2>
         <p className="text-lg text-zinc-400">
-          Thank you for taking the time to find the token. I'm seeking a Principal Engineer or Tech Lead
+          Thank you for taking the time to find the token. I&apos;m seeking a Principal Engineer or Tech Lead
           role with a US-based company that values innovation and technical excellence.
         </p>
       </div>
@@ -178,7 +178,7 @@ function RecruiterContent() {
         <div className="mt-6 p-4 bg-teal-600/5 border border-teal-500/10 rounded-lg">
           <p className="text-zinc-300 text-sm">
             <strong>Unique Value:</strong> The intersection of deep scientific research, AI/ML expertise,
-            and enterprise software engineering creates solutions others can't see. Ready to lead
+            and enterprise software engineering creates solutions others can&apos;t see. Ready to lead
             technical strategy and drive innovation at Principal Engineer / Tech Lead level.
           </p>
         </div>
@@ -187,7 +187,7 @@ function RecruiterContent() {
       <div className="mt-12 text-center">
         <p className="text-zinc-400 mb-4">
           Ready to discuss how I can drive technical innovation and team excellence at your company?
-          Let's connect and explore the possibilities.
+          Let&apos;s connect and explore the possibilities.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
