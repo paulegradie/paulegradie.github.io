@@ -21,7 +21,23 @@ module.exports = {
         'background-dark': '#121212',  // Almost Black - darker
         'text-dark': '#000000',  // Light Gray - brighter
         'success-dark': '#2F855A',  // Emerald Green - slightly darker
-        'error-dark': '#C53030'  // Red - slightly darker
+        'error-dark': '#C53030',  // Red - slightly darker
+
+        // Enhanced vibrant palette
+        'accent-warm': '#F59E0B',     // Amber-500 - warm accent
+        'accent-cool': '#3B82F6',     // Blue-500 - cool accent
+        'accent-creative': '#8B5CF6', // Violet-500 - creative accent
+        'accent-fresh': '#06B6D4',    // Cyan-500 - fresh accent
+        'github': '#F97316',          // Orange-500 - GitHub brand
+        'linkedin': '#0EA5E9',        // Sky-500 - LinkedIn brand
+      },
+
+      // Add gradient utilities
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'hero-gradient': 'linear-gradient(135deg, #1E293B 0%, #312E81 50%, #1E293B 100%)',
+        'card-gradient': 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
       }
     },
     fontSize: {

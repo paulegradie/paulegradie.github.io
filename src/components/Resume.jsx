@@ -12,6 +12,17 @@ import { BriefcaseIcon } from '@/components/BriefcaseIcon';
 import { SchoolIcon } from '@/components/SchoolIcon';
 
 
+// Helper function to get accent color classes
+function getAccentClasses(color) {
+    const colors = {
+        teal: 'ring-teal-400/30 bg-gradient-to-br from-teal-500/10 to-teal-400/5',
+        blue: 'ring-accent-cool/30 bg-gradient-to-br from-accent-cool/10 to-accent-cool/5',
+        violet: 'ring-accent-creative/30 bg-gradient-to-br from-accent-creative/10 to-accent-creative/5',
+        amber: 'ring-accent-warm/30 bg-gradient-to-br from-accent-warm/10 to-accent-warm/5'
+    };
+    return colors[color] || colors.teal;
+}
+
 export function Resume() {
     let resume = [
         {
@@ -23,13 +34,17 @@ export function Resume() {
                 label: "Present",
                 dateTime: new Date().getFullYear()
             },
+            type: 'current',
+            accentColor: 'teal'
         },
         {
             company: 'Octopus Deploy',
             title: 'Software Engineer',
             logo: octopusLogo,
             start: '2020',
-            end: '2024'
+            end: '2024',
+            type: 'engineering',
+            accentColor: 'blue'
         },
         {
             company: 'Palavyr - Self Employed',
@@ -37,13 +52,17 @@ export function Resume() {
             logo: palavyr,
             start: '2020',
             end: '2022',
+            type: 'entrepreneurial',
+            accentColor: 'violet'
         },
         {
             company: 'Zendesk',
             title: 'Data Science Engineer (AI team)',
             logo: zekdeskLogo,
             start: '2017',
-            end: '2020'
+            end: '2020',
+            type: 'ai',
+            accentColor: 'amber'
         },
     ];
 
@@ -53,28 +72,32 @@ export function Resume() {
             school: "University of Melbourne",
             start: '2014',
             end: '2017',
-            logo: unimelbLogo
+            logo: unimelbLogo,
+            accentColor: 'teal'
         },
         {
             degree: "Masters",
             school: "University of Connecticut",
             start: '2010',
             end: '2013',
-            logo: uconnLogo
+            logo: uconnLogo,
+            accentColor: 'blue'
         },
         {
             degree: "Bachelor of Science",
             school: "University of Connecticut",
             start: '2005',
             end: '2010',
-            logo: uconnLogo
+            logo: uconnLogo,
+            accentColor: 'violet'
         },
         {
             degree: "High School Diploma",
             school: "Putnam High School ",
             start: '2000',
             end: '2004',
-            logo: putnamLogo
+            logo: putnamLogo,
+            accentColor: 'amber'
         },
     ];
 
@@ -86,8 +109,8 @@ export function Resume() {
             </h2>
             <ol className="mt-6 space-y-4">
                 {resume.map((role, roleIndex) => (
-                    <li key={roleIndex} className="flex gap-4">
-                        <div className="relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                    <li key={roleIndex} className="flex gap-4 group">
+                        <div className={`relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-2 transition-all duration-200 group-hover:scale-105 ${getAccentClasses(role.accentColor)}`}>
                             <Image src={role.logo} alt="" className="h-14 w-14 bg-none rounded-full p-1 bg-white" unoptimized />
                         </div>
                         <dl className="flex flex-auto flex-wrap gap-x-2">
@@ -124,8 +147,8 @@ export function Resume() {
             </h2>
             <ol className="mt-6 space-y-4">
                 {education.map((edu, eduIndex) => (
-                    <li key={eduIndex} className="flex gap-4">
-                        <div className="border-2 relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                    <li key={eduIndex} className="flex gap-4 group">
+                        <div className={`relative mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-2 transition-all duration-200 group-hover:scale-105 ${getAccentClasses(edu.accentColor)}`}>
                             <Image src={edu.logo} alt="" className="h-14 w-14 rounded-full p-1 bg-white" unoptimized />
                         </div>
                         <dl className="flex flex-auto flex-wrap gap-x-2">

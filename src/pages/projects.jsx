@@ -17,6 +17,8 @@ const projects = [
     link: { href: 'https://coin-party.github.io/Party-Bots/', label: 'Party Bots' },
     logo: partybots,
     className: "w-64 rounded-lg m-2",
+    category: 'game',
+    accentColor: 'violet'
   },
   {
     name: 'Sailfish',
@@ -24,6 +26,8 @@ const projects = [
     link: { href: 'https://paulgradie.com/Sailfish', label: 'Sailfish' },
     logo: sailfishBanner,
     className: "w-64 rounded-lg m-2",
+    category: 'tool',
+    accentColor: 'teal'
   },
   {
     name: 'CatPirateQuotes',
@@ -31,6 +35,8 @@ const projects = [
     link: { href: 'https://github.com/paulegradie/CatPirateQuotes', label: 'Cat Pirate Quotes' },
     logo: catPirate,
     className: "w-16 rounded-lg m-2",
+    category: 'ai',
+    accentColor: 'amber'
   },
   {
     name: 'Qwerky Studio',
@@ -38,6 +44,8 @@ const projects = [
     link: { href: 'https://github.com/QwerkyDesigns/studio-portal', label: 'Qwerky Studio' },
     logo: queryStudio,
     className: "w-16 rounded-lg m-2",
+    category: 'ai',
+    accentColor: 'amber'
   },
   {
     name: 'Palavyr',
@@ -45,6 +53,8 @@ const projects = [
     link: { href: 'https://github.com/Palavyr/Palavyr', label: 'Palavyr' },
     logo: palavyrLogo,
     className: "w-16 rounded-lg m-2",
+    category: 'webapp',
+    accentColor: 'blue'
   },
   {
     name: 'Palavyr Chat Widget',
@@ -52,6 +62,8 @@ const projects = [
     link: { href: 'https://github.com/Palavyr/palavyr-chat-widget', label: 'palavyr-chat-widget' },
     logo: palavyrWidgetLogo,
     className: "w-32 rounded-lg m-2",
+    category: 'webapp',
+    accentColor: 'blue'
   },
   {
     name: 'SeqPyPlot',
@@ -59,8 +71,21 @@ const projects = [
     link: { href: 'https://github.com/paulegradie/SeqPyPlot', label: 'SeqPyPlot' },
     logo: seqpyplot,
     className: "w-32 rounded-lg m-2",
+    category: 'research',
+    accentColor: 'teal'
   },
 ]
+
+// Helper function to get project accent colors
+function getProjectAccentClasses(color) {
+  const colors = {
+    teal: 'ring-teal-400/40 bg-gradient-to-br from-teal-500/10 to-teal-400/5 hover:ring-teal-400/60',
+    blue: 'ring-accent-cool/40 bg-gradient-to-br from-accent-cool/10 to-accent-cool/5 hover:ring-accent-cool/60',
+    violet: 'ring-accent-creative/40 bg-gradient-to-br from-accent-creative/10 to-accent-creative/5 hover:ring-accent-creative/60',
+    amber: 'ring-accent-warm/40 bg-gradient-to-br from-accent-warm/10 to-accent-warm/5 hover:ring-accent-warm/60'
+  };
+  return colors[color] || colors.teal;
+}
 
 function LinkIcon(props) {
   return (
@@ -92,8 +117,8 @@ export default function Projects() {
           className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
         >
           {projects.map((project) => (
-            <Card as="li" key={project.name}>
-              <div className="relative z-10 flex items-center justify-center rounded-lg bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+            <Card as="li" key={project.name} className="group">
+              <div className={`relative z-10 flex items-center justify-center rounded-lg shadow-lg ring-2 transition-all duration-300 group-hover:scale-105 ${getProjectAccentClasses(project.accentColor)}`}>
                 {project.logo && (
                   <Image
                     src={project.logo}
@@ -103,12 +128,12 @@ export default function Projects() {
                   />
                 )}
               </div>
-              <h2 className="mt-6 text-base font-semibold text-zinc-200 dark:text-zinc-100">
+              <h2 className="mt-6 text-base font-semibold text-zinc-100 group-hover:text-white transition-colors duration-200">
                 <Card.Link href={project.link.href}>{project.name}</Card.Link>
               </h2>
               <Card.Description>{project.description}</Card.Description>
-              <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
-                <LinkIcon className="h-6 w-6 flex-none" />
+              <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition-colors duration-200 group-hover:text-teal-400 dark:text-zinc-200">
+                <LinkIcon className="h-6 w-6 flex-none group-hover:scale-110 transition-transform duration-200" />
                 <span className="ml-2">{project.link.label}</span>
               </p>
             </Card>

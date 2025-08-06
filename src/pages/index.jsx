@@ -24,8 +24,11 @@ export default function Home({ articles }) {
                     content="I`m Paul, a software engineer based in Melbourne, Aus."
                 />
             </Head>
-            <Container className="mt-9 w-full">
-                <div className="flex flex-col justify-center items-end md:flex-row md:justify-between md:flex-1 text-center">
+            <div className="relative">
+                {/* Hero gradient background */}
+                <div className="absolute inset-0 bg-hero-gradient opacity-30 rounded-3xl blur-3xl transform -rotate-1"></div>
+                <Container className="relative mt-9 w-full">
+                    <div className="flex flex-col justify-center items-end md:flex-row md:justify-between md:flex-1 text-center">
                     <div className="max-w-2xl text-center md:text-left">
                         <h1 className="text-4xl font-bold tracking-tight text-zinc-50 dark:text-zinc-100 sm:text-5xl">
                             Paul Gradie, PhD
@@ -48,17 +51,21 @@ export default function Home({ articles }) {
                     </div>
                     <div />
                     <div className="md:max-w-xs mt-3 md:mt-0 lg:max-w-none w-full md:w-1/4">
-                        <Image
-                            onClick={() => router.push("/about")}
-                            src={portraitImage}
-                            alt=""
-                            sizes="(min-width: 720px) 24rem, 15rem"
-                            className="aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 cursor-pointer"
-                        />
+                        <div className="relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 via-accent-creative to-teal-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
+                            <Image
+                                onClick={() => router.push("/about")}
+                                src={portraitImage}
+                                alt=""
+                                sizes="(min-width: 720px) 24rem, 15rem"
+                                className="relative aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 cursor-pointer ring-1 ring-teal-400/20 hover:ring-teal-400/40 transition-all duration-300"
+                            />
+                        </div>
                     </div>
-                </div>
-                <Divider />
-            </Container>
+                    </div>
+                    <Divider />
+                </Container>
+            </div>
             <Container className="mt-12 md:mt-14">
                 <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
                     <div className="flex flex-col gap-16">

@@ -98,13 +98,24 @@ function groupByYear(arr) {
 }
 
 function Divider(props) {
+	// Cycle through accent colors based on year
+	const getYearColor = (year) => {
+		const colors = [
+			'from-teal-500/20 to-teal-400/10 border-teal-400/30 text-teal-300',
+			'from-accent-creative/20 to-accent-creative/10 border-accent-creative/30 text-violet-300',
+			'from-accent-cool/20 to-accent-cool/10 border-accent-cool/30 text-blue-300',
+			'from-accent-warm/20 to-accent-warm/10 border-accent-warm/30 text-amber-300'
+		];
+		return colors[parseInt(year) % colors.length];
+	};
+
 	return (
-		<div className="relative flex py-8 items-center">
-			<div className="flex-grow border-t border-zinc-200/20"></div>
-			<div className="flex-shrink mx-6 px-6 py-3 bg-zinc-50/5 backdrop-blur-sm rounded-2xl border border-zinc-200/10">
-				<span className="text-3xl font-bold text-zinc-300">{props.year}</span>
+		<div className="relative flex py-8 items-center group">
+			<div className="flex-grow border-t border-zinc-200/20 group-hover:border-teal-400/40 transition-colors duration-300"></div>
+			<div className={`flex-shrink mx-6 px-6 py-3 bg-gradient-to-r backdrop-blur-sm rounded-2xl border shadow-lg transition-all duration-300 hover:scale-105 ${getYearColor(props.year)}`}>
+				<span className="text-3xl font-bold">{props.year}</span>
 			</div>
-			<div className="flex-grow border-t border-zinc-200/20"></div>
+			<div className="flex-grow border-t border-zinc-200/20 group-hover:border-teal-400/40 transition-colors duration-300"></div>
 		</div>
 	);
 }

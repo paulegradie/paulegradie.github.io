@@ -16,18 +16,24 @@ export default function About() {
                     content="I’m Paul Gradie. I live in Melbourne, where I build things."
                 />
             </Head>
-            <Container className="mt-16 sm:mt-32">
-                <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-                    <div className="lg:pl-20">
-                        <div className="max-w-xs px-2.5 lg:max-w-none">
-                            <Image
-                                src={portraitImage}
-                                alt=""
-                                sizes="(min-width: 1024px) 32rem, 20rem"
-                                className="aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
-                            />
+            <div className="relative">
+                {/* Background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-accent-creative/5 to-accent-cool/10 rounded-3xl blur-3xl transform rotate-1"></div>
+                <Container className="relative mt-24 sm:mt-32">
+                    <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
+                        <div className="lg:pl-20">
+                            <div className="max-w-xs px-2.5 lg:max-w-none">
+                                <div className="relative group">
+                                    <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 via-accent-creative to-accent-cool rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+                                    <Image
+                                        src={portraitImage}
+                                        alt=""
+                                        sizes="(min-width: 1024px) 32rem, 20rem"
+                                        className="relative aspect-square rotate-0 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 ring-2 ring-teal-400/30 hover:ring-teal-400/50 transition-all duration-300"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
                     <div className="lg:pl-20 mt-6 flex gap-6 justify-center md:justify-start">
                         <SocialLink
                             href="https://github.com/paulegradie"
@@ -41,13 +47,13 @@ export default function About() {
                         />
                     </div>
                     <div className="lg:order-first lg:row-span-2">
-                        <h1 className="text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-4xl">
+                        <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-zinc-100 to-teal-300 bg-clip-text text-transparent sm:text-4xl">
                             Hi - I’m Paul Gradie.
                         </h1>
-                        <h2 className="text-2xl font-bold tracking-tight text-zinc-400 dark:text-zinc-100 sm:text-2xl">
+                        <h2 className="text-2xl font-bold tracking-tight text-teal-400 dark:text-teal-300 sm:text-2xl mt-2">
                             So about me.
                         </h2>
-                        <div className="mt-6 space-y-7 text-base text-zinc-400 dark:text-zinc-400 text-justify">
+                        <div className="mt-6 space-y-7 text-base text-zinc-300 dark:text-zinc-400 text-justify leading-relaxed">
                             <p>
                                 I am a software engineer working mostly in the .NET ecosystem. I help companies build and reshape software to solve business problems using iterative delivery practices. My approach is to blend being principled with being pragmatic while slowly evolving towards a longer term vision. I find that this approach not only provides better transparency to stakeholder, it also yields a better sense of progress to the team and ensure we always deliver concrete value.
                             </p>
@@ -70,8 +76,9 @@ export default function About() {
                             </p>
                         </div>
                     </div>
-                </div>
-            </Container>
+                    </div>
+                </Container>
+            </div>
         </>
     )
 }

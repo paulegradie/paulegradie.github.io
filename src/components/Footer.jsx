@@ -17,10 +17,10 @@ export function Footer() {
   return (
     <footer className="mt-32">
       <Container.Outer>
-        <div className="border-t border-zinc-100 pb-16 pt-10 dark:border-zinc-700/40">
+        <div className="border-t border-gradient-to-r from-teal-400/20 via-zinc-200/20 to-teal-400/20 pb-16 pt-10 dark:border-zinc-700/40">
           <Container.Inner>
             <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-              <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-100 dark:text-zinc-200">
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-200 dark:text-zinc-200">
                 <NavLink href="/about">About</NavLink>
                 <NavLink href="/articles">Articles</NavLink>
                 <NavLink href="/projects">Projects</NavLink>

@@ -27,7 +27,7 @@ export function Card({ as: Component = 'div', className, children }) {
 Card.Link = function CardLink({ children, ...props }) {
   return (
     <>
-      <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-20 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl" />
+      <div className="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-gradient-to-br from-teal-500/10 via-accent-creative/5 to-teal-400/10 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 dark:from-teal-400/10 dark:via-accent-creative/5 dark:to-teal-500/10 sm:-inset-x-6 sm:rounded-2xl backdrop-blur-sm" />
       <Link {...props}>
         <span className="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl" />
         <span className="relative z-10">{children}</span>
@@ -38,7 +38,7 @@ Card.Link = function CardLink({ children, ...props }) {
 
 Card.Title = function CardTitle({ as: Component = 'h2', href, children }) {
   return (
-    <Component className="text-base font-semibold tracking-tight text-zinc-200 ">
+    <Component className="text-base font-semibold tracking-tight text-zinc-100 group-hover:text-white transition-colors duration-200">
       {href ? <Card.Link href={href}>{children}</Card.Link> : children}
     </Component>
   )
@@ -46,7 +46,7 @@ Card.Title = function CardTitle({ as: Component = 'h2', href, children }) {
 
 Card.Description = function CardDescription({ children }) {
   return (
-    <p className="relative z-10 mt-2 text-sm text-zinc-200 dark:text-zinc-400">
+    <p className="relative z-10 mt-2 text-sm text-zinc-300 group-hover:text-zinc-200 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition-colors duration-200">
       {children}
     </p>
   )
@@ -56,10 +56,10 @@ Card.Cta = function CardCta({ children }) {
   return (
     <div
       aria-hidden="true"
-      className="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500"
+      className="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500 group-hover:text-teal-400 transition-colors duration-200"
     >
       {children}
-      <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current" />
+      <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current group-hover:translate-x-1 transition-transform duration-200" />
     </div>
   )
 }
