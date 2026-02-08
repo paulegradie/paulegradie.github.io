@@ -1,0 +1,268 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { BlogImage } from '@/components/blog/BlogImage'
+import { Quote } from '@/components/blog/Quote'
+import { Objection, KeyPoint } from '@/components/blog/Callout'
+import diagram from './gdd-diagram.svg'
+import mindBlown from './the-universe-tim-and-eric-mind-blown.gif'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-02-07',
+  title: 'Guild Driven Development: The Review Guild Model for AI enabled development',
+  description: 'When code output is cheap, trust becomes the constraint. Guild Driven Development makes review the control surface that keeps systems coherent.',
+  series: 'New Models for AI-Enabled Engineering Teams',
+  seriesPart: 1,
+  tightListSpacing: false
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+<BlogImage src={mindBlown} />
+
+The pace of change and maturation across the AI industry is blowing my mind.
+
+Its not just that code gets written quicker - its that code stops being scarce. The fundamental structure against which software engineering teams operate - the way we work as is dictated by the way that code gets produced - is being upended.
+
+When the ground beneath our fingertips shifts, team structures must shift with it.
+
+<KeyPoint>In other words - We need a new way of dealing with the amount of code we're writing.</KeyPoint>
+
+If output becomes cheap at an acceptably low risk (and it is heading that way), the constraints move to:
+
+- deciding what should exist
+- keeping the system coherent while it changes rapidly
+- catching subtle breakage before it hits production
+- maintaining an honest map of what the system even is anymore
+
+In other words the main constrants become direction (of the code base's evolution) and trust (that the code and its direction are correct).
+
+That is where Guild Driven Development (GDD) comes in.
+
+## The Core Idea
+
+Guild Driven Development is an operating model where:
+
+- an Architect Commander owns direction (technical and product constraints)
+- an Agent Swarm produces implementation as tiny, reviewable diffs
+- the Review Guild is the control surface that decides what becomes real
+
+This is a practical response to a world where you can generate PRs endlessly. The bottleneck is no longer writing code. It is merging code.
+
+## Thought Experiment: Unlimited Output, Limited Trust
+
+Imagine a normal company codebase. Not a greenfield demo. A real system with sharp edges, "do not touch that" zones, and ten different ways to accomplish the same thing. Code where if you touch it, you'll likely break something.
+
+Moving through this kind of code base is slow. Its cognitively expensive. Its emotionally fraught. And its socially exhausting. Its just really really taxing no matter your level.
+
+Now add a swarm of agents that can:
+
+- read the repository
+- implement tasks
+- write tests
+- open PRs
+- respond to feedback
+
+<KeyPoint>Suddenly, you can create change faster than your organization can understand change.</KeyPoint>
+
+At first it feels like velocity. You understand how your AI tool let your devs write code so fast. And then the code reaches the PR. 
+
+The question is no longer "how do we build?" It is "how do we decide what is safe and coherent to ship?"
+
+That is what the Review Guild is for.
+
+## What the Review Guild Actually Is
+
+Regarding the name 'Review Guild'; I am using a more explicit name because it describes the role better than "reviewers" does.
+
+The Review Guild is:
+
+- the group with merge authority
+- the keepers of standards
+- the maintainers of coherence
+- the people who treat review as an active discipline, not a background chore
+
+This is not gatekeeping for ego. It is the system's immune response. Its the human-in-the-loop component of an AI driven development system.
+
+Here is my word of warning:
+
+In this age of AI assisted or driven development - it doesn't matter if you don't formalize a way of dealing with this influx of change. Your teams will silently invent it - but through pain. Additional PR load and pressure as devs assume they must deal with the additional review load. 
+
+Even if you do not formalize it, you will still have it. It will just exist as an invisible hierarchy with unclear rules. GDD makes it explicit, measurable, and improvable.
+
+<Quote>
+Review is not a speed bump. It is the control surface.
+</Quote>
+
+The guild can have any number of responsiblieies. Obviously the PR review, but the review guild can also be responsible for:
+
+- defining what "done" means for a given change
+- owning the release process
+- being the final arbiter of what is in the codebase
+
+You will have more reviewers than coders - where before those numbers were equal (or at least seemed to be - given the varying outputs of differnt people).
+
+## The One Rule That Makes This Work: Evolutionary Change
+
+Big PRs are where shipping confidence goes to die.
+
+Intent gets blurry. Reviewers miss things. Everyone approves because they are tired.
+
+Guild Driven Development only works if the Swarm outputs evolutionary slices:
+
+- each change is small
+- each change is locally testable
+- each change is reversible
+- each change has one reason to exist
+- each PR is reviewable in minutes, not hours
+
+This is not style. This is how you make a high throughput system stable. It is how you prevent an agent swarm from becoming a chaos generator.
+
+Of course - sometimes you must ship a larger change. That is fine. The key is that the system defaults to small changes, and large changes are the exception, not the rule.
+
+## The GDD Loop
+
+This is the loop you are building:
+
+1. Architect Commander defines direction and constraints
+2. Commander produces a task stream of micro-slices
+3. Agent Swarm converts slices into micro-PRs
+4. the Review Guild reviews, corrects, and merges
+5. mainline stays deployable
+6. production signals and review feedback flow back into the Commander's model (which can include agent memories)
+
+<BlogImage src={diagram} />
+
+That is the engine. The Review Guild is the name of the model because it is the part that prevents incoherent change from becoming reality.
+
+## Why GDD Scales Inside Existing Companies
+
+Existing systems are not hard because the code is hard. They are hard because they are socially hard:
+
+- too much context is tribal
+- boundaries are muddy
+- refactors get scary
+- migrations are "big bang" events
+- correctness is difficult to prove
+
+GDD attacks that by reducing how much of the system any one change needs to understand.
+
+If the Swarm is working in one bounded area, they do not need global understanding. They need:
+
+- local rules
+- clear seams
+- the ability to ship safe increments
+
+<KeyPoint>The Commander holds the map. The Swarm walks the terrain. The Guild verifies the steps.</KeyPoint>
+
+A critical aspect of this is that the review guild does not spend cognitive capacity writing code. They spend it on understanding the change and its impact - with the help of AI.
+
+## How You Actually Roll This Out Without Turning Your Org Into a Weird Cult
+
+Start with one team.
+
+### Step 1: Pick a Subsystem with Leverage
+
+Choose something that:
+
+- has visible pain
+- can be measured (incidents, lead time, deploy risk)
+- has semi-clear boundaries
+
+### Step 2: Write the Guild Rules
+
+The Review Guild needs a constitution. Practical rules like:
+
+- maximum scope per PR
+- what "behavior change" means
+- what needs tests
+- what needs a rollout flag
+- what requires a design note
+- what gets rejected on sight (risk patterns you know you hate)
+
+This is where teams stumble, because they do not like being explicit.
+
+<KeyPoint>Explicit rules are the difference between high throughput and high throughput garbage.</KeyPoint>
+
+### Step 3: Commander Builds the Slice Stream
+
+Not "implement feature X." More like:
+
+- create seam
+- characterize behavior
+- move one call site
+- move the next
+- introduce the new path behind a flag
+- measure
+- delete the old path
+
+<KeyPoint>This is the Commander's craft: turning large intent into a chain of safe steps.</KeyPoint>
+
+### Step 4: Swarm Produces PRs Continuously
+
+PRs are the artifact. PRs are the queue. PRs are the control surface.
+
+The Swarm's job is not to finish the project. It is to keep the conveyor moving without increasing risk.
+
+### Step 5: Treat Review as Work, Not Interruption
+
+If the review stays "something you do when you can," the system jams, people start batching PRs, and everything collapses back into big merges.
+
+The Review Guild is a real job:
+
+- predictable cadence
+- fast turnaround
+- consistent standards
+- tight feedback loops
+
+Rotate people through it if you want it to feel fair and to spread context. But treat it as a duty that matters.
+
+## The Restructure First Phase
+
+There is another piece that gets under-discussed:
+
+<KeyPoint>Before you can scale the Swarm, you often need to make the codebase swarmable.</KeyPoint>
+
+That means:
+
+- clearer seams
+- less coupling
+- reliable tests
+- consistent patterns
+- fewer "magic" pathways
+
+One high leverage use of GDD early is structural refactoring guided by a Commander. Not a rewrite. Not a heroic branch. A steady stream of small steps that make future change cheap.
+
+The first win is making the system easier to evolve. The second win is that the system then supports multiple swarms without them stepping on each other.
+
+## The Objections You Will Hear (and Why They Are Not Wrong)
+
+<Objection question="Review becomes the bottleneck.">
+Yes. That is the point. GDD is about putting the bottleneck where it belongs and then engineering it: reduce PR scope, standardize expectations, automate checks, and make review fast and boring (boring is good).
+</Objection>
+
+<Objection question="This creates hierarchy.">
+It creates roles. If you do not design the roles, your org will still create them. Implicitly, politically, and inconsistently -  and through much suffering amongst the devs. GDD makes the authority explicit and ties it to a measurable function: quality and coherence at merge time.
+</Objection>
+
+<Objection question="Who is accountable?">
+Humans. If you merged it, it is yours. The Swarm is output. The Guild is responsibility.
+</Objection>
+
+## Why I Think This Is Where Teams Go
+
+I don't expect anyone will read this and decide to be futuristic with a new model for their org to follow. I expect a great deal of resistence to such a model change.
+
+However - they will adopt it because the pressure forces them:
+
+- agents increase output
+- output increases PR volume
+- PR volume increases risk
+- risk forces tighter governance
+- governance becomes review discipline
+- review discipline becomes a role
+- that role becomes the center of the system
+
+<KeyPoint>That is Guild Driven Development with The Review Guild. It is a stable configuration when change becomes cheap.</KeyPoint>

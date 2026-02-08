@@ -1,0 +1,36 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Guild Driven Development header">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#0b3b3c" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#a3e635" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <g opacity="0.15" stroke="#e2e8f0" stroke-width="1">
+    <path d="M0 90 H1200" />
+    <path d="M0 180 H1200" />
+    <path d="M0 270 H1200" />
+    <path d="M0 360 H1200" />
+    <path d="M0 450 H1200" />
+    <path d="M0 540 H1200" />
+  </g>
+  <g>
+    <rect x="72" y="70" width="1056" height="490" rx="24" fill="none" stroke="url(#accent)" stroke-width="3" opacity="0.9" />
+    <rect x="110" y="110" width="980" height="410" rx="20" fill="#0f172a" opacity="0.65" />
+  </g>
+  <g fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif">
+    <text x="150" y="230" font-size="42" font-weight="700">Guild Driven Development</text>
+    <text x="150" y="290" font-size="26" opacity="0.9">Why Review Becomes the Center of Engineering</text>
+    <text x="150" y="360" font-size="20" opacity="0.8">When code is cheap, trust is the constraint.</text>
+  </g>
+  <g>
+    <rect x="150" y="410" width="230" height="12" rx="6" fill="#22d3ee" />
+    <rect x="392" y="410" width="180" height="12" rx="6" fill="#a3e635" />
+    <rect x="582" y="410" width="120" height="12" rx="6" fill="#38bdf8" />
+  </g>
+</svg>

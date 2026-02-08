@@ -126,12 +126,20 @@ module.exports = {
           color: 'var(--tw-prose-body)',
           lineHeight: theme('lineHeight.7'),
           '> *': {
-            marginTop: theme('spacing.10'),
-            marginBottom: theme('spacing.10'),
+            marginTop: theme('spacing.6'),
+            marginBottom: theme('spacing.6'),
           },
           p: {
-            marginTop: theme('spacing.7'),
-            marginBottom: theme('spacing.7'),
+            marginTop: theme('spacing.5'),
+            marginBottom: theme('spacing.5'),
+          },
+          // Tighten gap between paragraph and following list
+          'p + ul, p + ol': {
+            marginTop: theme('spacing.2'),
+          },
+          // Tighten gap between list and following paragraph
+          'ul + p, ol + p': {
+            marginTop: theme('spacing.4'),
           },
 
           // Headings
@@ -150,9 +158,11 @@ module.exports = {
           h2: {
             fontSize: theme('fontSize.xl')[0],
             lineHeight: theme('lineHeight.8'),
-            marginTop: theme('spacing.8'),
+            marginTop: theme('spacing.12'),
             marginBottom: theme('spacing.4'),
-            textAlign: "left"
+            textAlign: "left",
+            paddingBottom: theme('spacing.2'),
+            borderBottom: '1px solid rgb(63 63 70 / 0.3)',
           },
           h3: {
             fontSize: theme('fontSize.base')[0],
@@ -208,9 +218,14 @@ module.exports = {
           // Quotes
           blockquote: {
             paddingLeft: theme('spacing.6'),
-            borderLeftWidth: theme('borderWidth.2'),
-            borderLeftColor: 'var(--tw-prose-quote-borders)',
+            borderLeftWidth: '3px',
+            borderImage: 'linear-gradient(to bottom, #2dd4bf, #06b6d4) 1',
             fontStyle: 'italic',
+            backgroundColor: 'rgb(20 184 166 / 0.05)',
+            borderRadius: '0 0.75rem 0.75rem 0',
+            paddingTop: theme('spacing.3'),
+            paddingBottom: theme('spacing.3'),
+            paddingRight: theme('spacing.4'),
           },
 
           // Figures
@@ -235,8 +250,8 @@ module.exports = {
             paddingLeft: theme('spacing.6'),
           },
           li: {
-            marginTop: theme('spacing.6'),
-            marginBottom: theme('spacing.6'),
+            marginTop: theme('spacing.1'),
+            marginBottom: theme('spacing.1'),
             paddingLeft: theme('spacing[3.5]'),
           },
           'li::marker': {
@@ -250,12 +265,12 @@ module.exports = {
             color: 'var(--tw-prose-bullets)',
           },
           'li :is(ol, ul)': {
-            marginTop: theme('spacing.4'),
-            marginBottom: theme('spacing.4'),
+            marginTop: theme('spacing.2'),
+            marginBottom: theme('spacing.2'),
           },
           'li :is(li, p)': {
-            marginTop: theme('spacing.3'),
-            marginBottom: theme('spacing.3'),
+            marginTop: theme('spacing.2'),
+            marginBottom: theme('spacing.2'),
           },
 
           // Code blocks

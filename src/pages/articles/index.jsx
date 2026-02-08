@@ -58,6 +58,14 @@ function Article({ article }) {
 					{formatDate(article.date)}
 				</Card.Eyebrow>
 				<Card.Description>{article.description}</Card.Description>
+				{article.series && (
+					<div className="mt-3 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-200">
+						<span>{article.series}</span>
+						{Number.isFinite(article.seriesPart) && (
+							<span className="text-teal-300/80">Part {article.seriesPart}</span>
+						)}
+					</div>
+				)}
 				<Card.Cta>Read article</Card.Cta>
 			</Card>
 			<Card.Eyebrow

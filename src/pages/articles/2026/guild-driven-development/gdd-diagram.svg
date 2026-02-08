@@ -1,0 +1,53 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="Guild Driven Development loop diagram">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220" />
+      <stop offset="100%" stop-color="#0f1a2b" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="#0b1220" />
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#e2e8f0">
+    <text x="80" y="80" font-size="28" font-weight="700">Guild Driven Development</text>
+    <text x="80" y="115" font-size="18" opacity="0.8">Direction -> Slices -> Review -> Merge -> Signals</text>
+  </g>
+
+  <g>
+    <rect x="90" y="160" width="300" height="150" rx="18" fill="url(#panel)" stroke="#22d3ee" stroke-width="2" />
+    <text x="120" y="215" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#e2e8f0" font-weight="700">Architect Commander</text>
+    <text x="120" y="250" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Direction + constraints</text>
+    <text x="120" y="275" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Task stream of slices</text>
+  </g>
+
+  <g>
+    <rect x="450" y="160" width="300" height="150" rx="18" fill="url(#panel)" stroke="#a3e635" stroke-width="2" />
+    <text x="485" y="215" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#e2e8f0" font-weight="700">Agent Swarm</text>
+    <text x="485" y="250" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Micro-PR output</text>
+    <text x="485" y="275" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Tests + proofs</text>
+  </g>
+
+  <g>
+    <rect x="810" y="160" width="300" height="150" rx="18" fill="url(#panel)" stroke="#38bdf8" stroke-width="2" />
+    <text x="840" y="215" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#e2e8f0" font-weight="700">Review Guild</text>
+    <text x="840" y="250" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Merge authority</text>
+    <text x="840" y="275" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Quality and coherence</text>
+  </g>
+
+  <g stroke="#e2e8f0" stroke-width="2" fill="none" opacity="0.8">
+    <path d="M390 235 H450" />
+    <path d="M750 235 H810" />
+    <path d="M960 310 C960 420 240 420 240 310" />
+  </g>
+  <g fill="#e2e8f0" opacity="0.8">
+    <polygon points="448,235 438,229 438,241" />
+    <polygon points="808,235 798,229 798,241" />
+    <polygon points="240,310 234,300 246,300" />
+  </g>
+
+  <g>
+    <rect x="150" y="470" width="900" height="170" rx="20" fill="#0f172a" stroke="#334155" stroke-width="2" />
+    <text x="190" y="520" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#e2e8f0" font-weight="700">Review becomes the center</text>
+    <text x="190" y="555" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">When output is cheap, the merge decision is the scarce resource.</text>
+    <text x="190" y="580" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#94a3b8">Small diffs keep the system coherent and deployable.</text>
+  </g>
+</svg>

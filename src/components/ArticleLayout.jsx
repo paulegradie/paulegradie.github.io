@@ -1,4 +1,4 @@
-import Head from 'next/head'
+﻿import Head from 'next/head'
 import { React, useRef, useState, useEffect } from 'react';
 
 import { useRouter } from 'next/router'
@@ -35,7 +35,10 @@ export function ArticleLayout({
   const { previousArticle, nextArticle } = findPreviousAndNext(articles, meta.date)
 
   const divRef = useRef(null);
+  const bottomRef = useRef(null);
   const [readTime, setReadTime] = useState(15);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerDismissed, setDrawerDismissed] = useState(false);
   useEffect(() => {
 
     if (divRef.current) {
@@ -46,6 +49,22 @@ export function ArticleLayout({
     }
   }, []);
 
+  useEffect(() => {
+    if (drawerDismissed || !bottomRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setDrawerOpen(true);
+        }
+      },
+      { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.01 }
+    );
+
+    observer.observe(bottomRef.current);
+    return () => observer.disconnect();
+  }, [drawerDismissed]);
+
   return (
     <>
       <Head>
@@ -54,19 +73,17 @@ export function ArticleLayout({
       </Head>
       <Container className="mt-24 lg:mt-40">
         <div className="xl:relative">
-          <div className="flex flex-col xl:flex-row xl:gap-12">
+          <div className="flex flex-col">
             {/* Main content */}
-            <div className="flex-1 xl:max-w-[46rem]">
-              {previousPathname && (
-                <button
-                  type="button"
-                  onClick={() => router.push("/articles")}
-                  aria-label="Go back to articles"
-                  className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-50/10 backdrop-blur-sm shadow-lg shadow-zinc-800/10 ring-1 ring-zinc-200/20 transition-all duration-200 hover:bg-teal-500/10 hover:ring-teal-400/30 hover:shadow-teal-500/20 dark:bg-zinc-800/50 dark:ring-zinc-700/50 dark:hover:bg-teal-500/10 dark:hover:ring-teal-400/30 lg:absolute lg:left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0"
-                >
-                  <ArrowLeftIcon className="h-4 w-4 stroke-teal-500 transition group-hover:stroke-teal-400 dark:stroke-teal-400 dark:group-hover:stroke-teal-300" />
-                </button>
-              )}
+            <div className="w-full relative">
+              <button
+                type="button"
+                onClick={() => router.push("/articles")}
+                aria-label="Go back to articles"
+                className="group z-10 mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-50/10 backdrop-blur-sm shadow-lg shadow-zinc-800/10 ring-1 ring-zinc-200/20 transition-all duration-200 hover:bg-teal-500/10 hover:ring-teal-400/30 hover:shadow-teal-500/20 dark:bg-zinc-800/50 dark:ring-zinc-700/50 dark:hover:bg-teal-500/10 dark:hover:ring-teal-400/30 xl:absolute xl:-left-12 xl:top-0 xl:mb-0"
+              >
+                <ArrowLeftIcon className="h-4 w-4 stroke-teal-500 transition group-hover:stroke-teal-400 dark:stroke-teal-400 dark:group-hover:stroke-teal-300" />
+              </button>
               <article>
                 <header className="flex flex-col">
                   <time
@@ -79,17 +96,28 @@ export function ArticleLayout({
                   <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-300 dark:text-zinc-100 sm:text-5xl">
                     {meta.title}
                   </h1>
+                  {meta.series && (
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-500/10 px-3 py-1 text-sm font-medium text-teal-200">
+                      <span>{meta.series}</span>
+                      {Number.isFinite(meta.seriesPart) && (
+                        <span className="text-teal-300/80">Part {meta.seriesPart}</span>
+                      )}
+                    </div>
+                  )}
                   <div className="mt-3">
                     <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
                     <span className="text-zinc-400 dark:text-zinc-500">~{readTime} minute read</span>
                   </div>
                 </header>
-                <Prose countRef={divRef} className="mt-6 text-justify">{children}</Prose>
+                <Prose
+                  countRef={divRef}
+                  className={`mt-6 text-justify ${meta?.tightListSpacing ? '[&_li]:!my-2 [&_li>p]:!my-0 [&_li>ul]:!my-2 [&_li>ol]:!my-2' : ''}`}
+                >
+                  {children}
+                </Prose>
+                <div ref={bottomRef} className="h-px w-full" aria-hidden="true" />
               </article>
             </div>
-
-            {/* Sidebar */}
-            <BlogSidebar articles={articles} currentArticle={meta} />
           </div>
           <Divider />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -111,6 +139,17 @@ export function ArticleLayout({
           </div>
         </div>
       </Container>
+
+      <BlogDrawer
+        articles={articles}
+        currentArticle={meta}
+        isOpen={drawerOpen}
+        onOpen={() => setDrawerOpen(true)}
+        onClose={() => {
+          setDrawerOpen(false);
+          setDrawerDismissed(true);
+        }}
+      />
     </>
   )
 }
@@ -166,7 +205,7 @@ function ArrowRightIcon(props) {
   )
 }
 
-function BlogSidebar({ articles, currentArticle }) {
+function BlogDrawer({ articles, currentArticle, isOpen, onOpen, onClose }) {
   const router = useRouter();
 
   // Filter out current article and get the 6 most recent others
@@ -177,15 +216,23 @@ function BlogSidebar({ articles, currentArticle }) {
   if (otherArticles.length === 0) return null;
 
   return (
-    <aside className="hidden xl:block xl:w-80 xl:flex-shrink-0">
-      <div className="sticky top-8">
-        <div className="bg-zinc-50/5 backdrop-blur-sm border border-zinc-200/10 rounded-2xl p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-zinc-200 mb-6 flex items-center gap-2">
-            <span className="h-1 w-1 rounded-full bg-teal-400"></span>
-            More from me
-          </h2>
+    <div className="fixed bottom-4 right-4 z-40">
+      {isOpen ? (
+        <div className="w-[20rem] max-w-[85vw] max-h-[70vh] overflow-hidden rounded-2xl border border-zinc-200/10 bg-zinc-950/80 backdrop-blur-md shadow-2xl">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200/10">
+            <h2 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
+              <span className="h-1 w-1 rounded-full bg-teal-400"></span>
+              More from me
+            </h2>
+            <button
+              onClick={onClose}
+              className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+            >
+              Close
+            </button>
+          </div>
 
-          <div className="space-y-4">
+          <div className="max-h-[52vh] overflow-y-auto px-3 py-3 space-y-3">
             {otherArticles.map((article) => (
               <div
                 key={article.slug}
@@ -215,7 +262,7 @@ function BlogSidebar({ articles, currentArticle }) {
             ))}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-zinc-200/10">
+          <div className="px-4 py-3 border-t border-zinc-200/10">
             <button
               onClick={() => router.push('/articles')}
               className="text-sm text-teal-400 hover:text-teal-300 transition-colors font-medium flex items-center gap-1"
@@ -225,8 +272,17 @@ function BlogSidebar({ articles, currentArticle }) {
             </button>
           </div>
         </div>
-      </div>
-    </aside>
+      ) : (
+        <button
+          onClick={onOpen}
+          className="group inline-flex items-center gap-2 rounded-full border border-teal-500/60 bg-teal-500/20 px-4 py-2 text-xs font-semibold text-teal-800 shadow-lg shadow-teal-500/20 ring-1 ring-teal-400/30 backdrop-blur-sm transition-all duration-200 hover:bg-teal-500/30 hover:text-teal-900 hover:shadow-teal-500/30 dark:border-teal-400/50 dark:bg-teal-400/20 dark:text-teal-100 dark:hover:bg-teal-400/30 dark:hover:text-white"
+        >
+          <span className="inline-flex h-2 w-2 rounded-full bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.9)] dark:bg-teal-300 dark:shadow-[0_0_10px_rgba(45,212,191,0.8)]"></span>
+          <span className="bg-gradient-to-r from-teal-700 to-teal-600 bg-clip-text text-transparent dark:from-teal-100 dark:to-teal-200">More from me</span>
+          <ArrowRightIcon className="h-3 w-3 text-teal-700 group-hover:text-teal-900 transition-colors dark:text-teal-200 dark:group-hover:text-white" />
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -241,3 +297,4 @@ function Divider() {
     </div>
   );
 }
+
