@@ -5,32 +5,38 @@ import { SimpleLayout } from '@/components/SimpleLayout'
 import Link from 'next/link'
 import { SoundCloudIcon } from '@/components/SocialIcons'
 
-let playlists = [
+const playlists = [
   {
-    year: "2023",
-    title: "Around the Sun",
-    iframeSrc: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1622034748&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
-  }
+    year: '2023',
+    title: 'Around the Sun',
+    iframeSrc:
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1622034748&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true',
+  },
 ]
 
-const soundCloud = "https://soundcloud.com/paulgradie"
+const soundCloud = 'https://soundcloud.com/paulgradie'
+
 function MusicSection({ children, ...props }) {
   return (
     <Section {...props}>
-      <div className="space-y-16">{children}</div>
+      <div className="space-y-12">{children}</div>
     </Section>
   )
 }
 
-
 function Appearance({ title, src: iframeSrc }) {
   return (
-    <Card as="article">
-      <Card.Title as="h3" href="">
-        {title}
-      </Card.Title>
-      <div className=" w-full font-light text-black hyphens-auto overflow-hidden whitespace-nowrap text-ellipsis">
-        <iframe className="font-light text-black hyphens-auto overflow-hidden whitespace-nowrap text-ellipsis" width="100%" height={350} allow="autoplay" src={iframeSrc} />
+    <Card as="article" className="glass-panel rounded-2xl p-4 sm:p-5">
+      <Card.Title as="h3">{title}</Card.Title>
+      <div className="mt-3 w-full overflow-hidden rounded-xl border border-slate-300/60 dark:border-slate-600/60">
+        <iframe
+          title={title}
+          width="100%"
+          height={350}
+          allow="autoplay"
+          src={iframeSrc}
+          className="w-full"
+        />
       </div>
     </Card>
   )
@@ -38,13 +44,13 @@ function Appearance({ title, src: iframeSrc }) {
 
 function SoundCloudLink() {
   return (
-    <li className='flex'>
+    <li className="flex">
       <Link
         href={soundCloud}
-        className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+        className="glass-panel group inline-flex items-center rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:text-cyan-800 dark:text-slate-200 dark:hover:text-cyan-300"
       >
-        <SoundCloudIcon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
-        <span className="ml-4">Paul Gradie&apos;s SoundCloud</span>
+        <SoundCloudIcon className="h-6 w-6 flex-none fill-slate-500 transition group-hover:fill-cyan-600 dark:group-hover:fill-cyan-300" />
+        <span className="ml-3">Paul Gradie on SoundCloud</span>
       </Link>
     </li>
   )
@@ -62,20 +68,15 @@ export default function Music() {
       </Head>
       <SimpleLayout
         title="My Music"
-        intro="I regularly compose electronic music as a hobby and creative outlet. Every year I release a small number of tunes in order to satisfy a deeply rooted creative desire the simply will not leave me. Here are listed my published collections by year."
+        intro="I compose electronic music as a creative outlet. Every year I release a small set of tracks to satisfy a part of my brain that only music can reach."
       >
         <SoundCloudLink />
-        <div className="mt-12 space-y-20">
-          {
-            playlists.map((playlist, index) => {
-
-              return (
-                <MusicSection key={index} title={playlist.year}>
-                  <Appearance title={playlist.title} src={playlist.iframeSrc} />
-                </MusicSection>
-              )
-            })
-          }
+        <div className="mt-10 space-y-16">
+          {playlists.map((playlist, index) => (
+            <MusicSection key={index} title={playlist.year}>
+              <Appearance title={playlist.title} src={playlist.iframeSrc} />
+            </MusicSection>
+          ))}
         </div>
       </SimpleLayout>
     </>

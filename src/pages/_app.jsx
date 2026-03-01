@@ -1,10 +1,23 @@
 import { useEffect, useRef } from 'react'
+import { Fraunces, Sora } from 'next/font/google'
 
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
 import '@/styles/tailwind.css'
 import 'focus-visible'
+
+const sans = Sora({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const display = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+})
 
 function usePrevious(value) {
   let ref = useRef()
@@ -20,19 +33,15 @@ export default function App({ Component, pageProps, router }) {
   let previousPathname = usePrevious(router.pathname)
 
   return (
-    <>
-      <div className="fixed inset-0 flex justify-center sm:px-8">
-        <div className="flex w-full max-w-7xl lg:px-8">
-          <div className="w-full bg-gradient-to-br from-primary via-primary to-slate-800 dark:from-primary-dark dark:via-primary-dark dark:to-slate-900 ring-1 ring-zinc-100 dark:ring-zinc-300/20" />
-        </div>
-      </div>
-      <div className="relative">
+    <div className={`${sans.variable} ${display.variable} site-shell`}>
+      <div className="site-backdrop" aria-hidden="true" />
+      <div className="relative min-h-screen">
         <Header />
-        <main>
+        <main className="pb-12">
           <Component previousPathname={previousPathname} {...pageProps} />
         </main>
         <Footer />
       </div>
-    </>
+    </div>
   )
 }

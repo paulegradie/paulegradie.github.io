@@ -16,7 +16,7 @@ export function Avatar({ large = false, className, ...props }) {
         alt=""
         sizes={large ? '8rem' : '4.5rem'}
         className={clsx(
-          'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
+          'rounded-full bg-slate-100 object-cover ring-2 ring-white/70 dark:bg-slate-700 dark:ring-slate-600',
           large ? 'h-16 w-16' : 'h-18 w-18'
         )}
         priority />

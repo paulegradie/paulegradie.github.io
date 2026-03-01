@@ -24,10 +24,10 @@ module.exports = {
         'error-dark': '#C53030',  // Red - slightly darker
 
         // Enhanced vibrant palette
-        'accent-warm': '#F59E0B',     // Amber-500 - warm accent
-        'accent-cool': '#3B82F6',     // Blue-500 - cool accent
-        'accent-creative': '#8B5CF6', // Violet-500 - creative accent
-        'accent-fresh': '#06B6D4',    // Cyan-500 - fresh accent
+        'accent-warm': '#2563EB',     // Blue-600 - warm neon accent
+        'accent-cool': '#2563EB',     // Blue-600 - cool accent
+        'accent-creative': '#1D4ED8', // Blue-700 - creative accent
+        'accent-fresh': '#22D3EE',    // Cyan-400 - fresh accent
         'github': '#F97316',          // Orange-500 - GitHub brand
         'linkedin': '#0EA5E9',        // Sky-500 - LinkedIn brand
       },
@@ -82,45 +82,45 @@ module.exports = {
       },
       DEFAULT: {
         css: {
-          '--tw-prose-body': theme('colors.zinc.400'),
-          '--tw-prose-headings': theme('colors.zinc.200'),
-          '--tw-prose-links': theme('colors.teal.100'),
-          '--tw-prose-links-hover': theme('colors.teal.600'),
-          '--tw-prose-underline': theme('colors.teal.500 / 0.2'),
-          '--tw-prose-underline-hover': theme('colors.teal.500'),
-          '--tw-prose-bold': theme('colors.zinc.200'),
-          '--tw-prose-counters': theme('colors.zinc.300'),
-          '--tw-prose-bullets': theme('colors.zinc.200'),
-          '--tw-prose-hr': theme('colors.zinc.100'),
-          '--tw-prose-quote-borders': theme('colors.zinc.200'),
-          '--tw-prose-captions': theme('colors.zinc.400'),
-          '--tw-prose-code': theme('colors.zinc.200'),
-          '--tw-prose-code-bg': theme('colors.zinc.300 / 0.2'),
-          '--tw-prose-pre-code': theme('colors.zinc.100'),
-          '--tw-prose-pre-bg': theme('colors.zinc.900'),
-          '--tw-prose-pre-border': 'transparent',
-          '--tw-prose-th-borders': theme('colors.zinc.200'),
-          '--tw-prose-td-borders': theme('colors.zinc.100'),
+          '--tw-prose-body': theme('colors.slate.700'),
+          '--tw-prose-headings': theme('colors.slate.900'),
+          '--tw-prose-links': theme('colors.cyan.800'),
+          '--tw-prose-links-hover': theme('colors.blue.700'),
+          '--tw-prose-underline': theme('colors.cyan.500 / 0.32'),
+          '--tw-prose-underline-hover': theme('colors.blue.500'),
+          '--tw-prose-bold': theme('colors.slate.900'),
+          '--tw-prose-counters': theme('colors.slate.600'),
+          '--tw-prose-bullets': theme('colors.slate.500'),
+          '--tw-prose-hr': theme('colors.slate.300'),
+          '--tw-prose-quote-borders': theme('colors.blue.500 / 0.65'),
+          '--tw-prose-captions': theme('colors.slate.500'),
+          '--tw-prose-code': theme('colors.slate.900'),
+          '--tw-prose-code-bg': theme('colors.blue.500 / 0.12'),
+          '--tw-prose-pre-code': theme('colors.slate.100'),
+          '--tw-prose-pre-bg': 'rgb(15 23 42 / 0.95)',
+          '--tw-prose-pre-border': theme('colors.slate.700 / 0.75'),
+          '--tw-prose-th-borders': theme('colors.slate.300'),
+          '--tw-prose-td-borders': theme('colors.slate.200'),
 
-          '--tw-prose-invert-body': theme('colors.zinc.400'),
-          '--tw-prose-invert-headings': theme('colors.zinc.200'),
-          '--tw-prose-invert-links': theme('colors.teal.400'),
-          '--tw-prose-invert-links-hover': theme('colors.teal.400'),
-          '--tw-prose-invert-underline': theme('colors.teal.400 / 0.3'),
-          '--tw-prose-invert-underline-hover': theme('colors.teal.400'),
-          '--tw-prose-invert-bold': theme('colors.zinc.200'),
-          '--tw-prose-invert-counters': theme('colors.zinc.200'),
-          '--tw-prose-invert-bullets': theme('colors.zinc.200'),
-          '--tw-prose-invert-hr': theme('colors.zinc.700 / 0.4'),
-          '--tw-prose-invert-quote-borders': theme('colors.zinc.500'),
-          '--tw-prose-invert-captions': theme('colors.zinc.500'),
-          '--tw-prose-invert-code': theme('colors.zinc.300'),
-          '--tw-prose-invert-code-bg': theme('colors.zinc.200 / 0.05'),
-          '--tw-prose-invert-pre-code': theme('colors.zinc.100'),
-          '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 0.4)',
-          '--tw-prose-invert-pre-border': theme('colors.zinc.200 / 0.1'),
-          '--tw-prose-invert-th-borders': theme('colors.zinc.700'),
-          '--tw-prose-invert-td-borders': theme('colors.zinc.800'),
+          '--tw-prose-invert-body': theme('colors.slate.300'),
+          '--tw-prose-invert-headings': theme('colors.slate.100'),
+          '--tw-prose-invert-links': theme('colors.cyan.300'),
+          '--tw-prose-invert-links-hover': theme('colors.blue.300'),
+          '--tw-prose-invert-underline': theme('colors.cyan.300 / 0.35'),
+          '--tw-prose-invert-underline-hover': theme('colors.blue.300'),
+          '--tw-prose-invert-bold': theme('colors.slate.100'),
+          '--tw-prose-invert-counters': theme('colors.slate.300'),
+          '--tw-prose-invert-bullets': theme('colors.slate.400'),
+          '--tw-prose-invert-hr': theme('colors.slate.600 / 0.45'),
+          '--tw-prose-invert-quote-borders': theme('colors.blue.400 / 0.6'),
+          '--tw-prose-invert-captions': theme('colors.slate.400'),
+          '--tw-prose-invert-code': theme('colors.slate.200'),
+          '--tw-prose-invert-code-bg': theme('colors.blue.400 / 0.12'),
+          '--tw-prose-invert-pre-code': theme('colors.slate.100'),
+          '--tw-prose-invert-pre-bg': 'rgb(2 6 23 / 0.82)',
+          '--tw-prose-invert-pre-border': theme('colors.slate.600 / 0.45'),
+          '--tw-prose-invert-th-borders': theme('colors.slate.600'),
+          '--tw-prose-invert-td-borders': theme('colors.slate.700'),
 
           // Base
           color: 'var(--tw-prose-body)',
@@ -219,9 +219,9 @@ module.exports = {
           blockquote: {
             paddingLeft: theme('spacing.6'),
             borderLeftWidth: '3px',
-            borderImage: 'linear-gradient(to bottom, #2dd4bf, #06b6d4) 1',
+            borderImage: 'linear-gradient(to bottom, #22d3ee, #2563eb) 1',
             fontStyle: 'italic',
-            backgroundColor: 'rgb(20 184 166 / 0.05)',
+            backgroundColor: 'rgb(34 211 238 / 0.08)',
             borderRadius: '0 0.75rem 0.75rem 0',
             paddingTop: theme('spacing.3'),
             paddingBottom: theme('spacing.3'),

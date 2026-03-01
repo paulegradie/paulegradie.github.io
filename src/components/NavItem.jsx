@@ -10,17 +10,19 @@ export function NavItem({ href, children }) {
       <Link
         href={href}
         className={clsx(
-          'relative block px-3 py-2 transition whitespace-nowrap',
+          'relative block whitespace-nowrap rounded-full px-3 py-1.5 transition duration-200',
           isActive
-            ? 'text-teal-500 dark:text-teal-400'
-            : 'hover:text-teal-500 dark:hover:text-teal-400'
+            ? 'bg-white/70 text-slate-900 shadow-sm dark:bg-slate-700/70 dark:text-slate-100'
+            : 'text-slate-700 hover:bg-white/50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/55 dark:hover:text-slate-100'
         )}
       >
         {children}
         {isActive && (
-          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
+          <span className="absolute inset-x-2 -bottom-[2px] h-[2px] rounded-full bg-gradient-to-r from-cyan-500/0 via-cyan-500/80 to-blue-500/0 dark:from-cyan-300/0 dark:via-cyan-300/85 dark:to-blue-300/0" />
         )}
       </Link>
     </li>
   );
 }
+
+

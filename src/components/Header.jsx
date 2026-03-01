@@ -127,14 +127,14 @@ export function Header() {
       >
         <div
           ref={headerRef}
-          className="top-0 z-10 h-16 pt-6"
+          className="top-0 z-10 h-16 pt-5 sm:pt-6"
           style={{ position: 'var(--header-position)' }}
         >
           <Container
             className="top-[var(--header-top,theme(spacing.6))] w-full"
             style={{ position: 'var(--header-inner-position)' }}
           >
-            <div className="relative flex gap-4">
+            <div className="relative flex items-center gap-4">
               <div className="flex flex-1">
                 {!isHomePage && (
                   <AvatarContainer>

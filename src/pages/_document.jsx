@@ -1,24 +1,17 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 
 const modeScript = `
-  let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
   updateMode()
-  darkModeMediaQuery.addEventListener('change', updateModeWithoutTransitions)
   window.addEventListener('storage', updateModeWithoutTransitions)
 
   function updateMode() {
-    let isSystemDarkMode = darkModeMediaQuery.matches
-    let isDarkMode = window.localStorage.isDarkMode === 'true' || (!('isDarkMode' in window.localStorage) && isSystemDarkMode)
+    // Default to dark mode; persist only explicit light mode with isDarkMode='false'.
+    let isDarkMode = window.localStorage.isDarkMode !== 'false'
 
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
-    }
-
-    if (isDarkMode === isSystemDarkMode) {
-      delete window.localStorage.isDarkMode
     }
   }
 
@@ -63,7 +56,7 @@ export default function Document() {
           }}
         />
       </Head>
-      <body className="flex h-full flex-col bg-background dark:bg-background-dark">
+      <body className="flex min-h-full flex-col antialiased">
         <Main />
         <NextScript />
       </body>
