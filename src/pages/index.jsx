@@ -23,47 +23,42 @@ const journey = [
     range: '2024 - Present',
     company: 'Tilt Finance',
     progression: [
-      { year: '2025', title: 'Staff Software Engineer, Platform Team Lead' },
-      { year: '2024', title: 'Senior Software Engineer, Platform Team Lead' },
+      { year: '', title: 'Staff Software Engineer' },
     ],
   },
   {
     range: '2020 - 2024',
     company: 'Octopus Deploy',
     progression: [
-      { year: '2023', title: 'Senior Software Engineer' },
-      { year: '2020', title: 'Intermediate Software Engineer' },
+      { year: '', title: 'Senior Software Engineer' },
     ],
   },
   {
     range: '2017 - 2020',
     company: 'Zendesk',
     progression: [
-      { year: '2017', title: 'Data Science Engineer (AI Team)' },
+      { year: '', title: 'Data Science Engineer (AI Team)' },
     ],
   },
   {
     range: '2014 - 2017',
     company: 'University of Melbourne',
     progression: [
-      { year: '2017', title: 'Doctoral dissertation completed' },
-      { year: '2015', title: 'Co-author, Sexual Development publication' },
-      { year: '2014', title: 'PhD, Developmental Genetics' },
+      { year: '', title: 'PhD, Developmental Genetics' },
     ],
   },
   {
     range: '2010 - 2013',
     company: 'University of Connecticut',
     progression: [
-      { year: '2010', title: 'MSc, Genetics, Genomics, and Bioinformatics' },
+      { year: '', title: 'MSc, Genetics, Genomics, and Bioinformatics' },
     ],
   },
   {
     range: '2007 - 2010',
     company: 'University of Connecticut',
     progression: [
-      { year: '2009', title: 'Co-author, Phytologia publication' },
-      { year: '2007', title: 'BSc, Molecular and Cell Biology' },
+      { year: '', title: 'BSc, Molecular and Cell Biology' },
     ],
   },
 ]
@@ -205,7 +200,7 @@ export default function Home({ articles }) {
             </div>
 
             <div className="glass-panel reveal-up reveal-delay-3 rounded-3xl p-6 sm:p-7">
-              <h2 className="font-display text-2xl text-ink">Career and Research Snapshot</h2>
+              <h2 className="font-display text-2xl text-ink">Education and Career Snapshot</h2>
               <ol className="mt-4 space-y-4">
                 {journey.map((item) => (
                   <li key={`${item.company}-${item.range}`} className="border-l border-slate-300/80 pl-4 dark:border-slate-600/80">

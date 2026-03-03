@@ -4,13 +4,30 @@ import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import sailfishBanner from '@/images/photos/Sailfishnew.png'
 import palavyrLogo from '@/images/logos/palavyr-logo2.png'
-import palavyrWidgetLogo from '@/images/logos/palavyr-chat-widget-logo.png'
-import catPirate from '@/images/logos/cat-pirate-quotes-logo.png'
+import renaym from '@/images/logos/renaym.png'
+import launch11 from '@/images/logos/launch11.png'
 import seqpyplot from '@/images/logos/seqpyplot-logo.png'
 import queryStudio from '@/images/logos/qwerkystudio-logo.png'
 import partybots from '@/images/logos/partybots-logo.png'
 
 const projects = [
+  {
+    name: 'Launch11',
+    description: 'AI powered apps by Launch11',
+    link: { href: 'https://launch11.com', label: 'Launch11' },
+    logo: launch11,
+    className: 'w-64 rounded-lg m-2',
+    accentColor: 'green',
+  },
+  {
+    name: 'Renaym',
+    description: 'Renaym your media files smarter - not harder',
+    link: { href: 'https://renaym.launch11.com', label: 'Renaym' },
+    logo: renaym,
+    className: 'w-64 rounded-lg m-2',
+    accentColor: 'purple',
+  },
+
   {
     name: 'Party Bots!',
     description: 'Party Bots! Lets get ready to party!',
@@ -28,14 +45,6 @@ const projects = [
     accentColor: 'teal',
   },
   {
-    name: 'CatPirateQuotes',
-    description: 'A cheeky repo for automated AI generated posts to LinkedIn',
-    link: { href: 'https://github.com/paulegradie/CatPirateQuotes', label: 'Cat Pirate Quotes' },
-    logo: catPirate,
-    className: 'w-16 rounded-lg m-2',
-    accentColor: 'amber',
-  },
-  {
     name: 'Qwerky Studio',
     description: 'An app for creating and managing artwork with ChatGPT and DALL-E',
     link: { href: 'https://github.com/QwerkyDesigns/studio-portal', label: 'Qwerky Studio' },
@@ -50,14 +59,6 @@ const projects = [
     link: { href: 'https://github.com/Palavyr/Palavyr', label: 'Palavyr' },
     logo: palavyrLogo,
     className: 'w-16 rounded-lg m-2',
-    accentColor: 'blue',
-  },
-  {
-    name: 'Palavyr Chat Widget',
-    description: 'An npm package for embedding Palavyr conversational widgets.',
-    link: { href: 'https://github.com/Palavyr/palavyr-chat-widget', label: 'palavyr-chat-widget' },
-    logo: palavyrWidgetLogo,
-    className: 'w-32 rounded-lg m-2',
     accentColor: 'blue',
   },
   {

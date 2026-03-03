@@ -24,6 +24,7 @@ export function Footer() {
                 <NavLink href="/about">About</NavLink>
                 <NavLink href="/articles">Articles</NavLink>
                 <NavLink href="/projects">Projects</NavLink>
+                <NavLink href="/resume">Resume</NavLink>
                 <NavLink href="/music">Music</NavLink>
                 <NavLink href="/recruiters">For Recruiters</NavLink>
                 <NavLink href="https://github.com/paulegradie/paulegradie.github.io">Code</NavLink>
