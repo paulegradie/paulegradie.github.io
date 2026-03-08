@@ -28,7 +28,7 @@ function Appearance({ title, src: iframeSrc }) {
   return (
     <Card as="article" className="glass-panel rounded-2xl p-4 sm:p-5">
       <Card.Title as="h3">{title}</Card.Title>
-      <div className="mt-3 w-full overflow-hidden rounded-xl border border-slate-300/60 dark:border-slate-600/60">
+      <div className="surface-card mt-3 w-full overflow-hidden rounded-xl">
         <iframe
           title={title}
           width="100%"
@@ -47,9 +47,9 @@ function SoundCloudLink() {
     <li className="flex">
       <Link
         href={soundCloud}
-        className="glass-panel group inline-flex items-center rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:text-cyan-800 dark:text-slate-200 dark:hover:text-cyan-300"
+        className="glass-panel group inline-flex items-center rounded-2xl px-4 py-3 text-sm font-semibold text-muted transition hover:-translate-y-0.5 hover:text-[color:var(--brand-b)] dark:text-slate-200 dark:hover:text-cyan-300"
       >
-        <SoundCloudIcon className="h-6 w-6 flex-none fill-slate-500 transition group-hover:fill-cyan-600 dark:group-hover:fill-cyan-300" />
+        <SoundCloudIcon className="h-6 w-6 flex-none fill-[color:var(--ink-muted)] transition group-hover:fill-[color:var(--brand-a)] dark:group-hover:fill-cyan-300" />
         <span className="ml-3">Paul Gradie on SoundCloud</span>
       </Link>
     </li>

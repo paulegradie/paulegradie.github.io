@@ -91,29 +91,29 @@ export function ArticleLayout({ children, meta, previousPathname: _previousPathn
               aria-label="Go back to articles"
               className="glass-panel group z-10 mb-8 flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-x-0.5 hover:shadow-md xl:absolute xl:-left-12 xl:top-0 xl:mb-0"
             >
-              <ArrowLeftIcon className="h-4 w-4 stroke-cyan-800 transition group-hover:stroke-blue-700 dark:stroke-cyan-300 dark:group-hover:stroke-blue-200" />
+              <ArrowLeftIcon className="h-4 w-4 stroke-[color:var(--brand-b)] transition group-hover:stroke-[color:var(--brand-a)] dark:stroke-cyan-300 dark:group-hover:stroke-blue-200" />
             </button>
             <article>
               <header className="flex flex-col">
                 <time
                   dateTime={meta.date}
-                  className="order-first flex items-center text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400"
+                  className="eyebrow-label order-first flex items-center dark:text-slate-400"
                 >
-                  <span className="h-4 w-0.5 rounded-full bg-cyan-600/70 dark:bg-cyan-300/75" />
+                  <span className="h-4 w-0.5 rounded-full bg-[color:var(--brand-a)] dark:bg-cyan-300/75" />
                   <span className="ml-3">{formatDate(meta.date)}</span>
                 </time>
-                <h1 className="font-display mt-6 text-4xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                <h1 className="font-display mt-6 text-4xl font-bold leading-tight text-ink dark:text-slate-100 sm:text-5xl">
                   {meta.title}
                 </h1>
                 {meta.series && (
-                  <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-3 py-1 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
+                  <div className="accent-pill mt-4 text-sm font-semibold">
                     <span>{meta.series}</span>
                     {Number.isFinite(meta.seriesPart) && (
-                      <span className="text-cyan-800/75 dark:text-cyan-200/80">Part {meta.seriesPart}</span>
+                      <span className="opacity-75 dark:text-cyan-200/80">Part {meta.seriesPart}</span>
                     )}
                   </div>
                 )}
-                <div className="mt-3 text-sm text-slate-500 dark:text-slate-400">~{readTime} minute read</div>
+                <div className="mt-3 text-sm text-muted dark:text-slate-400">~{readTime} minute read</div>
               </header>
               <Prose
                 countRef={contentRef}
@@ -174,27 +174,27 @@ function NavCard({ direction, article, onClick, className = '' }) {
   return (
     <div
       onClick={onClick}
-      className={`glass-panel group relative flex min-h-[140px] cursor-pointer flex-col justify-between rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/35 hover:shadow-lg ${className}`}
+      className={`glass-panel group relative flex min-h-[140px] cursor-pointer flex-col justify-between rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--brand-a)]/35 hover:shadow-lg ${className}`}
     >
       <div className="mb-3 flex items-center gap-2">
         {isPrevious ? (
-          <ArrowLeftIcon className="h-4 w-4 text-cyan-800 transition-colors group-hover:text-blue-700 dark:text-cyan-300 dark:group-hover:text-blue-200" />
+          <ArrowLeftIcon className="h-4 w-4 text-[color:var(--brand-b)] transition-colors group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-200" />
         ) : (
-          <ArrowRightIcon className="h-4 w-4 text-cyan-800 transition-colors group-hover:text-blue-700 dark:text-cyan-300 dark:group-hover:text-blue-200" />
+          <ArrowRightIcon className="h-4 w-4 text-[color:var(--brand-b)] transition-colors group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-200" />
         )}
-        <span className="text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 transition-colors group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-200">
+        <span className="eyebrow-label transition-colors group-hover:text-[color:var(--ink)] dark:text-slate-400 dark:group-hover:text-slate-200">
           {direction}
         </span>
       </div>
 
       <div className="flex-1">
-        <h3 className="mb-2 text-lg font-semibold leading-tight text-slate-900 transition-colors group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-blue-300">
+        <h3 className="mb-2 text-lg font-semibold leading-tight text-ink transition-colors group-hover:text-[color:var(--brand-b)] dark:text-slate-100 dark:group-hover:text-blue-300">
           {article.title}
         </h3>
-        <time className="text-sm text-slate-500 dark:text-slate-400">{formatDate(article.date)}</time>
+        <time className="text-sm text-muted dark:text-slate-400">{formatDate(article.date)}</time>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[color:var(--brand-c)]/16 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
     </div>
   )
 }
@@ -212,12 +212,12 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
     <div className="fixed bottom-4 right-4 z-40 hidden md:block">
       {isOpen ? (
         <div className="glass-panel-strong max-h-[70vh] w-[20rem] max-w-[85vw] overflow-hidden rounded-2xl">
-          <div className="flex items-center justify-between border-b border-slate-300/60 px-4 py-3 dark:border-slate-600/60">
-            <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-100">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+          <div className="divider-line flex items-center justify-between border-b px-4 py-3 dark:border-slate-600/60">
+            <h2 className="flex items-center gap-2 text-sm font-semibold text-ink dark:text-slate-100">
+              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--brand-a)]" />
               More from me
             </h2>
-            <button onClick={onClose} className="text-xs text-slate-500 transition hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100">
+            <button onClick={onClose} className="text-xs text-muted transition hover:text-ink dark:text-slate-400 dark:hover:text-slate-100">
               Close
             </button>
           </div>
@@ -227,10 +227,10 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
               <div
                 key={article.slug}
                 onClick={() => router.push(`/articles/${article.slug}`)}
-                className="group cursor-pointer rounded-xl border border-transparent p-3 transition-all duration-200 hover:border-slate-300/60 hover:bg-white/65 dark:hover:border-slate-600/60 dark:hover:bg-slate-700/40"
+                className="group cursor-pointer rounded-xl border border-transparent p-3 transition-all duration-200 hover:border-[color:var(--line)] hover:bg-white/65 dark:hover:border-slate-600/60 dark:hover:bg-slate-700/40"
               >
                 <h3
-                  className="mb-1 overflow-hidden text-sm font-medium leading-tight text-slate-800 transition-colors group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300"
+                  className="mb-1 overflow-hidden text-sm font-medium leading-tight text-ink transition-colors group-hover:text-[color:var(--brand-b)] dark:text-slate-200 dark:group-hover:text-blue-300"
                   style={{
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
@@ -239,10 +239,10 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
                 >
                   {article.title}
                 </h3>
-                <time className="text-xs text-slate-500 dark:text-slate-400">{formatDate(article.date)}</time>
+                <time className="text-xs text-muted dark:text-slate-400">{formatDate(article.date)}</time>
                 {article.description && (
                   <p
-                    className="mt-1 overflow-hidden text-xs text-slate-500 dark:text-slate-400"
+                    className="mt-1 overflow-hidden text-xs text-muted dark:text-slate-400"
                     style={{
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
@@ -256,10 +256,10 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
             ))}
           </div>
 
-          <div className="border-t border-slate-300/60 px-4 py-3 dark:border-slate-600/60">
+          <div className="divider-line border-t px-4 py-3 dark:border-slate-600/60">
             <button
               onClick={() => router.push('/articles')}
-              className="flex items-center gap-1 text-sm font-semibold text-cyan-800 transition hover:text-blue-700 dark:text-cyan-300 dark:hover:text-blue-300"
+              className="flex items-center gap-1 text-sm font-semibold text-[color:var(--brand-b)] transition hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:hover:text-blue-300"
             >
               View all articles
               <ArrowRightIcon className="h-3 w-3" />
@@ -269,9 +269,9 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
       ) : (
         <button
           onClick={onOpen}
-          className="group inline-flex items-center gap-2 rounded-full border border-cyan-500/45 bg-white/80 px-4 py-2 text-xs font-semibold text-cyan-900 shadow-md backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-blue-700 dark:bg-slate-800/70 dark:text-cyan-200 dark:hover:text-blue-200"
+          className="surface-card-strong group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-[color:var(--brand-b)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-[color:var(--brand-a)] dark:text-cyan-200 dark:hover:text-blue-200"
         >
-          <span className="inline-flex h-2 w-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.82)]" />
+          <span className="inline-flex h-2 w-2 rounded-full bg-[color:var(--brand-a)] shadow-[0_0_10px_rgba(95,158,166,0.65)]" />
           <span>More from me</span>
           <ArrowRightIcon className="h-3 w-3" />
         </button>
@@ -283,11 +283,11 @@ function BlogDrawer({ articles, currentArticle, isVisible, isOpen, onOpen, onClo
 function Divider() {
   return (
     <div className="relative flex items-center py-12">
-      <div className="flex-grow border-t border-slate-300/70 dark:border-slate-600/70" />
-      <div className="mx-6 rounded-full border border-cyan-500/30 bg-white/75 px-4 py-2 shadow-sm backdrop-blur dark:bg-slate-800/75">
-        <span className="text-sm font-semibold text-cyan-800 dark:text-cyan-300">Continue Reading</span>
+      <div className="divider-line flex-grow border-t dark:border-slate-600/70" />
+      <div className="surface-card-strong mx-6 rounded-full px-4 py-2 backdrop-blur dark:bg-slate-800/75">
+        <span className="text-sm font-semibold text-[color:var(--brand-b)] dark:text-cyan-300">Continue Reading</span>
       </div>
-      <div className="flex-grow border-t border-slate-300/70 dark:border-slate-600/70" />
+      <div className="divider-line flex-grow border-t dark:border-slate-600/70" />
     </div>
   )
 }

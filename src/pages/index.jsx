@@ -8,6 +8,7 @@ import { SocialLink } from '@/components/SocialLink'
 import { formatDate } from '@/lib/formatDate'
 
 import portraitImage from '@/images/portrait.jpg'
+import { Button } from '@/components/Button'
 
 const RESUME_URL = 'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
 
@@ -102,27 +103,21 @@ export default function Home({ articles }) {
               pressure.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 overflow-hidden rounded-2xl ring-1 ring-inset ring-cyan-300/35 bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/45 transition hover:-translate-y-0.5 hover:from-slate-800 hover:via-blue-600 hover:to-cyan-400 hover:shadow-cyan-500/35"
-              >
+              <Button href="/projects" className="rounded-2xl px-5 py-3">
                 Explore Projects
                 <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/articles"
-                className="inline-flex items-center rounded-2xl border border-slate-300/80 bg-white/70 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5 hover:bg-white dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-100"
-              >
+              </Button>
+              <Button href="/articles" variant="secondary" className="rounded-2xl px-5 py-3">
                 Read Articles
-              </Link>
-              <a
+              </Button>
+              <Button
                 href={RESUME_URL}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-2xl border border-slate-300/80 bg-white/70 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5 hover:bg-white dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-100"
+                variant="secondary"
+                className="rounded-2xl px-5 py-3"
               >
                 Download CV
-              </a>
+              </Button>
             </div>
             <div className="mt-8 flex items-center gap-1">
               <SocialLink
@@ -159,7 +154,7 @@ export default function Home({ articles }) {
               <h2 className="font-display text-3xl text-ink">Latest Writing</h2>
               <Link
                 href="/articles"
-                className="text-sm font-semibold text-cyan-800 transition hover:text-blue-700 dark:text-cyan-300 dark:hover:text-blue-300"
+                className="theme-link text-sm font-semibold"
               >
                 View all
               </Link>
@@ -168,17 +163,17 @@ export default function Home({ articles }) {
               {articles.map((article) => (
                 <article
                   key={article.slug}
-                  className="rounded-2xl border border-slate-300/55 bg-white/70 p-4 transition hover:-translate-y-0.5 hover:border-cyan-500/40 hover:shadow-md dark:border-slate-600/60 dark:bg-slate-800/55"
+                  className="surface-card rounded-2xl p-4 transition hover:-translate-y-0.5 hover:border-[color:var(--brand-a)]/45 hover:shadow-md"
                 >
-                  <time className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+                  <time className="eyebrow-label dark:text-slate-400">
                     {formatDate(article.date)}
                   </time>
-                  <h3 className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
-                    <Link href={`/articles/${article.slug}`} className="hover:text-blue-700 dark:hover:text-cyan-300">
+                  <h3 className="mt-2 text-lg font-semibold text-ink dark:text-slate-100">
+                    <Link href={`/articles/${article.slug}`} className="theme-link">
                       {article.title}
                     </Link>
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                  <p className="mt-2 text-sm leading-relaxed text-muted dark:text-slate-300">
                     {article.description}
                   </p>
                 </article>
@@ -191,8 +186,8 @@ export default function Home({ articles }) {
               <h2 className="font-display text-2xl text-ink">Current Focus</h2>
               <ul className="mt-4 space-y-3">
                 {focusAreas.map((focus) => (
-                  <li key={focus} className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                    <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" />
+                  <li key={focus} className="flex items-start gap-3 text-sm leading-relaxed text-muted dark:text-slate-200">
+                    <span className="mt-1.5 h-2 w-2 flex-none rounded-full bg-gradient-to-r from-[color:var(--brand-a)] to-[color:var(--brand-b)]" />
                     <span>{focus}</span>
                   </li>
                 ))}
@@ -203,17 +198,17 @@ export default function Home({ articles }) {
               <h2 className="font-display text-2xl text-ink">Education and Career Snapshot</h2>
               <ol className="mt-4 space-y-4">
                 {journey.map((item) => (
-                  <li key={`${item.company}-${item.range}`} className="border-l border-slate-300/80 pl-4 dark:border-slate-600/80">
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+                  <li key={`${item.company}-${item.range}`} className="timeline-rail border-l pl-4 dark:border-slate-600/80">
+                    <p className="eyebrow-label dark:text-slate-400">
                       {item.range}
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
+                    <p className="mt-1 text-sm font-semibold text-ink dark:text-slate-100">
                       {item.company}
                     </p>
                     <ul className="mt-2 space-y-1">
                       {item.progression.map((step) => (
-                        <li key={`${item.company}-${step.year}`} className="text-sm text-slate-700 dark:text-slate-300">
-                          <span className="font-semibold text-slate-500 dark:text-slate-400">{step.year}</span>{' '}
+                        <li key={`${item.company}-${step.year}`} className="text-sm text-muted dark:text-slate-300">
+                          <span className="font-semibold text-[color:var(--ink-muted)] dark:text-slate-400">{step.year}</span>{' '}
                           {step.title}
                         </li>
                       ))}

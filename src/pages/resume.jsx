@@ -1,23 +1,24 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
+import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 
 const RESUME_URL =
   'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
 
 const highlights = [
-  'Published in Nature and AI/ML patent holder',
-  'Principal-level platform and product engineering scope',
-  'Foundational AI model development and evaluation',
-  'Applied AI systems delivered from concept to production',
+  'Published in Nature with an issued AI/ML patent',
+  'Principal-level scope across platform, product, and delivery',
+  'Hands-on experience with foundational model development and evaluation',
+  'Applied AI systems shipped from concept through production operations',
 ]
 
 const metrics = [
   { label: 'Years in software', value: '9+' },
-  { label: 'Core domains', value: 'AI + Platform + Product' },
-  { label: 'Remote collaboration', value: 'Global and cross-time-zone' },
-  { label: 'Leadership scope', value: 'Senior IC to principal trajectory' },
+  { label: 'Core domains', value: 'AI, Platform, and Product Engineering' },
+  { label: 'Remote collaboration', value: 'US-facing and cross-time-zone proven' },
+  { label: 'Leadership scope', value: 'Senior IC operating at principal breadth' },
 ]
 
 const experience = [
@@ -30,7 +31,7 @@ const experience = [
       'Senior Software Engineer (2024 - 2025)',
     ],
     summary:
-      'Driving high-leverage product and platform work, with a focus on applied AI, resilient architecture, and end-to-end delivery.',
+      'Leading high-leverage product and platform work with an emphasis on applied AI, resilient architecture, and disciplined end-to-end execution.',
   },
   {
     company: 'Octopus Deploy',
@@ -41,7 +42,7 @@ const experience = [
       'Intermediate Software Engineer (2020 - 2023)',
     ],
     summary:
-      'Built production systems at scale and partnered across product, platform, and delivery teams to improve developer and customer outcomes.',
+      'Built and evolved production systems at scale while partnering across product, platform, and delivery to improve both developer effectiveness and customer outcomes.',
   },
   {
     company: 'Zendesk',
@@ -49,22 +50,22 @@ const experience = [
     period: '2017 - 2020',
     roles: ['Data Science Engineer, AI Team (2017 - 2020)'],
     summary:
-      'Worked on AI-focused capabilities and model-driven features in a high-impact product environment.',
+      'Delivered AI-focused capabilities and model-driven features inside a high-scale product environment, bridging data science and software engineering concerns.',
   },
 ]
 
 const strengths = [
-  'Turns ambiguous problem spaces into clear technical plans and shipped outcomes',
-  'Combines research depth with practical software delivery',
-  'Builds systems that are operable, testable, and resilient under real load',
-  'Leads through technical clarity, thoughtful tradeoffs, and execution rhythm',
+  'Turns ambiguous problem spaces into clear technical plans, decision paths, and shipped outcomes',
+  'Combines research depth with practical software delivery and operational realism',
+  'Builds systems that are testable, observable, and resilient under real production conditions',
+  'Leads through technical clarity, tradeoff discipline, and steady execution rhythm',
 ]
 
 const credentials = [
-  'PhD background with applied research depth',
-  'Published in Nature',
+  'PhD in developmental genetics with applied research depth',
+  'Published in Nature: Comms Bio',
   'AI/ML patent holder',
-  'Founder and serial builder experience',
+  'Founder and repeat product builder',
 ]
 
 export default function ResumePage() {
@@ -79,40 +80,38 @@ export default function ResumePage() {
       </Head>
 
       <Container className="mt-8 sm:mt-12">
-        <section className="reveal-up relative overflow-hidden rounded-[2rem] border border-slate-300/70 bg-slate-950 text-slate-100 shadow-2xl shadow-slate-900/35">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(56,189,248,0.3),transparent_38%),radial-gradient(circle_at_88%_5%,rgba(14,165,233,0.32),transparent_42%),linear-gradient(130deg,rgba(2,6,23,0.96),rgba(15,23,42,0.92),rgba(12,74,110,0.88))]" />
+        <section className="glass-panel-strong reveal-up relative overflow-hidden rounded-[2rem]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(183,202,215,0.28),transparent_36%),radial-gradient(circle_at_90%_4%,rgba(95,158,166,0.16),transparent_38%),linear-gradient(140deg,rgba(255,252,248,0.84),rgba(255,249,242,0.78),rgba(226,235,242,0.82))]" />
           <div className="relative grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.4fr_0.9fr]">
             <div>
-              <p className="section-chip border-cyan-300/45 bg-cyan-400/15 text-cyan-100">
-                Principal-Level Resume
-              </p>
-              <h1 className="font-display mt-5 text-5xl leading-[0.94] sm:text-6xl">
+              <p className="section-chip">Principal-Level Resume</p>
+              <h1 className="font-display mt-5 text-5xl leading-[0.94] text-ink sm:text-6xl">
                 Paul Gradie
               </h1>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg">
-                Software Engineer, founder, and inventor focused on high-impact systems at the
-                intersection of AI, product, and platform engineering.
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+                Staff-level engineer operating at principal breadth, with a track record spanning
+                AI systems, platform architecture, and product delivery in high-trust teams.
               </p>
               <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold">
-                <span className="rounded-full border border-cyan-300/40 bg-cyan-400/10 px-4 py-1.5 text-cyan-100">
+                <span className="accent-pill">
                   Melbourne-based
                 </span>
-                <span className="rounded-full border border-blue-300/40 bg-blue-400/10 px-4 py-1.5 text-blue-100">
+                <span className="accent-pill">
                   Remote with US teams
                 </span>
-                <span className="rounded-full border border-slate-300/40 bg-slate-300/10 px-4 py-1.5 text-slate-100">
+                <span className="accent-pill">
                   Principal Engineer scope
                 </span>
               </div>
             </div>
 
-            <div className="glass-panel-strong rounded-2xl border-white/20 p-6">
-              <h2 className="font-display text-2xl text-slate-100">Contact</h2>
-              <ul className="mt-4 space-y-2 text-sm text-slate-200">
+            <div className="surface-card-strong rounded-2xl p-6">
+              <h2 className="font-display text-2xl text-ink">Contact</h2>
+              <ul className="mt-4 space-y-2 text-sm text-muted">
                 <li>
-                  <span className="font-semibold text-white">LinkedIn:</span>{' '}
+                  <span className="font-semibold text-ink">LinkedIn:</span>{' '}
                   <a
-                    className="underline decoration-cyan-300/50 underline-offset-2 hover:text-cyan-200"
+                    className="theme-link underline decoration-[color:var(--brand-c)] underline-offset-2"
                     href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -121,9 +120,9 @@ export default function ResumePage() {
                   </a>
                 </li>
                 <li>
-                  <span className="font-semibold text-white">GitHub:</span>{' '}
+                  <span className="font-semibold text-ink">GitHub:</span>{' '}
                   <a
-                    className="underline decoration-cyan-300/50 underline-offset-2 hover:text-cyan-200"
+                    className="theme-link underline decoration-[color:var(--brand-c)] underline-offset-2"
                     href="https://github.com/paulegradie"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -132,9 +131,9 @@ export default function ResumePage() {
                   </a>
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Portfolio:</span>{' '}
+                  <span className="font-semibold text-ink">Portfolio:</span>{' '}
                   <a
-                    className="underline decoration-cyan-300/50 underline-offset-2 hover:text-cyan-200"
+                    className="theme-link underline decoration-[color:var(--brand-c)] underline-offset-2"
                     href="https://paulgradie.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -143,14 +142,13 @@ export default function ResumePage() {
                   </a>
                 </li>
               </ul>
-              <a
+              <Button
                 href={RESUME_URL}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:from-cyan-400 hover:to-blue-400"
+                className="mt-5 flex w-full rounded-xl px-4 py-2.5"
               >
                 Open Full CV
-              </a>
+              </Button>
             </div>
           </div>
         </section>
@@ -158,10 +156,10 @@ export default function ResumePage() {
         <section className="mt-8 grid gap-6 md:grid-cols-2">
           {metrics.map((item, idx) => (
             <article key={item.label} className={`glass-panel reveal-up rounded-2xl p-5 ${idx > 0 ? 'reveal-delay-1' : ''}`}>
-              <p className="text-xs font-semibold uppercase tracking-[0.13em] text-slate-500 dark:text-slate-300">
+              <p className="eyebrow-label dark:text-slate-300">
                 {item.label}
               </p>
-              <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{item.value}</p>
+              <p className="mt-2 text-lg font-semibold text-ink dark:text-slate-100">{item.value}</p>
             </article>
           ))}
         </section>
@@ -171,20 +169,23 @@ export default function ResumePage() {
             <h2 className="font-display text-3xl text-ink">Career Experience</h2>
             <ol className="mt-6 space-y-5">
               {experience.map((item) => (
-                <li key={item.company} className="rounded-2xl border border-slate-300/60 bg-white/65 p-5 dark:border-slate-600/65 dark:bg-slate-900/45">
+                <li key={item.company} className="surface-card rounded-2xl p-5">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{item.company}</h3>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">
+                    <h3 className="text-lg font-semibold text-ink dark:text-slate-100">{item.company}</h3>
+                    <p className="eyebrow-label dark:text-slate-300">
                       {item.period}
                     </p>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">{item.location}</p>
-                  <ul className="mt-3 space-y-1 text-sm text-slate-700 dark:text-slate-200">
+                  <p className="text-sm text-muted dark:text-slate-300">{item.location}</p>
+                  <ul className="mt-3 space-y-1 text-sm text-muted dark:text-slate-200">
                     {item.roles.map((role) => (
-                      <li key={role}>- {role}</li>
+                      <li key={role} className="flex items-start gap-3">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[color:var(--brand-a)]" />
+                        <span>{role}</span>
+                      </li>
                     ))}
                   </ul>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{item.summary}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted dark:text-slate-300">{item.summary}</p>
                 </li>
               ))}
             </ol>
@@ -193,36 +194,45 @@ export default function ResumePage() {
           <div className="space-y-6">
             <article className="glass-panel reveal-up reveal-delay-2 rounded-3xl p-6 sm:p-7">
               <h2 className="font-display text-2xl text-ink">Highlights</h2>
-              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted dark:text-slate-200">
                 {highlights.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-2 w-2 rounded-full bg-[color:var(--brand-a)]" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </article>
 
             <article className="glass-panel reveal-up reveal-delay-3 rounded-3xl p-6 sm:p-7">
               <h2 className="font-display text-2xl text-ink">Core Strengths</h2>
-              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted dark:text-slate-200">
                 {strengths.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-2 w-2 rounded-full bg-[color:var(--brand-b)]" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </article>
 
             <article className="glass-panel reveal-up reveal-delay-3 rounded-3xl p-6 sm:p-7">
               <h2 className="font-display text-2xl text-ink">Credentials</h2>
-              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted dark:text-slate-200">
                 {credentials.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-2 w-2 rounded-full bg-[color:var(--brand-a)]" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
-              <div className="mt-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-4 text-sm text-slate-700 dark:text-slate-200">
+              <div className="surface-card mt-5 rounded-2xl border-[color:var(--brand-c)]/60 p-4 text-sm text-muted dark:text-slate-200">
                 For detailed history, publications, and project context, open the full CV or visit{' '}
-                <Link href="/projects" className="font-semibold text-cyan-800 underline dark:text-cyan-300">
+                <Link href="/projects" className="theme-link font-semibold underline">
                   Projects
                 </Link>{' '}
                 and{' '}
-                <Link href="/articles" className="font-semibold text-cyan-800 underline dark:text-cyan-300">
+                <Link href="/articles" className="theme-link font-semibold underline">
                   Articles
                 </Link>
                 .

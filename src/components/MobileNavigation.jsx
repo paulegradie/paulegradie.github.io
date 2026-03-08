@@ -9,7 +9,7 @@ export function MobileNavigation(props) {
     <Popover {...props}>
       <Popover.Button className="glass-panel group flex items-center rounded-full px-4 py-2 text-sm font-semibold text-ink transition hover:shadow-md whitespace-nowrap">
         Menu
-        <ChevronDownIcon className="ml-3 h-auto w-2 stroke-slate-500 transition group-hover:stroke-slate-800 dark:stroke-slate-300 dark:group-hover:stroke-slate-100" />
+        <ChevronDownIcon className="ml-3 h-auto w-2 stroke-[color:var(--ink-muted)] transition group-hover:stroke-[color:var(--ink)] dark:stroke-slate-300 dark:group-hover:stroke-slate-100" />
       </Popover.Button>
       <Transition.Root>
         <Transition.Child
@@ -38,14 +38,14 @@ export function MobileNavigation(props) {
           >
             <div className="flex flex-row-reverse items-center justify-between">
               <Popover.Button aria-label="Close menu" className="-m-1 p-1">
-                <CloseIcon className="h-6 w-6 text-slate-500 dark:text-slate-300" />
+                <CloseIcon className="h-6 w-6 text-[color:var(--ink-muted)] dark:text-slate-300" />
               </Popover.Button>
-              <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-300">
+              <h2 className="eyebrow-label dark:text-slate-300">
                 Navigation
               </h2>
             </div>
             <nav className="mt-6">
-              <ul className="-my-2 divide-y divide-slate-300/50 text-base text-slate-900 dark:divide-slate-600/50 dark:text-slate-100">
+              <ul className="-my-2 divide-y divider-line text-base text-ink dark:divide-slate-600/50 dark:text-slate-100">
                 <MobileNavItem href="/">Home</MobileNavItem>
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>

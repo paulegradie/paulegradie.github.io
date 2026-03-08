@@ -13,43 +13,43 @@ import queryStudio from '@/images/logos/qwerkystudio-logo.png'
 const projects = [
   {
     name: 'Launch11',
-    description: 'AI powered apps by Launch11',
+    description: 'A studio for focused AI products and productized experiments.',
     link: { href: 'https://launch11.com', label: 'Launch11' },
     logo: launch11,
-    className: 'w-64 rounded-lg m-2',
-    accentColor: 'green',
-  },
-  {
-    name: 'Renaym',
-    description: 'Renaym your media files smarter - not harder',
-    link: { href: 'https://renaym.launch11.com', label: 'Renaym' },
-    logo: renaym,
-    className: 'w-64 rounded-lg m-2',
-    accentColor: 'purple',
-  },
-  {
-    name: 'Siftr',
-    description: 'Get your gmail inbox under control',
-    link: { href: 'https://siftr.launch11.com', label: 'Siftr' },
-    logo: siftr,
-    className: 'w-64 rounded-lg m-2',
-    accentColor: 'purple',
-  },
-  {
-    name: 'Sailfish',
-    description: 'Sailfish - a user friendly performance test runner for .NET',
-    link: { href: 'https://paulgradie.com/Sailfish', label: 'Sailfish' },
-    logo: sailfishBanner,
     className: 'w-64 rounded-lg m-2',
     accentColor: 'teal',
   },
   {
+    name: 'Renaym',
+    description: 'A utility for renaming media libraries with less manual cleanup.',
+    link: { href: 'https://renaym.launch11.com', label: 'Renaym' },
+    logo: renaym,
+    className: 'w-64 rounded-lg m-2',
+    accentColor: 'blue',
+  },
+  {
+    name: 'Siftr',
+    description: 'A focused tool for reducing inbox noise and regaining control of email.',
+    link: { href: 'https://siftr.launch11.com', label: 'Siftr' },
+    logo: siftr,
+    className: 'w-64 rounded-lg m-2',
+    accentColor: 'blue',
+  },
+  {
     name: 'Qwerky Studio',
-    description: 'An app for creating and managing artwork with ChatGPT and DALL-E',
+    description: 'A creative tool for generating and managing artwork with modern image models.',
     link: { href: 'https://github.com/QwerkyDesigns/studio-portal', label: 'Qwerky Studio' },
     logo: queryStudio,
     className: 'w-16 rounded-lg m-2',
     accentColor: 'amber',
+  },
+  {
+    name: 'Sailfish',
+    description: 'A .NET performance test runner designed to be approachable, repeatable, and useful.',
+    link: { href: 'https://paulgradie.com/Sailfish', label: 'Sailfish' },
+    logo: sailfishBanner,
+    className: 'w-64 rounded-lg m-2',
+    accentColor: 'teal',
   },
   {
     name: 'Palavyr',
@@ -72,10 +72,10 @@ const projects = [
 
 function getProjectAccentClasses(color) {
   const colors = {
-    teal: 'from-cyan-500/20 to-cyan-300/10 border-cyan-500/35',
-    blue: 'from-indigo-500/20 to-indigo-300/10 border-indigo-500/35',
-    violet: 'from-blue-500/20 to-blue-300/10 border-blue-500/35',
-    amber: 'from-sky-500/20 to-sky-300/10 border-sky-500/35',
+    teal: 'from-[color:var(--brand-a)]/16 to-white/5 border-[color:var(--brand-a)]/25',
+    blue: 'from-[color:var(--brand-b)]/16 to-white/5 border-[color:var(--brand-b)]/25',
+    violet: 'from-[color:var(--brand-c)]/18 to-white/5 border-[color:var(--brand-b)]/20',
+    amber: 'from-[#b38b52]/16 to-white/5 border-[#b38b52]/25',
   }
 
   return colors[color] || colors.teal
@@ -107,17 +107,17 @@ export default function Projects() {
           {projects.map((project) => (
             <Card as="li" key={project.name} className="group">
               <div
-                className={`relative z-10 flex items-center justify-center rounded-2xl border bg-gradient-to-br p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg ${getProjectAccentClasses(project.accentColor)}`}
+                className={`surface-card relative z-10 flex items-center justify-center rounded-2xl bg-gradient-to-br p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg ${getProjectAccentClasses(project.accentColor)}`}
               >
                 {project.logo && (
                   <Image src={project.logo} alt="no logo for this project" className={project.className} unoptimized />
                 )}
               </div>
-              <h2 className="mt-6 text-base font-semibold text-slate-900 dark:text-slate-100">
+              <h2 className="mt-6 text-base font-semibold text-ink dark:text-slate-100">
                 <Card.Link href={project.link.href}>{project.name}</Card.Link>
               </h2>
               <Card.Description>{project.description}</Card.Description>
-              <p className="relative z-10 mt-6 flex text-sm font-semibold text-cyan-800 transition-colors duration-200 group-hover:text-blue-700 dark:text-cyan-300 dark:group-hover:text-blue-300">
+              <p className="relative z-10 mt-6 flex text-sm font-semibold text-[color:var(--brand-b)] transition-colors duration-200 group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-300">
                 <LinkIcon className="h-5 w-5 flex-none transition-transform duration-200 group-hover:scale-110" />
                 <span className="ml-2">{project.link.label}</span>
               </p>
@@ -128,5 +128,4 @@ export default function Projects() {
     </>
   )
 }
-
 

@@ -48,29 +48,29 @@ export default function About() {
             </h1>
             <div className="mt-7 space-y-5 text-base leading-relaxed text-muted sm:text-lg">
               <p>
-                I am a software engineer who works mostly in the .NET ecosystem. I help companies
-                build and reshape systems through iterative delivery, balancing principled thinking
-                with pragmatic execution.
+                I work mostly in the .NET ecosystem and help companies improve critical software
+                through iterative delivery, architecture refinement, and pragmatic technical
+                leadership.
               </p>
               <p>
                 Before software, I worked in biology and completed a PhD in developmental genetics
-                at the University of Melbourne. I was published in Nature, and that research
-                experience sharpened how I reason about change, uncertainty, and long-term system
-                evolution.
+                at the University of Melbourne. I was published in Nature: Comms Bio, and that research
+                background sharpened how I reason about uncertainty, evidence, and long-term system
+                change.
               </p>
               <p>
-                My AI background is not just app integration. I have experience with foundational
-                model development, evaluation, and the engineering needed to bring model-driven
-                systems into production environments.
+                My AI background is deeper than application-layer integration. I have worked on
+                foundational model development, evaluation, and the engineering required to take
+                model-driven systems into production.
               </p>
               <p>
-                I care deeply about team performance. Great teams do not happen by accident. They
-                need trust, clear expectations, and a technical culture where people can push each
-                other without burnout.
+                I care deeply about team performance. Strong teams are built through trust, clear
+                expectations, and a culture where people can challenge each other without creating
+                burnout.
               </p>
               <p>
-                I am easy to work with but I hold a high bar. I invest heavily in improving my own
-                craft and expect a similar level of engagement from people around me.
+                I am collaborative, but I keep a high bar. I invest heavily in improving my own
+                craft and value the same seriousness from the teams I work with.
               </p>
               <p>
                 If that sounds like your environment, reach out. I am always open to meaningful

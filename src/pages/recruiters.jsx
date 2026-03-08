@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { SimpleLayout } from '@/components/SimpleLayout'
+import { Button } from '@/components/Button'
 
 const RECRUITER_TOKEN = 'MELBOURNE2025'
 
@@ -51,16 +52,16 @@ function TokenInput({ onTokenSubmit, isLoading }) {
     <div className="mx-auto max-w-md">
       <div className="glass-panel-strong rounded-3xl p-8">
         <div className="mb-6 text-center">
-          <LockIcon className="mx-auto mb-4 h-12 w-12 text-cyan-800 dark:text-cyan-300" />
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Access Required</h2>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
+          <LockIcon className="mx-auto mb-4 h-12 w-12 text-[color:var(--brand-b)] dark:text-cyan-300" />
+          <h2 className="text-2xl font-bold text-ink dark:text-slate-100">Access Required</h2>
+          <p className="mt-2 text-muted dark:text-slate-300">
             Find the token on my LinkedIn profile to open this page.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="token" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">
+            <label htmlFor="token" className="mb-2 block text-sm font-semibold text-ink dark:text-slate-200">
               Enter Token
             </label>
             <input
@@ -68,7 +69,7 @@ function TokenInput({ onTokenSubmit, isLoading }) {
               id="token"
               value={token}
               onChange={(e) => setToken(e.target.value)}
-              className="w-full rounded-xl border border-slate-300/80 bg-white/70 px-4 py-3 text-slate-900 placeholder-slate-500 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/25 dark:border-slate-600/70 dark:bg-slate-800/70 dark:text-slate-100"
+              className="surface-card w-full rounded-xl px-4 py-3 text-ink placeholder:text-[color:var(--ink-muted)] outline-none transition focus:border-[color:var(--brand-a)] focus:ring-2 focus:ring-[color:var(--brand-a)]/20 dark:border-slate-600/70 dark:bg-slate-800/70 dark:text-slate-100"
               placeholder="Enter token from LinkedIn"
               disabled={isLoading}
             />
@@ -76,23 +77,23 @@ function TokenInput({ onTokenSubmit, isLoading }) {
 
           {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
 
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="w-full overflow-hidden rounded-xl ring-1 ring-inset ring-cyan-300/35 bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 px-4 py-3 font-semibold text-white shadow-lg shadow-blue-900/45 transition hover:from-slate-800 hover:via-blue-600 hover:to-cyan-400 hover:shadow-cyan-500/35 disabled:cursor-not-allowed disabled:opacity-75"
+            className="w-full rounded-xl px-4 py-3 disabled:cursor-not-allowed disabled:opacity-75"
           >
             {isLoading ? 'Verifying...' : 'Access Page'}
-          </button>
+          </Button>
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-muted dark:text-slate-400">
             Visit my{' '}
             <a
               href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-cyan-800 underline hover:text-blue-700 dark:text-cyan-300 dark:hover:text-blue-300"
+              className="theme-link font-semibold underline"
             >
               LinkedIn profile
             </a>{' '}
@@ -108,11 +109,11 @@ function RecruiterContent() {
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-10 text-center">
-        <div className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full border border-cyan-500/35 bg-cyan-500/12">
-          <UnlockIcon className="h-8 w-8 text-cyan-800 dark:text-cyan-300" />
+        <div className="accent-pill mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full p-0">
+          <UnlockIcon className="h-8 w-8 text-[color:var(--brand-b)] dark:text-cyan-300" />
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Welcome, Recruiter</h2>
-        <p className="mx-auto mt-3 max-w-3xl text-lg text-slate-600 dark:text-slate-300">
+        <h2 className="text-3xl font-bold text-ink dark:text-slate-100">Welcome, Recruiter</h2>
+        <p className="mx-auto mt-3 max-w-3xl text-lg text-muted dark:text-slate-300">
           I am open to Principal Engineer or Tech Lead roles with US-based companies that value
           product velocity, deep AI capability, and practical leadership.
         </p>
@@ -121,11 +122,11 @@ function RecruiterContent() {
       <div className="mb-10 grid gap-6 md:grid-cols-2">
         <div className="glass-panel rounded-2xl p-6">
           <div className="mb-4 flex items-center">
-            <CheckIcon className="mr-3 h-6 w-6 text-cyan-800 dark:text-cyan-300" />
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Work Arrangement</h3>
+            <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
+            <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Work Arrangement</h3>
           </div>
-          <p className="text-lg font-semibold text-slate-800 dark:text-slate-100">Remote only, US teams preferred</p>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">Remote only, US teams preferred</p>
+          <p className="mt-2 text-muted dark:text-slate-300">
             Based in Melbourne, Australia with strong history collaborating across US time zones.
             Open to occasional travel for key planning and alignment.
           </p>
@@ -133,11 +134,11 @@ function RecruiterContent() {
 
         <div className="glass-panel rounded-2xl p-6">
           <div className="mb-4 flex items-center">
-            <CheckIcon className="mr-3 h-6 w-6 text-cyan-800 dark:text-cyan-300" />
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Compensation</h3>
+            <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
+            <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Compensation</h3>
           </div>
-          <p className="text-lg font-semibold text-slate-800 dark:text-slate-100">$265,000 USD base salary target</p>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">$265,000 USD base salary target</p>
+          <p className="mt-2 text-muted dark:text-slate-300">
             Looking for principal-level scope, with equity participation and comprehensive benefits
             on top of base salary.
           </p>
@@ -145,14 +146,14 @@ function RecruiterContent() {
       </div>
 
       <div className="glass-panel-strong rounded-3xl p-7 sm:p-8">
-        <h3 className="font-display text-3xl font-bold text-slate-900 dark:text-slate-100">
+        <h3 className="font-display text-3xl font-bold text-ink dark:text-slate-100">
           Principal-Level Engineering Leader
         </h3>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
-            <h4 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">Technical excellence</h4>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
-              <li>- Published in Nature</li>
+            <h4 className="mb-3 text-lg font-semibold text-ink dark:text-slate-100">Technical excellence</h4>
+            <ul className="space-y-2 text-muted dark:text-slate-300">
+              <li>- Published in Nature: Comms Bio</li>
               <li>- AI/ML patent holder</li>
               <li>- Foundational AI model development experience</li>
               <li>- Model evaluation and productionization expertise</li>
@@ -160,8 +161,8 @@ function RecruiterContent() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">Leadership and innovation</h4>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
+            <h4 className="mb-3 text-lg font-semibold text-ink dark:text-slate-100">Leadership and innovation</h4>
+            <ul className="space-y-2 text-muted dark:text-slate-300">
               <li>- Serial entrepreneur and builder</li>
               <li>- Applied AI systems delivery across product and platform</li>
               <li>- Cross-functional technical leader</li>
@@ -170,7 +171,7 @@ function RecruiterContent() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-cyan-500/25 bg-cyan-500/8 p-4 text-sm text-slate-700 dark:text-slate-200">
+        <div className="surface-card mt-6 rounded-2xl border-[color:var(--brand-c)]/60 p-4 text-sm text-muted dark:text-slate-200">
           <strong>Unique value:</strong> The intersection of scientific rigor, AI fluency, and
           enterprise software leadership lets me solve high-stakes technical problems quickly and
           with low drama.
@@ -178,26 +179,25 @@ function RecruiterContent() {
       </div>
 
       <div className="mt-10 text-center">
-        <p className="mb-4 text-slate-600 dark:text-slate-300">
+        <p className="mb-4 text-muted dark:text-slate-300">
           If this profile aligns with your role, let us connect.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
+          <Button
             href="https://www.linkedin.com/in/paul-gradie-phd-743b8b58/"
             target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center overflow-hidden rounded-xl ring-1 ring-inset ring-cyan-300/35 bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-900/45 transition hover:from-slate-800 hover:via-blue-600 hover:to-cyan-400 hover:shadow-cyan-500/35"
+            className="rounded-xl px-6 py-3"
           >
             Connect on LinkedIn
-          </a>
-          <a
+          </Button>
+          <Button
             href="https://paulgradie.com"
             target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-xl border border-slate-300/80 bg-white/75 px-6 py-3 font-semibold text-slate-800 transition hover:bg-white dark:border-slate-600/70 dark:bg-slate-800/70 dark:text-slate-100"
+            variant="secondary"
+            className="rounded-xl px-6 py-3"
           >
             View Portfolio
-          </a>
+          </Button>
         </div>
       </div>
     </div>
