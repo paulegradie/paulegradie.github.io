@@ -11,8 +11,9 @@
     --bg-2: #bccff1;
     --surface: rgba(242, 247, 255, 0.84);
     --surface-strong: rgba(248, 252, 255, 0.94);
-    --line: rgba(22, 49, 99, 0.2);
-    --line-strong: rgba(34, 74, 138, 0.3);
+    --line: rgba(22, 49, 99, 0.3);
+    --line-strong: rgba(34, 74, 138, 0.42);
+    --hr-line: rgba(0, 0, 0, 0.99);
     --ink: #09122b;
     --ink-muted: #2e466f;
     --brand-a: #3de5ff;
@@ -23,20 +24,21 @@
   }
 
   .dark {
-    --bg-0: #020712;
-    --bg-1: #060e1f;
-    --bg-2: #0c1733;
-    --surface: rgba(5, 12, 29, 0.82);
-    --surface-strong: rgba(8, 16, 37, 0.95);
-    --line: rgba(97, 147, 255, 0.34);
-    --line-strong: rgba(127, 187, 255, 0.5);
-    --ink: #e8f2ff;
-    --ink-muted: #a7c0df;
-    --brand-a: #52e6ff;
-    --brand-b: #4d83ff;
-    --brand-c: #97bbff;
-    --shadow-elevated: 0 18px 60px rgba(0, 0, 0, 0.55);
-    --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.45);
+    --bg-0: #07111f;
+    --bg-1: #0b1830;
+    --bg-2: #112648;
+    --surface: rgba(12, 24, 47, 0.8);
+    --surface-strong: rgba(14, 28, 54, 0.9);
+    --line: rgba(125, 171, 255, 0.38);
+    --line-strong: rgba(150, 196, 255, 0.56);
+    --hr-line: rgba(176, 210, 255, 0.62);
+    --ink: #f3f8ff;
+    --ink-muted: #c2d3e9;
+    --brand-a: #6be7ff;
+    --brand-b: #5c8fff;
+    --brand-c: #a8c2ff;
+    --shadow-elevated: 0 18px 56px rgba(2, 8, 23, 0.42);
+    --shadow-soft: 0 10px 28px rgba(2, 8, 23, 0.3);
   }
 
   html,
@@ -54,6 +56,12 @@
 
   a {
     color: inherit;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--hr-line);
+    opacity: 1;
   }
 }
 
@@ -142,6 +150,11 @@
     opacity: 0.6;
   }
 
+  .dark .glass-panel::after {
+    mix-blend-mode: screen;
+    opacity: 0.22;
+  }
+
   .glass-panel > * {
     position: relative;
     z-index: 1;
@@ -160,6 +173,19 @@
       var(--shadow-elevated);
   }
 
+  .dark .glass-panel,
+  .dark .glass-panel-strong {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      var(--shadow-soft);
+  }
+
+  .dark .glass-panel-strong {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      var(--shadow-elevated);
+  }
+
   .section-chip {
     display: inline-flex;
     align-items: center;
@@ -174,6 +200,12 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     font-weight: 700;
+  }
+
+  .dark .section-chip {
+    border-color: color-mix(in oklab, var(--brand-c) 26%, rgba(255, 255, 255, 0.16));
+    background: color-mix(in oklab, var(--brand-b) 10%, rgba(255, 255, 255, 0.04));
+    color: color-mix(in oklab, var(--brand-a) 86%, white);
   }
 
   .text-gradient-brand {

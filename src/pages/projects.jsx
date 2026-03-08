@@ -5,10 +5,10 @@ import { SimpleLayout } from '@/components/SimpleLayout'
 import sailfishBanner from '@/images/photos/Sailfishnew.png'
 import palavyrLogo from '@/images/logos/palavyr-logo2.png'
 import renaym from '@/images/logos/renaym.png'
+import siftr from '@/images/logos/siftr.png'
 import launch11 from '@/images/logos/launch11.png'
 import seqpyplot from '@/images/logos/seqpyplot-logo.png'
 import queryStudio from '@/images/logos/qwerkystudio-logo.png'
-import partybots from '@/images/logos/partybots-logo.png'
 
 const projects = [
   {
@@ -27,14 +27,13 @@ const projects = [
     className: 'w-64 rounded-lg m-2',
     accentColor: 'purple',
   },
-
   {
-    name: 'Party Bots!',
-    description: 'Party Bots! Lets get ready to party!',
-    link: { href: 'https://coin-party.github.io/Party-Bots/', label: 'Party Bots' },
-    logo: partybots,
+    name: 'Siftr',
+    description: 'Get your gmail inbox under control',
+    link: { href: 'https://siftr.launch11.com', label: 'Siftr' },
+    logo: siftr,
     className: 'w-64 rounded-lg m-2',
-    accentColor: 'violet',
+    accentColor: 'purple',
   },
   {
     name: 'Sailfish',

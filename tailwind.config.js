@@ -3,7 +3,7 @@ import { colors as allColors } from 'tailwindcss/colors'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx}'],
+  content: ['./src/**/*.{js,jsx,mdx}'],
   darkMode: 'class',
   plugins: [require('@tailwindcss/typography')],
   theme: {
@@ -161,8 +161,6 @@ module.exports = {
             marginTop: theme('spacing.12'),
             marginBottom: theme('spacing.4'),
             textAlign: "left",
-            paddingBottom: theme('spacing.2'),
-            borderBottom: '1px solid rgb(63 63 70 / 0.3)',
           },
           h3: {
             fontSize: theme('fontSize.base')[0],

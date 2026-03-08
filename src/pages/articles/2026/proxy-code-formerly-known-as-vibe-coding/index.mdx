@@ -1,0 +1,495 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint } from '@/components/blog/Callout'
+import { Quote } from '@/components/blog/Quote'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-02-21',
+  title:
+    'Proxy Coding (formerly known as "Vibe Coding")',
+  description:
+    'An intentful, workplace-ready substitute for the stigmatizing "vibe coding" paradigm',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+# Proxy Coding (formerly known as "Vibe Coding")
+
+### You've suddenly realized:
+
+AI is showing up in force around work, but for most teams it is still not part of the everyday craft.
+
+Some people use it constantly. Most people dabble. Others avoid it, not because they are against it, but because they are unsure where it fits. What "good" looks like. How to use it safely. Whether they will continue to be successful if they start leaning into it. Whether it will affect how others perceive them.
+
+### Reality hits
+These are serious inhibitors that organizations not born in AI must evolve to overcome, lest they eventually be overtaken. There can be no doubt that in the right hands, with the right background or training, AI can seriously boost productivity.
+
+This post is a working proposal to start treating AI as a first-class part of our engineering workflow. The goal is **more leverage, less confusion, and a culture where people can "vibe code" responsibly**. I call this **proxy coding**: AI-driven development approached not as black-box programming, but as intentional programming conducted through an agent proxy. In this model, AI helps humans generate understanding, explore options, and execute changes, but the human still owns the work as their own. It is my belief that the greatest outcomes from integrating AI into real-world workflows will come from deep collaboration between humans and AI, as opposed to handing responsibilities off entirely.
+
+<div
+  className="glass-panel-strong not-prose relative my-8 overflow-hidden rounded-3xl p-6 sm:p-7"
+  style={{ color: 'var(--ink)' }}
+>
+  <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-400/20 blur-3xl dark:bg-cyan-400/10" />
+  <div className="pointer-events-none absolute -bottom-16 left-10 h-36 w-36 rounded-full bg-blue-500/10 blur-3xl dark:bg-blue-400/10" />
+  <div className="flex flex-wrap gap-2">
+    <span className="section-chip">Intent stays human</span>
+    <span className="section-chip">Execution can be delegated</span>
+    <span className="section-chip">Evidence stays mandatory</span>
+  </div>
+  <div className="mt-5 max-w-2xl">
+    <div
+      className="text-xs font-semibold uppercase tracking-[0.18em]"
+      style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}
+    >
+      Working Thesis
+    </div>
+    <h2 className="font-display mt-3 text-2xl leading-tight sm:text-3xl" style={{ color: 'var(--ink)' }}>
+      Use AI as a proxy for execution, not as an excuse to abandon judgment.
+    </h2>
+    <div className="mt-4 text-base leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
+      The professional version of &quot;vibe coding&quot; is not looser engineering. It is using AI to expand human understanding, accelerate execution, and still keep authorship and proof grounded in the human.
+    </div>
+  </div>
+  <div className="mt-6 grid gap-3 sm:grid-cols-3">
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        border: '1px solid color-mix(in oklab, var(--line-strong) 85%, white 15%)',
+        background: 'color-mix(in oklab, var(--surface-strong) 84%, white 16%)',
+      }}
+    >
+      <div
+        className="text-xs font-semibold uppercase tracking-[0.18em]"
+        style={{ color: 'color-mix(in oklab, var(--brand-c) 38%, var(--ink-muted))' }}
+      >
+        Intent
+      </div>
+      <div className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--ink)' }}>
+        Humans still declare the goal, the constraints, and what counts as done.
+      </div>
+    </div>
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        border: '1px solid color-mix(in oklab, var(--line-strong) 85%, white 15%)',
+        background: 'color-mix(in oklab, var(--surface-strong) 84%, white 16%)',
+      }}
+    >
+      <div
+        className="text-xs font-semibold uppercase tracking-[0.18em]"
+        style={{ color: 'color-mix(in oklab, var(--brand-c) 38%, var(--ink-muted))' }}
+      >
+        Proxy
+      </div>
+      <div className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--ink)' }}>
+        Agents research, draft, edit, and implement inside a bounded delegation surface.
+      </div>
+    </div>
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        border: '1px solid color-mix(in oklab, var(--line-strong) 85%, white 15%)',
+        background: 'color-mix(in oklab, var(--surface-strong) 84%, white 16%)',
+      }}
+    >
+      <div
+        className="text-xs font-semibold uppercase tracking-[0.18em]"
+        style={{ color: 'color-mix(in oklab, var(--brand-c) 38%, var(--ink-muted))' }}
+      >
+        Evidence
+      </div>
+      <div className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--ink)' }}>
+        Review, tests, accountability, and consequences remain real all the way to merge.
+      </div>
+    </div>
+  </div>
+</div>
+
+---
+
+## The Problem Is Uncertainty
+
+When someone is not using AI at work, the blocker is usually not ideology. It is uncertainty.
+
+In practice, that uncertainty sounds like: _"I do not know what to ask. I tried it once and it was underwhelming. I do not trust what it is doing. I do not know how it fits into review, ownership, or security. And I do not want people to think I am cutting corners."_
+
+That last part matters more than people admit.
+
+Inside most companies, AI adoption is happening in a socially awkward middle state. A few engineers are already getting serious leverage from it. Everyone else can see that something important is changing, but the norms are still fuzzy. The result is a weird split: private experimentation, inconsistent results, and very little shared language for what responsible usage looks like.
+
+If we leave it there, the organization gets the worst of both worlds. Some people move faster, but nobody is sure how much trust to place in the output. Good patterns stay tribal. Bad patterns spread quietly. Reviewers inherit ambiguity they did not ask for.
+
+So the first problem to solve is not raw capability. It is legibility.
+
+<KeyPoint>
+  The adoption gap is not mainly about capability. It is about whether AI-assisted work feels legible, reviewable, and
+  socially safe.
+</KeyPoint>
+
+---
+
+## Why "Vibe Coding" Stops Being Useful At Work
+
+"Vibe coding" is a funny internet term, but it is a bad organizational term.
+
+It suggests intuition over discipline. It sounds unserious. It gives skeptics an easy target, and it gives careless behavior a convenient cover. If the phrase people hear is "trust the vibes," then any team trying to adopt AI responsibly starts the conversation from a disadvantage.
+
+The issue is not that the term is inaccurate in every context. It is that it is too ambiguous to build process around.
+
+At work, we need language that answers a few practical questions: who owns the intent, what exactly the agent did, what evidence makes the change trustworthy, and how the work fits into review, accountability, and release.
+
+"Vibe coding" does not answer those questions. It mostly names the feeling of accelerated development. That is not enough.
+
+<Callout label="Translation">
+  What most serious teams actually want is not permission to &quot;trust the vibes.&quot; They want a way to use AI
+  aggressively without sounding careless or behaving carelessly.
+</Callout>
+
+---
+
+## Proxy Coding: A Better Mental Model
+
+Proxy coding is the term I would rather use for serious teams.
+
+The core idea is simple: **the AI is acting as a proxy for human understanding and engineering intent, not as a replacement for human judgment or authorship**.
+
+That framing matters because it keeps the center of gravity in the right place.
+
+In proxy coding, the human owns the goal, the constraints, and the definition of done. The agent helps the human build understanding, generate ideas, research options, draft changes, edit files, and even implement code on the human's behalf. But the work is still authored by the human directing it through the tool. Verification, acceptance, and consequences still belong to the human and the surrounding system.
+
+This is not a rhetorical distinction. It changes behavior.
+
+If you think in terms of replacement, you are tempted to hand off too much and evaluate too little.
+
+If you think in terms of proxy, you naturally ask better questions about what exactly you are delegating, what boundaries you have set, what proof you require before accepting the work, and what remains your responsibility.
+
+<Callout label="Ownership">
+  We need to stop talking about AI-written code as if it were somehow outside normal human authorship or ownership. We
+  do not do that with compilers, frameworks, code generators, IDEs, or any other tool. AI is another tool. If you used
+  it to understand the problem, explore the approach, produce the change, chose the direction, and accepted the output,
+  then the code is still yours and so are its outcomes. Proxy coding expresses that directly: execution can be proxied,
+  authorship and responsibility cannot.
+</Callout>
+
+That is the posture I want teams to normalize.
+
+<Quote>
+  The proxy can explain the system, generate ideas, draft the change, and even implement the first pass. The human
+  still authors the work by directing it and accepts the consequences.
+</Quote>
+
+---
+
+## What Proxy Coding Actually Looks Like
+
+Not every AI-assisted workflow is the same. "I used AI" can mean wildly different things operationally.
+
+<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Mode 01</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Inline Assistance</h3>
+    <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">The human stays fully in control while the model suggests local deltas, completions, and small transformations.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Mode 02</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Chat Pairing</h3>
+    <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">The human remains the primary actor, but the agent becomes a fast collaborator for explanation, options, and snippet generation.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Mode 03</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Task Delegation</h3>
+    <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">The human defines scope and constraints, and the agent edits files, runs commands, and returns a reviewable diff.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Mode 04</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Multi-Agent Orchestration</h3>
+    <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">One agent plans, others execute, and another reviews, with the human supervising the system instead of writing every line directly.</div>
+  </div>
+</div>
+
+These are different modes with different risk profiles.
+
+The more autonomy we give the proxy, the more we need stronger constraints, better observability, and tighter evidence. Treating all of this as one vague behavior is how organizations create both fear and sloppiness at the same time.
+
+Proxy coding gives us a way to say: yes, these workflows are related, but no, they are not all interchangeable.
+
+<KeyPoint>Higher autonomy is fine. Lower observability is not.</KeyPoint>
+
+---
+
+## The Skill Shift: From Typing To Steering
+
+One reason adoption gets uneven is that AI changes what good engineering behavior looks like in the moment.
+
+The old loop was mostly:
+
+1. understand the task
+2. write the code
+3. test the code
+4. ship the code
+
+The new loop increasingly looks like:
+
+1. define intent clearly
+2. delegate part of the work
+3. inspect what came back
+4. refine or redirect
+5. verify aggressively
+6. ship with evidence
+
+That means some of the highest leverage skills are no longer just syntax recall or typing speed. They are decomposition, constraint setting, taste, review discipline, verification design, and knowing when not to delegate.
+
+This is why some people seem immediately productive with AI while others bounce off it. They are not necessarily better engineers overall. They may simply be better at operating through a proxy.
+
+That is a trainable skill. We should treat it like one.
+
+---
+
+## The Non-Negotiables
+
+If proxy coding is going to work inside a real engineering organization, a few things cannot be optional.
+
+<Callout label="Operating Rule">
+  The more autonomy you grant the proxy, the more explicit intent, tighter scope, and stronger verification you must
+  demand in return.
+</Callout>
+
+### 1. Intent Must Be Explicit
+
+The proxy should not be guessing what success means.
+
+Good delegated work starts with the problem being solved, the relevant constraints, the scope boundaries, the quality expectations, and what "done" means.
+
+When intent is vague, the agent fills the gaps with plausible nonsense. That is not the model failing. That is us delegating badly.
+
+### 2. Evidence Must Beat Confidence
+
+The proxy sounding convincing is meaningless.
+
+What matters is evidence: tests added or updated, existing tests run, lint and type checks passing, reproducible bug validation, benchmarks when performance matters, screenshots when behavior changes, and a rollback story when risk is non-trivial.
+
+If the change is real, the proof should be real too.
+
+### 3. Scope Must Stay Bounded
+
+The fastest way to turn AI into a liability is to let it roam.
+
+Proxy coding works best when the delegation surface is explicit: file or directory boundaries, timeboxed tasks, known "do not touch" areas, small diffs, and reversible steps.
+
+This is not about distrusting the tool. It is about making trust economically cheap.
+
+### 4. Review Must Stay Human
+
+Agents can help review. They cannot own accountability.
+
+A good human reviewer should still be able to say what changed, why it changed, what evidence supports it, and what risks remain.
+
+If review becomes "well, the agent probably knew what it was doing," the team has already lost the plot.
+
+---
+
+## The Workstation Has Changed
+
+Traditional developer tooling assumes the human is the only active operator and the editor is the center of the universe.
+
+That assumption is weakening.
+
+<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Before</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Editor-Centric</h3>
+    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+      <li>write code</li>
+      <li>run commands</li>
+      <li>inspect output</li>
+      <li>repeat manually</li>
+    </ul>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Now</div>
+    <h3 className="font-display mt-2 text-2xl text-slate-900 dark:text-slate-100">Workflow-Centric</h3>
+    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+      <li>direct work</li>
+      <li>constrain work</li>
+      <li>observe work</li>
+      <li>validate, reject, or replay work</li>
+    </ul>
+  </div>
+</div>
+
+That means the useful interface is no longer just "text editor plus terminal." It is increasingly a control surface for collaboration with proxies.
+
+The teams that adapt fastest will not just have better models. They will have better environments for supervising those models.
+
+---
+
+## Observability Is What Makes Proxy Coding Trustworthy
+
+The missing piece in many AI workflows is observability.
+
+Code appears. A diff exists. But the path from intent to output is blurry. Reviewers are left reverse-engineering what happened, which is exactly the kind of invisible labor that kills trust.
+
+If we want proxy coding to scale, agent actions need to be legible.
+
+At a minimum, I want traceability around the task that was delegated, the files that were touched, the commands that were run, what failed along the way, what checks were executed, what assumptions were made, and what remains uncertain.
+
+This is the difference between "an AI changed something" and "a teammate used a proxy to produce a reviewable unit of work."
+
+The more observable the process is, the easier it becomes to teach, debug, govern, and improve.
+
+<Quote>If the path from intent to diff is invisible, reviewers are doing archaeology instead of review.</Quote>
+
+---
+
+## A Small Shared Playbook Beats Personal Wizardry
+
+If broad adoption is the goal, we should stop relying on individuals to invent their own rituals.
+
+Organizations need a few default workflows that people can actually remember and reuse.
+
+<div className="not-prose my-8 grid gap-4 md:grid-cols-2">
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="flex items-center gap-3">
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-500/35 bg-cyan-500/10 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
+        1
+      </span>
+      <h3 className="font-display text-2xl text-slate-900 dark:text-slate-100">Explain, Then Change</h3>
+    </div>
+    <div className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">Before editing, the agent shows the plan, likely risks, expected files, and the evidence it intends to gather. The human approves direction first.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="flex items-center gap-3">
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-500/35 bg-cyan-500/10 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
+        2
+      </span>
+      <h3 className="font-display text-2xl text-slate-900 dark:text-slate-100">Spike and Propose</h3>
+    </div>
+    <div className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">For uncertain work, the agent explores multiple options and returns with tradeoffs before implementation begins. This is ideal when the real task is reducing ambiguity.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="flex items-center gap-3">
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-500/35 bg-cyan-500/10 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
+        3
+      </span>
+      <h3 className="font-display text-2xl text-slate-900 dark:text-slate-100">Bounded Refactor</h3>
+    </div>
+    <div className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">The agent is allowed to refactor only within a clearly defined surface area, with before-and-after validation attached and blast radius kept small.</div>
+  </div>
+  <div className="glass-panel rounded-2xl p-5">
+    <div className="flex items-center gap-3">
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-500/35 bg-cyan-500/10 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
+        4
+      </span>
+      <h3 className="font-display text-2xl text-slate-900 dark:text-slate-100">Review Companion</h3>
+    </div>
+    <div className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">The agent reads a PR and highlights likely bugs, missing tests, brittle assumptions, docs gaps, or migration risks to support reviewer judgment rather than replace it.</div>
+  </div>
+</div>
+
+These patterns matter because they make AI use legible. People are no longer "doing some weird AI thing." They are following a recognizable operating model.
+
+---
+
+## Training This Into The Team
+
+If proxy coding is real work, then it deserves real enablement.
+
+Not everyone needs to become an expert prompt engineer. They do need a baseline shared competence in how to work through an AI proxy responsibly.
+
+A lightweight training path could look like this:
+
+1. foundations: what agents are good at, what they are bad at, and where hallucination risk actually shows up
+2. safety: data handling, secrets, privacy, licensing, and prompt hygiene
+3. workflow: how to plan, delegate, inspect, and verify
+4. review: how to evaluate proxy-produced diffs efficiently
+5. practice: one small real task completed with evidence attached
+
+<KeyPoint>
+  Stop treating effective AI usage as a mysterious personality trait. It is a learnable part of the craft.
+</KeyPoint>
+
+---
+
+## Practical Next Steps For A Real Organization
+
+If I were trying to close the adoption gap inside an existing company, I would focus on four things.
+
+<div className="not-prose my-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+  <div className="rounded-2xl border border-slate-300/70 bg-white/60 p-4 dark:border-slate-600/70 dark:bg-slate-800/45">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Step 1</div>
+    <div className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">Define the minimum standard</div>
+  </div>
+  <div className="rounded-2xl border border-slate-300/70 bg-white/60 p-4 dark:border-slate-600/70 dark:bg-slate-800/45">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Step 2</div>
+    <div className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">Support a default tooling path</div>
+  </div>
+  <div className="rounded-2xl border border-slate-300/70 bg-white/60 p-4 dark:border-slate-600/70 dark:bg-slate-800/45">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Step 3</div>
+    <div className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">Create safe practice space</div>
+  </div>
+  <div className="rounded-2xl border border-slate-300/70 bg-white/60 p-4 dark:border-slate-600/70 dark:bg-slate-800/45">
+    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">Step 4</div>
+    <div className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">Measure outcomes that matter</div>
+  </div>
+</div>
+
+### 1. Define A Minimum Standard
+
+Write a short internal standard for AI-assisted work that covers what can and cannot go into prompts, how agent contributions are disclosed, what evidence is required by change type, and what kinds of work need extra review.
+
+Short is important. If the policy is too long, nobody will internalize it.
+
+### 2. Support A Default Tooling Path
+
+Do not make every engineer assemble their own fragile AI stack.
+
+Pick a supported path for the primary coding assistant or agent runtime, logging or trace capture, PR templates for agent-produced work, and approved environments and credential boundaries.
+
+The default path does not need to be perfect. It needs to be coherent.
+
+### 3. Create Safe Practice Space
+
+Office hours, paired sessions, internal demos, and low-risk pilot projects all help.
+
+Most hesitation disappears once people see the tool used on real work, with real guardrails, by people they trust.
+
+### 4. Measure Outcomes That Matter
+
+Do not optimize for prompt count or demo theatrics.
+
+Measure things like cycle time, defect rates, rework, review burden, developer confidence, and how often evidence is attached cleanly.
+
+The point is not to prove that AI is magical. The point is to see whether the workflow is becoming useful and trustworthy.
+
+---
+
+## The Point
+
+I am not interested in teaching organizations to "trust the vibes."
+
+I am interested in helping them adopt a better model for human and AI collaboration, one that acknowledges what is actually happening: developers are increasingly working through software proxies that can reason, draft, transform, and execute on their behalf.
+
+That shift is real. The only question is whether we make it explicit.
+
+If we do, we get something much better than hype: a name that removes stigma instead of amplifying it, workflows that make delegation safer, review practices grounded in evidence, and a clearer path for the rest of the team to participate.
+
+<Quote>
+  Proxy coding is what happens when we keep the human in charge of understanding, intent, and authorship while letting
+  software proxies carry more of the mechanical load.
+</Quote>
+
+Proxy coding is, to me, the professional version of what people are gesturing at when they say "vibe coding."
+
+Not surrender.
+
+Not magic.
+
+Not replacing the craft.
+
+Expanding the craft through a proxy, while keeping understanding, authorship, responsibility, and judgment where they
+belong.
