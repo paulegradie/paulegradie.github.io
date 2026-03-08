@@ -81,7 +81,10 @@ export default function ResumePage() {
 
       <Container className="mt-8 sm:mt-12">
         <section className="glass-panel-strong reveal-up relative overflow-hidden rounded-[2rem]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(183,202,215,0.28),transparent_36%),radial-gradient(circle_at_90%_4%,rgba(95,158,166,0.16),transparent_38%),linear-gradient(140deg,rgba(255,252,248,0.84),rgba(255,249,242,0.78),rgba(226,235,242,0.82))]" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(183,202,215,0.28),transparent_36%),radial-gradient(circle_at_90%_4%,rgba(95,158,166,0.16),transparent_38%),linear-gradient(140deg,rgba(255,252,248,0.84),rgba(255,249,242,0.78),rgba(226,235,242,0.82))] dark:bg-[radial-gradient(circle_at_14%_18%,rgba(92,143,255,0.18),transparent_32%),radial-gradient(circle_at_88%_8%,rgba(107,231,255,0.14),transparent_34%),linear-gradient(140deg,rgba(8,18,34,0.94),rgba(12,25,46,0.92),rgba(16,37,68,0.9))]"
+          />
           <div className="relative grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.4fr_0.9fr]">
             <div>
               <p className="section-chip">Principal-Level Resume</p>
