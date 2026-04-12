@@ -26,10 +26,13 @@ export function useLatestAudUsdRate() {
 
       const data = await response.json()
 
+      // Frankfurter returns { rates: { AUD: 1.54 }, date: "..." }
+      const rate = data.rates?.AUD ?? data.rate ?? null
+
       setState({
         date: data.date ?? null,
         error: null,
-        rate: typeof data.rate === 'number' ? data.rate : null,
+        rate: typeof rate === 'number' ? rate : null,
         status: 'success',
       })
     } catch (error) {

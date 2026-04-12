@@ -105,6 +105,12 @@ export function PayDisparityLab() {
       note: 'Employer-side cost in Australia after compulsory super is added.',
     },
     {
+      type: 'gap',
+      label: `Cash gap to US parity`,
+      gapValue: cashGapAudK,
+      prefix: 'A$',
+    },
+    {
       label: 'US comparable salary at FX',
       value: usCashParityAudK,
       tone: 'violet',
@@ -337,10 +343,10 @@ export function PayDisparityLab() {
                 eyebrow="What This Setting Shows"
                 headline={`The Australian offer is ${formatDirectionalCurrencyK(localPremiumAudK, 'A$', 'above', 'below')} local Melbourne market, but ${formatDirectionalCurrencyK(cashGapAudK, 'A$', 'short of', 'ahead of')} US cash parity.`}
                 subheadline={`After adding Australia's 12% super and US employer payroll taxes, Australia is still ${formatDirectionalCurrencyK(employerGapAudK, 'A$', 'short of', 'ahead of')} US employer-side total comp.`}
+                parityNeeded={formatCurrencyK(employerParityNeededAuBaseK, 'A$')}
                 bullets={[
                   `Typical Melbourne market pay is ${formatCurrencyK(melbourneAnchorK, 'A$')}, while the Australian offer is ${formatCurrencyK(auSalaryK, 'A$')}.`,
                   `At the current lab FX, the US comparable salary lands at ${formatCurrencyK(usCashParityAudK, 'A$')} and the US employer-side total lands at ${formatCurrencyK(usEmployerAudK, 'A$')}.`,
-                  `To match the US employer-side total after super, the Australian base would need to be about ${formatCurrencyK(employerParityNeededAuBaseK, 'A$')}.`,
                 ]}
               />
 
@@ -374,6 +380,7 @@ export function PayDisparityLab() {
           eyebrow="Big Mac Index Over Time"
           title="Market FX versus burger PPP"
           description="Australia's market exchange rate and the burger-implied PPP rate do not move together. That is why PPP can soften the story without eliminating the disparity."
+          note="Both lines show how many Australian dollars you need to buy one US dollar — higher means a weaker AUD. The blue line is the actual market exchange rate. The amber line is the rate implied by burger prices: if a Big Mac costs A$8.50 in Australia and US$6.12 in the US, the implied PPP rate is 8.50 ÷ 6.12 ≈ 1.39. The blue line sits above the amber in most years, which means the AUD trades weaker on forex markets than its local purchasing power would suggest. For an Australian worker, this makes the market-FX conversion the more punishing lens — their salary converts to fewer US dollars than PPP would give them. The two lines converging would mean fair value; the persistent gap above means the AUD is undervalued at market rates."
         >
           <TrendChart
             series={BIG_MAC_SERIES}
@@ -391,6 +398,7 @@ export function PayDisparityLab() {
           eyebrow="Price Difference Over Time"
           title="Australia versus US burger price in US dollars"
           description="Converted at market FX, Australia's burger price sometimes nearly catches the US and sometimes falls well below it. The spread is a simple proxy for cross-country purchasing-power drift."
+          note="Both lines show the price of a Big Mac in US dollars. The purple line is what Americans actually pay at the counter. The blue line is what Australians pay — after converting from AUD at the prevailing market exchange rate. If the two countries were at true purchasing-power parity, the lines would sit on top of each other. They don't. The gap below the purple line is the empirical basis for cost-of-living arguments: Australian goods are genuinely somewhat cheaper in USD terms. But look at the size of that gap — roughly US$0.40–0.60 in recent years on a ~US$6 item, a discount of around 5–10%. That is nowhere near the 40–50% salary difference this post is examining. Cost of living is real; it just is not doing nearly enough work to justify the pay gap."
         >
           <TrendChart
             series={BIG_MAC_SERIES}
@@ -478,7 +486,7 @@ function TooltipBadge({ text }) {
 }
 
 function ComparisonBars({ bars, currencyPrefix }) {
-  const maxValue = Math.max(...bars.map((bar) => bar.value))
+  const maxValue = Math.max(...bars.filter((b) => !b.type).map((bar) => bar.value))
   const toneClasses = {
     amber: 'bg-amber-500',
     cyan: 'bg-cyan-500',
@@ -489,32 +497,47 @@ function ComparisonBars({ bars, currencyPrefix }) {
 
   return (
     <div className="space-y-4">
-      {bars.map((bar) => (
-        <div key={bar.label}>
-          <div className="flex items-center justify-between gap-3 text-sm font-semibold text-slate-800 dark:text-slate-100">
-            <div className="min-w-0">
-              <div>{bar.label}</div>
-              {bar.note ? (
-                <div className="mt-1 text-xs font-medium leading-relaxed text-slate-500 dark:text-slate-400">
-                  {bar.note}
-                </div>
-              ) : null}
+      {bars.map((bar, i) => {
+        if (bar.type === 'gap') {
+          const isPositiveGap = bar.gapValue > 0
+          return (
+            <div key={`gap-${i}`} className="flex items-center gap-3 py-1">
+              <div className="h-px flex-1 border-t-2 border-dashed border-violet-400/50 dark:border-violet-400/35" />
+              <div className="shrink-0 rounded-full bg-violet-500/12 px-3 py-1.5 text-xs font-bold tracking-wide text-violet-800 dark:bg-violet-400/12 dark:text-violet-200">
+                {isPositiveGap ? '↑' : '↓'} {formatCurrencyK(Math.abs(bar.gapValue), bar.prefix)} {bar.label}
+              </div>
+              <div className="h-px flex-1 border-t-2 border-dashed border-violet-400/50 dark:border-violet-400/35" />
             </div>
-            <span className="shrink-0">{formatCurrencyK(bar.value, currencyPrefix)}</span>
+          )
+        }
+
+        return (
+          <div key={bar.label}>
+            <div className="flex items-center justify-between gap-3 text-sm font-semibold text-slate-800 dark:text-slate-100">
+              <div className="min-w-0">
+                <div>{bar.label}</div>
+                {bar.note ? (
+                  <div className="mt-1 text-xs font-medium leading-relaxed text-slate-500 dark:text-slate-400">
+                    {bar.note}
+                  </div>
+                ) : null}
+              </div>
+              <span className="shrink-0">{formatCurrencyK(bar.value, currencyPrefix)}</span>
+            </div>
+            <div className="mt-2 h-4 rounded-full bg-slate-200/80 dark:bg-slate-700/70">
+              <div
+                className={`h-4 rounded-full ${toneClasses[bar.tone]}`}
+                style={{ width: `${Math.max((bar.value / maxValue) * 100, 4)}%` }}
+              />
+            </div>
           </div>
-          <div className="mt-2 h-4 rounded-full bg-slate-200/80 dark:bg-slate-700/70">
-            <div
-              className={`h-4 rounded-full ${toneClasses[bar.tone]}`}
-              style={{ width: `${Math.max((bar.value / maxValue) * 100, 4)}%` }}
-            />
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
 
-function InsightCard({ eyebrow, headline, subheadline, bullets }) {
+function InsightCard({ eyebrow, headline, subheadline, parityNeeded, bullets }) {
   return (
     <div className="glass-panel-strong rounded-3xl p-5 sm:p-6">
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
@@ -522,7 +545,22 @@ function InsightCard({ eyebrow, headline, subheadline, bullets }) {
       </div>
       <h3 className="font-display mt-3 text-3xl leading-tight text-slate-900 dark:text-slate-100">{headline}</h3>
       <p className="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">{subheadline}</p>
-      <div className="mt-5 space-y-3">
+
+      {parityNeeded && (
+        <div className="mt-5 rounded-2xl border border-violet-400/30 bg-violet-500/8 px-5 py-4 dark:border-violet-400/20 dark:bg-violet-400/8">
+          <div className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-700/80 dark:text-violet-300/80">
+            Parity salary required
+          </div>
+          <div className="mt-1.5 font-display text-4xl leading-none text-slate-900 dark:text-slate-100">
+            {parityNeeded}
+          </div>
+          <div className="mt-1.5 text-sm text-slate-600 dark:text-slate-400">
+            Australian base needed to match US employer-side total after super
+          </div>
+        </div>
+      )}
+
+      <div className="mt-4 space-y-3">
         {bullets.map((bullet) => (
           <div key={bullet} className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
             <span className="mt-1.5 h-2 w-2 rounded-full bg-cyan-500" />
@@ -564,7 +602,7 @@ function LegendCard({ title, value, tone }) {
   )
 }
 
-function TrendChartCard({ eyebrow, title, description, children }) {
+function TrendChartCard({ eyebrow, title, description, note, children }) {
   return (
     <div className="rounded-3xl border border-slate-300/70 bg-white/70 p-5 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.55)] dark:border-slate-600/60 dark:bg-slate-900/45 sm:p-6">
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
@@ -573,6 +611,12 @@ function TrendChartCard({ eyebrow, title, description, children }) {
       <h3 className="font-display mt-3 text-2xl leading-tight text-slate-900 dark:text-slate-100">{title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{description}</p>
       <div className="mt-5">{children}</div>
+      {note && (
+        <div className="mt-4 rounded-2xl border border-slate-200/70 bg-slate-50/60 px-4 py-3 dark:border-slate-700/50 dark:bg-slate-800/30">
+          <div className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">What this shows</div>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{note}</p>
+        </div>
+      )}
     </div>
   )
 }

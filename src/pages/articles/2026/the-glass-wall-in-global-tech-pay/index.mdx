@@ -22,9 +22,7 @@ export default (props) => <ArticleLayout meta={meta} {...props} />
 
 ### Remote work went global. Compensation did not.
 
-Remote work promised a more open market for talent. Companies could hire anywhere. Workers could compete anywhere. Geography, at least in theory, would matter less.
-
-But that is not what happened.
+Remote work promised a more open market for talent. Geography, at least in theory, would matter less.
 
 What actually emerged was a more selective version of globalization: companies expanded the geography of labor supply while keeping compensation tied to local pricing logic. The work crossed borders. The pay often did not.
 
@@ -101,9 +99,9 @@ This is important because it shows the issue is not just currency optics. Even a
 
 To justify the cash gap on standard-of-living grounds, the US location would need to be roughly 1.47x to 1.50x as expensive as Melbourne.
 
-That is a very large difference. It is not the kind of gap you get from an ordinary "different city, different rent" explanation. It requires a genuinely high-cost US location to do all of the moral work here.
+That is a very large difference. It is not the kind of gap you get from an ordinary "different city, different rent" explanation. It requires a genuinely extreme US cost of living — think peak San Francisco — to carry all the moral weight here.
 
-And the broader pattern I am pointing at is not limited to the absolute highest-cost US markets. That last point is an inference from the size of the required cost-of-living offset.
+And most US tech roles are not in peak San Francisco.
 
 ### 4. Even total employer cost leaves a large gap
 
@@ -140,11 +138,14 @@ The offer can be genuinely attractive to the Australian worker and still be stru
 
 Salary datasets vary by title, company type, and whether they measure base salary or total compensation. Titles are also noisy. A "senior" at one company can be doing staff-shaped work at another.
 
-Even with that caveat, the broad shape is clear.
+Even with that caveat, the broad shape is clear across multiple independent sources:
 
-SEEK's Melbourne software engineer salary page, based on disclosed salary ranges in job ads, puts the citywide average for "software engineer" at about A$115,000. Hays' FY24/25 guide for Victoria lists a typical senior .NET/Java developer at about A$140,000, technical lead at about A$160,000, and development manager at about A$180,000, all exclusive of super. Levels.fyi's Greater Melbourne data shows senior software engineer total compensation at roughly A$168,000 median, with the 25th percentile around A$142,000 and the 75th percentile around A$196,000, last updated March 12, 2026. Onset's FY24/25 tech salary guide places principal/staff engineers at an average of about A$205,000, with a range of A$180,000 to A$230,000.
+- **SEEK** (citywide average from job ads): A$115,000 for software engineer
+- **Hays FY24/25** (Victoria, exclusive of super): A$140,000 senior developer — A$160,000 technical lead — A$180,000 development manager
+- **Levels.fyi** (Greater Melbourne, updated March 2026): A$168,000 median total comp for senior software engineer; 25th–75th percentile range of A$142,000–A$196,000
+- **Onset FY24/25**: A$180,000–A$230,000 for principal and staff engineers
 
-So if someone says "a role comparable to that US$210k US job might go for something like A$150k in Melbourne," that is not a crazy claim. It sits squarely inside the range suggested by current local-market guides for senior-to-lead software roles, even if the exact match depends on title calibration.
+So if someone says a role comparable to that US$210,000 US job might go for something like A$150,000 in Melbourne, that is not a crazy claim. It sits squarely inside the range suggested by current local-market guides for senior-to-lead software roles.
 
 ### Why this strengthens the argument, not weakens it
 
@@ -184,19 +185,11 @@ Often it is a story of companies paying just enough above local market to feel e
   a discount globally.
 </Quote>
 
-## A better way to see the gap
+## See it for yourself
 
-Because I do not want this post to hinge on one exact city or one exact teammate package, the visual below uses a rounded anonymous scenario.
+The numbers above establish the pattern. The lab below lets you stress-test it.
 
-That is deliberate.
-
-The point is not whether the Australian side is A$200k or A$205k, or whether the US side is US$210k or US$220k. The point is that once you compare a Melbourne salary to:
-
-- the typical local Melbourne market pay
-- the US salary converted at market FX
-- and the US salary converted at a rough PPP rate
-
-the same shape keeps appearing.
+Start by clicking **"Set same sticker number"** — give both workers identical nominal pay — then watch the gap appear once market FX is applied. Adjust the exchange rate. Change the salaries. Move the Melbourne market anchor. The shape stays the same: the Australian offer sits above local market and well below US parity, and the company is comfortable in the middle.
 
 <PayDisparityLab />
 
@@ -236,9 +229,33 @@ That matters because "you can always move" is not a serious fairness principle.
   Remote work was supposed to make talent more portable. Too often it has mostly made talent more sourceable.
 </Quote>
 
+## The numbers do not capture the full cost
+
+The salary comparison above is already unfavorable. But it only measures money.
+
+Working for a US company from Melbourne is not the same job as working for a US company from Austin. It carries hidden costs that never appear in the compensation comparison — and they compound the unfairness of the gap.
+
+**Timezone.** Australian east coast time sits 15 to 17 hours ahead of US Pacific time. The collaboration window is in the early morning or late evening. Calls that are 9 AM in San Francisco are 2 AM or 3 AM in Melbourne — or a 7 AM start if you are fortunate. Someone pays that tax. It is usually the Australian end.
+
+**Travel.** Many US-headquartered tech roles carry an expectation of regular visits — all-hands meetings, offsites, team onsite weeks. The flight from Melbourne to the US east or west coast runs 17 to 22 hours each way. A week-long trip is 10 days door-to-door. It is not a weekend inconvenience. It is days of physical recovery and family disruption on top of the professional obligation.
+
+**Visibility.** Career advancement in most companies is relational as much as meritocratic. If the people who make promotion decisions are in San Francisco and you are in Melbourne, you are structurally less visible than the person two desks away from them. A large pay gap is hard enough to close. Closing it from a different hemisphere while bearing a timezone and travel load the US team does not carry adds another layer of difficulty.
+
+None of this shows up in the salary line. None of it is priced in.
+
+So the real question is not just "am I paid fairly versus my US teammates?" It is: "am I being paid enough of a premium over what I could earn locally to justify the early calls, the long-haul travel, and the structural disadvantage?"
+
+Melbourne-based senior and staff engineering roles exist today that pay in the neighborhood of A$200,000 to A$210,000. They come without the timezone tax. Without the travel burden. Without the visibility disadvantage that comes from being 16 time zones from where decisions get made.
+
+For a US company paying 40 percent less in real USD terms — and not compensating for any of these additional costs — the deal is not just unfair. It is objectively worse.
+
+<KeyPoint>
+  The pay gap is the headline. The hidden costs are the fine print. Together they make the case for walking away.
+</KeyPoint>
+
 ## What better companies should do instead
 
-I am not arguing that every company must jump to perfect global parity overnight. I am arguing that companies should stop pretending a 40 percent-plus same-role gap is ethically washed clean just because it came out of a spreadsheet.
+A 40 percent-plus same-role pay gap does not become fair because it came out of a spreadsheet. Companies do not need to reach perfect global parity overnight. They do need to stop treating structured arbitrage as if it were a principled compensation philosophy.
 
 A better model would look something like this:
 
@@ -258,19 +275,25 @@ the market is not truly global at all.
 
 ## The point
 
-What this Melbourne-versus-US comparison reveals is not an edge case. It is the underlying shape of a compensation regime that wants the benefits of global hiring without fully surrendering the advantages of local wage arbitrage.
+What this Melbourne-versus-US comparison reveals is not an edge case. It is the underlying shape of a compensation regime that wants the benefits of global hiring without paying the price that global hiring ought to require.
 
 That is why the disparity feels so wrong even when the paperwork is immaculate.
 
 The wall is hard to see when we talk in abstractions. It becomes obvious the moment we compare the people standing on either side of it.
 
-Same company. Same team. Same problems.
+Same company. Same team. Same problems. One of them is also absorbing 16 hours of timezone displacement and flying to America twice a year.
 
-Different price for the same labor because of where the worker lives.
+Different price for that labor. Because of where the worker lives.
 
-If companies want to say they hire from a global talent market, then the compensation logic needs to start behaving like talent is actually global.
+At some point the calculus tips. A$210,000 at a Melbourne-based company — for a role that does not come with the early morning calls, the long-haul travel, or the structural disadvantage of being remote from leadership — is a better deal than a US-company salary that looks similar on the sticker but loses 40 percent once FX is applied. Especially when you add back everything the salary comparison conveniently leaves out.
 
-Otherwise remote work is not flattening opportunity. It is just widening the catchment area for discounted excellence.
+The rational response to a bad deal is to find a better one. When talented Australian engineers start choosing local employers — not because they cannot land US-company roles, but because the US-company deal is objectively worse after the numbers are run — companies paying location-discounted rates will feel it.
+
+The wall works until people stop walking into it.
+
+If companies want to say they hire from a global talent market, the compensation logic needs to start behaving like talent is actually global.
+
+Otherwise remote work is not flattening opportunity. It is just widening the catchment area for discounted excellence — until the people being discounted decide they have done the math.
 
 ## Method notes and sources
 

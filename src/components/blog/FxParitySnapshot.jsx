@@ -43,31 +43,49 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Sticker number in AUD" />
-        <SnapshotCard label="United States" value={formatCompactCurrency(usSalary, 'US$')} detail="Sticker number in USD" />
-        <SnapshotCard
-          label={`${formatCompactCurrency(auSalary, 'A$')} at FX`}
-          value={formatCompactCurrency(auInUsd, 'US$')}
-          detail="What the Australian number is worth in USD"
-        />
-        <SnapshotCard
-          label={`${formatCompactCurrency(usSalary, 'US$')} at FX`}
-          value={formatCompactCurrency(usInAud, 'A$')}
-          detail="What the US number is worth in AUD"
-        />
+      <div className="mt-6 space-y-3">
+        <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--ink-muted)' }}>
+          On paper — looks the same
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Sticker number in AUD" muted />
+          <SnapshotCard label="United States" value={formatCompactCurrency(usSalary, 'US$')} detail="Sticker number in USD" muted />
+        </div>
+
+        <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}>
+          After FX conversion — very different
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <SnapshotCard
+            label={`${formatCompactCurrency(auSalary, 'A$')} converted`}
+            value={formatCompactCurrency(auInUsd, 'US$')}
+            detail="What the Australian salary is actually worth in USD"
+          />
+          <SnapshotCard
+            label={`${formatCompactCurrency(usSalary, 'US$')} converted`}
+            value={formatCompactCurrency(usInAud, 'A$')}
+            detail="What the US salary is worth in AUD"
+          />
+        </div>
       </div>
+
+      {usSalary > auInUsd && (
+        <GapSummary usSalary={usSalary} auInUsd={auInUsd} usInAud={usInAud} />
+      )}
     </div>
   )
 }
 
-function SnapshotCard({ label, value, detail }) {
+function SnapshotCard({ label, value, detail, muted = false }) {
   return (
     <div
       className="rounded-2xl p-4"
       style={{
         border: '1px solid color-mix(in oklab, var(--line-strong) 85%, white 15%)',
-        background: 'color-mix(in oklab, var(--surface-strong) 84%, white 16%)',
+        background: muted
+          ? 'color-mix(in oklab, var(--surface-strong) 60%, transparent 40%)'
+          : 'color-mix(in oklab, var(--surface-strong) 84%, white 16%)',
+        opacity: muted ? 0.75 : 1,
       }}
     >
       <div
@@ -76,11 +94,47 @@ function SnapshotCard({ label, value, detail }) {
       >
         {label}
       </div>
-      <div className="mt-2 font-display text-3xl" style={{ color: 'var(--ink)' }}>
+      <div
+        className={`mt-2 font-display leading-none ${muted ? 'text-2xl' : 'text-3xl'}`}
+        style={{ color: 'var(--ink)' }}
+      >
         {value}
       </div>
       <div className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
         {detail}
+      </div>
+    </div>
+  )
+}
+
+function GapSummary({ usSalary, auInUsd, usInAud }) {
+  const cashGapUsd = usSalary - auInUsd
+  const cashGapPct = Math.round((cashGapUsd / auInUsd) * 100)
+
+  return (
+    <div className="mt-4 rounded-2xl p-5" style={{ background: 'color-mix(in oklab, var(--brand-a) 8%, transparent)', border: '1px solid color-mix(in oklab, var(--brand-a) 25%, transparent)' }}>
+      <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}>
+        The gap
+      </div>
+      <div className="mt-3 grid gap-4 sm:grid-cols-3">
+        <div>
+          <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
+            {formatCompactCurrency(cashGapUsd, 'US$')}
+          </div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>cash gap in USD</div>
+        </div>
+        <div>
+          <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
+            {cashGapPct}%
+          </div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>more for the US worker</div>
+        </div>
+        <div>
+          <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
+            {formatCompactCurrency(usInAud, 'A$')}
+          </div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>Australian salary needed for parity</div>
+        </div>
       </div>
     </div>
   )
