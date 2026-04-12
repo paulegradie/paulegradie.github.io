@@ -1,0 +1,289 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint } from '@/components/blog/Callout'
+import { FxParitySnapshot } from '@/components/blog/FxParitySnapshot'
+import { PayDisparityLab } from '@/components/blog/PayDisparityLab'
+import { Quote } from '@/components/blog/Quote'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-04-06',
+  title: 'The Glass Wall in Global Tech Pay',
+  description:
+    'Remote work made hiring global, but compensation still hits a border. A Melbourne-versus-US comparison shows how same-team pay can diverge sharply even after accounting for super and employer payroll costs.',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+# The Glass Wall in Global Tech Pay
+
+### Remote work went global. Compensation did not.
+
+Remote work promised a more open market for talent. Companies could hire anywhere. Workers could compete anywhere. Geography, at least in theory, would matter less.
+
+But that is not what happened.
+
+What actually emerged was a more selective version of globalization: companies expanded the geography of labor supply while keeping compensation tied to local pricing logic. The work crossed borders. The pay often did not.
+
+That is the glass wall.
+
+It is "glass" because nothing about it looks openly hostile. No one says the quiet part out loud. There is no email that says, "we think your work is worth less because you live in Australia." There is just policy. Benchmarking. Compliance. Employer of Record arrangements. "Local market rates." "Cost of labor."
+
+And yet the outcome can be stark: two people on the same team, solving the same problems for the same company, can be paid on fundamentally different scales because one lives in Melbourne and the other is based somewhere in the United States.
+
+<FxParitySnapshot auSalary={200000} usSalary={200000} />
+
+<Quote>
+  International talent is allowed to do the work, but often not allowed to set the price.
+</Quote>
+
+## How the wall gets built
+
+A US company that wants to hire in Australia usually has three options:
+
+- open a local entity
+- use an Employer of Record
+- hire through a contractor arrangement
+
+None of those paths are inherently unethical. In fact, they are often operationally sensible. Cross-border employment is real work. Payroll, tax, benefits, and labor law do not disappear just because the team works in Slack and GitHub.
+
+The problem is what these mechanisms make easy.
+
+Once a company has a local payroll wrapper around an international employee, compensation starts to get narrated as a local matter. The company directs the work, sets the bar, evaluates the output, and captures the value globally. But the pay discussion gets pulled back down into local market benchmarks.
+
+Employer of Record structures are especially important here. They solve a real business problem, but they also act like a wage membrane: the work flows through globally, while the pay is filtered through local pricing logic.
+
+<KeyPoint>
+  If the work is global but the pay policy is local, then a single global labor market has not actually formed.
+</KeyPoint>
+
+That is the central point. I am not arguing that every company is behaving maliciously. I am arguing that a polite policy can still produce an unfair result.
+
+## The case that makes the disparity visible
+
+Consider an illustrative anonymous comparison:
+
+- Melbourne: about A$200,000
+- US-based teammate: about US$210,000
+- Same company, same team, same class of problems
+
+At a glance, some people will look at those numbers and think they are in the same neighborhood.
+
+They are not.
+
+### 1. At market FX, these salaries are nowhere near each other
+
+Using the Federal Reserve's March 2026 AUD/USD range of roughly US$0.70 to US$0.715 per A$1, A$200,000 converts to about US$140,000 to US$143,000.
+
+Against US$210,000, that means the US-based teammate is making about 47 percent to 50 percent more in cash salary.
+
+To close that gap on cash alone, the Melbourne salary would need to be closer to A$294,000 to A$300,000, not A$200,000.
+
+### 2. A rough PPP check still does not rescue the Australian number
+
+Purchasing-power adjustments are worth checking because employers often imply that a lower Australian salary is reasonable once local prices are considered.
+
+That argument still comes up short.
+
+Using the Economist's January 2026 Big Mac data as a rough PPP proxy, A$200,000 works out to about US$144,000 in purchasing-power terms. That still leaves the Australian figure at roughly 69 percent of the US$210,000 salary.
+
+This is important because it shows the issue is not just currency optics. Even after a rough purchasing-power adjustment, the Australian role is still materially behind.
+
+<Callout label="Interpretation">
+  FX and PPP are different lenses. Both point in the same direction: the gap is large enough that it cannot be waved
+  away as a rounding error, a tax footnote, or a misunderstanding about local prices.
+</Callout>
+
+### 3. Cost of living has to do an implausibly large amount of work
+
+To justify the cash gap on standard-of-living grounds, the US location would need to be roughly 1.47x to 1.50x as expensive as Melbourne.
+
+That is a very large difference. It is not the kind of gap you get from an ordinary "different city, different rent" explanation. It requires a genuinely high-cost US location to do all of the moral work here.
+
+And the broader pattern I am pointing at is not limited to the absolute highest-cost US markets. That last point is an inference from the size of the required cost-of-living offset.
+
+### 4. Even total employer cost leaves a large gap
+
+This is where cross-country salary conversations often get muddy, so it is worth being precise.
+
+Australia has compulsory superannuation. In the 2025-26 financial year, the Superannuation Guarantee rate is 12 percent. If A$200,000 is base salary and super sits on top, the employer's cost becomes A$224,000. At the same March 2026 exchange-rate range, that is about US$157,000 to US$160,000.
+
+On the US side, a US$210,000 employee also costs more than base salary once employer payroll taxes are included. Using 2026 Social Security and Medicare rates, employer-side payroll taxes add roughly US$14,484, bringing total employer cost to around US$224,484 before health insurance or any retirement match.
+
+So even on an employer-cost basis, the US-based teammate still costs roughly 40 percent to 43 percent more.
+
+And if the A$200,000 figure is actually a total package inclusive of super, not base plus super, then the Australian cash salary is lower again and the disparity gets worse.
+
+<KeyPoint>
+  Different tax and benefits systems complicate comparisons. They do not rescue this one.
+</KeyPoint>
+
+## The part that makes this system durable: the arbitrage band
+
+There is a second layer to this that makes the pattern even more persistent.
+
+In Melbourne, the local market for comparable software roles is often nowhere near the US-equivalent number.
+
+That matters because it creates a very stable middle zone for employers:
+
+- pay well above what many Australian candidates can get locally
+- still pay far below what the same work would cost in the US
+
+This is the real trick.
+
+The offer can be genuinely attractive to the Australian worker and still be structurally discounted from the company's point of view.
+
+### What the Melbourne market appears to support
+
+Salary datasets vary by title, company type, and whether they measure base salary or total compensation. Titles are also noisy. A "senior" at one company can be doing staff-shaped work at another.
+
+Even with that caveat, the broad shape is clear.
+
+SEEK's Melbourne software engineer salary page, based on disclosed salary ranges in job ads, puts the citywide average for "software engineer" at about A$115,000. Hays' FY24/25 guide for Victoria lists a typical senior .NET/Java developer at about A$140,000, technical lead at about A$160,000, and development manager at about A$180,000, all exclusive of super. Levels.fyi's Greater Melbourne data shows senior software engineer total compensation at roughly A$168,000 median, with the 25th percentile around A$142,000 and the 75th percentile around A$196,000, last updated March 12, 2026. Onset's FY24/25 tech salary guide places principal/staff engineers at an average of about A$205,000, with a range of A$180,000 to A$230,000.
+
+So if someone says "a role comparable to that US$210k US job might go for something like A$150k in Melbourne," that is not a crazy claim. It sits squarely inside the range suggested by current local-market guides for senior-to-lead software roles, even if the exact match depends on title calibration.
+
+### Why this strengthens the argument, not weakens it
+
+At first glance, this can sound like a defense of the employer:
+
+"But the Australian offer is already above local market."
+
+That is exactly the point.
+
+If local Melbourne market pricing for a strong senior or lead engineer is something like A$150,000 to A$180,000, then an offer around A$200,000 can feel meaningfully above-market to the worker while still being dramatically below US parity.
+
+That means the company does not need to choose between:
+
+- paying Australian-market rates
+- paying US-market rates
+
+It can sit comfortably in between.
+
+And that middle position is powerful.
+
+It lets the company present the offer as generous in Australia, competitive internally, and financially efficient relative to the US. All three can be true at once.
+
+<Callout label="Why It Persists">
+  This is why the disparity survives so easily. The company is not forced to underpay by Australian standards in order to
+  gain a discount relative to the US. It can pay above Melbourne market, win the candidate, and still capture a large
+  labor-cost advantage.
+</Callout>
+
+That is a more sophisticated problem than simple "cheap labor" framing.
+
+This is not always a story of companies paying rock-bottom salaries.
+
+Often it is a story of companies paying just enough above local market to feel exceptional, while still anchoring far below the rate implied by the global value of the work.
+
+<Quote>
+  The system works best for employers when the offer is high enough to feel like a win locally, but low enough to remain
+  a discount globally.
+</Quote>
+
+## A better way to see the gap
+
+Because I do not want this post to hinge on one exact city or one exact teammate package, the visual below uses a rounded anonymous scenario.
+
+That is deliberate.
+
+The point is not whether the Australian side is A$200k or A$205k, or whether the US side is US$210k or US$220k. The point is that once you compare a Melbourne salary to:
+
+- the typical local Melbourne market pay
+- the US salary converted at market FX
+- and the US salary converted at a rough PPP rate
+
+the same shape keeps appearing.
+
+<PayDisparityLab />
+
+## Why the usual defenses do not settle the fairness question
+
+There are several employer-side arguments that sound reasonable here.
+
+Cross-border hiring is complex. EORs reduce risk. Local benchmarking is standard practice. Compensation teams need a system. Finance wants predictability.
+
+All of that can be true.
+
+It still does not answer the fairness question.
+
+### Compliance is real. It is not a moral justification.
+
+Jurisdictional complexity is a company operating cost. It is the price of hiring beyond your home border. It should not quietly become a permanent discount applied to the worker.
+
+If a company is happy to capture the benefit of global talent, it should be willing to carry the complexity that comes with hiring globally.
+
+### "Local market rates" mostly measure leverage, not value
+
+When a company says it pays by "cost of labor" rather than "cost of living," what it usually means is that pay is anchored to what the worker's local market can be made to accept.
+
+That is a bargaining-power statement. It is not a clean statement of contribution, difficulty, or business value.
+
+Two people can create the same leverage for a company while living in places with very different salary norms. Localized pay treats that asymmetry in local bargaining power as if it were morally neutral.
+
+It is not.
+
+### Geography is often constraint, not preference
+
+People do not choose location in a vacuum. Partners, children, visas, aging parents, healthcare, citizenship, and community all matter. A compensation model that treats geography as a simple consumer preference often ends up penalizing constraint.
+
+That matters because "you can always move" is not a serious fairness principle.
+
+<Quote>
+  Remote work was supposed to make talent more portable. Too often it has mostly made talent more sourceable.
+</Quote>
+
+## What better companies should do instead
+
+I am not arguing that every company must jump to perfect global parity overnight. I am arguing that companies should stop pretending a 40 percent-plus same-role gap is ethically washed clean just because it came out of a spreadsheet.
+
+A better model would look something like this:
+
+1. Set global compensation bands by role and level, not by worker geography.
+2. Separate base pay from mandatory employer-side costs such as Australian super or US payroll taxes.
+3. If location factors are used, cap them tightly and publish them.
+4. Add a purchasing-power floor so "localization" cannot drift into extreme underpayment.
+5. Treat EOR and compliance overhead as company cost, not as evidence that the worker's contribution is worth less.
+
+That would still leave room for practical constraints, but it would move the system toward honesty.
+
+Because right now the language is cleaner than the reality. We call it benchmarking. We call it localization. We call it cost of labor.
+
+But when two people are doing the same work on the same team and one of them is sitting behind a 40 percent-plus compensation wall, the system is telling us something very plain:
+
+the market is not truly global at all.
+
+## The point
+
+What this Melbourne-versus-US comparison reveals is not an edge case. It is the underlying shape of a compensation regime that wants the benefits of global hiring without fully surrendering the advantages of local wage arbitrage.
+
+That is why the disparity feels so wrong even when the paperwork is immaculate.
+
+The wall is hard to see when we talk in abstractions. It becomes obvious the moment we compare the people standing on either side of it.
+
+Same company. Same team. Same problems.
+
+Different price for the same labor because of where the worker lives.
+
+If companies want to say they hire from a global talent market, then the compensation logic needs to start behaving like talent is actually global.
+
+Otherwise remote work is not flattening opportunity. It is just widening the catchment area for discounted excellence.
+
+## Method notes and sources
+
+All figures referenced here are based on data current as of April 6, 2026.
+
+- [Federal Reserve H.10 historical exchange rates for the Australian dollar](https://www.federalreserve.gov/releases/h10/hist/dat00_al.htm)
+- [The Economist Big Mac Index interactive](https://www.economist.com/interactive/big-mac-index)
+- [The Economist Big Mac data repository](https://github.com/TheEconomist/big-mac-data)
+- [Australian Taxation Office: Super guarantee rate](https://www.ato.gov.au/tax-rates-and-codes/key-superannuation-rates-and-thresholds/super-guarantee)
+- [Australian Taxation Office: How much super to pay](https://www.ato.gov.au/businesses-and-organisations/super-for-employers/paying-super-contributions/how-much-super-to-pay)
+- [Social Security Administration: 2026 contribution and benefit base](https://www.ssa.gov/oact/cola/cbb.html)
+- [IRS: Social Security and Medicare withholding rates](https://www.irs.gov/taxtopics/tc751)
+- [SEEK: Software Engineer salary in Melbourne](https://www.seek.com.au/career-advice/role/software-engineer/salary/in-melbourne)
+- [Hays Salary Guide FY24/25](https://www.hays.com.au/documents/276732/1102429/Hays%2BSalary%2BGuide%2BFY24-25.pdf)
+- [Levels.fyi: Senior Software Engineer salary in Greater Melbourne Area](https://www.levels.fyi/t/software-engineer/levels/senior/locations/greater-melbourne-area)
+- [Onset FY24/25 Tech Salary Guide](https://theonset.com.au/wp-content/uploads/2024/08/FY2425-Onset-Tech-Salary-Guide-compressed.pdf)
