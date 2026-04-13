@@ -114,7 +114,7 @@ function RecruiterContent() {
         </div>
         <h2 className="text-3xl font-bold text-ink dark:text-slate-100">Welcome, Recruiter</h2>
         <p className="mx-auto mt-3 max-w-3xl text-lg text-muted dark:text-slate-300">
-          I am open to Principal Engineer or Tech Lead roles with companies that value
+          I am open to Staff Engineer, Team Lead, or managerial roles with companies that value
           product velocity, deep AI capability, and practical leadership.
         </p>
       </div>
@@ -147,7 +147,7 @@ function RecruiterContent() {
 
       <div className="glass-panel-strong rounded-3xl p-7 sm:p-8">
         <h3 className="font-display text-3xl font-bold text-ink dark:text-slate-100">
-          Principal-Level Engineering Leader
+          Staff-Level Engineering Leader
         </h3>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
@@ -247,7 +247,7 @@ export default function Recruiters() {
         title="For Recruiters"
         intro={
           isAuthenticated
-            ? 'Seeking Principal Engineer and Tech Lead opportunities with US-based teams. Here are my expectations for the next chapter of my career.'
+            ? 'Seeking Staff Engineer and Tech Lead opportunities. Here are my expectations for the next chapter of my career.'
             : 'Exclusive information for serious recruiters. Find the access token on my LinkedIn profile.'
         }
       >
