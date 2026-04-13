@@ -137,9 +137,9 @@ function RecruiterContent() {
             <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
             <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Compensation</h3>
           </div>
-          <p className="text-lg font-semibold text-ink dark:text-slate-100">$250,000 AUD base salary target</p>
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">$250,000 AUD base salary target (before super)</p>
           <p className="mt-2 text-muted dark:text-slate-300">
-            Looking for principal-level scope, with equity participation and comprehensive benefits
+            Looking for staff-level scope, with equity participation or generous bonus
             on top of base salary.
           </p>
         </div>
