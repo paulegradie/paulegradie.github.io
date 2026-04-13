@@ -7,6 +7,7 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
   const audPerUsd = rate ?? FALLBACK_AUD_PER_USD
   const auInUsd = auSalary / audPerUsd
   const usInAud = usSalary * audPerUsd
+  const isUsingLiveRate = status === 'success' && typeof rate === 'number'
 
   return (
     <div
@@ -19,24 +20,25 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
       <div className="flex flex-wrap gap-2">
         <span className="section-chip">Same sticker number</span>
         <span className="section-chip">Different currencies</span>
+        <span className="section-chip">Base salary only</span>
         <span className="section-chip">Latest FX snapshot</span>
       </div>
 
-      <div className="mt-5 max-w-2xl">
-        <div
-          className="text-xs font-semibold uppercase tracking-[0.18em]"
-          style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}
-        >
-          Live FX Snapshot
-        </div>
+      <div className="mt-5">
+        <ExchangeRateBadge isUsingLiveRate={isUsingLiveRate} />
+        <h3 className="font-display mt-3 text-2xl leading-tight sm:text-3xl" style={{ color: 'var(--ink)' }}>
+          {formatCurrency(auSalary, 'A$')} and {formatCurrency(usSalary, 'US$')} look symmetrical on paper.
+        </h3>
         <h2 className="font-display mt-3 text-2xl leading-tight sm:text-3xl" style={{ color: 'var(--ink)' }}>
-          {formatCurrency(auSalary, 'A$')} in Australia and {formatCurrency(usSalary, 'US$')} in the United States look
-          symmetrical on paper. They are not.
+          They are not.
         </h2>
         <div className="mt-4 text-base leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-          This comparison uses the latest published <SourceLink href="https://www.ecb.europa.eu/stats/euro-exchange-rates/html/index.en.html">ECB reference rate</SourceLink>,
-          delivered via the <SourceLink href="https://frankfurter.dev/">Frankfurter API</SourceLink>. That means the Australian number converts to about{' '}
-          {formatCompactCurrency(auInUsd, 'US$')}, while the US number converts to about {formatCompactCurrency(usInAud, 'A$')}.
+          <b>This section compares raw base salary only</b>. It does not include Australian superannuation, US employer payroll
+          taxes, bonus, equity, or other employer-side costs - we&apos;ll analyze that a bit later. Using the latest published{' '}
+          <SourceLink href="https://www.ecb.europa.eu/stats/euro-exchange-rates/html/index.en.html">ECB reference rate</SourceLink>,
+          delivered via the <SourceLink href="https://frankfurter.dev/">Frankfurter API</SourceLink>, the Australian
+          number converts to about {formatCompactCurrency(auInUsd, 'US$')}, while the US number converts to about{' '}
+          {formatCompactCurrency(usInAud, 'A$')}.
         </div>
         <div
           className="mt-4 rounded-2xl p-4 sm:p-5"
@@ -69,26 +71,26 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
 
       <div className="mt-6 space-y-3">
         <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--ink-muted)' }}>
-          On paper - looks the same
+          On paper - salaries look the same
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Sticker number in AUD" muted />
-          <SnapshotCard label="United States" value={formatCompactCurrency(usSalary, 'US$')} detail="Sticker number in USD" muted />
+          <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Raw base salary in AUD" muted />
+          <SnapshotCard label="United States" value={formatCompactCurrency(usSalary, 'US$')} detail="Raw base salary in USD" muted />
         </div>
 
         <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}>
-          After FX conversion - very different
+          After currency exchange conversion - the story looks very different
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <SnapshotCard
             label={`${formatCompactCurrency(auSalary, 'A$')} converted`}
             value={formatCompactCurrency(auInUsd, 'US$')}
-            detail="What the Australian salary is actually worth in USD"
+            detail="What the Australian base salary is worth in USD before super"
           />
           <SnapshotCard
             label={`${formatCompactCurrency(usSalary, 'US$')} converted`}
             value={formatCompactCurrency(usInAud, 'A$')}
-            detail="What the US salary is worth in AUD"
+            detail="What the US base salary is worth in AUD before employer on-costs"
           />
         </div>
       </div>
@@ -96,6 +98,37 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
       {usSalary > auInUsd && (
         <GapSummary usSalary={usSalary} auInUsd={auInUsd} usInAud={usInAud} />
       )}
+    </div>
+  )
+}
+
+function ExchangeRateBadge({ isUsingLiveRate }) {
+  const label = isUsingLiveRate
+    ? 'Numbers here use live exchange rates'
+    : 'Numbers here use a fallback exchange rate'
+
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold tracking-[0.08em] sm:text-sm"
+      style={{
+        color: '#0f172a',
+        border: '1px solid color-mix(in oklab, var(--brand-a) 26%, white 18%)',
+        background: 'color-mix(in oklab, var(--brand-a) 10%, white 90%)',
+        boxShadow: isUsingLiveRate ? '0 0 28px color-mix(in oklab, var(--brand-a) 22%, transparent)' : 'none',
+      }}
+    >
+      <span
+        aria-hidden="true"
+        className={isUsingLiveRate ? 'inline-block h-2.5 w-2.5 rounded-full animate-pulse' : 'inline-block h-2.5 w-2.5 rounded-full'}
+        style={{
+          background: isUsingLiveRate
+            ? 'color-mix(in oklab, var(--brand-a) 92%, black 18%)'
+            : 'color-mix(in oklab, var(--ink-muted) 90%, white 20%)',
+          boxShadow: isUsingLiveRate
+            ? '0 0 14px color-mix(in oklab, var(--brand-a) 15%, transparent)'
+            : 'none',
+        }}
+      />
+      <span>{label}</span>
     </div>
   )
 }
@@ -159,7 +192,7 @@ function GapSummary({ usSalary, auInUsd, usInAud }) {
           <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
             {formatCompactCurrency(cashGapUsd, 'US$')}
           </div>
-          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>cash gap in USD</div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>raw cash gap in USD</div>
         </div>
         <div>
           <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
@@ -171,7 +204,7 @@ function GapSummary({ usSalary, auInUsd, usInAud }) {
           <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
             {formatCompactCurrency(usInAud, 'A$')}
           </div>
-          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>Australian salary needed for parity</div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>Australian base salary needed for FX parity</div>
         </div>
       </div>
     </div>

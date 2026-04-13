@@ -28,9 +28,43 @@ export const Objection = ({ question, children }) => {
 
 export const KeyPoint = ({ children }) => {
   return (
-    <div className="relative my-6 flex items-center gap-3 rounded-xl border-l-2 border-cyan-500/45 bg-gradient-to-r from-cyan-500/[0.1] to-transparent px-5 py-4 not-prose">
-      <span className="flex-shrink-0 text-sm text-cyan-800 dark:text-cyan-300">*</span>
-      <div className="text-sm font-medium leading-relaxed text-slate-800 dark:text-slate-100">{children}</div>
+    <div className="relative my-8 overflow-hidden rounded-2xl not-prose">
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            linear-gradient(135deg, rgba(8, 47, 73, 0.92) 0%, rgba(15, 23, 42, 0.92) 52%, rgba(30, 41, 59, 0.94) 100%),
+            radial-gradient(circle at top left, rgba(34, 211, 238, 0.28), transparent 36%),
+            radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.2), transparent 34%)
+          `,
+        }}
+      />
+      <div
+        className="absolute inset-0 rounded-2xl"
+        style={{
+          border: '1px solid rgba(34, 211, 238, 0.3)',
+          boxShadow: '0 24px 60px -32px rgba(8, 145, 178, 0.55), inset 0 1px 0 rgba(255,255,255,0.08)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute left-0 top-4 bottom-4 w-1 rounded-full"
+        style={{
+          background: 'linear-gradient(180deg, rgba(103, 232, 249, 0.95) 0%, rgba(34, 211, 238, 0.95) 45%, rgba(59, 130, 246, 0.95) 100%)',
+          boxShadow: '0 0 24px rgba(34, 211, 238, 0.5)',
+        }}
+      />
+
+      <div className="relative flex items-start gap-4 px-5 py-5 sm:px-6 sm:py-6">
+        <div className="min-w-0 flex-1">
+          <div className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-cyan-100/75">
+            Key Point
+          </div>
+          <div className="mt-2 text-base font-semibold leading-7 text-slate-50 sm:text-[1.05rem]">
+            {children}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
