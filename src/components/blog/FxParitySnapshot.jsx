@@ -1,4 +1,4 @@
-import { useLatestAudUsdRate } from '@/components/blog/useLatestAudUsdRate'
+﻿import { useLatestAudUsdRate } from '@/components/blog/useLatestAudUsdRate'
 
 const FALLBACK_AUD_PER_USD = 1.42
 
@@ -34,18 +34,42 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
           symmetrical on paper. They are not.
         </h2>
         <div className="mt-4 text-base leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-          Using the latest ECB reference rate available through Frankfurter, {formatFxPair(audPerUsd)}. That means the
-          Australian number converts to about {formatCompactCurrency(auInUsd, 'US$')}, while the US number converts to
-          about {formatCompactCurrency(usInAud, 'A$')}.
+          This comparison uses the latest published <SourceLink href="https://www.ecb.europa.eu/stats/euro-exchange-rates/html/index.en.html">ECB reference rate</SourceLink>,
+          delivered via the <SourceLink href="https://frankfurter.dev/">Frankfurter API</SourceLink>. That means the Australian number converts to about{' '}
+          {formatCompactCurrency(auInUsd, 'US$')}, while the US number converts to about {formatCompactCurrency(usInAud, 'A$')}.
         </div>
-        <div className="mt-3 text-sm" style={{ color: 'var(--ink-muted)' }}>
-          {status === 'success' && date ? `Latest business-day FX: ${formatDate(date)}` : 'Loading latest FX...'}
+        <div
+          className="mt-4 rounded-2xl p-4 sm:p-5"
+          style={{
+            border: '1px solid color-mix(in oklab, var(--line-strong) 82%, white 18%)',
+            background: 'color-mix(in oklab, var(--surface-strong) 82%, white 18%)',
+          }}
+        >
+          <div
+            className="text-xs font-semibold uppercase tracking-[0.18em]"
+            style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}
+          >
+            Current USD/AUD Rate
+          </div>
+          <div className="mt-2 flex flex-wrap items-end gap-x-4 gap-y-1.5">
+            <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
+              {formatUsdToAud(audPerUsd)}
+            </div>
+            <div className="text-sm" style={{ color: 'var(--ink-muted)' }}>
+              {formatAudToUsd(audPerUsd)}
+            </div>
+          </div>
+          <div className="mt-2 text-sm" style={{ color: 'var(--ink-muted)' }}>
+            {status === 'success' && date
+              ? `Latest business-day update: ${formatDate(date)}`
+              : 'Loading latest business-day FX data...'}
+          </div>
         </div>
       </div>
 
       <div className="mt-6 space-y-3">
         <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--ink-muted)' }}>
-          On paper — looks the same
+          On paper - looks the same
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Sticker number in AUD" muted />
@@ -53,7 +77,7 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
         </div>
 
         <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}>
-          After FX conversion — very different
+          After FX conversion - very different
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <SnapshotCard
@@ -73,6 +97,20 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
         <GapSummary usSalary={usSalary} auInUsd={auInUsd} usInAud={usInAud} />
       )}
     </div>
+  )
+}
+
+function SourceLink({ href, children }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="font-semibold underline decoration-2 underline-offset-2 transition-opacity hover:opacity-75"
+      style={{ color: 'color-mix(in oklab, var(--brand-a) 75%, var(--ink))' }}
+    >
+      {children}
+    </a>
   )
 }
 
@@ -156,6 +194,10 @@ function formatDate(value) {
   }).format(new Date(value))
 }
 
-function formatFxPair(audPerUsd) {
-  return `1 US$ = ${audPerUsd.toFixed(4)} A$ and 1 A$ = US$${(1 / audPerUsd).toFixed(4)}`
+function formatUsdToAud(audPerUsd) {
+  return `1 US$ = ${audPerUsd.toFixed(4)} A$`
+}
+
+function formatAudToUsd(audPerUsd) {
+  return `1 A$ = US$${(1 / audPerUsd).toFixed(4)}`
 }

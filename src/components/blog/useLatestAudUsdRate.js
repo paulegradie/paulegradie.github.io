@@ -1,6 +1,51 @@
 import { useCallback, useEffect, useState } from 'react'
 
 const FX_ENDPOINT = 'https://api.frankfurter.dev/v2/rates?base=USD&quotes=AUD&providers=ECB'
+const TARGET_QUOTE = 'AUD'
+
+function parseRate(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number.parseFloat(value)
+    return Number.isFinite(parsed) ? parsed : null
+  }
+
+  return null
+}
+
+function extractFxFromRecord(record) {
+  if (!record || typeof record !== 'object') {
+    return { date: null, rate: null }
+  }
+
+  const directRate = parseRate(record.rates?.[TARGET_QUOTE] ?? record.rate ?? null)
+  if (directRate !== null) {
+    return { date: record.date ?? null, rate: directRate }
+  }
+
+  return { date: record.date ?? null, rate: null }
+}
+
+function extractFxSnapshot(payload) {
+  if (Array.isArray(payload)) {
+    for (const record of payload) {
+      const { date, rate } = extractFxFromRecord(record)
+      if (rate !== null) {
+        return { date, rate }
+      }
+    }
+    return { date: null, rate: null }
+  }
+
+  if (payload && Array.isArray(payload.data)) {
+    return extractFxSnapshot(payload.data)
+  }
+
+  return extractFxFromRecord(payload)
+}
 
 export function useLatestAudUsdRate() {
   const [state, setState] = useState({
@@ -25,14 +70,12 @@ export function useLatestAudUsdRate() {
       }
 
       const data = await response.json()
-
-      // Frankfurter returns { rates: { AUD: 1.54 }, date: "..." }
-      const rate = data.rates?.AUD ?? data.rate ?? null
+      const { date, rate } = extractFxSnapshot(data)
 
       setState({
-        date: data.date ?? null,
+        date,
         error: null,
-        rate: typeof rate === 'number' ? rate : null,
+        rate,
         status: 'success',
       })
     } catch (error) {
