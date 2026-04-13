@@ -114,7 +114,7 @@ function RecruiterContent() {
         </div>
         <h2 className="text-3xl font-bold text-ink dark:text-slate-100">Welcome, Recruiter</h2>
         <p className="mx-auto mt-3 max-w-3xl text-lg text-muted dark:text-slate-300">
-          I am open to Principal Engineer or Tech Lead roles with US-based companies that value
+          I am open to Principal Engineer or Tech Lead roles with companies that value
           product velocity, deep AI capability, and practical leadership.
         </p>
       </div>
@@ -125,7 +125,7 @@ function RecruiterContent() {
             <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
             <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Work Arrangement</h3>
           </div>
-          <p className="text-lg font-semibold text-ink dark:text-slate-100">Remote only, US teams preferred</p>
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">Remote only</p>
           <p className="mt-2 text-muted dark:text-slate-300">
             Based in Melbourne, Australia with strong history collaborating across US time zones.
             Open to occasional travel for key planning and alignment.
