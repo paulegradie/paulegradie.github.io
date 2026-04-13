@@ -55,10 +55,10 @@ const experience = [
 ]
 
 const strengths = [
-  'Turns ambiguous problem spaces into clear technical plans, decision paths, and shipped outcomes',
-  'Combines research depth with practical software delivery and operational realism',
-  'Builds systems that are testable, observable, and resilient under real production conditions',
-  'Leads through technical clarity, tradeoff discipline, and steady execution rhythm',
+  'Turning ambiguous problem spaces into clear technical plans, decision paths, and shipped outcomes',
+  'Combining research depth with practical software delivery and operational realism',
+  'Building systems that are testable, observable, and resilient under real production conditions',
+  'Leading through technical clarity, tradeoff discipline, and steady execution rhythm',
 ]
 
 const credentials = [
