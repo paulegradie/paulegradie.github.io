@@ -69,28 +69,38 @@ export function FxParitySnapshot({ auSalary = 200000, usSalary = 200000 }) {
         </div>
       </div>
 
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-4">
         <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'var(--ink-muted)' }}>
-          On paper - salaries look the same
+          Follow each salary downward: local currency on top, converted value underneath
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <SnapshotCard label="Australia" value={formatCompactCurrency(auSalary, 'A$')} detail="Raw base salary in AUD" muted />
-          <SnapshotCard label="United States" value={formatCompactCurrency(usSalary, 'US$')} detail="Raw base salary in USD" muted />
-        </div>
-
-        <div className="text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: 'color-mix(in oklab, var(--brand-a) 78%, var(--ink))' }}>
-          After currency exchange conversion - the story looks very different
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <SnapshotCard
-            label={`${formatCompactCurrency(auSalary, 'A$')} converted`}
-            value={formatCompactCurrency(auInUsd, 'US$')}
-            detail="What the Australian base salary is worth in USD before super"
+        <div className="grid gap-4 sm:grid-cols-2">
+          <ConversionColumn
+            topCard={{
+              label: 'Australia',
+              value: formatCompactCurrency(auSalary, 'A$'),
+              detail: 'Raw base salary in AUD',
+              muted: true,
+            }}
+            connectorLabel="Converted to USD"
+            bottomCard={{
+              label: 'Australia in US dollars',
+              value: formatCompactCurrency(auInUsd, 'US$'),
+              detail: 'What the Australian base salary is worth in USD before super',
+            }}
           />
-          <SnapshotCard
-            label={`${formatCompactCurrency(usSalary, 'US$')} converted`}
-            value={formatCompactCurrency(usInAud, 'A$')}
-            detail="What the US base salary is worth in AUD before employer on-costs"
+          <ConversionColumn
+            topCard={{
+              label: 'United States',
+              value: formatCompactCurrency(usSalary, 'US$'),
+              detail: 'Raw base salary in USD',
+              muted: true,
+            }}
+            connectorLabel="Converted to AUD"
+            bottomCard={{
+              label: 'United States in Australian dollars',
+              value: formatCompactCurrency(usInAud, 'A$'),
+              detail: 'What the US base salary is worth in AUD before employer on-costs',
+            }}
           />
         </div>
       </div>
@@ -144,6 +154,47 @@ function SourceLink({ href, children }) {
     >
       {children}
     </a>
+  )
+}
+
+function ConversionColumn({ topCard, connectorLabel, bottomCard }) {
+  return (
+    <div className="rounded-[1.75rem] p-1" style={{ background: 'color-mix(in oklab, var(--surface-strong) 28%, transparent 72%)' }}>
+      <SnapshotCard {...topCard} />
+      <ConversionConnector label={connectorLabel} />
+      <SnapshotCard {...bottomCard} />
+    </div>
+  )
+}
+
+function ConversionConnector({ label }) {
+  return (
+    <div className="flex flex-col items-center py-3">
+      <div
+        className="w-px"
+        style={{
+          height: '1.5rem',
+          background: 'linear-gradient(180deg, color-mix(in oklab, var(--line-strong) 30%, transparent) 0%, color-mix(in oklab, var(--brand-a) 60%, white 10%) 100%)',
+        }}
+      />
+      <div
+        className="rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em]"
+        style={{
+          color: 'color-mix(in oklab, var(--brand-a) 82%, var(--ink))',
+          border: '1px solid color-mix(in oklab, var(--brand-a) 26%, white 16%)',
+          background: 'color-mix(in oklab, var(--brand-a) 10%, white 90%)',
+        }}
+      >
+        {label}
+      </div>
+      <div
+        className="w-px"
+        style={{
+          height: '1.5rem',
+          background: 'linear-gradient(180deg, color-mix(in oklab, var(--brand-a) 60%, white 10%) 0%, color-mix(in oklab, var(--line-strong) 30%, transparent) 100%)',
+        }}
+      />
+    </div>
   )
 }
 
@@ -204,7 +255,7 @@ function GapSummary({ usSalary, auInUsd, usInAud }) {
           <div className="font-display text-3xl leading-none" style={{ color: 'var(--ink)' }}>
             {formatCompactCurrency(usInAud, 'A$')}
           </div>
-          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>Australian base salary needed for FX parity</div>
+          <div className="mt-1.5 text-sm" style={{ color: 'var(--ink-muted)' }}>Australian base salary needed for parity with US</div>
         </div>
       </div>
     </div>

@@ -34,6 +34,7 @@ export function PayDisparityLab() {
   const localPremiumPct = ((auSalaryK / melbourneAnchorK) - 1) * 100
 
   const auEmployerAudK = auSalaryK * (1 + AU_SUPER_RATE)
+  const auEmployerUsdK = auEmployerAudK / audPerUsd
   const usEmployerTaxK =
     Math.min(usSalaryK, US_SOCIAL_SECURITY_WAGE_BASE_K) * US_SOCIAL_SECURITY_RATE +
     usSalaryK * US_MEDICARE_RATE
@@ -83,7 +84,8 @@ export function PayDisparityLab() {
     },
     {
       type: 'gap',
-      label: `Cash gap to US parity`,
+      positiveLabel: 'Australian offer is {amount} below US cash parity',
+      negativeLabel: 'Australian offer is {amount} above US cash parity',
       gapValue: cashGapAudK,
       prefix: 'A$',
     },
@@ -129,45 +131,38 @@ export function PayDisparityLab() {
       <div className="relative overflow-hidden p-6 sm:p-8">
         <div className="pointer-events-none absolute -right-16 top-0 h-48 w-48 rounded-full bg-cyan-400/15 blur-3xl dark:bg-cyan-400/10" />
         <div className="pointer-events-none absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-blue-400/10 blur-3xl dark:bg-blue-400/10" />
-
         <div className="relative">
-          <div className="flex flex-wrap gap-2">
-            <span className="section-chip">Melbourne market baseline</span>
-            <span className="section-chip">Australian offer</span>
-            <span className="section-chip">US parity comparison</span>
-          </div>
-
-          <div className="mt-5 max-w-3xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
-              Compensation Lab
-            </div>
+          <div className="mt-5 ">
             <h2 className="font-display mt-3 text-3xl leading-tight text-slate-900 dark:text-slate-100 sm:text-4xl">
-              Start with Melbourne market pay, then see how the Australian offer stacks up against US parity.
+              Set the scenario, compare everything in one currency, then read the gap.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">
-              This panel is built to answer one specific question clearly: how can an Australian offer look strong
-              relative to Melbourne market pay and still leave a large gap versus comparable US compensation, even after
-              super is included?
+              This lab lets you set the Melbourne benchmark, the actual offer, and the exchange rate, then shows what
+              that same setup looks like against US cash and employer-cost parity.
             </p>
           </div>
+
+          {/* <ReadingFlow /> */}
 
           <div className="mt-8 grid gap-6 xl:grid-cols-[0.92fr_1.15fr_0.93fr]">
             <div className="space-y-5">
               <div className="glass-panel rounded-3xl p-5 sm:p-6">
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
-                  Inputs
-                </div>
+                {/* <div className="text-lg font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+
+                </div> */}
                 <h3 className="font-display mt-3 text-2xl leading-tight text-slate-900 dark:text-slate-100">
-                  Set the local market, the actual offer, and the FX rate
+                  First, set the scenario
+                </h3>
+                <h3 className="font-display mt-3 text-2xl leading-tight text-slate-900 dark:text-slate-100">
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  This column defines the scenario. The rest of the lab shows what those inputs mean after Australia and
-                  US pay are converted into the same frame.
+                  Start here. Set the local market, the actual offer, and the exchange rate that the rest of the lab
+                  will use.
                 </p>
 
                 <div className="mt-5 space-y-4">
                   <ControlSection
-                    eyebrow="1. Local Market"
+                    eyebrow="A. Local Market"
                     title="Typical Melbourne market pay"
                     description="Use this as the local benchmark for an equivalent role in Melbourne. It is the market anchor, not the actual offer."
                   >
@@ -187,7 +182,7 @@ export function PayDisparityLab() {
                   </ControlSection>
 
                   <ControlSection
-                    eyebrow="2. Offers"
+                    eyebrow="B. Offers"
                     title="Australian offer versus US comparable pay"
                     description="Set the actual Australian offer and the comparable US base salary for the same class of work."
                   >
@@ -229,7 +224,7 @@ export function PayDisparityLab() {
                   </ControlSection>
 
                   <ControlSection
-                    eyebrow="3. FX"
+                    eyebrow="C. Foreign Exchange"
                     title="Exchange rate"
                     description="Use live ECB reference FX or move the slider manually. Every US-to-AUD comparison below uses this rate."
                   >
@@ -270,44 +265,21 @@ export function PayDisparityLab() {
 
             <div className="space-y-5">
               <div className="rounded-3xl border border-slate-300/70 bg-white/70 p-5 shadow-[0_14px_40px_-34px_rgba(15,23,42,0.5)] dark:border-slate-600/60 dark:bg-slate-800/45 sm:p-6">
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
-                  Normalized Comparison
-                </div>
+                {/* <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+                  Step 2
+                </div> */}
                 <h3 className="font-display mt-3 text-2xl leading-tight text-slate-900 dark:text-slate-100">
-                  Everything restated in Australian dollars
+                  Next, compare everything in Australian dollars
                 </h3>
+                <div className="text-lg font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+                </div>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  Read this from left to right: typical Melbourne market pay, the actual Australian offer, the
-                  Australian employer-side cost after super, then the US salary and US total comp converted into
-                  Australian dollars.
+                  Read the bars from top to bottom. They restate the market benchmark, the Australian offer, the
+                  Australian employer cost, then the US cash and employer-side numbers in the same frame.
                 </p>
                 <div className="mt-5">
                   <ComparisonBars bars={normalizedBars} currencyPrefix="A$" />
                 </div>
-
-                <div className="mt-5 grid gap-3 md:grid-cols-2">
-                  <LegendCard
-                    title="Melbourne Market Range"
-                    value={`${formatCurrencyK(localBandLowK, 'A$')} - ${formatCurrencyK(localBandHighK, 'A$')}`}
-                    tone="amber"
-                  />
-                  <LegendCard
-                    title="Australian Offer + Super"
-                    value={formatCurrencyK(auEmployerAudK, 'A$')}
-                    tone="teal"
-                  />
-                  <LegendCard
-                    title="US Cash Parity In AUD"
-                    value={formatCurrencyK(usCashParityAudK, 'A$')}
-                    tone="violet"
-                  />
-                  <LegendCard
-                    title="US Total Comp In AUD"
-                    value={formatCurrencyK(usEmployerAudK, 'A$')}
-                    tone="indigo"
-                  />
-                </div>
-
                 <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   Assumes the Australian number is base salary with super on top. If the Australian figure is package
                   inclusive of super instead, the employer-cost gap grows further.
@@ -317,34 +289,72 @@ export function PayDisparityLab() {
 
             <div className="space-y-5">
               <InsightCard
-                eyebrow="What This Setting Shows"
-                headline={`The Australian offer is ${formatDirectionalCurrencyK(localPremiumAudK, 'A$', 'above', 'below')} local Melbourne market, but ${formatDirectionalCurrencyK(cashGapAudK, 'A$', 'short of', 'ahead of')} US cash parity.`}
-                subheadline={`After adding Australia's 12% super and US employer payroll taxes, Australia is still ${formatDirectionalCurrencyK(employerGapAudK, 'A$', 'short of', 'ahead of')} US employer-side total comp.`}
+                eyebrow="Step 3"
+                headline={`The Australian offer is ${formatDirectionalCurrencyK(localPremiumAudK, 'A$', 'above', 'below')} local Melbourne market, and is ${formatRelativePosition(cashGapAudK, 'behind', 'ahead of')} US cash parity.`}
+                subheadline={`Cash gap to US salary parity: ${formatRelativeGap(cashGapAudK, 'A$', 'the US cash salary')}. Employer-cost gap after super and payroll taxes: ${formatRelativeGap(employerGapAudK, 'A$', 'the US employer-side total')}.`}
                 parityNeeded={formatCurrencyK(employerParityNeededAuBaseK, 'A$')}
-                bullets={[
-                  `Typical Melbourne market pay is ${formatCurrencyK(melbourneAnchorK, 'A$')}, while the Australian offer is ${formatCurrencyK(auSalaryK, 'A$')}.`,
-                  `At the current lab FX, the US comparable salary lands at ${formatCurrencyK(usCashParityAudK, 'A$')} and the US employer-side total lands at ${formatCurrencyK(usEmployerAudK, 'A$')}.`,
+                summaryCards={[
+                  {
+                    eyebrow: 'Local benchmark',
+                    value: `${formatCurrencyK(melbourneAnchorK, 'A$')}`,
+                    note: 'Typical Melbourne market pay.',
+                  },
+                  {
+                    eyebrow: 'Parity with the US',
+                    value: `${formatCurrencyK(usCashParityAudK, 'A$')}`,
+                    note: 'US comparable salary at current FX.',
+                  },
+                ]}
+                costGroups={[
+                  {
+                    eyebrow: 'Australian employee at A${auSalaryK}',
+                    title: 'Employer cost from the Australian offer',
+                    tone: 'teal',
+                    items: [
+                      { label: 'In AUD', value: formatCurrencyK(auEmployerAudK, 'A$') },
+                      { label: 'In USD', value: formatCurrencyK(auEmployerUsdK, 'US$') },
+                    ],
+                  },
+                  {
+                    eyebrow: 'US employee at USD${usSalaryK}',
+                    title: 'Employer cost from the US salary',
+                    tone: 'indigo',
+                    items: [
+                      { label: 'In USD', value: formatCurrencyK(usEmployerCostK, 'US$') },
+                      { label: 'In AUD', value: formatCurrencyK(usEmployerAudK, 'A$') },
+                    ],
+                  },
                 ]}
               />
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                {keyMetrics.map((metric) => (
-                  <MetricCard
-                    key={metric.title}
-                    title={metric.title}
-                    value={metric.value}
-                    description={metric.description}
-                  />
-                ))}
-              </div>
-
-              <div className="rounded-3xl border border-slate-300/70 bg-white/70 p-5 dark:border-slate-600/60 dark:bg-slate-800/45">
+              <div className="glass-panel rounded-3xl p-5 sm:p-6">
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
-                  Why The Gap Survives
+                  Supporting Detail
                 </div>
-                <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                  The company does not need to choose between paying Melbourne market and paying US market. It can pay an
-                  Australian offer that is <span className="font-semibold text-slate-900 dark:text-slate-100">{formatDirectionalPercent(localPremiumPct, 'above', 'below')}</span> local Melbourne market, while the US worker still holds a <span className="font-semibold text-slate-900 dark:text-slate-100">{usCashLeadComparison}</span> in cash and Australia remains <span className="font-semibold text-slate-900 dark:text-slate-100">{formatDirectionalCurrencyK(employerGapAudK, 'A$', 'short of', 'ahead of')}</span> US employer-side total comp. That middle zone is the arbitrage band.
+                <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  These smaller tiles support the Step 3 verdict. Read them as local context, cash gap, employer-cost
+                  gap, then the US lead in USD.
+                </p>
+
+                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                  {keyMetrics.map((metric) => (
+                    <MetricCard
+                      key={metric.title}
+                      title={metric.title}
+                      value={metric.value}
+                      description={metric.description}
+                    />
+                  ))}
+                </div>
+
+                <div className="mt-5 rounded-3xl border border-slate-300/70 bg-white/70 p-5 dark:border-slate-600/60 dark:bg-slate-800/45">
+                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+                    Why The Gap Survives
+                  </div>
+                  <div className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                    The company does not need to choose between paying Melbourne market and paying US market. It can pay an
+                    Australian offer that is <span className="font-semibold text-slate-900 dark:text-slate-100">{formatDirectionalPercent(localPremiumPct, 'above', 'below')}</span> local Melbourne market, while the US worker still holds a <span className="font-semibold text-slate-900 dark:text-slate-100">{usCashLeadComparison}</span> in cash and Australia remains <span className="font-semibold text-slate-900 dark:text-slate-100">{formatDirectionalCurrencyK(employerGapAudK, 'A$', 'short of', 'ahead of')}</span> US employer-side total comp. That middle zone is the arbitrage band.
+                  </div>
                 </div>
               </div>
             </div>
@@ -443,8 +453,8 @@ function ComparisonBars({ bars, currencyPrefix }) {
           return (
             <div key={`gap-${i}`} className="flex items-center gap-3 py-1">
               <div className="h-px flex-1 border-t-2 border-dashed border-violet-400/50 dark:border-violet-400/35" />
-              <div className="shrink-0 rounded-full bg-violet-500/12 px-3 py-1.5 text-xs font-bold tracking-wide text-violet-800 dark:bg-violet-400/12 dark:text-violet-200">
-                {isPositiveGap ? '↑' : '↓'} {formatCurrencyK(Math.abs(bar.gapValue), bar.prefix)} {bar.label}
+              <div className="max-w-[22rem] rounded-2xl bg-violet-500/12 px-3.5 py-2 text-center text-xs font-bold leading-relaxed text-violet-800 dark:bg-violet-400/12 dark:text-violet-200 sm:text-sm">
+                {formatGapLabel(bar, isPositiveGap)}
               </div>
               <div className="h-px flex-1 border-t-2 border-dashed border-violet-400/50 dark:border-violet-400/35" />
             </div>
@@ -477,37 +487,96 @@ function ComparisonBars({ bars, currencyPrefix }) {
   )
 }
 
-function InsightCard({ eyebrow, headline, subheadline, parityNeeded, bullets }) {
+function InsightCard({ eyebrow, headline, subheadline, parityNeeded, summaryCards = [], costGroups = [] }) {
+  const toneClasses = {
+    teal: {
+      panel: 'border-teal-400/30 bg-teal-500/10 dark:border-teal-400/20 dark:bg-teal-400/10',
+      eyebrow: 'text-teal-700/85 dark:text-teal-300/85',
+      value: 'text-teal-950 dark:text-teal-50',
+      divider: 'border-teal-500/15 dark:border-teal-400/15',
+    },
+    indigo: {
+      panel: 'border-indigo-400/30 bg-indigo-500/10 dark:border-indigo-400/20 dark:bg-indigo-400/10',
+      eyebrow: 'text-indigo-700/85 dark:text-indigo-300/85',
+      value: 'text-indigo-950 dark:text-indigo-50',
+      divider: 'border-indigo-500/15 dark:border-indigo-400/15',
+    },
+  }
+
   return (
     <div className="glass-panel-strong rounded-3xl p-5 sm:p-6">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+      <div className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/85 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300/85">
         {eyebrow}
       </div>
-      <h3 className="font-display mt-3 text-3xl leading-tight text-slate-900 dark:text-slate-100">{headline}</h3>
+      <h3 className="font-display mt-3 text-2xl leading-tight text-slate-900 dark:text-slate-100">
+        The Result:
+        <br />
+        {headline}
+      </h3>
       <p className="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">{subheadline}</p>
+
+      {summaryCards.length > 0 && (
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          {summaryCards.map((card) => (
+            <div
+              key={card.eyebrow}
+              className="rounded-2xl border border-white/45 bg-white/65 p-4 shadow-[0_14px_35px_-28px_rgba(15,23,42,0.55)] dark:border-slate-500/20 dark:bg-slate-900/35"
+            >
+              <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                {card.eyebrow}
+              </div>
+              <div className="font-display mt-2 text-3xl leading-none text-slate-900 dark:text-slate-100">
+                {card.value}
+              </div>
+              <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{card.note}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {parityNeeded && (
         <div className="mt-5 rounded-2xl border border-violet-400/30 bg-violet-500/8 px-5 py-4 dark:border-violet-400/20 dark:bg-violet-400/8">
           <div className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-700/80 dark:text-violet-300/80">
-            Parity salary required
+            Australian base salary target
           </div>
           <div className="mt-1.5 font-display text-4xl leading-none text-slate-900 dark:text-slate-100">
             {parityNeeded}
           </div>
           <div className="mt-1.5 text-sm text-slate-600 dark:text-slate-400">
-            Australian base needed to match US employer-side total after super
+            This is the Australian base salary needed for total employer cost to match the US figure once 12% super is added on top.
           </div>
         </div>
       )}
 
-      <div className="mt-4 space-y-3">
-        {bullets.map((bullet) => (
-          <div key={bullet} className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-            <span className="mt-1.5 h-2 w-2 rounded-full bg-cyan-500" />
-            <span>{bullet}</span>
-          </div>
-        ))}
-      </div>
+      {costGroups.length > 0 && (
+        <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          {costGroups.map((group) => {
+            const tone = toneClasses[group.tone] ?? toneClasses.teal
+
+            return (
+              <div
+                key={group.title}
+                className={`rounded-[1.6rem] border p-5 shadow-[0_18px_40px_-32px_rgba(15,23,42,0.65)] ${tone.panel}`}
+              >
+                <div className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.eyebrow}`}>
+                  {group.eyebrow}
+                </div>
+                <div className="mt-2 text-lg font-semibold leading-tight text-slate-900 dark:text-slate-100">
+                  {group.title}
+                </div>
+                <div className={`mt-4 space-y-3 border-t pt-4 ${tone.divider}`}>
+                  {group.items.map((item) => (
+                    <div key={item.label} className="flex items-end justify-between gap-4">
+                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">{item.label}</div>
+                      <div className={`font-display text-2xl leading-none ${tone.value}`}>{item.value}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
@@ -556,6 +625,20 @@ function formatDirectionalCurrencyK(value, prefix, positiveWord, negativeWord) {
 
 function formatDirectionalPercent(value, positiveWord, negativeWord) {
   return `${Math.abs(Math.round(value))}% ${value >= 0 ? positiveWord : negativeWord}`
+}
+
+function formatRelativeGap(value, prefix, target) {
+  const amount = formatAbsoluteCurrencyK(value, prefix)
+  return value >= 0 ? `${amount} short of ${target}` : `${amount} ahead of ${target}`
+}
+
+function formatRelativePosition(value, positiveWord, negativeWord) {
+  return value >= 0 ? positiveWord : negativeWord
+}
+
+function formatGapLabel(bar, isPositiveGap) {
+  const template = isPositiveGap ? bar.positiveLabel : bar.negativeLabel
+  return template.replace('{amount}', formatCurrencyK(Math.abs(bar.gapValue), bar.prefix))
 }
 
 function formatDate(value) {

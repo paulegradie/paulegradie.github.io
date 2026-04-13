@@ -13,7 +13,6 @@ import { Button } from '@/components/Button'
 const RESUME_URL = 'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
 
 const focusAreas = [
-  'Foundational AI model development and evaluation',
   'Applied AI systems and product delivery',
   'Principal-level platform architecture',
   'Cross-time-zone technical leadership',
@@ -182,7 +181,7 @@ export default function Home({ articles }) {
           </div>
 
           <div className="space-y-6">
-            <div className="glass-panel reveal-up reveal-delay-2 rounded-3xl p-6 sm:p-7">
+            {/* <div className="glass-panel reveal-up reveal-delay-2 rounded-3xl p-6 sm:p-7">
               <h2 className="font-display text-2xl text-ink">Current Focus</h2>
               <ul className="mt-4 space-y-3">
                 {focusAreas.map((focus) => (
@@ -192,7 +191,7 @@ export default function Home({ articles }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             <div className="glass-panel reveal-up reveal-delay-3 rounded-3xl p-6 sm:p-7">
               <h2 className="font-display text-2xl text-ink">Education and Career Snapshot</h2>

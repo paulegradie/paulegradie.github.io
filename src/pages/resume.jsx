@@ -8,7 +8,7 @@ const RESUME_URL =
   'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
 
 const highlights = [
-  'Published in Nature with an issued AI/ML patent',
+  'Published in Nature: Comms Bio with an issued AI/ML patent',
   'Principal-level scope across platform, product, and delivery',
   'Hands-on experience with foundational model development and evaluation',
   'Applied AI systems shipped from concept through production operations',
