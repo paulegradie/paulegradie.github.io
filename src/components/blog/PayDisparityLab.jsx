@@ -11,7 +11,7 @@ const DEFAULT_AU_SALARY_K = 200
 const DEFAULT_US_SALARY_K = 210
 const DEFAULT_AUD_PER_USD = 1.42
 const DEFAULT_MELBOURNE_ANCHOR_K = 165
-
+export const toReadable = (sal) => Number(sal).toLocaleString('en-AU')
 export function PayDisparityLab() {
   const [auSalaryK, setAuSalaryK] = useState(DEFAULT_AU_SALARY_K)
   const [usSalaryK, setUsSalaryK] = useState(DEFAULT_US_SALARY_K)
@@ -307,7 +307,7 @@ export function PayDisparityLab() {
                 ]}
                 costGroups={[
                   {
-                    eyebrow: 'Australian employee at A${auSalaryK}',
+                    eyebrow: `Au employee @ $${toReadable(auSalaryK * 1000)}AUD`,
                     title: 'Employer cost from the Australian offer',
                     tone: 'teal',
                     items: [
@@ -316,7 +316,7 @@ export function PayDisparityLab() {
                     ],
                   },
                   {
-                    eyebrow: 'US employee at USD${usSalaryK}',
+                    eyebrow: `US employee @ $${toReadable(usSalaryK * 1000)}USD`,
                     title: 'Employer cost from the US salary',
                     tone: 'indigo',
                     items: [
@@ -520,7 +520,7 @@ function InsightCard({ eyebrow, headline, subheadline, parityNeeded, summaryCard
           {summaryCards.map((card) => (
             <div
               key={card.eyebrow}
-              className="rounded-2xl border border-white/45 bg-white/65 p-4 shadow-[0_14px_35px_-28px_rgba(15,23,42,0.55)] dark:border-slate-500/20 dark:bg-slate-900/35"
+              className="rounded-2xl border border-white/45 bg-white/65 p-4 shadow-[0_14px_35px_-28px_rgba(15,23,42,0.55)] dark:border-slate-500/20 dark:bg-slate-900/35 text-center"
             >
               <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                 {card.eyebrow}
@@ -558,17 +558,17 @@ function InsightCard({ eyebrow, headline, subheadline, parityNeeded, summaryCard
                 key={group.title}
                 className={`rounded-[1.6rem] border p-5 shadow-[0_18px_40px_-32px_rgba(15,23,42,0.65)] ${tone.panel}`}
               >
-                <div className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${tone.eyebrow}`}>
+                <div className={`text-sm font-semibold uppercase tracking-[0.16em] ${tone.eyebrow} text-center`}>
                   {group.eyebrow}
                 </div>
-                <div className="mt-2 text-lg font-semibold leading-tight text-slate-900 dark:text-slate-100">
+                <div className="mt-2 text-sm font-semibold leading-tight text-slate-900 dark:text-slate-100 text-center">
                   {group.title}
                 </div>
                 <div className={`mt-4 space-y-3 border-t pt-4 ${tone.divider}`}>
                   {group.items.map((item) => (
-                    <div key={item.label} className="flex items-end justify-between gap-4">
-                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">{item.label}</div>
-                      <div className={`font-display text-2xl leading-none ${tone.value}`}>{item.value}</div>
+                    <div key={item.label} className="flex items-end justify-center gap-4">
+                      {/* <div className="text-sm font-medium text-slate-600 dark:text-slate-400 align-middle">{item.label}</div> */}
+                      <div className={`font-display text-sm leading-none justify-center align-middle ${tone.value}`}>{item.value}</div>
                     </div>
                   ))}
                 </div>
@@ -584,11 +584,11 @@ function InsightCard({ eyebrow, headline, subheadline, parityNeeded, summaryCard
 function MetricCard({ title, value, description }) {
   return (
     <div className="glass-panel rounded-2xl p-5">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80">
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800/80 dark:text-cyan-300/80 text-center">
         {title}
       </div>
-      <div className="font-display mt-3 text-4xl leading-none text-slate-900 dark:text-slate-100">{value}</div>
-      <div className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{description}</div>
+      <div className="font-display mt-3 text-4xl leading-none text-slate-900 dark:text-slate-100 text-center">{value}</div>
+      <div className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400 text-center">{description}</div>
     </div>
   )
 }
