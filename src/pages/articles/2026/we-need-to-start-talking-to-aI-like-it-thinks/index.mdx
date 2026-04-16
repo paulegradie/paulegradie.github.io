@@ -1,0 +1,247 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint } from '@/components/blog/Callout'
+import { Quote } from '@/components/blog/Quote'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-04-16',
+  title: 'We Need to Start Talking to AI Like It Thinks',
+  description:
+    'We now have machines that do not merely execute instructions. They participate in reasoning. Not perfectly, not independently, not in some mystical human-equivalent sense — but enough that the mode of interaction has fundamentally changed.',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+### For a long time, the relationship between humans and software was simple.
+
+We told the machine what to do.
+
+That was the whole arrangement. We wrote explicit instructions, encoded logic, modeled systems, and translated messy reality into something a computer could execute. The machine did not meet us halfway. It did not reason with us. It did not help us think through tradeoffs. It did not challenge our first idea. It simply carried out whatever structure we were able to impose on the world.
+
+That is why software engineering developed the way it did. We had to become the source of structure. We had to learn how to break problems apart, how to define boundaries, how to express logic clearly, how to make systems extensible, testable, readable, and safe to change. We had to become good at thinking, because the machine itself could not think with us. It could only obey.
+
+But we are in a different world now.
+
+We now have machines that do not merely execute instructions. They participate in reasoning. Not perfectly, not independently, not in some mystical human-equivalent sense — but enough that the mode of interaction has fundamentally changed. You can explain a problem to a model. You can ask it to compare options. You can challenge its assumptions. You can refine an idea through dialogue. You can explore a design space together. You can go back and forth with it the way you would with another engineer sitting at a whiteboard.
+
+And that, to me, is the real shift.
+
+People keep talking about AI as though its main value is code generation, or speed, or automation, or replacing junior engineers, or flattening the cost of implementation. All of that is part of the story. But I think the deeper change is this: we are no longer just programming machines. We are conversing with them.
+
+<Quote>We are no longer just programming machines. We are conversing with them.</Quote>
+
+<KeyPoint>The winning move is not just to “use AI more.” The winning move is to learn how to think with it.</KeyPoint>
+
+And if that is true, then a lot of the current discourse about AI rollout inside organizations is missing the point.
+
+The shallow version of AI adoption
+
+A lot of organizations seem to be approaching AI in the most superficial way possible.
+
+They buy access. They approve the tools. They wire up the editor integrations. They write some safety guidance. They run a training session on prompting. Then they sit back and assume productivity will rise just because everyone now has a machine that can generate code on demand.
+
+Sometimes it does help. Of course it does. The models are strong enough now that even a lazy interaction can produce something useful. But that is not the same thing as integrating AI well into engineering practice.
+
+Because the bottleneck is not really access.
+
+The bottleneck is whether the humans using it know how to engage with it in a serious way.
+
+<Callout label={'The Real Bottleneck'}>The bottleneck is not access. It is whether the humans using AI know how to engage with it in a serious way. Even the best model produces mediocre results when the person on the other end is not thinking carefully.</Callout>
+
+Most people still treat AI like a glorified vending machine. Put in a request, receive some output, inspect whether it looks good enough, and move on. That is fine for simple tasks. It is even impressive for simple tasks. But when the problem is genuinely hard — when the constraints are fuzzy, the codebase is ugly, the tests are brittle, the boundaries are wrong, and the first implementation instinct is almost certainly underdeveloped — that mode of use starts to break down.
+
+You do not get the best results from a smart human by tossing vague instructions over the wall and hoping they return brilliance. You get the best results by having a real conversation. You give context. You explore the problem. You test assumptions. You pressure-test approaches. You surface tradeoffs. You refine the question itself. The thinking happens in the exchange.
+
+I think that is increasingly true with AI as well.
+
+Not because the machine is literally human, but because the shape of the interaction has become similar enough that the same collaborative instincts now matter.
+
+That is why I keep coming back to this point: we should be talking to AI the way we talk to humans when the problem is difficult. We should be engaging it like a thinking machine.
+
+Because, in a very real sense, that is what it now is.
+
+Once upon a time, AI modeled functions. Now it models us.
+
+I think one of the strangest and most underappreciated things happening right now is that AI has crossed a conceptual boundary.
+
+Once upon a time, software mostly modeled processes out in the world. Banking flows. Payroll logic. HTTP routing. Inventory systems. Scheduling engines. Authentication rules. Database relationships. State transitions. External reality was messy, and software was the attempt to carve that mess into logic.
+
+But modern AI does something different. It models patterns of human reasoning, human language, human explanation, human argument, human structure, and human response. It does not merely capture business processes. It captures enough of us that it can now participate in the act of building those processes with us.
+
+That changes everything.
+
+It means the interface to the machine is no longer just syntax. It is conversation.
+
+It means the work is no longer only about issuing instructions. It is about building shared understanding.
+
+It means that when you are working well with AI, you are not just asking for code. You are shaping a line of thought.
+
+That is why deep conversation matters so much here. The real value is not just in getting the model to produce something. The real value is in using the model to think more clearly than you would have alone.
+
+You bring the experience, the constraints, the context, the taste, the intuition, the knowledge of the codebase, the awareness of the business reality, the scars from previous mistakes. The model brings breadth, synthesis, speed, recall of patterns, alternative framings, rapid iteration, and the ability to push back on or expand your first instinct. When that exchange is working properly, the result is not human or machine. It is collaborative reasoning.
+
+That, in my view, is what people should be learning.
+
+Not “how to get AI to write code.”
+
+How to think with a machine that can follow thought.
+
+<KeyPoint>The real value is not in getting the model to produce something. The real value is in using the model to think more clearly than you would have alone.</KeyPoint>
+
+This is exactly why engineering fundamentals still matter
+
+And this is where I part ways with the people who think AI somehow makes engineering fundamentals less important.
+
+I think it makes them more important.
+
+If you are going to have a meaningful conversation with the model about architecture, boundaries, abstractions, coupling, test shape, extensibility, tradeoffs, failure modes, or operational risk, then you still need to understand those things yourself. Otherwise, what are you actually doing? You are not collaborating. You are sampling plausible output and hoping you picked well.
+
+That is not a serious workflow.
+
+The human still has to know enough to recognize when a principle is being applied well, when it is being applied badly, and when it should not be applied at all. The human still has to detect the difference between elegant-looking code and strategically correct code. The human still has to see when an abstraction reduces complexity and when it merely hides it. The human still has to recognize when the model has latched onto a local pattern that should never have existed in the first place.
+
+This is the part people skip because they want the fantasy version of AI. They want it to eliminate the need for depth. They want it to flatten expertise. They want it to make judgement optional.
+
+I do not think it does any of that.
+
+What it actually does is amplify the value of judgement. Because once raw implementation becomes cheaper, the scarce thing is no longer the ability to produce output. The scarce thing is the ability to direct it well.
+
+<KeyPoint>Once raw implementation becomes cheaper, the scarce thing is no longer the ability to produce output. The scarce thing is the ability to direct it well. And directing it well depends on fundamentals.</KeyPoint>
+
+And directing it well depends on fundamentals.
+
+Not the shallow kind. Not trivia. Not purity rituals. I mean the real stuff: how complexity behaves, how systems degrade, how code becomes hard to change, how poor boundaries create hidden costs, how tests can either support change or suffocate it, how abstractions drift away from the domain, how tradeoffs compound over time.
+
+The engineer who understands that can do incredible things with AI.
+
+The engineer who does not is often just approving mistakes faster.
+
+<Quote>The engineer who understands that can do incredible things with AI. The engineer who does not is often just approving mistakes faster.</Quote>
+
+Your codebase is part of the conversation too
+
+There is another piece to this that I think matters enormously: AI does not work equally well in all environments.
+
+It absolutely performs better in codebases that make sense.
+
+That should not be surprising, but people still talk as if AI is some universal solvent for technical mess. In my experience, that is not how it works at all. AI can help clean up bad systems, yes, but it also gets confused by them in exactly the same places humans get confused by them — and sometimes more.
+
+Poorly structured production code is hard for AI to reason through. Poorly structured test code is often even worse. Hidden coupling, contradictory patterns, giant classes, bizarre fixtures, magical side effects, inconsistent conventions, and sprawling setup logic all make it harder for the model to understand what is safe to change, what the true seam is, and how the code wants to evolve.
+
+Humans can sometimes survive in that sort of environment through accumulated intuition. We learn the smell of the place. We learn that this service lies, that this test harness is theater, that this abstraction is decorative, that this boundary is fake. We learn the local weirdness because we have been burned by it before.
+
+The model does not have that same relationship to the system. It can infer some of it, sometimes quite impressively, but once the terrain becomes swampy enough, it starts to wander. It extends the wrong pattern. It copies the wrong test style. It makes locally plausible moves that reinforce the larger mess.
+
+So if an organization wants AI to work well, then restructuring the codebase is not some secondary “engineering excellence” hobby that can wait until after rollout. It is part of the rollout. You are shaping the terrain so both humans and models can move through it coherently.
+
+That matters more than people realize.
+
+If the model is going to collaborate with your team, then the codebase itself becomes part of the conversation. And if the codebase is incoherent, then the conversation is incoherent too.
+
+<Callout label={'Codebase as Context'}>Restructuring is not a nice-to-have you schedule after rollout. If the model is going to collaborate with your team, the codebase is part of the conversation. An incoherent codebase produces incoherent collaboration.</Callout>
+
+The first idea is usually the worst one
+
+One of the greatest things AI gives us is not the first answer. It is escape velocity from the first answer.
+
+<Quote>One of the greatest things AI gives us is not the first answer. It is escape velocity from the first answer.</Quote>
+
+Humans attach to first ideas far too easily. We see a path, it feels reasonable, and our minds start defending it before we have really explored the space. That is normal. It is how people work. But it is also one of the reasons design quality is so uneven. The first solution is often the least interrogated solution.
+
+AI is fantastic at disrupting that reflex.
+
+You can bring it your initial thought and ask it to critique the tradeoffs. You can ask it what assumptions you are smuggling in. You can ask it for a simpler shape, a more domain-aligned shape, a more testable shape, a shape that minimizes operational risk, a shape that avoids over-abstraction, a shape that reduces incidental complexity. You can ask it which parts of the plan are likely wrong, fragile, or unnecessary.
+
+That is where the collaboration becomes powerful. Not in treating the machine as an answer oracle, but in using it to widen the search space and deepen the conversation.
+
+But again, that only works if the human can judge the responses.
+
+That is why I keep returning to the same position: AI does not erase the need for experience. It makes experience more valuable. Experience is what helps the human recognize which alternative is actually better and which one only sounds better.
+
+Foresight matters. Intuition matters. Pattern recognition matters. Understanding how a decision will age matters. Those things did not disappear. They moved closer to the center of the work.
+
+This is why I still care so much about coaching and mentoring
+
+This entire shift is also why my posture on coaching and mentoring has not weakened one bit.
+
+If anything, it feels more important now.
+
+Because what are we really trying to develop in people anymore? Not merely the ability to produce code by hand, line by line, against a blank screen. That still matters, but it is no longer the whole picture. What matters increasingly is whether someone can frame a problem well, recognize a strong solution, critique a weak one, reason about tradeoffs, reshape messy systems, and guide an AI collaboration toward something that is actually good.
+
+That is mentorship territory.
+
+That is not the kind of thing you get just by handing someone access to a model and a list of best practices. You can bake in principles. You can provide templates. You can write internal guidance. You can create great examples. All of that is useful. I am completely in favor of it.
+
+But none of that guarantees success.
+
+It never did, even with humans alone.
+
+Two engineers can be handed the exact same rules, patterns, conventions, and design principles and still produce radically different outcomes depending on whether they understand when and why those ideas should be applied. Software development has always required deliberate application, not just knowledge of the rules. AI does not remove that reality. It exposes it more brutally.
+
+That is why I still believe in developing judgement. I still believe in helping engineers understand the deep structure of software. I still believe in critique, feedback, discussion, and design conversation. Because those are the things that make someone dangerous in the good way. Those are the things that let a human work with AI instead of being carried along by it.
+
+That is the real skill.
+
+What I actually think organizations should do
+
+My view on rollout has stayed pretty consistent.
+
+First, make sure the humans understand the fundamentals of software development well enough to collaborate intelligently with an AI that already knows those fundamentals in the abstract. The model may know the principles. It may even explain them beautifully. But it does not inherently know which one should govern this decision, in this codebase, under these business realities, with these future risks. The human still has to be capable of steering.
+
+Second, reshape the codebase as early as possible so the model has a sane environment to work in. This is not just about giving it better examples to copy. It is about making the system legible enough that neither the human nor the model wastes half their energy stumbling through garbage structure and fake patterns.
+
+Third, normalize deep collaboration with AI around problem framing, idea generation, tradeoff analysis, and solution refinement. Do not just ask it to write the thing. Talk to it. Think with it. Push past the first idea. Use it to explore, challenge, and sharpen the solution before implementation hardens the wrong shape into place.
+
+That combination has worked fantastically well for me.
+
+And the reason it works is simple: it treats AI neither as magic nor as autocomplete. It treats it as a reasoning partner inside a process still governed by human judgement.
+
+The real opportunity
+
+I think the organizations that will benefit most from AI are not the ones that merely deploy it fastest. They are the ones that understand the nature of the tool they are dealing with.
+
+If you think AI is mostly about speed, you will get speed.
+
+If you think AI is mostly about replacing labor, you will get a messy and politically corrosive version of replacement logic.
+
+If you think AI is mostly about code generation, you will probably optimize for throughput and miss the deeper change.
+
+But if you realize that AI can now meaningfully participate in a line of thought, then the real opportunity becomes clearer. You can build organizations where engineers think more deeply, iterate more broadly, challenge their own instincts sooner, clean up systems more deliberately, and develop stronger judgement because they are in constant dialogue with a machine that can reason with them just enough to make that dialogue productive.
+
+That is a very different future.
+
+And it is one I find much more interesting than the usual panic, hype, or fantasy.
+
+Because the real magic is not that the machine can write code.
+
+The real magic is that we can now reason with it.
+
+Final thought
+
+Once upon a time, AI modeled functions out in the wild.
+
+Now, increasingly, AI models us.
+
+It models our language, our structures of explanation, our patterns of argument, our design instincts, our problem-solving habits, and enough of our reasoning behavior that we can sit across from it and actually work through hard things together.
+
+That changes the job.
+
+It does not eliminate the need for fundamentals. It raises their value.
+
+It does not make experience obsolete. It makes experience more decisive.
+
+It does not remove the need for human judgement. It turns judgement into the bottleneck.
+
+<KeyPoint>AI does not eliminate the need for fundamentals — it raises their value. It does not make experience obsolete — it makes experience more decisive. It does not remove the need for human judgement — it turns judgement into the bottleneck.</KeyPoint>
+
+So no, I do not think successful AI rollout is about handing people powerful tools and hoping the outputs look impressive.
+
+I think it is about teaching people how to think clearly enough to collaborate with a machine that can now think with them, cleaning up the systems those collaborations have to pass through, and building a culture where deep conversation — not shallow prompting — becomes the way real engineering gets done.
+
+That is the strategy.
+
+And from where I sit, it works fking fantastic.
