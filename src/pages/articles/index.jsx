@@ -16,9 +16,9 @@ export default function ArticlesIndex({ articles }) {
         />
       </Head>
       <SimpleLayout
-        title="In My Own Words"
-        subtitle="...with a little help from AI"
-        intro="On software, artificial intelligence, personal experiences, and more."
+        title="My thoughts on things"
+        subtitle=""
+        intro="Software, artificial intelligence, personal experiences, and more."
       >
         <div className="md:border-l md:border-[color:var(--line)] md:pl-8 md:dark:border-slate-600/70">
           <div className="flex max-w-3xl flex-col space-y-14">
