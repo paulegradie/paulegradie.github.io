@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Australia vs Arizona Take-Home Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #67e8f9;
+      --accent-2: #86efac;
+      --accent-3: #c084fc;
+      --accent-4: #fbbf24;
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+      --danger: #f97316;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.10), transparent 22%),
+        linear-gradient(180deg, #06101c 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero, .panel {
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(15, 23, 42, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero { padding: 26px; }
+    .panel { padding: 22px; }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(1.8rem, 3.2vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: #f8fafc;
+    }
+    h3 {
+      font-size: 0.95rem;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 1080px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat, .compare-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .big {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: 700;
+    }
+
+    .positive { color: #86efac; }
+    .warning { color: #fdba74; }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      background: rgba(2, 6, 23, 0.55);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.15);
+      accent-color: var(--accent);
+    }
+
+    .inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #bae6fd;
+      background: rgba(8, 47, 73, 0.35);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-top: 16px;
+    }
+
+    .summary { display: grid; gap: 12px; }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .row:last-child { border-bottom: none; }
+
+    .name { color: var(--muted); }
+    .value { font-weight: 700; text-align: right; }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(2, 6, 23, 0.28);
+      margin-top: 16px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    .foot, .small {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .foot { font-size: 0.88rem; margin-top: 12px; }
+    .small { font-size: 0.82rem; }
+
+    .chart-wrap {
+      background: rgba(2, 6, 23, 0.38);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .chart-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 16px;
+      height: 3px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .axis-note {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .callout {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .dual-results {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .country-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(148, 163, 184, 0.1);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    @media (max-width: 1120px) {
+      .grid { grid-template-columns: 1fr; }
+      .stats, .compare-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .four, .three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dual-results { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px; }
+      .stats, .two, .three, .four, .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Australia vs Arizona take-home comparison</h1>
+      <p class="sub">
+        Interactive estimator comparing an Australian resident with a single filer living in Arizona. The comparison uses each system's current tax settings for 2026-facing calculations, applies the same local salary amount on the X-axis, and lets you reuse shared deduction and rental assumptions so you can see how each curve bends under its own tax law. Local pay means the Australian line uses Australian dollars and the Arizona line uses U.S. dollars with the same numeric salary on the X-axis.
+      </p>
+      <div class="pill">Australia 2025–26 resident rates • U.S. 2026 single filer + Arizona flat tax • Super/401(k) ignored</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="eyebrow">Selected local salary amount</div>
+          <div class="big" id="statSelectedSalary">260,000</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Australia monthly take-home</div>
+          <div class="big" id="statAuMonthly">A$0</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Arizona monthly take-home</div>
+          <div class="big" id="statUsMonthly">US$0</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Take-home ratio</div>
+          <div class="big" id="statRatio">0%</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Inputs</h2>
+
+        <div class="field">
+          <label for="salaryRange">Local salary amount</label>
+          <input id="salaryRange" type="range" min="0" max="500000" step="1000" value="260000" />
+          <div class="row">
+            <span class="name">Selected salary amount for both curves</span>
+            <strong class="value" id="salaryDisplay">260,000</strong>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="bonus">Annual bonus / extra cash income</label>
+            <input id="bonus" type="number" min="0" step="100" value="0" />
+          </div>
+          <div class="field">
+            <label for="otherDeductions">Other deductible claims</label>
+            <input id="otherDeductions" type="number" min="0" step="100" value="0" />
+          </div>
+        </div>
+
+        <details open>
+          <summary>Working from home</summary>
+          <div class="three" style="margin-top:14px;">
+            <div class="field">
+              <label for="wfhHours">Hours worked from home per year</label>
+              <input id="wfhHours" type="number" min="0" step="1" value="0" />
+            </div>
+            <div class="field">
+              <label for="wfhRate">Deduction rate per hour</label>
+              <input id="wfhRate" type="number" min="0" step="0.01" value="0.70" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="inline"><input id="useWfh" type="checkbox" checked /><span>Include WFH deduction in both systems</span></div>
+            </div>
+          </div>
+          <p class="small">This is intentionally shared so the comparison stays close to apples-to-apples. For the U.S. side, this behaves like an equivalent deductible adjustment in the model even though real treatment can differ.</p>
+        </details>
+
+        <details open>
+          <summary>Rental properties and depreciation</summary>
+          <div style="margin-top:14px; display:grid; gap:18px;">
+            <div>
+              <h3>Property 1</h3>
+              <div class="four">
+                <div class="field">
+                  <label for="rentWeekly1">Rent per week</label>
+                  <input id="rentWeekly1" type="number" min="0" step="1" value="630" />
+                </div>
+                <div class="field">
+                  <label for="debt1">Outstanding debt</label>
+                  <input id="debt1" type="number" min="0" step="1000" value="520000" />
+                </div>
+                <div class="field">
+                  <label for="interestRate1">Interest rate</label>
+                  <input id="interestRate1" type="number" min="0" step="0.01" value="6.5" />
+                </div>
+                <div class="field">
+                  <label for="otherCosts1">Other annual costs</label>
+                  <input id="otherCosts1" type="number" min="0" step="100" value="0" />
+                </div>
+              </div>
+              <div class="four">
+                <div class="field">
+                  <label for="constructionCost1">Eligible construction cost</label>
+                  <input id="constructionCost1" type="number" min="0" step="1000" value="0" />
+                </div>
+                <div class="field">
+                  <label for="capWorksRate1">Capital works rate</label>
+                  <input id="capWorksRate1" type="number" min="0" step="0.001" value="0.025" />
+                </div>
+                <div class="field">
+                  <label for="weeksRented1">Weeks rented</label>
+                  <input id="weeksRented1" type="number" min="0" max="52" step="1" value="52" />
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="inline"><input id="includeProp1" type="checkbox" checked /><span>Include property 1</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Property 2</h3>
+              <div class="four">
+                <div class="field">
+                  <label for="rentWeekly2">Rent per week</label>
+                  <input id="rentWeekly2" type="number" min="0" step="1" value="550" />
+                </div>
+                <div class="field">
+                  <label for="debt2">Outstanding debt</label>
+                  <input id="debt2" type="number" min="0" step="1000" value="449000" />
+                </div>
+                <div class="field">
+                  <label for="interestRate2">Interest rate</label>
+                  <input id="interestRate2" type="number" min="0" step="0.01" value="6.5" />
+                </div>
+                <div class="field">
+                  <label for="otherCosts2">Other annual costs</label>
+                  <input id="otherCosts2" type="number" min="0" step="100" value="0" />
+                </div>
+              </div>
+              <div class="four">
+                <div class="field">
+                  <label for="constructionCost2">Eligible construction cost</label>
+                  <input id="constructionCost2" type="number" min="0" step="1000" value="0" />
+                </div>
+                <div class="field">
+                  <label for="capWorksRate2">Capital works rate</label>
+                  <input id="capWorksRate2" type="number" min="0" step="0.001" value="0.025" />
+                </div>
+                <div class="field">
+                  <label for="weeksRented2">Weeks rented</label>
+                  <input id="weeksRented2" type="number" min="0" max="52" step="1" value="52" />
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="inline"><input id="includeProp2" type="checkbox" checked /><span>Include property 2</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="small">Each property estimates annual interest from outstanding debt × interest rate, annual rent from weekly rent × rented weeks, and taxable rental position as rent minus interest, costs, and estimated capital works.</p>
+        </details>
+
+        <details open>
+          <summary>Australia assumptions</summary>
+          <div class="two" style="margin-top:14px;">
+            <div class="field">
+              <label for="medicareLevyRate">Medicare levy rate</label>
+              <input id="medicareLevyRate" type="number" min="0" step="0.001" value="0.02" />
+            </div>
+            <div class="field">
+              <label for="mlsStatus">Medicare Levy Surcharge</label>
+              <select id="mlsStatus">
+                <option value="autoNoMLS" selected>Appropriate hospital cover: no MLS</option>
+                <option value="manual0">Force MLS 0%</option>
+                <option value="manual1">Force MLS 1%</option>
+                <option value="manual1.25">Force MLS 1.25%</option>
+                <option value="manual1.5">Force MLS 1.5%</option>
+              </select>
+            </div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>Arizona / U.S. assumptions</summary>
+          <div class="four" style="margin-top:14px;">
+            <div class="field">
+              <label for="usStandardDeduction">U.S. standard deduction</label>
+              <input id="usStandardDeduction" type="number" min="0" step="50" value="16100" />
+            </div>
+            <div class="field">
+              <label for="azStateRate">Arizona state tax rate</label>
+              <input id="azStateRate" type="number" min="0" step="0.001" value="0.025" />
+            </div>
+            <div class="field">
+              <label for="ssWageBase">Social Security wage base</label>
+              <input id="ssWageBase" type="number" min="0" step="100" value="184500" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="inline"><input id="useUsPayrollTaxes" type="checkbox" checked /><span>Include FICA + Addl. Medicare</span></div>
+            </div>
+          </div>
+          <div class="two">
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="inline"><input id="allowUsRentalLossOffset" type="checkbox" checked /><span>Allow U.S. rental losses to offset wages</span></div>
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="inline"><input id="useUsStandardDeduction" type="checkbox" checked /><span>Apply standard deduction</span></div>
+            </div>
+          </div>
+          <p class="small">For comparability the U.S. side models a single Arizona filer. The rental-loss toggle defaults to an apples-to-apples setting; real U.S. passive-loss rules can be more restrictive.</p>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>Comparison</h2>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="eyebrow">Australia annual take-home</div>
+            <div class="big" id="auAnnualCard">A$0</div>
+          </div>
+          <div class="compare-card">
+            <div class="eyebrow">Arizona annual take-home</div>
+            <div class="big" id="usAnnualCard">US$0</div>
+          </div>
+          <div class="compare-card">
+            <div class="eyebrow">Net as % of local gross</div>
+            <div class="big" id="netPctCard">0% / 0%</div>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="chart-meta">
+            <div>
+              <h3 style="margin-bottom:4px;">Local salary amount vs take-home</h3>
+              <div class="axis-note">X-axis: same numeric local salary amount. Y-axis: annual local-currency dollars.</div>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="swatch" style="background: var(--accent);"></span>Local gross reference</span>
+              <span class="legend-item"><span class="swatch" style="background: var(--accent-2);"></span>Australia take-home</span>
+              <span class="legend-item"><span class="swatch" style="background: var(--accent-3);"></span>Arizona take-home</span>
+            </div>
+          </div>
+          <svg id="comparisonChart" viewBox="0 0 760 420" role="img" aria-label="Chart comparing Australian and Arizona take-home as salary rises"></svg>
+          <div class="callout" id="comparisonCallout"></div>
+        </div>
+
+        <div class="dual-results">
+          <div class="compare-card">
+            <div class="country-title">
+              <h3 style="margin:0;">Australia</h3>
+              <span class="badge">Resident • 2025–26</span>
+            </div>
+            <div class="summary" id="resultsAu"></div>
+          </div>
+          <div class="compare-card">
+            <div class="country-title">
+              <h3 style="margin:0;">Arizona, U.S.</h3>
+              <span class="badge">Single filer • 2026</span>
+            </div>
+            <div class="summary" id="resultsUs"></div>
+          </div>
+        </div>
+
+        <details open>
+          <summary>Calculation notes</summary>
+          <div class="foot">
+            <p>The Australian side applies resident tax brackets for 2025–26, the Medicare levy, and an optional Medicare Levy Surcharge override. The U.S. side applies 2026 federal single-filer brackets, the standard deduction if enabled, Arizona's flat individual income tax rate, and employee payroll taxes if enabled.</p>
+            <p style="margin-top:10px;">This is an explanatory comparison, not tax advice. It intentionally normalizes some assumptions so you can compare the shape of the two systems. Real-world U.S. rental-loss limitations, itemized deductions, health-insurance arrangements, retirement contributions, and filing choices can move the Arizona line materially.</p>
+          </div>
+        </details>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const aud0 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 });
+    const aud2 = new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+    const usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const els = {
+      salaryRange: document.getElementById('salaryRange'),
+      salaryDisplay: document.getElementById('salaryDisplay'),
+      bonus: document.getElementById('bonus'),
+      otherDeductions: document.getElementById('otherDeductions'),
+      useWfh: document.getElementById('useWfh'),
+      wfhHours: document.getElementById('wfhHours'),
+      wfhRate: document.getElementById('wfhRate'),
+      includeProp1: document.getElementById('includeProp1'),
+      includeProp2: document.getElementById('includeProp2'),
+      rentWeekly1: document.getElementById('rentWeekly1'),
+      debt1: document.getElementById('debt1'),
+      interestRate1: document.getElementById('interestRate1'),
+      otherCosts1: document.getElementById('otherCosts1'),
+      constructionCost1: document.getElementById('constructionCost1'),
+      capWorksRate1: document.getElementById('capWorksRate1'),
+      weeksRented1: document.getElementById('weeksRented1'),
+      rentWeekly2: document.getElementById('rentWeekly2'),
+      debt2: document.getElementById('debt2'),
+      interestRate2: document.getElementById('interestRate2'),
+      otherCosts2: document.getElementById('otherCosts2'),
+      constructionCost2: document.getElementById('constructionCost2'),
+      capWorksRate2: document.getElementById('capWorksRate2'),
+      weeksRented2: document.getElementById('weeksRented2'),
+      medicareLevyRate: document.getElementById('medicareLevyRate'),
+      mlsStatus: document.getElementById('mlsStatus'),
+      usStandardDeduction: document.getElementById('usStandardDeduction'),
+      azStateRate: document.getElementById('azStateRate'),
+      ssWageBase: document.getElementById('ssWageBase'),
+      useUsPayrollTaxes: document.getElementById('useUsPayrollTaxes'),
+      allowUsRentalLossOffset: document.getElementById('allowUsRentalLossOffset'),
+      useUsStandardDeduction: document.getElementById('useUsStandardDeduction'),
+      statSelectedSalary: document.getElementById('statSelectedSalary'),
+      statAuMonthly: document.getElementById('statAuMonthly'),
+      statUsMonthly: document.getElementById('statUsMonthly'),
+      statRatio: document.getElementById('statRatio'),
+      auAnnualCard: document.getElementById('auAnnualCard'),
+      usAnnualCard: document.getElementById('usAnnualCard'),
+      netPctCard: document.getElementById('netPctCard'),
+      comparisonChart: document.getElementById('comparisonChart'),
+      comparisonCallout: document.getElementById('comparisonCallout'),
+      resultsAu: document.getElementById('resultsAu'),
+      resultsUs: document.getElementById('resultsUs')
+    };
+
+    function num(el) {
+      const value = Number(el.value);
+      return Number.isFinite(value) ? value : 0;
+    }
+    function clamp(value, min = 0) { return Math.max(min, value || 0); }
+    function pctFromWholeNumber(value) { const n = clamp(value); return n > 1 ? n / 100 : n; }
+    function formatLocalPlain(n) { return new Intl.NumberFormat('en-US').format(Math.round(n)); }
+
+    function calcResidentTax2025_26(taxableIncome) {
+      const income = Math.max(0, taxableIncome);
+      if (income <= 18200) return { tax: 0, marginalRate: 0 };
+      if (income <= 45000) return { tax: (income - 18200) * 0.16, marginalRate: 0.16 };
+      if (income <= 135000) return { tax: 4288 + (income - 45000) * 0.30, marginalRate: 0.30 };
+      if (income <= 190000) return { tax: 31288 + (income - 135000) * 0.37, marginalRate: 0.37 };
+      return { tax: 51638 + (income - 190000) * 0.45, marginalRate: 0.45 };
+    }
+
+    function calcUsFederalSingle2026(taxableIncome) {
+      const income = Math.max(0, taxableIncome);
+      const brackets = [
+        { upTo: 12400, rate: 0.10 },
+        { upTo: 50400, rate: 0.12 },
+        { upTo: 105700, rate: 0.22 },
+        { upTo: 201775, rate: 0.24 },
+        { upTo: 256225, rate: 0.32 },
+        { upTo: 640600, rate: 0.35 },
+        { upTo: Infinity, rate: 0.37 }
+      ];
+      let remaining = income;
+      let lower = 0;
+      let tax = 0;
+      let marginalRate = 0;
+      for (const b of brackets) {
+        if (remaining <= 0) break;
+        const width = Math.min(remaining, b.upTo - lower);
+        if (width > 0) {
+          tax += width * b.rate;
+          marginalRate = b.rate;
+          remaining -= width;
+          lower = b.upTo;
+        }
+      }
+      return { tax, marginalRate };
+    }
+
+    function getMlsRate() {
+      switch (els.mlsStatus.value) {
+        case 'manual1': return 0.01;
+        case 'manual1.25': return 0.0125;
+        case 'manual1.5': return 0.015;
+        case 'manual0': return 0;
+        case 'autoNoMLS':
+        default: return 0;
+      }
+    }
+
+    function rentalFigure(includeEl, rentWeeklyEl, debtEl, interestRateEl, otherCostsEl, constructionCostEl, capRateEl, weeksRentedEl) {
+      if (!includeEl.checked) return { annualRent: 0, annualInterest: 0, otherCosts: 0, capitalWorks: 0, netRental: 0 };
+      const annualRent = clamp(num(rentWeeklyEl)) * clamp(num(weeksRentedEl));
+      const annualInterest = clamp(num(debtEl)) * pctFromWholeNumber(num(interestRateEl));
+      const otherCosts = clamp(num(otherCostsEl));
+      const capitalWorks = clamp(num(constructionCostEl)) * clamp(num(capRateEl));
+      const netRental = annualRent - annualInterest - otherCosts - capitalWorks;
+      return { annualRent, annualInterest, otherCosts, capitalWorks, netRental };
+    }
+
+    function buildSharedInputs(baseSalary) {
+      const salary = clamp(baseSalary);
+      const bonus = clamp(num(els.bonus));
+      const wageIncome = salary + bonus;
+      const wfhDeduction = els.useWfh.checked ? clamp(num(els.wfhHours)) * clamp(num(els.wfhRate)) : 0;
+      const property1 = rentalFigure(els.includeProp1, els.rentWeekly1, els.debt1, els.interestRate1, els.otherCosts1, els.constructionCost1, els.capWorksRate1, els.weeksRented1);
+      const property2 = rentalFigure(els.includeProp2, els.rentWeekly2, els.debt2, els.interestRate2, els.otherCosts2, els.constructionCost2, els.capWorksRate2, els.weeksRented2);
+      const totalRentalNet = property1.netRental + property2.netRental;
+      const totalAnnualRent = property1.annualRent + property2.annualRent;
+      const totalAnnualInterest = property1.annualInterest + property2.annualInterest;
+      const totalOtherPropertyCosts = property1.otherCosts + property2.otherCosts;
+      const totalCapitalWorks = property1.capitalWorks + property2.capitalWorks;
+      const otherDeductions = clamp(num(els.otherDeductions));
+      return {
+        salary, bonus, wageIncome, wfhDeduction, property1, property2,
+        totalRentalNet, totalAnnualRent, totalAnnualInterest, totalOtherPropertyCosts,
+        totalCapitalWorks, otherDeductions
+      };
+    }
+
+    function calculateAustralia(baseSalary) {
+      const s = buildSharedInputs(baseSalary);
+      const taxableIncome = Math.max(0, s.wageIncome + s.totalRentalNet - s.otherDeductions - s.wfhDeduction);
+      const { tax, marginalRate } = calcResidentTax2025_26(taxableIncome);
+      const medicareLevyRate = clamp(num(els.medicareLevyRate));
+      const medicareLevy = taxableIncome * medicareLevyRate;
+      const mlsRate = getMlsRate();
+      const mls = taxableIncome * mlsRate;
+      const totalTax = tax + medicareLevy + mls;
+      const netAnnual = s.wageIncome + s.totalRentalNet - totalTax;
+      return {
+        ...s, taxableIncome, tax, medicareLevy, mls, totalTax, netAnnual,
+        netMonthly: netAnnual / 12, netFortnight: netAnnual / 26, netWeekly: netAnnual / 52,
+        effectiveTaxRate: s.wageIncome > 0 ? totalTax / s.wageIncome : 0, marginalRate,
+        systemMarginalRate: marginalRate + medicareLevyRate + mlsRate
+      };
+    }
+
+    function calculateArizona(baseSalary) {
+      const s = buildSharedInputs(baseSalary);
+      const standardDeduction = els.useUsStandardDeduction.checked ? clamp(num(els.usStandardDeduction)) : 0;
+      const wageDeductions = s.otherDeductions + s.wfhDeduction;
+      let taxableBeforeStandard;
+      if (els.allowUsRentalLossOffset.checked) {
+        taxableBeforeStandard = Math.max(0, s.wageIncome + s.totalRentalNet - wageDeductions);
+      } else {
+        taxableBeforeStandard = Math.max(0, s.wageIncome + Math.max(0, s.totalRentalNet) - wageDeductions);
+      }
+      const taxableIncome = Math.max(0, taxableBeforeStandard - standardDeduction);
+      const { tax: federalTax, marginalRate } = calcUsFederalSingle2026(taxableIncome);
+      const azStateRate = pctFromWholeNumber(num(els.azStateRate));
+      const stateTax = taxableIncome * azStateRate;
+      let socialSecurity = 0;
+      let medicare = 0;
+      let additionalMedicare = 0;
+      if (els.useUsPayrollTaxes.checked) {
+        const ssWageBase = clamp(num(els.ssWageBase));
+        socialSecurity = Math.min(s.wageIncome, ssWageBase) * 0.062;
+        medicare = s.wageIncome * 0.0145;
+        additionalMedicare = Math.max(0, s.wageIncome - 200000) * 0.009;
+      }
+      const payrollTax = socialSecurity + medicare + additionalMedicare;
+      const totalTax = federalTax + stateTax + payrollTax;
+      const netAnnual = s.wageIncome + s.totalRentalNet - totalTax;
+      return {
+        ...s, taxableIncome, federalTax, stateTax, payrollTax, socialSecurity, medicare, additionalMedicare,
+        totalTax, netAnnual, netMonthly: netAnnual / 12, netFortnight: netAnnual / 26, netWeekly: netAnnual / 52,
+        effectiveTaxRate: s.wageIncome > 0 ? totalTax / s.wageIncome : 0, marginalRate,
+        systemMarginalRate: marginalRate + azStateRate + (els.useUsPayrollTaxes.checked ? ((s.wageIncome < clamp(num(els.ssWageBase)) ? 0.062 : 0) + 0.0145 + (s.wageIncome >= 200000 ? 0.009 : 0)) : 0),
+        standardDeduction
+      };
+    }
+
+    function niceCeiling(value) {
+      if (value <= 0) return 100000;
+      const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
+      return Math.ceil(value / magnitude) * magnitude;
+    }
+
+    function polylinePoints(values, xScale, yScale, padding, height) {
+      return values.map((v, i) => {
+        const x = padding.left + i * xScale;
+        const y = height - padding.bottom - (v * yScale);
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      }).join(' ');
+    }
+
+    function axisMoney(value) {
+      if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}m`;
+      if (value >= 1000) return `$${Math.round(value / 1000)}k`;
+      return `$${Math.round(value)}`;
+    }
+
+    function renderComparisonChart(currentAu, currentUs) {
+      const width = 760;
+      const height = 420;
+      const padding = { top: 18, right: 18, bottom: 46, left: 74 };
+      const maxSalary = 500000;
+      const step = 10000;
+      const salaries = [];
+      const grossValues = [];
+      const auValues = [];
+      const usValues = [];
+
+      for (let salary = 0; salary <= maxSalary; salary += step) {
+        salaries.push(salary);
+        const au = calculateAustralia(salary);
+        const us = calculateArizona(salary);
+        grossValues.push(salary + clamp(num(els.bonus)));
+        auValues.push(au.netAnnual);
+        usValues.push(us.netAnnual);
+      }
+
+      const yMax = niceCeiling(Math.max(...grossValues, ...auValues, ...usValues));
+      const xScale = (width - padding.left - padding.right) / (salaries.length - 1);
+      const yScale = (height - padding.top - padding.bottom) / yMax;
+      const grossPoints = polylinePoints(grossValues, xScale, yScale, padding, height);
+      const auPoints = polylinePoints(auValues, xScale, yScale, padding, height);
+      const usPoints = polylinePoints(usValues, xScale, yScale, padding, height);
+      const currentIndex = Math.round(currentAu.salary / step);
+      const currentX = padding.left + currentIndex * xScale;
+      const currentAuY = height - padding.bottom - (auValues[currentIndex] * yScale);
+      const currentUsY = height - padding.bottom - (usValues[currentIndex] * yScale);
+
+      const yTicks = 5;
+      const grid = [];
+      for (let i = 0; i <= yTicks; i++) {
+        const value = yMax * (i / yTicks);
+        const y = height - padding.bottom - (value * yScale);
+        grid.push(`
+          <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" stroke="rgba(148,163,184,0.15)" />
+          <text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" fill="#94a3b8" font-size="11">${axisMoney(value)}</text>
+        `);
+      }
+
+      const xTicks = [0, 100000, 200000, 300000, 400000, 500000];
+      const xMarkup = xTicks.map((value) => {
+        const x = padding.left + ((value / maxSalary) * (width - padding.left - padding.right));
+        return `
+          <line x1="${x}" y1="${padding.top}" x2="${x}" y2="${height - padding.bottom}" stroke="rgba(148,163,184,0.08)" />
+          <text x="${x}" y="${height - 16}" text-anchor="middle" fill="#94a3b8" font-size="11">${axisMoney(value)}</text>
+        `;
+      }).join('');
+
+      els.comparisonChart.innerHTML = `
+        <rect x="0" y="0" width="${width}" height="${height}" fill="transparent" rx="20"></rect>
+        ${grid.join('')}
+        ${xMarkup}
+        <line x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}" stroke="rgba(148,163,184,0.28)" />
+        <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}" stroke="rgba(148,163,184,0.28)" />
+        <polyline fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${grossPoints}" />
+        <polyline fill="none" stroke="var(--accent-2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${auPoints}" />
+        <polyline fill="none" stroke="var(--accent-3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${usPoints}" />
+        <line x1="${currentX}" y1="${padding.top}" x2="${currentX}" y2="${height - padding.bottom}" stroke="rgba(251,191,36,0.7)" stroke-dasharray="6 6" />
+        <circle cx="${currentX}" cy="${currentAuY}" r="5.5" fill="var(--accent-2)" />
+        <circle cx="${currentX}" cy="${currentUsY}" r="5.5" fill="var(--accent-3)" />
+        <text x="${Math.min(currentX + 10, width - 180)}" y="${Math.max(Math.min(currentAuY, currentUsY) - 12, 24)}" fill="#e5e7eb" font-size="12">Current local salary: ${formatLocalPlain(currentAu.salary)}</text>
+      `;
+
+      const diff = currentUs.netAnnual - currentAu.netAnnual;
+      const direction = diff >= 0 ? 'higher' : 'lower';
+      els.comparisonCallout.textContent = `At the selected local salary amount of ${formatLocalPlain(currentAu.salary)}, the Australian model estimates ${aud0.format(currentAu.netAnnual)} a year after tax while the Arizona model estimates ${usd0.format(currentUs.netAnnual)}. The Arizona curve is ${direction} than the Australian curve by ${Math.abs(diff).toLocaleString('en-US', { maximumFractionDigits: 0 })} local dollars under the shared assumptions currently shown.`;
+    }
+
+    function renderCountryResults(au, us) {
+      els.resultsAu.innerHTML = `
+        <div class="row"><span class="name">Gross salary + bonus</span><span class="value">${aud2.format(au.wageIncome)}</span></div>
+        <div class="row"><span class="name">Taxable income</span><span class="value">${aud2.format(au.taxableIncome)}</span></div>
+        <div class="row"><span class="name">Rental net position</span><span class="value ${au.totalRentalNet < 0 ? 'warning' : 'positive'}">${aud2.format(au.totalRentalNet)}</span></div>
+        <div class="row"><span class="name">Income tax</span><span class="value">${aud2.format(au.tax)}</span></div>
+        <div class="row"><span class="name">Medicare levy + MLS</span><span class="value">${aud2.format(au.medicareLevy + au.mls)}</span></div>
+        <div class="row"><span class="name">Total tax</span><span class="value">${aud2.format(au.totalTax)}</span></div>
+        <div class="row"><span class="name">Annual take-home</span><span class="value">${aud2.format(au.netAnnual)}</span></div>
+        <div class="row"><span class="name">Monthly take-home</span><span class="value">${aud2.format(au.netMonthly)}</span></div>
+        <div class="row"><span class="name">Effective tax on wages</span><span class="value">${(au.effectiveTaxRate * 100).toFixed(2)}%</span></div>
+        <div class="row"><span class="name">Marginal rate on next wage dollar</span><span class="value">${(au.systemMarginalRate * 100).toFixed(2)}%</span></div>
+      `;
+
+      els.resultsUs.innerHTML = `
+        <div class="row"><span class="name">Gross salary + bonus</span><span class="value">${usd2.format(us.wageIncome)}</span></div>
+        <div class="row"><span class="name">Taxable income</span><span class="value">${usd2.format(us.taxableIncome)}</span></div>
+        <div class="row"><span class="name">Rental net position</span><span class="value ${us.totalRentalNet < 0 ? 'warning' : 'positive'}">${usd2.format(us.totalRentalNet)}</span></div>
+        <div class="row"><span class="name">Federal income tax</span><span class="value">${usd2.format(us.federalTax)}</span></div>
+        <div class="row"><span class="name">Arizona state tax</span><span class="value">${usd2.format(us.stateTax)}</span></div>
+        <div class="row"><span class="name">Payroll taxes (FICA)</span><span class="value">${usd2.format(us.payrollTax)}</span></div>
+        <div class="row"><span class="name">Annual take-home</span><span class="value">${usd2.format(us.netAnnual)}</span></div>
+        <div class="row"><span class="name">Monthly take-home</span><span class="value">${usd2.format(us.netMonthly)}</span></div>
+        <div class="row"><span class="name">Effective tax on wages</span><span class="value">${(us.effectiveTaxRate * 100).toFixed(2)}%</span></div>
+        <div class="row"><span class="name">Marginal rate on next wage dollar</span><span class="value">${(us.systemMarginalRate * 100).toFixed(2)}%</span></div>
+      `;
+    }
+
+    function render() {
+      const salary = num(els.salaryRange);
+      const au = calculateAustralia(salary);
+      const us = calculateArizona(salary);
+      const ratio = au.netAnnual > 0 ? us.netAnnual / au.netAnnual : 0;
+
+      els.salaryDisplay.textContent = formatLocalPlain(salary);
+      els.statSelectedSalary.textContent = formatLocalPlain(salary);
+      els.statAuMonthly.textContent = aud0.format(au.netMonthly);
+      els.statUsMonthly.textContent = usd0.format(us.netMonthly);
+      els.statRatio.textContent = ratio ? `${(ratio * 100).toFixed(1)}%` : '0%';
+      els.auAnnualCard.textContent = aud0.format(au.netAnnual);
+      els.usAnnualCard.textContent = usd0.format(us.netAnnual);
+      els.netPctCard.textContent = `${(au.wageIncome ? (au.netAnnual / au.wageIncome) * 100 : 0).toFixed(1)}% / ${(us.wageIncome ? (us.netAnnual / us.wageIncome) * 100 : 0).toFixed(1)}%`;
+
+      renderComparisonChart(au, us);
+      renderCountryResults(au, us);
+    }
+
+    Object.values(els).forEach((el) => {
+      if (el && ['INPUT', 'SELECT'].includes(el.tagName)) {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

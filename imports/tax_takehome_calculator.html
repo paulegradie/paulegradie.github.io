@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Australian Take-Home Pay Calculator</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+      --danger: #f97316;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.10), transparent 22%),
+        linear-gradient(180deg, #06101c 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero, .panel {
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(15, 23, 42, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero { padding: 26px; }
+    .panel { padding: 22px; }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(1.8rem, 3.2vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: #f8fafc;
+    }
+    h3 {
+      font-size: 0.95rem;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 900px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .big {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: 700;
+    }
+
+    .positive { color: #86efac; }
+    .warning { color: #fdba74; }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      background: rgba(2, 6, 23, 0.55);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.15);
+      accent-color: var(--accent);
+    }
+
+    .inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .three {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #bae6fd;
+      background: rgba(8, 47, 73, 0.35);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-top: 16px;
+    }
+
+    .summary {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .row:last-child { border-bottom: none; }
+
+    .name { color: var(--muted); }
+    .value { font-weight: 700; text-align: right; }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(2, 6, 23, 0.28);
+      margin-top: 16px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    .foot {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-top: 12px;
+    }
+
+    .small {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .three { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px; }
+      .stats, .two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Australian take-home pay calculator</h1>
+      <p class="sub">
+        Interactive estimator for Australian resident income tax using the 2025–26 tax settings that apply during calendar year 2026. Adjust salary, bonuses, deductions, working-from-home claims, and rental-property assumptions to see estimated take-home pay.
+      </p>
+      <div class="pill">Resident rates • 2025–26 • Medicare levy included • Super ignored</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="eyebrow">Gross income</div>
+          <div class="big" id="statGross">A$260,000</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Estimated annual take-home</div>
+          <div class="big" id="statNetAnnual">A$0</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Estimated monthly take-home</div>
+          <div class="big" id="statNetMonthly">A$0</div>
+        </div>
+        <div class="stat">
+          <div class="eyebrow">Marginal rate on next dollar</div>
+          <div class="big" id="statMarginal">0%</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Inputs</h2>
+
+        <div class="field">
+          <label for="salaryRange">Base salary</label>
+          <input id="salaryRange" type="range" min="0" max="500000" step="1000" value="260000" />
+          <div class="row">
+            <span class="name">Selected salary</span>
+            <strong class="value" id="salaryDisplay">A$260,000</strong>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="bonus">Annual bonus / extra cash income</label>
+            <input id="bonus" type="number" min="0" step="100" value="0" />
+          </div>
+          <div class="field">
+            <label for="otherDeductions">Other deductible claims</label>
+            <input id="otherDeductions" type="number" min="0" step="100" value="0" />
+          </div>
+        </div>
+
+        <details open>
+          <summary>Working from home</summary>
+          <div class="three" style="margin-top:14px;">
+            <div class="field">
+              <label for="wfhHours">Hours worked from home per year</label>
+              <input id="wfhHours" type="number" min="0" step="1" value="0" />
+            </div>
+            <div class="field">
+              <label for="wfhRate">Fixed rate per hour</label>
+              <input id="wfhRate" type="number" min="0" step="0.01" value="0.70" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="inline"><input id="useWfh" type="checkbox" checked /><span>Include WFH deduction</span></div>
+            </div>
+          </div>
+          <p class="small">This uses a configurable fixed-rate approach. Keep your own records and confirm the right rate and method for your return.</p>
+        </details>
+
+        <details>
+          <summary>Rental properties and depreciation</summary>
+          <div style="margin-top:14px; display:grid; gap:18px;">
+            <div>
+              <h3>Property 1</h3>
+              <div class="three">
+                <div class="field">
+                  <label for="rent1">Annual rent</label>
+                  <input id="rent1" type="number" min="0" step="100" value="32760" />
+                </div>
+                <div class="field">
+                  <label for="interest1">Annual interest</label>
+                  <input id="interest1" type="number" min="0" step="100" value="33800" />
+                </div>
+                <div class="field">
+                  <label for="otherCosts1">Other annual costs</label>
+                  <input id="otherCosts1" type="number" min="0" step="100" value="0" />
+                </div>
+              </div>
+              <div class="three">
+                <div class="field">
+                  <label for="constructionCost1">Eligible construction cost</label>
+                  <input id="constructionCost1" type="number" min="0" step="1000" value="0" />
+                </div>
+                <div class="field">
+                  <label for="capWorksRate1">Capital works rate</label>
+                  <input id="capWorksRate1" type="number" min="0" step="0.001" value="0.025" />
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="inline"><input id="includeProp1" type="checkbox" /><span>Include property 1</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Property 2</h3>
+              <div class="three">
+                <div class="field">
+                  <label for="rent2">Annual rent</label>
+                  <input id="rent2" type="number" min="0" step="100" value="28600" />
+                </div>
+                <div class="field">
+                  <label for="interest2">Annual interest</label>
+                  <input id="interest2" type="number" min="0" step="100" value="29185" />
+                </div>
+                <div class="field">
+                  <label for="otherCosts2">Other annual costs</label>
+                  <input id="otherCosts2" type="number" min="0" step="100" value="0" />
+                </div>
+              </div>
+              <div class="three">
+                <div class="field">
+                  <label for="constructionCost2">Eligible construction cost</label>
+                  <input id="constructionCost2" type="number" min="0" step="1000" value="0" />
+                </div>
+                <div class="field">
+                  <label for="capWorksRate2">Capital works rate</label>
+                  <input id="capWorksRate2" type="number" min="0" step="0.001" value="0.025" />
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="inline"><input id="includeProp2" type="checkbox" /><span>Include property 2</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="small">
+            This estimates taxable rental profit or loss as rent minus interest, other costs, and estimated capital works deduction. It does not model CGT, Division 40 limits, apportionment, vacancy timing, or ownership splits.
+          </p>
+        </details>
+
+        <details>
+          <summary>Medicare and health cover</summary>
+          <div class="two" style="margin-top:14px;">
+            <div class="field">
+              <label for="medicareLevyRate">Medicare levy rate</label>
+              <input id="medicareLevyRate" type="number" min="0" step="0.001" value="0.02" />
+            </div>
+            <div class="field">
+              <label for="mlsStatus">MLS setting</label>
+              <select id="mlsStatus">
+                <option value="autoNoMLS" selected>Appropriate hospital cover: no MLS</option>
+                <option value="manual0">Force MLS 0%</option>
+                <option value="manual1">Force MLS 1%</option>
+                <option value="manual1.25">Force MLS 1.25%</option>
+                <option value="manual1.5">Force MLS 1.5%</option>
+              </select>
+            </div>
+          </div>
+          <p class="small">This component assumes a single Australian resident. Family thresholds, exemptions, and special cases are not modeled.</p>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>Results</h2>
+        <div class="summary" id="results"></div>
+
+        <details open>
+          <summary>Calculation notes</summary>
+          <div class="foot">
+            <p>This estimator applies Australian resident tax brackets for 2025–26, adds the Medicare levy, subtracts configured deductions from taxable income, and optionally applies a Medicare Levy Surcharge override.</p>
+            <p style="margin-top:10px;">It is designed for exploration and content publishing, not for lodging a return. Confirm assumptions with your accountant before relying on it.</p>
+          </div>
+        </details>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const currency = new Intl.NumberFormat('en-AU', {
+      style: 'currency',
+      currency: 'AUD',
+      maximumFractionDigits: 0
+    });
+
+    const money2 = new Intl.NumberFormat('en-AU', {
+      style: 'currency',
+      currency: 'AUD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    const els = {
+      salaryRange: document.getElementById('salaryRange'),
+      salaryDisplay: document.getElementById('salaryDisplay'),
+      bonus: document.getElementById('bonus'),
+      otherDeductions: document.getElementById('otherDeductions'),
+      useWfh: document.getElementById('useWfh'),
+      wfhHours: document.getElementById('wfhHours'),
+      wfhRate: document.getElementById('wfhRate'),
+      includeProp1: document.getElementById('includeProp1'),
+      includeProp2: document.getElementById('includeProp2'),
+      rent1: document.getElementById('rent1'),
+      interest1: document.getElementById('interest1'),
+      otherCosts1: document.getElementById('otherCosts1'),
+      constructionCost1: document.getElementById('constructionCost1'),
+      capWorksRate1: document.getElementById('capWorksRate1'),
+      rent2: document.getElementById('rent2'),
+      interest2: document.getElementById('interest2'),
+      otherCosts2: document.getElementById('otherCosts2'),
+      constructionCost2: document.getElementById('constructionCost2'),
+      capWorksRate2: document.getElementById('capWorksRate2'),
+      medicareLevyRate: document.getElementById('medicareLevyRate'),
+      mlsStatus: document.getElementById('mlsStatus'),
+      statGross: document.getElementById('statGross'),
+      statNetAnnual: document.getElementById('statNetAnnual'),
+      statNetMonthly: document.getElementById('statNetMonthly'),
+      statMarginal: document.getElementById('statMarginal'),
+      results: document.getElementById('results')
+    };
+
+    function num(el) {
+      const value = Number(el.value);
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function clamp(value, min = 0) {
+      return Math.max(min, value || 0);
+    }
+
+    function calcResidentTax2025_26(taxableIncome) {
+      const income = Math.max(0, taxableIncome);
+
+      if (income <= 18200) {
+        return { tax: 0, marginalRate: 0 };
+      }
+      if (income <= 45000) {
+        return { tax: (income - 18200) * 0.16, marginalRate: 0.16 };
+      }
+      if (income <= 135000) {
+        return { tax: 4288 + (income - 45000) * 0.30, marginalRate: 0.30 };
+      }
+      if (income <= 190000) {
+        return { tax: 31288 + (income - 135000) * 0.37, marginalRate: 0.37 };
+      }
+      return { tax: 51638 + (income - 190000) * 0.45, marginalRate: 0.45 };
+    }
+
+    function getMlsRate() {
+      switch (els.mlsStatus.value) {
+        case 'manual1': return 0.01;
+        case 'manual1.25': return 0.0125;
+        case 'manual1.5': return 0.015;
+        case 'manual0': return 0;
+        case 'autoNoMLS':
+        default:
+          return 0;
+      }
+    }
+
+    function rentalFigure(includeEl, rentEl, interestEl, otherCostsEl, constructionCostEl, capRateEl) {
+      if (!includeEl.checked) {
+        return { netRental: 0, capitalWorks: 0 };
+      }
+
+      const rent = clamp(num(rentEl));
+      const interest = clamp(num(interestEl));
+      const otherCosts = clamp(num(otherCostsEl));
+      const capitalWorks = clamp(num(constructionCostEl)) * clamp(num(capRateEl));
+      const netRental = rent - interest - otherCosts - capitalWorks;
+
+      return { netRental, capitalWorks };
+    }
+
+    function render() {
+      const salary = clamp(num(els.salaryRange));
+      const bonus = clamp(num(els.bonus));
+      const grossIncome = salary + bonus;
+      const wfhDeduction = els.useWfh.checked ? clamp(num(els.wfhHours)) * clamp(num(els.wfhRate)) : 0;
+      const property1 = rentalFigure(els.includeProp1, els.rent1, els.interest1, els.otherCosts1, els.constructionCost1, els.capWorksRate1);
+      const property2 = rentalFigure(els.includeProp2, els.rent2, els.interest2, els.otherCosts2, els.constructionCost2, els.capWorksRate2);
+      const otherDeductions = clamp(num(els.otherDeductions));
+      const totalRentalNet = property1.netRental + property2.netRental;
+      const deductibleRentalLoss = totalRentalNet < 0 ? Math.abs(totalRentalNet) : 0;
+      const positiveRentalIncome = totalRentalNet > 0 ? totalRentalNet : 0;
+
+      const taxableIncome = Math.max(0, grossIncome + positiveRentalIncome - deductibleRentalLoss - otherDeductions - wfhDeduction);
+      const { tax, marginalRate } = calcResidentTax2025_26(taxableIncome);
+      const medicareLevyRate = clamp(num(els.medicareLevyRate));
+      const medicareLevy = taxableIncome * medicareLevyRate;
+      const mlsRate = getMlsRate();
+      const mls = taxableIncome * mlsRate;
+      const totalTax = tax + medicareLevy + mls;
+      const netAnnual = grossIncome + totalRentalNet - totalTax;
+      const netMonthly = netAnnual / 12;
+      const netFortnight = netAnnual / 26;
+      const netWeekly = netAnnual / 52;
+      const effectiveTaxRate = grossIncome > 0 ? totalTax / grossIncome : 0;
+
+      els.salaryDisplay.textContent = currency.format(salary);
+      els.statGross.textContent = currency.format(grossIncome);
+      els.statNetAnnual.textContent = currency.format(netAnnual);
+      els.statNetMonthly.textContent = currency.format(netMonthly);
+      els.statMarginal.textContent = `${Math.round((marginalRate + medicareLevyRate + mlsRate) * 10000) / 100}%`;
+
+      els.results.innerHTML = `
+        <div class="row"><span class="name">Gross salary + bonus</span><span class="value">${currency.format(grossIncome)}</span></div>
+        <div class="row"><span class="name">Taxable income after configured deductions</span><span class="value">${currency.format(taxableIncome)}</span></div>
+        <div class="row"><span class="name">Rental net position</span><span class="value ${totalRentalNet < 0 ? 'warning' : 'positive'}">${money2.format(totalRentalNet)}</span></div>
+        <div class="row"><span class="name">Working from home deduction</span><span class="value">${money2.format(wfhDeduction)}</span></div>
+        <div class="row"><span class="name">Other deductions</span><span class="value">${money2.format(otherDeductions)}</span></div>
+        <div class="row"><span class="name">Income tax</span><span class="value">${money2.format(tax)}</span></div>
+        <div class="row"><span class="name">Medicare levy</span><span class="value">${money2.format(medicareLevy)}</span></div>
+        <div class="row"><span class="name">Medicare Levy Surcharge</span><span class="value">${money2.format(mls)}</span></div>
+        <div class="row"><span class="name">Total tax</span><span class="value">${money2.format(totalTax)}</span></div>
+        <div class="row"><span class="name">Estimated annual take-home</span><span class="value">${money2.format(netAnnual)}</span></div>
+        <div class="row"><span class="name">Estimated monthly take-home</span><span class="value">${money2.format(netMonthly)}</span></div>
+        <div class="row"><span class="name">Estimated fortnightly take-home</span><span class="value">${money2.format(netFortnight)}</span></div>
+        <div class="row"><span class="name">Estimated weekly take-home</span><span class="value">${money2.format(netWeekly)}</span></div>
+        <div class="row"><span class="name">Effective tax rate on gross cash income</span><span class="value">${(effectiveTaxRate * 100).toFixed(2)}%</span></div>
+        <div class="row"><span class="name">Property capital works included</span><span class="value">${money2.format(property1.capitalWorks + property2.capitalWorks)}</span></div>
+      `;
+    }
+
+    Object.values(els).forEach((el) => {
+      if (el && ['INPUT', 'SELECT'].includes(el.tagName)) {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
