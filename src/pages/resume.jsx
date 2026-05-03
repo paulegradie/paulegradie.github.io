@@ -5,20 +5,20 @@ import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 
 const RESUME_URL =
-  'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
+  'https://docs.google.com/document/d/1ZGeHJqQbX38He0TcC9hepM6w2rRRd-gM2HD4IrjfT3U/edit?usp=sharing'
 
 const highlights = [
   'Published in Nature: Comms Bio with an issued AI/ML patent',
   'Principal-level scope across platform, product, and delivery',
-  'Hands-on experience with foundational model development and evaluation',
-  'Applied AI systems shipped from concept through production operations',
+  'Applied AI systems and model-aware workflows shipped in production',
+  'Founder/operator product builder with global remote collaboration experience',
 ]
 
 const metrics = [
   { label: 'Years in software', value: '9+' },
-  { label: 'Core domains', value: 'AI, Platform, and Product Engineering' },
+  { label: 'Core domains', value: 'Platform, Product, and Applied AI Engineering' },
   { label: 'Remote collaboration', value: 'US-facing and cross-time-zone proven' },
-  { label: 'Leadership scope', value: 'Senior IC operating at principal breadth' },
+  { label: 'Leadership scope', value: 'Staff / Principal IC with delivery and architecture influence' },
 ]
 
 const experience = [
@@ -50,7 +50,7 @@ const experience = [
     period: '2017 - 2020',
     roles: ['Data Science Engineer, AI Team (2017 - 2020)'],
     summary:
-      'Delivered AI-focused capabilities and model-driven features inside a high-scale product environment, bridging data science and software engineering concerns.',
+      'Delivered applied AI and model-aware features in a high-scale product environment, bridging data science and engineering operations.',
   },
 ]
 
@@ -93,21 +93,14 @@ export default function ResumePage() {
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
                 Staff-level engineer operating at principal breadth, with a track record spanning
-                AI systems, platform architecture, and product delivery in high-trust teams.
+                applied AI systems, platform architecture, and product delivery in high-trust teams.
               </p>
               <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold">
-                <span className="accent-pill">
-                  Melbourne-based
-                </span>
-                <span className="accent-pill">
-                  Remote with US teams
-                </span>
-                <span className="accent-pill">
-                  Principal Engineer scope
-                </span>
+                <span className="accent-pill">Melbourne-based</span>
+                <span className="accent-pill">Remote with US teams</span>
+                <span className="accent-pill">Staff / Principal IC</span>
               </div>
             </div>
-
             <div className="surface-card-strong rounded-2xl p-6">
               <h2 className="font-display text-2xl text-ink">Contact</h2>
               <ul className="mt-4 space-y-2 text-sm text-muted">

@@ -68,7 +68,7 @@ export default function Music() {
       </Head>
       <SimpleLayout
         title="My Music"
-        intro="I compose electronic music as a creative outlet. Every year I release a small set of tracks to satisfy a part of my brain that only music can reach."
+        intro="I compose electronic music as a creative outlet and a way to keep the maker side of my brain active. Every year I release a small set of tracks that reflect a different creative mood."
       >
         <SoundCloudLink />
         <div className="mt-10 space-y-16">

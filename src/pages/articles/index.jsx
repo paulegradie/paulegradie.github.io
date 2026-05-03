@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
@@ -6,33 +7,70 @@ import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
 
 export default function ArticlesIndex({ articles }) {
+  const featuredArticles = [
+    {
+      slug: 'we-need-to-start-talking-to-aI-like-it-thinks',
+      title: 'We Need to Start Talking to AI Like It Thinks',
+    },
+    {
+      slug: 'proxy-code-formerly-known-as-vibe-coding',
+      title: 'Proxy Coding (formerly known as "Vibe Coding")',
+    },
+    {
+      slug: 'guild-driven-development',
+      title: 'Guild Driven Development: The Review Guild Model for AI-enabled development',
+    },
+    {
+      slug: 'the-glass-wall-in-global-tech-pay',
+      title: 'The Glass Wall in Global Tech Pay',
+    },
+  ]
+
   return (
     <>
       <Head>
         <title>Articles - Paul Gradie</title>
         <meta
           name="description"
-          content="My voice on building software, artificial intelligence, life, and much more."
+          content="Writing on software, AI-enabled engineering, product systems, and technical leadership."
         />
       </Head>
       <SimpleLayout
-        title="My thoughts on things"
+        title="My writing on software, AI, and product systems"
         subtitle=""
-        intro="Software, artificial intelligence, personal experiences, and more."
+        intro="Thoughts on building systems, engineering teams, AI-native workflows, and durable product practice."
       >
-        <div className="md:border-l md:border-[color:var(--line)] md:pl-8 md:dark:border-slate-600/70">
-          <div className="flex max-w-3xl flex-col space-y-14">
-            {groupByYear(articles).map((group, i) => {
-              const year = group[0].date.split('-')[0]
-              return (
-                <div key={`${year}-${i}`}>
-                  <Divider year={year} />
-                  {group.map((article) => (
-                    <Article key={article.slug} article={article} />
-                  ))}
-                </div>
-              )
-            })}
+        <div className="space-y-8">
+          <section className="glass-panel rounded-3xl p-6">
+            <h2 className="font-display text-2xl text-ink">Start here</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              A few pieces that capture my current thinking about AI-enabled engineering, review workflows,
+              and the social systems that make software work.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm">
+              {featuredArticles.map((article) => (
+                <li key={article.slug}>
+                  <Link href={`/articles/${article.slug}`} className="theme-link font-semibold">
+                    {article.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <div className="md:border-l md:border-[color:var(--line)] md:pl-8 md:dark:border-slate-600/70">
+            <div className="flex max-w-3xl flex-col space-y-14">
+              {groupByYear(articles).map((group, i) => {
+                const year = group[0].date.split('-')[0]
+                return (
+                  <div key={`${year}-${i}`}>
+                    <Divider year={year} />
+                    {group.map((article) => (
+                      <Article key={article.slug} article={article} />
+                    ))}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </SimpleLayout>

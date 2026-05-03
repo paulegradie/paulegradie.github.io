@@ -32,14 +32,28 @@ export default function Uses() {
         <title>Uses - Paul Gradie</title>
         <meta
           name="description"
-          content="Software I use, gadgets I love, and other things I recommend."
+          content="Tools, workflows, and AI-enabled engineering habits I use to build reliable software and practical products."
         />
       </Head>
       <SimpleLayout
-        title="Software I use, gadgets I love, and other things I recommend."
-        intro="I get asked a lot about the tools I use to build software and stay productive. Here is the current list."
+        title="Tools, workflows, and engineering habits"
+        intro="I get asked a lot about the tools and workflows I use. This page is a snapshot of my workstation, development stack, and how I think about AI-enabled engineering."
       >
         <div className="space-y-20">
+          <ToolsSection title="AI and workflows">
+            <Tool title="Prompt libraries and context documents">
+              I keep structured prompt and context documents that help agents work with consistent
+              intent, reduce setup overhead, and preserve useful engineering context.
+            </Tool>
+            <Tool title="Review guilds and handoff discipline">
+              I treat AI as part of the workflow rather than the output. Clear handoffs, review
+              guidelines, and human verification keep work reliable.
+            </Tool>
+            <Tool title="Codebase legibility and observability">
+              Work is easier to maintain when software, docs, and automation are designed for both
+              humans and AI-assisted review practices.
+            </Tool>
+          </ToolsSection>
           <ToolsSection title="Workstation">
             <Tool title="16-inch MacBook Pro, M1 Max, 64GB RAM (2021)">
               I was using an Intel-based 16-inch MacBook Pro prior to this and the difference is

@@ -1,0 +1,142 @@
+{
+  "generated_on": "2026-05-03",
+  "site": "https://paulgradie.com",
+  "repo": "https://github.com/paulegradie/paulegradie.github.io",
+  "top_level_routes": [
+    "/",
+    "/about/",
+    "/articles/",
+    "/projects/",
+    "/resume/",
+    "/music/",
+    "/recruiters/",
+    "/Sailfish/"
+  ],
+  "source_routes_to_inspect": [
+    "/uses/",
+    "/thank-you/"
+  ],
+  "articles": [
+    {
+      "year": 2026,
+      "title": "We Need to Start Talking to AI Like It Thinks",
+      "route": "/articles/2026/we-need-to-start-talking-to-aI-like-it-thinks/"
+    },
+    {
+      "year": 2026,
+      "title": "The Glass Wall in Global Tech Pay",
+      "route": "/articles/2026/the-glass-wall-in-global-tech-pay/"
+    },
+    {
+      "year": 2026,
+      "title": "Proxy Coding (formerly known as \"Vibe Coding\")",
+      "route": "/articles/2026/proxy-code-formerly-known-as-vibe-coding/"
+    },
+    {
+      "year": 2026,
+      "title": "Guild Driven Development: The Review Guild Model for AI enabled development",
+      "route": "/articles/2026/guild-driven-development/"
+    },
+    {
+      "year": 2025,
+      "title": "Seamless AI Agent Thread Transitions: A Debugging Success Story",
+      "route": "/articles/2025/ai-agent-thread-transitions/"
+    },
+    {
+      "year": 2024,
+      "title": "Building Work Relationships",
+      "route": "/articles/2024/building-relationships/"
+    },
+    {
+      "year": 2023,
+      "title": "Iterative Planning",
+      "route": "/articles/2023/iterative-planning/"
+    },
+    {
+      "year": 2023,
+      "title": "Need-Driven Conversations",
+      "route": "/articles/2023/need-driven-conversations/"
+    },
+    {
+      "year": 2023,
+      "title": "Incremental Changes",
+      "route": "/articles/2023/incremental-changes/"
+    },
+    {
+      "year": 2023,
+      "title": "AI-first API design",
+      "route": "/articles/2023/ai-first-api-design/"
+    },
+    {
+      "year": 2023,
+      "title": "The Parallels Between Biological Evolution and Software Development",
+      "route": "/articles/2023/the-parallels-between-biology-and-software/"
+    },
+    {
+      "year": 2023,
+      "title": "Crafting Friendly yet Effective Pull Requests",
+      "route": "/articles/2023/friendly-yet-effective-prs/"
+    },
+    {
+      "year": 2023,
+      "title": "How did matter scatter across the universe?",
+      "route": "/articles/2023/how-did-matter-scatter/"
+    },
+    {
+      "year": 2023,
+      "title": "A Future with Artifical Intelligence",
+      "route": "/articles/2023/a-future-with-artificial-intelligence/"
+    },
+    {
+      "year": 2023,
+      "title": "Why are descriptive statistics of a distribution called \"moments\"?",
+      "route": "/articles/2023/moments-of-a-distribution/"
+    },
+    {
+      "year": 2023,
+      "title": "Syntax behind sorted(key=lambda: ...)",
+      "route": "/articles/2023/Syntax-behind-python-sorted/"
+    },
+    {
+      "year": 2023,
+      "title": "Error building mdx page with NextJS in github actions",
+      "route": "/articles/2023/deploying-nextjs-to-github-pages/"
+    },
+    {
+      "year": 2023,
+      "title": "Name, PhD - or is that too much?",
+      "route": "/articles/2023/name-phd-or-is-that-too-much/"
+    },
+    {
+      "year": 2022,
+      "title": "Generic Abstractions in ASP.NET core using MediatR",
+      "route": "/articles/2022/generic-endpoint-abstractions/"
+    },
+    {
+      "year": 2022,
+      "title": "Iterations on the Palavyr API - Part 3",
+      "route": "/articles/2022/iterations-of-the-palavyr-api-part-3/"
+    },
+    {
+      "year": 2022,
+      "title": "Iterations on the Palavyr API - Part 2",
+      "route": "/articles/2022/iterations-of-the-palavyr-api-part-2/"
+    },
+    {
+      "year": 2022,
+      "title": "Iterations on the Palavyr API - Part 1",
+      "route": "/articles/2022/iterations-of-the-palavyr-api-part-1/"
+    },
+    {
+      "year": 2022,
+      "title": "To use Autowired properties or not - that is the question",
+      "route": "/articles/2022/using-autowired-properties/"
+    }
+  ],
+  "stale_or_broken_to_check": [
+    "/articles/2026/closing-the-adoption-gap-vibe-coding/",
+    "src/pages/articles/2023/.career-story-1"
+  ],
+  "packet_version": "v2",
+  "positioning_correction": "Do not position Paul primarily as an AI model builder; lead with research-trained software/platform/product engineering with applied-AI fluency."
+}

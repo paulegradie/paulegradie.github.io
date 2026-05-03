@@ -13,7 +13,8 @@ import queryStudio from '@/images/logos/qwerkystudio-logo.png'
 const projects = [
   {
     name: 'Launch11',
-    description: 'A studio for focused AI products and productized experiments.',
+    category: 'Active products and experiments',
+    description: 'A studio for practical product experiments and AI-enabled workflow exploration.',
     link: { href: 'https://launch11.com', label: 'Launch11' },
     logo: launch11,
     className: 'w-64 rounded-lg m-2',
@@ -21,6 +22,7 @@ const projects = [
   },
   {
     name: 'Renaym',
+    category: 'Active products and experiments',
     description: 'A utility for renaming media libraries with less manual cleanup.',
     link: { href: 'https://renaym.launch11.com', label: 'Renaym' },
     logo: renaym,
@@ -29,6 +31,7 @@ const projects = [
   },
   {
     name: 'Siftr',
+    category: 'Active products and experiments',
     description: 'A focused tool for reducing inbox noise and regaining control of email.',
     link: { href: 'https://siftr.launch11.com', label: 'Siftr' },
     logo: siftr,
@@ -37,7 +40,8 @@ const projects = [
   },
   {
     name: 'Qwerky Studio',
-    description: 'A creative tool for generating and managing artwork with modern image models.',
+    category: 'Active products and experiments',
+    description: 'A creative experiment in image workflows and product design.',
     link: { href: 'https://github.com/QwerkyDesigns/studio-portal', label: 'Qwerky Studio' },
     logo: queryStudio,
     className: 'w-16 rounded-lg m-2',
@@ -45,7 +49,8 @@ const projects = [
   },
   {
     name: 'Sailfish',
-    description: 'A .NET performance test runner designed to be approachable, repeatable, and useful.',
+    category: 'Open source / engineering proof-of-work',
+    description: 'A .NET performance and testing infrastructure built for repeatable, practical developer workflows.',
     link: { href: 'https://paulgradie.com/Sailfish', label: 'Sailfish' },
     logo: sailfishBanner,
     className: 'w-64 rounded-lg m-2',
@@ -53,8 +58,8 @@ const projects = [
   },
   {
     name: 'Palavyr',
-    description:
-      'An open-source full stack app for chatbot-driven information capture and estimate workflows.',
+    category: 'Open source / engineering proof-of-work',
+    description: 'An open-source full stack app for chatbot-driven information capture and estimate workflows.',
     link: { href: 'https://github.com/Palavyr/Palavyr', label: 'Palavyr' },
     logo: palavyrLogo,
     className: 'w-16 rounded-lg m-2',
@@ -62,11 +67,25 @@ const projects = [
   },
   {
     name: 'SeqPyPlot',
+    category: 'Open source / engineering proof-of-work',
     description: 'A package for descriptive analysis of replicate-free RNA-seq time series data.',
     link: { href: 'https://github.com/paulegradie/SeqPyPlot', label: 'SeqPyPlot' },
     logo: seqpyplot,
     className: 'w-32 rounded-lg m-2',
     accentColor: 'teal',
+  },
+]
+
+const projectGroups = [
+  {
+    title: 'Products and experiments',
+    description: 'Current product work and practical experiments that explore productization, AI-enabled workflows, and developer experience.',
+    items: projects.filter((project) => project.category === 'Active products and experiments'),
+  },
+  {
+    title: 'Open source and engineering proof-of-work',
+    description: 'Reusable systems and developer-facing tooling that reflect production discipline, observability, and performance.',
+    items: projects.filter((project) => project.category === 'Open source / engineering proof-of-work'),
   },
 ]
 
@@ -100,30 +119,40 @@ export default function Projects() {
         <meta name="description" content="Projects and side hustles" />
       </Head>
       <SimpleLayout
-        title="Projects and Side Hustles"
-        intro="Outside work, I build products, experiments, and open-source tools. Some are playful, some are practical, and all of them teach me something useful."
+        title="Products, experiments, and proof-of-work."
+        intro="Outside my formal roles, I build tools and experiments that let me explore product ideas, AI-enabled workflows, developer experience, and research-shaped software. Some are active products. Some are open-source proof-of-work. All of them sharpen how I think about building."
       >
-        <ul role="list" className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Card as="li" key={project.name} className="group">
-              <div
-                className={`surface-card relative z-10 flex items-center justify-center rounded-2xl bg-gradient-to-br p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg ${getProjectAccentClasses(project.accentColor)}`}
-              >
-                {project.logo && (
-                  <Image src={project.logo} alt="no logo for this project" className={project.className} unoptimized />
-                )}
+        <div className="space-y-16">
+          {projectGroups.map((group) => (
+            <section key={group.title} className="space-y-6">
+              <div className="glass-panel-strong rounded-3xl p-6">
+                <h2 className="font-display text-2xl text-ink">{group.title}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{group.description}</p>
               </div>
-              <h2 className="mt-6 text-base font-semibold text-ink dark:text-slate-100">
-                <Card.Link href={project.link.href}>{project.name}</Card.Link>
-              </h2>
-              <Card.Description>{project.description}</Card.Description>
-              <p className="relative z-10 mt-6 flex text-sm font-semibold text-[color:var(--brand-b)] transition-colors duration-200 group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-300">
-                <LinkIcon className="h-5 w-5 flex-none transition-transform duration-200 group-hover:scale-110" />
-                <span className="ml-2">{project.link.label}</span>
-              </p>
-            </Card>
+              <ul role="list" className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                {group.items.map((project) => (
+                  <Card as="li" key={project.name} className="group">
+                    <div
+                      className={`surface-card relative z-10 flex items-center justify-center rounded-2xl bg-gradient-to-br p-3 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg ${getProjectAccentClasses(project.accentColor)}`}
+                    >
+                      {project.logo && (
+                        <Image src={project.logo} alt="no logo for this project" className={project.className} unoptimized />
+                      )}
+                    </div>
+                    <h2 className="mt-6 text-base font-semibold text-ink dark:text-slate-100">
+                      <Card.Link href={project.link.href}>{project.name}</Card.Link>
+                    </h2>
+                    <Card.Description>{project.description}</Card.Description>
+                    <p className="relative z-10 mt-6 flex text-sm font-semibold text-[color:var(--brand-b)] transition-colors duration-200 group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-300">
+                      <LinkIcon className="h-5 w-5 flex-none transition-transform duration-200 group-hover:scale-110" />
+                      <span className="ml-2">{project.link.label}</span>
+                    </p>
+                  </Card>
+                ))}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       </SimpleLayout>
     </>
   )

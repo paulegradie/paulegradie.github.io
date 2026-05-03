@@ -12,7 +12,7 @@ export default function About() {
         <title>About - Paul Gradie</title>
         <meta
           name="description"
-          content="I am Paul Gradie. I live in Melbourne, where I build software and teams that perform at a high level."
+          content="I am Paul Gradie, a Melbourne-based research-trained software engineer, platform leader, and product builder who blends scientific reasoning with production discipline."
         />
       </Head>
       <Container className="mt-20 sm:mt-28">
@@ -44,37 +44,39 @@ export default function About() {
           <div className="reveal-up reveal-delay-1 lg:order-1">
             <span className="section-chip">About Paul</span>
             <h1 className="font-display mt-5 text-5xl leading-tight text-ink sm:text-6xl">
-              Scientist mindset, product engineer execution.
+              Research depth, production discipline, product instinct.
             </h1>
             <div className="mt-7 space-y-5 text-base leading-relaxed text-muted sm:text-lg">
               <p>
-                I work mostly in the .NET ecosystem and help companies improve critical software
-                through iterative delivery, architecture refinement, and pragmatic technical
-                leadership.
+                I work across .NET, cloud, platform, and product systems, helping teams
+                improve critical software through architecture refinement, operational maturity,
+                and pragmatic delivery.
               </p>
               <p>
-                Before software, I worked in biology and completed a PhD in developmental genetics
-                at the University of Melbourne. I was published in Nature: Comms Bio, and that research
-                background sharpened how I reason about uncertainty, evidence, and long-term system
-                change.
+                My career began in biology. I completed a PhD in developmental genetics at the
+                University of Melbourne, where I learned to reason carefully about uncertainty,
+                evidence, complex systems, and long-term behavior.
               </p>
               <p>
-                My AI background is deeper than application-layer integration. I have worked on
-                foundational model development, evaluation, and the engineering required to take
-                model-driven systems into production.
+                I moved into software through data science and applied AI at Zendesk, working at
+                the boundary between models, product workflows, and production engineering. That
+                experience shaped my interest in turning research ideas into reliable systems
+                people can actually use.
               </p>
               <p>
-                I care deeply about team performance. Strong teams are built through trust, clear
-                expectations, and a culture where people can challenge each other without creating
-                burnout.
+                At Octopus Deploy, I worked on developer experience, performance tooling, and
+                product delivery for serious engineering teams. Today at Tilt Finance, I lead
+                platform-oriented work across modernization, delivery discipline, system reliability,
+                and high-leverage architecture.
               </p>
               <p>
-                I am collaborative, but I keep a high bar. I invest heavily in improving my own
-                craft and value the same seriousness from the teams I work with.
+                Outside formal roles, I build practical products through Launch11, write about
+                AI-native engineering and technical leadership, and use writing as a way to clarify
+                complex ideas.
               </p>
               <p>
-                If that sounds like your environment, reach out. I am always open to meaningful
-                conversations.
+                Strong teams are built through trust, clear expectations, technical honesty, and
+                the ability to disagree productively. If that sounds like your environment, reach out.
               </p>
             </div>
           </div>

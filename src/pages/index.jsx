@@ -13,9 +13,22 @@ import { Button } from '@/components/Button'
 const RESUME_URL = 'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
 
 const focusAreas = [
-  'Applied AI systems and product delivery',
-  'Principal-level platform architecture',
-  'Cross-time-zone technical leadership',
+  {
+    title: 'Platform architecture',
+    description: 'Designing resilient platform systems, migration discipline, and delivery-ready engineering for complex teams.',
+  },
+  {
+    title: 'Product engineering',
+    description: 'Turning ambiguity into useful software through clear plans, incremental delivery, and operational realism.',
+  },
+  {
+    title: 'Applied AI workflows',
+    description: 'Using AI fluency as a capability layer to make engineering, review, and product work more productive.',
+  },
+  {
+    title: 'Founder-led experiments',
+    description: 'Building practical products and productized experiments that sharpen my judgment and engineering craft.',
+  },
 ]
 
 const journey = [
@@ -92,15 +105,22 @@ export default function Home({ articles }) {
           <div className="reveal-up">
             <div className="section-chip">Melbourne-based, building for global teams</div>
             <h1 className="font-display mt-5 text-5xl leading-[0.95] text-ink sm:text-6xl lg:text-7xl">
-              I turn complex ideas into
-              <span className="text-gradient-brand block">high-impact software</span>
+              I build software where research,{' '}
+              <span className="text-gradient-brand block">product, and production meet.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-              I am Paul Gradie, a software engineer, founder, and inventor with a PhD background.
-              I help teams move from research to production by building foundational AI models,
-              applied AI systems, and resilient software that keeps delivering under real-world
-              pressure.
+              I’m Paul Gradie — a scientist-trained staff software engineer, platform leader,
+              founder, and AI-fluent product builder. I help teams move from ambiguity to
+              production systems that are testable, observable, maintainable, and useful.
             </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              {focusAreas.map((item) => (
+                <div key={item.title} className="glass-panel rounded-3xl p-5">
+                  <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>
+                </div>
+              ))}
+            </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button href="/projects" className="rounded-2xl px-5 py-3">
                 Explore Projects

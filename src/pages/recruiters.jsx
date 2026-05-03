@@ -114,8 +114,8 @@ function RecruiterContent() {
         </div>
         <h2 className="text-3xl font-bold text-ink dark:text-slate-100">Welcome, Recruiter</h2>
         <p className="mx-auto mt-3 max-w-3xl text-lg text-muted dark:text-slate-300">
-          I am open to Staff Engineer, Team Lead, or managerial roles with companies that value
-          product velocity, deep AI capability, and practical leadership.
+          I am open to Staff Engineer, Team Lead, or senior technical roles with companies that value
+          platform architecture, product engineering, applied AI workflows, and practical leadership.
         </p>
       </div>
 
@@ -135,12 +135,12 @@ function RecruiterContent() {
         <div className="glass-panel rounded-2xl p-6">
           <div className="mb-4 flex items-center">
             <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
-            <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Compensation</h3>
+            <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Preferred scope</h3>
           </div>
-          <p className="text-lg font-semibold text-ink dark:text-slate-100">$250,000 AUD base salary target (before super)</p>
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">Staff / Principal engineering roles</p>
           <p className="mt-2 text-muted dark:text-slate-300">
-            Looking for staff-level scope, with equity participation or generous bonus
-            on top of base salary.
+            Most interested in roles that combine platform architecture, product engineering,
+            AI-native workflows, and high-trust technical leadership.
           </p>
         </div>
       </div>
@@ -155,7 +155,7 @@ function RecruiterContent() {
             <ul className="space-y-2 text-muted dark:text-slate-300">
               <li>- Published in Nature: Comms Bio</li>
               <li>- AI/ML patent holder</li>
-              <li>- Foundational AI model development experience</li>
+              <li>- Applied AI systems and production workflow experience</li>
               <li>- Model evaluation and productionization expertise</li>
               <li>- PhD plus production engineering depth</li>
             </ul>

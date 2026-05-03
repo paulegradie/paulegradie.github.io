@@ -1,0 +1,226 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - heading "Global take-home comparison lab" [level=1] [ref=e4]
+    - paragraph [ref=e5]: Compare retained income across Australia, multiple U.S. states, Ontario, India, the Philippines, Hong Kong, and New Zealand using a chosen base region. Version 8 anchors the salary slider, bonus, deductions, and property assumptions in one selected currency, then localizes them by salary lens so the comparison stays coherent as you switch between nominal, FX, and purchasing-power views.
+    - generic [ref=e6]:
+      - generic [ref=e7]: "Nominal: same numeric salary in each local currency"
+      - generic [ref=e8]: "FX: same market-value salary across regions"
+      - generic [ref=e9]: "PPP: same purchasing-power salary across regions"
+  - generic [ref=e10]:
+    - complementary [ref=e11]:
+      - generic [ref=e12]:
+        - heading "Controls" [level=2] [ref=e13]
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic [ref=e16]: Comparison lens
+            - combobox "Comparison lens" [ref=e17]:
+              - option "Nominal local salary" [selected]
+              - option "FX-normalized compensation"
+              - option "Real purchasing power"
+          - generic [ref=e18]:
+            - generic [ref=e19]: Base region / input currency
+            - combobox "Base region / input currency" [ref=e20]:
+              - option "Australia (AUD)" [selected]
+              - option "Arizona, U.S. (USD)"
+              - option "California, U.S. (USD)"
+              - option "Georgia, U.S. (USD)"
+              - option "New York State, U.S. (USD)"
+              - option "Minnesota, U.S. (USD)"
+              - option "Ontario, Canada (CAD)"
+              - option "Mumbai, India (INR)"
+              - option "Philippines (PHP)"
+              - option "Hong Kong (HKD)"
+              - option "New Zealand (NZD)"
+        - generic [ref=e21]:
+          - generic [ref=e22]: Reference salary in the base region
+          - slider "Reference salary in the base region" [ref=e23]: "260000"
+          - generic [ref=e24]:
+            - generic [ref=e25]: A$0
+            - generic [ref=e26]: "Cap: A$350,000"
+        - generic [ref=e27]:
+          - generic [ref=e28]: Reference salary amount
+          - spinbutton "Reference salary amount" [ref=e29]: "260000"
+        - generic [ref=e30]:
+          - strong [ref=e31]: A$260,000
+          - paragraph [ref=e32]: Same numeric salary in each jurisdiction. Inputs are anchored in Australia.
+        - paragraph [ref=e33]: Nominal mode keeps the same numeric salary and base-entered assumptions in every jurisdiction's own currency, then translates the resulting take-home back into AUD so the ranking stays comparable.
+        - paragraph [ref=e34]: "The slider, bonus, deductions, and rental property amounts are entered in Australia (AUD). The current ceiling is the FX translation of A$350,000: A$350,000."
+      - generic [ref=e35]:
+        - heading "Scenario assumptions" [level=2] [ref=e36]
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - generic [ref=e39]: Annual bonus
+            - spinbutton "Annual bonus" [ref=e40]: "0"
+          - generic [ref=e41]:
+            - generic [ref=e42]: Other deductions
+            - spinbutton "Other deductions" [ref=e43]: "0"
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]: Work-from-home deduction
+            - spinbutton "Work-from-home deduction" [ref=e47]: "0"
+          - generic [ref=e48]:
+            - generic [ref=e49]: Australia MLS override
+            - combobox "Australia MLS override" [ref=e50]:
+              - option "0.00%" [selected]
+              - option "1.00%"
+              - option "1.25%"
+              - option "1.50%"
+        - group [ref=e51]:
+          - generic "Rental properties" [ref=e52] [cursor=pointer]
+          - generic [ref=e53]:
+            - generic [ref=e54]: All property amounts are entered in AUD.
+            - button "Add rental property" [ref=e55] [cursor=pointer]
+          - generic [ref=e56]: No rental properties yet. Add one to model geared or cash-flow-positive investments.
+        - group [ref=e57]:
+          - generic "U.S. simplification toggles" [ref=e58] [cursor=pointer]
+          - option "Use 2026 standard deduction" [selected]
+          - option "Do not apply it"
+          - option "Yes, apples-to-apples" [selected]
+          - option "No, conservative mode"
+        - paragraph [ref=e59]: All money inputs here are base-region amounts in AUD. Weeks rented and interest rates stay literal, while currency amounts localize per mode when each jurisdiction is modeled.
+    - main [ref=e60]:
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]: Base salary on this lens
+          - generic [ref=e65]: A$260,000
+          - generic [ref=e66]: "Same numeric salary in each jurisdiction. Ceiling: A$350,000."
+        - generic [ref=e67]:
+          - generic [ref=e68]: Best compared take-home
+          - generic [ref=e69]: Arizona, U.S.
+          - generic [ref=e70]: A$258,331 in AUD equivalent.
+        - generic [ref=e71]:
+          - generic [ref=e72]: Base region rank
+          - generic [ref=e73]: "#6 of 11"
+          - generic [ref=e74]: A$86,669 behind Arizona, U.S..
+        - generic [ref=e75]:
+          - generic [ref=e76]: Spread top to bottom
+          - generic [ref=e77]: A$254,070
+          - generic [ref=e78]: Arizona, U.S. to Mumbai, India.
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - button "Base gross reference" [ref=e81] [cursor=pointer]: Base gross reference
+          - button "Australia" [ref=e83] [cursor=pointer]: Australia
+          - button "Arizona, U.S." [ref=e85] [cursor=pointer]: Arizona, U.S.
+          - button "California, U.S." [ref=e87] [cursor=pointer]: California, U.S.
+          - button "Georgia, U.S." [ref=e89] [cursor=pointer]: Georgia, U.S.
+          - button "New York State, U.S." [ref=e91] [cursor=pointer]: New York State, U.S.
+          - button "Minnesota, U.S." [ref=e93] [cursor=pointer]: Minnesota, U.S.
+          - button "Ontario, Canada" [ref=e95] [cursor=pointer]: Ontario, Canada
+          - button "Mumbai, India" [ref=e97] [cursor=pointer]: Mumbai, India
+          - button "Philippines" [ref=e99] [cursor=pointer]: Philippines
+          - button "Hong Kong" [ref=e101] [cursor=pointer]: Hong Kong
+          - button "New Zealand" [ref=e103] [cursor=pointer]: New Zealand
+        - img "Take-home comparison chart" [ref=e106]:
+          - generic [ref=e107]: "0"
+          - generic [ref=e108]: A$83.3K
+          - generic [ref=e109]: A$166.7K
+          - generic [ref=e110]: A$250K
+          - generic [ref=e111]: A$333.3K
+          - generic [ref=e112]: A$416.7K
+          - generic [ref=e113]: A$500K
+          - generic [ref=e114]: "0"
+          - generic [ref=e115]: A$58.3K
+          - generic [ref=e116]: A$116.7K
+          - generic [ref=e117]: A$175K
+          - generic [ref=e118]: A$233.3K
+          - generic [ref=e119]: A$291.7K
+          - generic [ref=e120]: A$350K
+          - generic [ref=e121]: Reference salary in AUD
+          - generic [ref=e122]: (AUD eq.)
+          - generic [ref=e124]: A$260K
+        - generic [ref=e159]: Arizona, U.S. currently leads at A$260,000 on the nominal local-salary lens. Australia sits 6th out of 11. The spread between the strongest and weakest compared take-home outcomes is A$254,070. Arizona, U.S. takes home effectively A$86,669 more than the baseline, Australia.
+      - generic [ref=e160]:
+        - heading "Ranking at the selected salary" [level=2] [ref=e161]
+        - table [ref=e163]:
+          - rowgroup [ref=e164]:
+            - row "# Jurisdiction Implied local salary Estimated local take-home Compared take-home (AUD eq.) Effective tax rate" [ref=e165]:
+              - columnheader "#" [ref=e166]
+              - columnheader "Jurisdiction" [ref=e167]
+              - columnheader "Implied local salary" [ref=e168]
+              - columnheader "Estimated local take-home" [ref=e169]
+              - columnheader "Compared take-home (AUD eq.)" [ref=e170]
+              - columnheader "Effective tax rate" [ref=e171]
+          - rowgroup [ref=e172]:
+            - row "1 Arizona, U.S. $260,000 $182,640 A$258,331 29.8%" [ref=e173]:
+              - cell "1" [ref=e174]
+              - cell "Arizona, U.S." [ref=e175]: Arizona, U.S.
+              - cell "$260,000" [ref=e177]
+              - cell "$182,640" [ref=e178]
+              - cell "A$258,331" [ref=e179]
+              - cell "29.8%" [ref=e180]
+            - row "2 Georgia, U.S. $260,000 $176,166 A$249,174 32.2%" [ref=e181]:
+              - cell "2" [ref=e182]
+              - cell "Georgia, U.S." [ref=e183]: Georgia, U.S.
+              - cell "$260,000" [ref=e185]
+              - cell "$176,166" [ref=e186]
+              - cell "A$249,174" [ref=e187]
+              - cell "32.2%" [ref=e188]
+            - row "3 New York State, U.S. $260,000 $171,039 A$241,922 34.2%" [ref=e189]:
+              - cell "3" [ref=e190]
+              - cell "New York State, U.S." [ref=e191]: New York State, U.S.
+              - cell "$260,000" [ref=e193]
+              - cell "$171,039" [ref=e194]
+              - cell "A$241,922" [ref=e195]
+              - cell "34.2%" [ref=e196]
+            - row "4 Minnesota, U.S. $260,000 $168,947 A$238,964 35.0%" [ref=e197]:
+              - cell "4" [ref=e198]
+              - cell "Minnesota, U.S." [ref=e199]: Minnesota, U.S.
+              - cell "$260,000" [ref=e201]
+              - cell "$168,947" [ref=e202]
+              - cell "A$238,964" [ref=e203]
+              - cell "35.0%" [ref=e204]
+            - row "5 California, U.S. $260,000 $168,418 A$238,215 35.2%" [ref=e205]:
+              - cell "5" [ref=e206]
+              - cell "California, U.S." [ref=e207]: California, U.S.
+              - cell "$260,000" [ref=e209]
+              - cell "$168,418" [ref=e210]
+              - cell "A$238,215" [ref=e211]
+              - cell "35.2%" [ref=e212]
+            - row "6 Australia A$260,000 A$171,662 A$171,662 34.0%" [ref=e213]:
+              - cell "6" [ref=e214]
+              - cell "Australia" [ref=e215]: Australia
+              - cell "A$260,000" [ref=e217]
+              - cell "A$171,662" [ref=e218]
+              - cell "A$171,662" [ref=e219]
+              - cell "34.0%" [ref=e220]
+            - row "7 Ontario, Canada CA$260,000 CA$167,565 A$170,646 35.6%" [ref=e221]:
+              - cell "7" [ref=e222]
+              - cell "Ontario, Canada" [ref=e223]: Ontario, Canada
+              - cell "CA$260,000" [ref=e225]
+              - cell "CA$167,565" [ref=e226]
+              - cell "A$170,646" [ref=e227]
+              - cell "35.6%" [ref=e228]
+            - row "8 New Zealand NZ$260,000 NZ$179,523 A$151,083 31.0%" [ref=e229]:
+              - cell "8" [ref=e230]
+              - cell "New Zealand" [ref=e231]: New Zealand
+              - cell "NZ$260,000" [ref=e233]
+              - cell "NZ$179,523" [ref=e234]
+              - cell "A$151,083" [ref=e235]
+              - cell "31.0%" [ref=e236]
+            - row "9 Hong Kong HK$260,000 HK$253,200 A$45,841 2.6%" [ref=e237]:
+              - cell "9" [ref=e238]
+              - cell "Hong Kong" [ref=e239]: Hong Kong
+              - cell "HK$260,000" [ref=e241]
+              - cell "HK$253,200" [ref=e242]
+              - cell "A$45,841" [ref=e243]
+              - cell "2.6%" [ref=e244]
+            - row "10 Philippines ₱260,000 ₱258,500 A$6,399 0.6%" [ref=e245]:
+              - cell "10" [ref=e246]
+              - cell "Philippines" [ref=e247]: Philippines
+              - cell "₱260,000" [ref=e249]
+              - cell "₱258,500" [ref=e250]
+              - cell "A$6,399" [ref=e251]
+              - cell "0.6%" [ref=e252]
+            - row "11 Mumbai, India ₹260,000 ₹257,500 A$4,261 1.0%" [ref=e253]:
+              - cell "11" [ref=e254]
+              - cell "Mumbai, India" [ref=e255]: Mumbai, India
+              - cell "₹260,000" [ref=e257]
+              - cell "₹257,500" [ref=e258]
+              - cell "A$4,261" [ref=e259]
+              - cell "1.0%" [ref=e260]
+      - generic [ref=e261]:
+        - heading "Method notes" [level=2] [ref=e262]
+        - paragraph [ref=e263]:
+          - text: FX mode uses approximate market exchange rates and PPP mode uses simplified purchasing-power or regional-price factors. Taxes remain explanatory approximations for a single filer or resident and still do not cover every credit, treaty, payroll cap edge case, or passive-loss rule.
+          - strong [ref=e264]: Version 8 also fixes the property cash-flow treatment
+          - text: so rental gains and losses affect both taxable income and net take-home instead of only altering the tax bill.
