@@ -11,7 +11,7 @@ import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
 
 const RESUME_URL =
-  'https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing'
+  'https://docs.google.com/document/d/1ZGeHJqQbX38He0TcC9hepM6w2rRRd-gM2HD4IrjfT3U/edit?usp=sharing'
 
 const focusAreas = [
   {
