@@ -177,12 +177,14 @@ td{font-size:.96rem}
     <p class="sub">
       This page focuses on the cross-region salary equivalence question: if two people doing the same work
       earn local headline salaries in different economies, how much actually lands in their bank accounts after
-      modeled tax, and how does that compare under nominal, FX, and purchasing-power lenses.
+      modeled tax, and how does that compare under nominal, FX, and purchasing-power lenses. For the question
+      “is A$200k in Melbourne locally like US$200k in Arizona?”, the purchasing-power lens is the closest read
+      on this page.
     </p>
     <div class="pillrow">
-      <div class="pill">Nominal: same numeric salary in each local currency</div>
+      <div class="pill">Nominal: same local headline number, not equivalence</div>
       <div class="pill">FX: same market-value salary across regions</div>
-      <div class="pill">PPP: same purchasing-power salary across regions</div>
+      <div class="pill">PPP: closest local-equivalence lens</div>
     </div>
     <div class="linkrow">
       <a class="nav-pill" href="./tax_takehome_australia_property.html">Open the Australia-only property page</a>
@@ -199,7 +201,7 @@ td{font-size:.96rem}
             <select id="mode">
               <option value="nominal">Nominal local salary</option>
               <option value="fx">FX-normalized compensation</option>
-              <option value="ppp">Real purchasing power</option>
+              <option value="ppp" selected>Real purchasing power</option>
             </select>
           </div>
           <div class="field">
@@ -526,17 +528,35 @@ function headerLabel(mode, baseRegion){
 }
 function modeExplainer(mode, baseRegion){
   if (mode === 'nominal') {
-    return `Nominal mode keeps the same numeric salary and base-entered assumptions in every jurisdiction's own currency, then translates the resulting take-home back into ${baseRegion.currency}.`;
+    return `Nominal mode keeps the same local headline salary number in every jurisdiction, then translates the resulting take-home back into ${baseRegion.currency}. This is useful for a same-number headline comparison, but it is not a local-equivalence claim.`;
   }
   if (mode === 'fx') {
-    return `FX mode converts salary, bonus, and deductions from ${baseRegion.label} into each local currency at market exchange rates, then translates take-home back into ${baseRegion.currency}.`;
+    return `FX mode converts salary, bonus, and deductions from ${baseRegion.label} into each local currency at market exchange rates, then translates take-home back into ${baseRegion.currency}. This is the border-crossing market-value view.`;
   }
-  return `PPP mode converts salary and deductions into equal purchasing-power terms, then restates take-home in ${baseRegion.label} real-income units.`;
+  return `PPP mode converts salary and deductions into equal purchasing-power terms, then restates take-home in ${baseRegion.label} real-income units. This is the closest answer on this page to “are these salaries locally equivalent?”`;
 }
 function salaryLabel(mode){
-  if (mode === 'nominal') return 'Same numeric salary in each jurisdiction.';
+  if (mode === 'nominal') return 'Same local headline number in each jurisdiction.';
   if (mode === 'fx') return 'Same market-value salary across jurisdictions.';
-  return 'Same purchasing-power salary across jurisdictions.';
+  return 'Same purchasing-power salary across jurisdictions. Closest local-equivalence lens.';
+}
+function lensName(mode){
+  if (mode === 'nominal') return 'same-local-headline-number';
+  if (mode === 'fx') return 'FX-equalized';
+  return 'PPP-equalized';
+}
+function premiumSentence(mode, best, baseRegion, baseComparisonRow){
+  const premium = best.normalizedNet - baseComparisonRow.normalizedNet;
+  if (best.id === baseRegion.id || Math.abs(premium) < 0.5) {
+    return `${baseRegion.label} is the current baseline and also leads, so the leader premium versus the baseline is ${fmtMoney(0, baseRegion.currency)}.`;
+  }
+  if (mode === 'nominal') {
+    return `${best.label} leaves ${fmtMoney(premium, baseRegion.currency)} more after-tax cash than the baseline when both regions use the same local headline salary number and the result is converted back to ${baseRegion.currency} at market FX. This is not a local-equivalence claim.`;
+  }
+  if (mode === 'fx') {
+    return `${best.label} takes home ${fmtMoney(premium, baseRegion.currency)} more than the baseline in market-value terms at this pay level.`;
+  }
+  return `${best.label} takes home ${fmtMoney(premium, baseRegion.currency)} more than the baseline after price-level adjustment. This is the closest local-equivalence read on this page.`;
 }
 function baseNote(baseRegion, maxSalary){
   return `The slider, bonus, and deductions are entered in ${baseRegion.label} (${baseRegion.currency}). The current ceiling is the FX translation of ${fmtMoney(AUD_COMPARISON_MAX, 'AUD')}: ${fmtMoney(maxSalary, baseRegion.currency)}.`;
@@ -747,7 +767,7 @@ function render(){
   $('spreadSub').textContent = best && worst ? `${best.label} to ${worst.label}.` : 'Visible regions will populate this spread.';
 
   $('chartCallout').textContent = best && worst
-    ? `${best.label} currently leads at ${fmtMoney(baseSalary, baseRegion.currency)} on the ${mode === 'nominal' ? 'nominal local-salary' : mode === 'fx' ? 'FX-equalized' : 'PPP-equalized'} lens. ${baseRegion.label} sits ${baseRow ? ord(baseIndex + 1) : 'outside the visible set'} out of ${ranked.length}. The spread between the strongest and weakest compared take-home outcomes is ${fmtMoney(best.normalizedNet - worst.normalizedNet, baseRegion.currency)}.\n${best.id === baseRegion.id ? `${baseRegion.label} is the current baseline and also leads, so the leader premium versus the baseline is ${fmtMoney(0, baseRegion.currency)}.` : `${best.label} takes home effectively ${fmtMoney(best.normalizedNet - baseComparisonRow.normalizedNet, baseRegion.currency)} more than the baseline, ${baseRegion.label}.`}`
+    ? `${best.label} currently leads at ${fmtMoney(baseSalary, baseRegion.currency)} on the ${lensName(mode)} lens. ${baseRegion.label} sits ${baseRow ? ord(baseIndex + 1) : 'outside the visible set'} out of ${ranked.length}. The spread between the strongest and weakest compared take-home outcomes is ${fmtMoney(best.normalizedNet - worst.normalizedNet, baseRegion.currency)}.\n${premiumSentence(mode, best, baseRegion, baseComparisonRow)}`
     : 'At least one visible jurisdiction is required for the chart summary.';
 
   $('rankingBody').innerHTML = ranked.map((row, index) => `
