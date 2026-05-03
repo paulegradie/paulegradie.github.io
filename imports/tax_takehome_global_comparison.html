@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Take-Home Comparison Lab</title>
+<style>
+:root{
+  --bg:#07101d;
+  --panel:#0d1729;
+  --text:#e6edf7;
+  --muted:#a8b8cf;
+  --border:rgba(148,163,184,.2);
+  --gross:#e5e7eb;
+  --au:#67e8f9;
+  --az:#c084fc;
+  --ca:#fb923c;
+  --ga:#86efac;
+  --ny:#fbbf24;
+  --mn:#60a5fa;
+  --on:#f472b6;
+  --in:#22c55e;
+  --ph:#a78bfa;
+  --hk:#f87171;
+  --nz:#2dd4bf;
+  --shadow:0 24px 48px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:24px;
+  min-height:100vh;
+  font:17px/1.55 "Segoe UI",Inter,system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(56,189,248,.12),transparent 30%),
+    radial-gradient(circle at top right,rgba(168,85,247,.08),transparent 24%),
+    linear-gradient(180deg,#050d18 0%,var(--bg) 100%);
+}
+.wrap{max-width:1560px;margin:0 auto;display:grid;gap:18px}
+.hero,.panel{
+  background:linear-gradient(180deg,rgba(13,23,41,.96),rgba(9,18,34,.98));
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.hero{padding:30px}
+.panel{padding:22px}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(2.2rem,3vw,3.4rem);line-height:1.03;margin-bottom:14px}
+h2{font-size:1.14rem;margin-bottom:14px}
+h3{font-size:1rem}
+.sub,.small,.foot{color:var(--muted)}
+.sub{max-width:1240px}
+.small,.foot{font-size:.97rem;line-height:1.64}
+.pillrow,.legend,.linkrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pill,.legend-item,.nav-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.8);
+  color:#e5eef9;
+  font-size:.94rem;
+}
+.nav-pill{text-decoration:none}
+.legend-item{cursor:pointer;user-select:none}
+.legend-item.off{opacity:.38}
+.legend-item:focus-visible,.nav-pill:focus-visible,.field input:focus-visible,.field select:focus-visible{
+  outline:2px solid rgba(103,232,249,.7);
+  outline-offset:2px;
+}
+.dot{width:11px;height:11px;border-radius:999px;display:inline-block}
+.grid{display:grid;grid-template-columns:440px 1fr;gap:18px}
+@media(max-width:1240px){.grid{grid-template-columns:1fr}}
+.stack{display:grid;gap:16px}
+.two,.cards{display:grid;gap:12px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.two,.cards{grid-template-columns:1fr}}
+.field label{display:block;color:var(--muted);font-size:.95rem;margin-bottom:7px}
+.field input,.field select{
+  width:100%;
+  min-height:48px;
+  padding:12px 13px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:rgba(15,23,42,.88);
+  color:var(--text);
+  font:inherit;
+}
+.field input[type=range]{min-height:auto;padding:0}
+.range-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:10px;
+  font-size:.92rem;
+  color:var(--muted);
+}
+.hint{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.56);
+}
+.hint strong{color:#f5fbff}
+details{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  background:rgba(11,20,36,.56);
+}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700}
+.card{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.62);
+}
+.eyebrow{color:var(--muted);font-size:.92rem;margin-bottom:8px}
+.value{font-size:clamp(1.5rem,2vw,2.2rem);font-weight:800;line-height:1.04}
+.mono{font-variant-numeric:tabular-nums}
+.chart-shell{
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  background:rgba(9,17,31,.52);
+}
+svg{width:100%;height:auto;display:block}
+.gridline{stroke:rgba(148,163,184,.12);stroke-width:1}
+.gridline.zero{stroke:rgba(148,163,184,.24)}
+.axis{stroke:rgba(148,163,184,.42);stroke-width:1.2}
+.tick,.label{fill:#b7c5d9;font-size:13px}
+.guide-line{stroke:rgba(248,250,252,.45);stroke-width:1.6;stroke-dasharray:7 8}
+.guide-chip{fill:rgba(5,16,25,.9);stroke:rgba(248,250,252,.35);stroke-width:1}
+.guide-text{fill:#f8fafc;font-size:12px;font-weight:700}
+.marker-ring{fill:rgba(5,16,25,.9);stroke-width:2.4}
+.marker-core{fill:#f8fafc}
+.callout{
+  margin-top:14px;
+  padding:15px 16px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:rgba(11,20,36,.56);
+  white-space:pre-line;
+}
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+table{width:100%;border-collapse:collapse;min-width:1020px}
+th,td{padding:12px 14px;border-bottom:1px solid rgba(148,163,184,.14);text-align:left}
+th{
+  font-size:.92rem;
+  color:#eef5ff;
+  background:rgba(8,14,26,.82);
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+td{font-size:.96rem}
+.rank{width:52px;color:var(--muted)}
+.foot strong{color:#f4fbff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Global take-home comparison lab</h1>
+    <p class="sub">
+      This page focuses on the cross-region salary equivalence question: if two people doing the same work
+      earn local headline salaries in different economies, how much actually lands in their bank accounts after
+      modeled tax, and how does that compare under nominal, FX, and purchasing-power lenses.
+    </p>
+    <div class="pillrow">
+      <div class="pill">Nominal: same numeric salary in each local currency</div>
+      <div class="pill">FX: same market-value salary across regions</div>
+      <div class="pill">PPP: same purchasing-power salary across regions</div>
+    </div>
+    <div class="linkrow">
+      <a class="nav-pill" href="./tax_takehome_australia_property.html">Open the Australia-only property page</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <aside class="stack">
+      <section class="panel">
+        <h2>Controls</h2>
+        <div class="two">
+          <div class="field">
+            <label for="mode">Comparison lens</label>
+            <select id="mode">
+              <option value="nominal">Nominal local salary</option>
+              <option value="fx">FX-normalized compensation</option>
+              <option value="ppp">Real purchasing power</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="baseRegion">Base region / input currency</label>
+            <select id="baseRegion"></select>
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="salarySlider">Reference salary in the base region</label>
+          <input id="salarySlider" type="range" min="0" max="350000" step="1000" value="260000">
+          <div class="range-meta">
+            <span id="sliderMinLabel"></span>
+            <span id="sliderMaxLabel"></span>
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="salaryBox">Reference salary amount</label>
+          <input id="salaryBox" type="number" min="0" max="350000" step="1000" value="260000">
+        </div>
+        <div class="hint">
+          <strong id="selectedSalaryDisplay"></strong>
+          <p class="small" id="selectedSalaryLabel" style="margin-top:8px"></p>
+        </div>
+        <p class="small" id="modeExplainer" style="margin-top:12px"></p>
+        <p class="small" id="baseExplainer" style="margin-top:8px"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Shared assumptions</h2>
+        <div class="two">
+          <div class="field">
+            <label for="bonus">Annual bonus / extra wage income</label>
+            <input id="bonus" type="number" min="0" step="1000" value="0">
+          </div>
+          <div class="field">
+            <label for="otherDeductions">Other deductions</label>
+            <input id="otherDeductions" type="number" min="0" step="1000" value="0">
+          </div>
+        </div>
+        <div class="two" style="margin-top:12px">
+          <div class="field">
+            <label for="wfh">Work-from-home deduction</label>
+            <input id="wfh" type="number" min="0" step="100" value="0">
+          </div>
+          <div class="field">
+            <label for="mlsRate">Australia MLS override</label>
+            <select id="mlsRate">
+              <option value="0">0.00%</option>
+              <option value="0.01">1.00%</option>
+              <option value="0.0125">1.25%</option>
+              <option value="0.015">1.50%</option>
+            </select>
+          </div>
+        </div>
+        <details open style="margin-top:14px">
+          <summary>U.S. simplification toggle</summary>
+          <div class="field" style="margin-top:12px">
+            <label for="usStandardDeduction">Federal standard deduction</label>
+            <select id="usStandardDeduction">
+              <option value="1">Use 2026 standard deduction</option>
+              <option value="0">Do not apply it</option>
+            </select>
+          </div>
+        </details>
+        <p class="small" id="assumptionsNote" style="margin-top:12px"></p>
+      </section>
+    </aside>
+
+    <main class="stack">
+      <section class="panel">
+        <div class="cards">
+          <div class="card">
+            <div class="eyebrow">Base salary on this lens</div>
+            <div class="value mono" id="statSalary"></div>
+            <div class="small" id="statSalarySub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Best compared take-home</div>
+            <div class="value mono" id="bestJurisdiction"></div>
+            <div class="small" id="bestJurisdictionSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Base region rank</div>
+            <div class="value mono" id="baseRank"></div>
+            <div class="small" id="baseRankSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Spread top to bottom</div>
+            <div class="value mono" id="spreadValue"></div>
+            <div class="small" id="spreadSub" style="margin-top:10px"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="legend" id="legend"></div>
+        <div class="chart-shell" style="margin-top:14px">
+          <svg id="chart" viewBox="0 0 1160 620" aria-label="Take-home comparison chart"></svg>
+        </div>
+        <div class="callout small" id="chartCallout"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Ranking at the selected salary</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="rank">#</th>
+                <th>Jurisdiction</th>
+                <th>Implied local salary</th>
+                <th>Estimated local take-home</th>
+                <th id="comparedHeader">Compared take-home</th>
+                <th>Effective tax rate</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Method notes</h2>
+        <p class="foot">
+          FX mode uses approximate market exchange rates and PPP mode uses simplified purchasing-power or
+          regional-price factors. This page is intentionally wage-focused and does <strong>not</strong> model rental
+          properties or country-specific property tax strategies. Taxes remain explanatory approximations for a single
+          filer or resident and do not cover every credit, treaty, payroll cap edge case, or local household-cost nuance.
+        </p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+const REGION_IDS = ['au','az','ca','ga','ny','mn','on','in','ph','hk','nz'];
+const DEFAULT_BASE_ID = 'au';
+const AUD_COMPARISON_MAX = 350000;
+const DEFAULT_SALARY_AUD = 260000;
+
+const REGION_MAP = {
+  au:{id:'au',label:'Australia',color:css('--au'),currency:'AUD',usd:0.707,ppp:1.48},
+  az:{id:'az',label:'Arizona, U.S.',color:css('--az'),currency:'USD',usd:1,ppp:0.965},
+  ca:{id:'ca',label:'California, U.S.',color:css('--ca'),currency:'USD',usd:1,ppp:1.107},
+  ga:{id:'ga',label:'Georgia, U.S.',color:css('--ga'),currency:'USD',usd:1,ppp:0.965},
+  ny:{id:'ny',label:'New York State, U.S.',color:css('--ny'),currency:'USD',usd:1,ppp:1.079},
+  mn:{id:'mn',label:'Minnesota, U.S.',color:css('--mn'),currency:'USD',usd:1,ppp:0.983},
+  on:{id:'on',label:'Ontario, Canada',color:css('--on'),currency:'CAD',usd:0.72,ppp:1.23},
+  in:{id:'in',label:'Mumbai, India',color:css('--in'),currency:'INR',usd:0.0117,ppp:24},
+  ph:{id:'ph',label:'Philippines',color:css('--ph'),currency:'PHP',usd:0.0175,ppp:26.5},
+  hk:{id:'hk',label:'Hong Kong',color:css('--hk'),currency:'HKD',usd:0.128,ppp:5.9},
+  nz:{id:'nz',label:'New Zealand',color:css('--nz'),currency:'NZD',usd:0.595,ppp:1.68}
+};
+
+const REGIONS = REGION_IDS.map(id => ({
+  ...REGION_MAP[id],
+  calc(salary, assumptions){
+    const wages = salary + assumptions.bonus;
+    if (id === 'au') {
+      const taxable = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      const tax = taxAU(taxable) + taxable * 0.02 + taxable * assumptions.mlsRate;
+      return resultFor(this, salary, wages, taxable, tax);
+    }
+    if (['az','ca','ga','ny','mn'].includes(id)) {
+      const stateTaxFn = {az:x=>x*0.025, ca:taxCA, ga:x=>x*0.0499, ny:taxNY, mn:taxMN}[id];
+      return calcUS(this, salary, assumptions, stateTaxFn);
+    }
+    if (id === 'on') {
+      const taxable = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      const cpp = Math.max(0, Math.min(Math.max(0, wages - 3500), 68500) * 0.0595)
+        + Math.max(0, Math.min(Math.max(0, wages - 68500), 5000) * 0.04);
+      const ei = Math.min(wages, 65700) * 0.0164;
+      return resultFor(this, salary, wages, taxable, taxCAFed(taxable) + taxON(taxable) + cpp + ei);
+    }
+    if (id === 'in') {
+      const base = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      const taxable = Math.max(0, base - 75000);
+      let incomeTax = taxable > 1200000 ? taxIN(taxable) : 0;
+      incomeTax *= 1.04;
+      const professionalTax = wages > 0 ? 2500 : 0;
+      return resultFor(this, salary, wages, taxable, incomeTax + professionalTax);
+    }
+    if (id === 'ph') {
+      const taxable = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      return resultFor(this, salary, wages, taxable, taxPH(taxable));
+    }
+    if (id === 'hk') {
+      const taxable = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      const netChargeableIncome = Math.max(0, taxable - 132000);
+      const tax = Math.min(taxHK(netChargeableIncome), taxable * 0.15);
+      return resultFor(this, salary, wages, taxable, tax);
+    }
+    if (id === 'nz') {
+      const taxable = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+      return resultFor(this, salary, wages, taxable, taxNZ(taxable));
+    }
+    return resultFor(this, salary, wages, 0, 0);
+  }
+}));
+
+const vis = Object.fromEntries(['gross', ...REGION_IDS].map(id => [id, true]));
+let previousBaseId = DEFAULT_BASE_ID;
+
+const CURRENCY_SYMBOL = {
+  AUD:'A$',
+  USD:'$',
+  CAD:'C$',
+  INR:'Rs ',
+  PHP:'P',
+  HKD:'HK$',
+  NZD:'NZ$'
+};
+
+function n(value){ return Number(value || 0); }
+function clamp(value, min = 0, max = Infinity){
+  const num = Number.isFinite(value) ? value : Number(value || 0);
+  return Math.min(max, Math.max(min, Number.isFinite(num) ? num : 0));
+}
+function roundToStep(value, step){
+  if (!step || !Number.isFinite(step)) return Math.round(value);
+  return Math.round(value / step) * step;
+}
+function stepForMax(max){
+  if (max <= 120000) return 500;
+  if (max <= 350000) return 1000;
+  if (max <= 1000000) return 2500;
+  if (max <= 3000000) return 5000;
+  if (max <= 10000000) return 25000;
+  return 50000;
+}
+function currencySymbol(currency){ return CURRENCY_SYMBOL[currency] || `${currency} `; }
+function fmtMoney(value, currency){
+  return new Intl.NumberFormat('en', { style:'currency', currency, maximumFractionDigits:0 }).format(value);
+}
+function fmtCompact(value, currency){
+  return `${currencySymbol(currency)}${new Intl.NumberFormat('en', { notation:'compact', maximumFractionDigits:1 }).format(value)}`;
+}
+function fmtPercent(value){
+  return `${(value * 100).toFixed(1)}%`;
+}
+function niceCeil(value){
+  if (value <= 0) return 1;
+  const magnitude = 10 ** Math.floor(Math.log10(value));
+  const normalized = value / magnitude;
+  const nice = normalized <= 1 ? 1 : normalized <= 1.5 ? 1.5 : normalized <= 2 ? 2 : normalized <= 2.5 ? 2.5 : normalized <= 5 ? 5 : 10;
+  return nice * magnitude;
+}
+function niceFloor(value){
+  if (value >= 0) return 0;
+  return -niceCeil(Math.abs(value));
+}
+function ord(value){
+  const suffix = ['th','st','nd','rd'];
+  const v = value % 100;
+  return `${value}${suffix[(v - 20) % 10] || suffix[v] || suffix[0]}`;
+}
+function prog(income, brackets, rates){
+  let total = 0;
+  for (let i = 0; i < rates.length; i++) {
+    const lower = brackets[i];
+    const upper = brackets[i + 1] ?? 1e18;
+    if (income <= lower) break;
+    total += (Math.min(income, upper) - lower) * rates[i];
+    if (income <= upper) break;
+  }
+  return Math.max(0, total);
+}
+
+function taxAU(i){ if (i <= 18200) return 0; if (i <= 45000) return (i - 18200) * 0.16; if (i <= 135000) return 4288 + (i - 45000) * 0.30; if (i <= 190000) return 31288 + (i - 135000) * 0.37; return 51638 + (i - 190000) * 0.45; }
+function taxUSFed(i){ return prog(i, [0,11925,48475,103350,197300,250525,626350], [.10,.12,.22,.24,.32,.35,.37]); }
+function taxCA(i){ return prog(i, [0,10756,25500,40245,55866,70606,360659,432787,721314], [.01,.02,.04,.06,.08,.093,.103,.113,.123]); }
+function taxNY(i){ return prog(i, [0,8500,11700,13900,21400,80650,215400,1077550,5000000,25000000], [.04,.045,.0525,.055,.06,.0685,.0965,.103,.109,.109]); }
+function taxMN(i){ return prog(i, [0,31690,104090,193240], [.0535,.068,.0785,.0985]); }
+function taxCAFed(i){ return prog(i, [0,57375,114750,177882,253414], [.15,.205,.26,.29,.33]); }
+function taxON(i){ return prog(i, [0,52886,105775,150000,220000], [.0505,.0915,.1116,.1216,.1316]); }
+function taxIN(i){ return prog(i, [0,400000,800000,1200000,1600000,2000000,2400000], [0,.05,.10,.15,.20,.25,.30]); }
+function taxPH(i){ if (i <= 250000) return 0; if (i <= 400000) return (i - 250000) * .15; if (i <= 800000) return 22500 + (i - 400000) * .20; if (i <= 2000000) return 102500 + (i - 800000) * .25; if (i <= 8000000) return 402500 + (i - 2000000) * .30; return 2202500 + (i - 8000000) * .35; }
+function taxHK(i){ return prog(i, [0,50000,100000,150000,200000], [.02,.06,.10,.14,.17]); }
+function taxNZ(i){ return prog(i, [0,15600,53500,78100,180000], [.105,.175,.30,.33,.39]); }
+
+function resultFor(region, salary, wages, taxableIncome, totalTax){
+  return {
+    ...region,
+    salary,
+    wagesAnnual:wages,
+    grossCashAnnual:wages,
+    taxableIncome,
+    totalTax:Math.max(0, totalTax),
+    netAnnual:wages - Math.max(0, totalTax)
+  };
+}
+
+function calcUS(region, salary, assumptions, stateTaxFn){
+  const wages = salary + assumptions.bonus;
+  const preDeduction = Math.max(0, wages - assumptions.otherDeductions - assumptions.wfh);
+  const federalTaxable = Math.max(0, preDeduction - (assumptions.usStandardDeduction ? 16100 : 0));
+  const federal = taxUSFed(federalTaxable);
+  const state = stateTaxFn(Math.max(0, preDeduction));
+  const socialSecurity = Math.min(wages, 184500) * 0.062;
+  const medicare = wages * 0.0145 + Math.max(0, wages - 200000) * 0.009;
+  return resultFor(region, salary, wages, preDeduction, federal + state + socialSecurity + medicare);
+}
+
+function crossFx(amount, fromRegion, toRegion){
+  return amount * fromRegion.usd / toRegion.usd;
+}
+function localizeMoney(amount, mode, baseRegion, targetRegion){
+  if (mode === 'nominal') return amount;
+  if (mode === 'fx') return crossFx(amount, baseRegion, targetRegion);
+  return (amount / baseRegion.ppp) * targetRegion.ppp;
+}
+function normalizeToBase(amount, mode, sourceRegion, baseRegion){
+  if (mode === 'ppp') return (amount / sourceRegion.ppp) * baseRegion.ppp;
+  return crossFx(amount, sourceRegion, baseRegion);
+}
+function comparisonUnitLabel(mode, baseRegion){
+  return mode === 'ppp' ? `${baseRegion.label} real-income equivalent` : `${baseRegion.currency} equivalent`;
+}
+function headerLabel(mode, baseRegion){
+  return mode === 'ppp' ? `Compared take-home (${baseRegion.currency} real)` : `Compared take-home (${baseRegion.currency} eq.)`;
+}
+function modeExplainer(mode, baseRegion){
+  if (mode === 'nominal') {
+    return `Nominal mode keeps the same numeric salary and base-entered assumptions in every jurisdiction's own currency, then translates the resulting take-home back into ${baseRegion.currency}.`;
+  }
+  if (mode === 'fx') {
+    return `FX mode converts salary, bonus, and deductions from ${baseRegion.label} into each local currency at market exchange rates, then translates take-home back into ${baseRegion.currency}.`;
+  }
+  return `PPP mode converts salary and deductions into equal purchasing-power terms, then restates take-home in ${baseRegion.label} real-income units.`;
+}
+function salaryLabel(mode){
+  if (mode === 'nominal') return 'Same numeric salary in each jurisdiction.';
+  if (mode === 'fx') return 'Same market-value salary across jurisdictions.';
+  return 'Same purchasing-power salary across jurisdictions.';
+}
+function baseNote(baseRegion, maxSalary){
+  return `The slider, bonus, and deductions are entered in ${baseRegion.label} (${baseRegion.currency}). The current ceiling is the FX translation of ${fmtMoney(AUD_COMPARISON_MAX, 'AUD')}: ${fmtMoney(maxSalary, baseRegion.currency)}.`;
+}
+function assumptionsNote(baseRegion){
+  return `All money inputs here are base-region amounts in ${baseRegion.currency}. This page intentionally models wage income only, without rental-property settings.`;
+}
+function getBaseRegion(){
+  return REGION_MAP[$('baseRegion').value];
+}
+function baseSalaryMax(baseRegion){
+  const exact = crossFx(AUD_COMPARISON_MAX, REGION_MAP.au, baseRegion);
+  return Math.max(stepForMax(exact), roundToStep(exact, stepForMax(exact)));
+}
+function defaultSalaryFor(baseRegion){
+  const exact = crossFx(DEFAULT_SALARY_AUD, REGION_MAP.au, baseRegion);
+  return roundToStep(exact, stepForMax(baseSalaryMax(baseRegion)));
+}
+function baseAssumptions(){
+  return {
+    bonus: clamp(n($('bonus').value)),
+    otherDeductions: clamp(n($('otherDeductions').value)),
+    wfh: clamp(n($('wfh').value)),
+    mlsRate: parseFloat($('mlsRate').value || '0'),
+    usStandardDeduction:$('usStandardDeduction').value === '1'
+  };
+}
+function localizeAssumptions(assumptions, mode, baseRegion, targetRegion){
+  return {
+    bonus: localizeMoney(assumptions.bonus, mode, baseRegion, targetRegion),
+    otherDeductions: localizeMoney(assumptions.otherDeductions, mode, baseRegion, targetRegion),
+    wfh: localizeMoney(assumptions.wfh, mode, baseRegion, targetRegion),
+    mlsRate: assumptions.mlsRate,
+    usStandardDeduction: assumptions.usStandardDeduction
+  };
+}
+function rowsFor(mode, baseSalary, baseRegion, assumptions){
+  return REGIONS.map(region => {
+    const localSalary = localizeMoney(baseSalary, mode, baseRegion, region);
+    const localAssumptions = localizeAssumptions(assumptions, mode, baseRegion, region);
+    const row = region.calc(localSalary, localAssumptions);
+    row.normalizedNet = normalizeToBase(row.netAnnual, mode, region, baseRegion);
+    row.effectiveTaxRate = row.totalTax / Math.max(Math.abs(row.grossCashAnnual), 1);
+    return row;
+  });
+}
+function axisTick(value, currency){
+  return value === 0 ? '0' : fmtCompact(value, currency);
+}
+function syncSalaryInputs(preserveValue = false){
+  const baseRegion = getBaseRegion();
+  const max = baseSalaryMax(baseRegion);
+  const step = stepForMax(max);
+  const current = preserveValue ? n($('salaryBox').value) : defaultSalaryFor(baseRegion);
+  const clamped = clamp(roundToStep(current, step), 0, max);
+  $('salarySlider').max = String(max);
+  $('salarySlider').step = String(step);
+  $('salarySlider').value = String(clamped);
+  $('salaryBox').max = String(max);
+  $('salaryBox').step = String(step);
+  $('salaryBox').value = String(clamped);
+  $('sliderMinLabel').textContent = fmtMoney(0, baseRegion.currency);
+  $('sliderMaxLabel').textContent = `Cap: ${fmtMoney(max, baseRegion.currency)}`;
+}
+function convertBaseInputs(oldBaseRegion, newBaseRegion){
+  ['salaryBox','bonus','otherDeductions','wfh'].forEach(id => {
+    const input = $(id);
+    const step = parseFloat(input.step || '1') || 1;
+    input.value = roundToStep(crossFx(n(input.value), oldBaseRegion, newBaseRegion), step);
+  });
+}
+function buildLegend(){
+  const legend = $('legend');
+  const entries = [
+    {id:'gross', label:'Gross wage reference', color:css('--gross')},
+    ...REGIONS.map(region => ({id:region.id, label:region.label, color:region.color}))
+  ];
+  legend.innerHTML = entries.map(entry => `
+    <button type="button" class="legend-item${vis[entry.id] ? '' : ' off'}" data-legend-id="${entry.id}">
+      <span class="dot" style="background:${entry.color}"></span>${entry.label}
+    </button>
+  `).join('');
+}
+function renderChart(mode, baseSalary, baseRegion, assumptions){
+  const svg = $('chart');
+  const W = 1160;
+  const H = 620;
+  const margin = {top:28,right:28,bottom:70,left:108};
+  const width = W - margin.left - margin.right;
+  const height = H - margin.top - margin.bottom;
+  const xMax = baseSalaryMax(baseRegion);
+  const xs = Array.from({length:61}, (_, index) => xMax * index / 60);
+  const regionSeries = REGIONS.map(region => ({
+    id:region.id,
+    label:region.label,
+    color:region.color,
+    show:vis[region.id],
+    points:xs.map(x => {
+      const localSalary = localizeMoney(x, mode, baseRegion, region);
+      const localAssumptions = localizeAssumptions(assumptions, mode, baseRegion, region);
+      const row = region.calc(localSalary, localAssumptions);
+      return {x, y:normalizeToBase(row.netAnnual, mode, region, baseRegion)};
+    })
+  }));
+  const sets = [
+    {id:'gross', label:'Gross wage reference', color:css('--gross'), dash:true, show:vis.gross, points:xs.map(x => ({x, y:x + assumptions.bonus}))},
+    ...regionSeries.map(series => ({...series, dash:false}))
+  ].filter(set => set.show);
+
+  let yMin = 0;
+  let yMax = xMax + assumptions.bonus;
+  sets.forEach(set => set.points.forEach(point => {
+    yMin = Math.min(yMin, point.y);
+    yMax = Math.max(yMax, point.y);
+  }));
+  const paddedMax = niceCeil(yMax * 1.08);
+  const paddedMin = yMin < 0 ? niceFloor(Math.abs(yMin) * -1.08) : 0;
+  yMin = paddedMin;
+  yMax = Math.max(paddedMax, 1);
+  const ySpan = Math.max(yMax - yMin, 1);
+
+  const sx = x => margin.left + (x / xMax) * width;
+  const sy = y => margin.top + height - ((y - yMin) / ySpan) * height;
+  let out = '';
+
+  for (let i = 0; i <= 6; i++) {
+    const value = yMin + (ySpan * i / 6);
+    const y = sy(value);
+    out += `<line class="gridline${Math.abs(value) < 1 ? ' zero' : ''}" x1="${margin.left}" y1="${y}" x2="${W - margin.right}" y2="${y}"></line>`;
+    out += `<text class="tick" x="${margin.left - 12}" y="${y + 4}" text-anchor="end">${axisTick(value, baseRegion.currency)}</text>`;
+  }
+  for (let i = 0; i <= 6; i++) {
+    const value = xMax * i / 6;
+    const x = sx(value);
+    out += `<line class="gridline" x1="${x}" y1="${margin.top}" x2="${x}" y2="${margin.top + height}"></line>`;
+    out += `<text class="tick" x="${x}" y="${H - 24}" text-anchor="middle">${axisTick(value, baseRegion.currency)}</text>`;
+  }
+
+  out += `<line class="axis" x1="${margin.left}" y1="${margin.top + height}" x2="${W - margin.right}" y2="${margin.top + height}"></line>`;
+  out += `<line class="axis" x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + height}"></line>`;
+  out += `<text class="label" x="${margin.left + width / 2}" y="${H - 4}" text-anchor="middle">Reference salary in ${baseRegion.currency}</text>`;
+  out += `<text class="label" transform="translate(22 ${margin.top + height / 2}) rotate(-90)" text-anchor="middle">${headerLabel(mode, baseRegion).replace('Compared take-home ', '')}</text>`;
+
+  const guideX = sx(baseSalary);
+  out += `<line class="guide-line" x1="${guideX}" y1="${margin.top}" x2="${guideX}" y2="${margin.top + height}"></line>`;
+  const chipWidth = 148;
+  const chipHeight = 28;
+  const chipX = Math.max(margin.left + 6, Math.min(guideX - chipWidth / 2, W - margin.right - chipWidth));
+  out += `<rect class="guide-chip" x="${chipX}" y="${margin.top + 8}" width="${chipWidth}" height="${chipHeight}" rx="14"></rect>`;
+  out += `<text class="guide-text" x="${chipX + chipWidth / 2}" y="${margin.top + 26}" text-anchor="middle">${fmtCompact(baseSalary, baseRegion.currency)}</text>`;
+
+  sets.forEach(set => {
+    const points = set.points.map(point => `${sx(point.x)},${sy(point.y)}`).join(' ');
+    out += `<polyline points="${points}" fill="none" stroke="${set.color}" stroke-width="${set.dash ? 2.3 : 3.1}" ${set.dash ? 'stroke-dasharray="8 8"' : ''} stroke-linecap="round" stroke-linejoin="round"></polyline>`;
+  });
+
+  regionSeries.filter(series => vis[series.id]).forEach(series => {
+    const selectedPoint = series.points.reduce((closest, point) => Math.abs(point.x - baseSalary) < Math.abs(closest.x - baseSalary) ? point : closest, series.points[0]);
+    const x = sx(selectedPoint.x);
+    const y = sy(selectedPoint.y);
+    out += `<circle class="marker-ring" cx="${x}" cy="${y}" r="5.7" stroke="${series.color}"></circle>`;
+    out += `<circle class="marker-core" cx="${x}" cy="${y}" r="2.2"></circle>`;
+  });
+
+  svg.innerHTML = out;
+}
+function render(){
+  const mode = $('mode').value;
+  const baseRegion = getBaseRegion();
+  const maxSalary = baseSalaryMax(baseRegion);
+  const step = parseFloat($('salaryBox').step || '1000') || 1000;
+  const baseSalary = clamp(roundToStep(n($('salaryBox').value), step), 0, maxSalary);
+  $('salaryBox').value = String(baseSalary);
+  $('salarySlider').value = String(baseSalary);
+  const assumptions = baseAssumptions();
+  const allRows = rowsFor(mode, baseSalary, baseRegion, assumptions);
+  const visibleRows = allRows.filter(row => vis[row.id]);
+  const ranked = [...visibleRows].sort((a, b) => b.normalizedNet - a.normalizedNet);
+  const best = ranked[0];
+  const worst = ranked[ranked.length - 1];
+  const baseRow = ranked.find(row => row.id === baseRegion.id);
+  const baseIndex = ranked.findIndex(row => row.id === baseRegion.id);
+  const baseComparisonRow = allRows.find(row => row.id === baseRegion.id);
+
+  $('modeExplainer').textContent = modeExplainer(mode, baseRegion);
+  $('baseExplainer').textContent = baseNote(baseRegion, maxSalary);
+  $('assumptionsNote').textContent = assumptionsNote(baseRegion);
+  $('selectedSalaryDisplay').textContent = fmtMoney(baseSalary, baseRegion.currency);
+  $('selectedSalaryLabel').textContent = `${salaryLabel(mode)} Inputs are anchored in ${baseRegion.label}.`;
+  $('comparedHeader').textContent = headerLabel(mode, baseRegion);
+
+  $('statSalary').textContent = fmtMoney(baseSalary, baseRegion.currency);
+  $('statSalarySub').textContent = `${salaryLabel(mode)} Ceiling: ${fmtMoney(maxSalary, baseRegion.currency)}.`;
+  $('bestJurisdiction').textContent = best ? best.label : 'None visible';
+  $('bestJurisdictionSub').textContent = best ? `${fmtMoney(best.normalizedNet, baseRegion.currency)} in ${comparisonUnitLabel(mode, baseRegion)}.` : 'Turn at least one jurisdiction on.';
+
+  if (baseRow) {
+    $('baseRank').textContent = `#${baseIndex + 1} of ${ranked.length}`;
+    $('baseRankSub').textContent = Math.abs(best.normalizedNet - baseRow.normalizedNet) < 0.5
+      ? `${baseRegion.label} currently leads on this lens.`
+      : `${fmtMoney(best.normalizedNet - baseRow.normalizedNet, baseRegion.currency)} behind ${best.label}.`;
+  } else {
+    $('baseRank').textContent = 'Hidden';
+    $('baseRankSub').textContent = `${baseRegion.label} is currently filtered out of the visible set.`;
+  }
+
+  $('spreadValue').textContent = best && worst ? fmtMoney(best.normalizedNet - worst.normalizedNet, baseRegion.currency) : fmtMoney(0, baseRegion.currency);
+  $('spreadSub').textContent = best && worst ? `${best.label} to ${worst.label}.` : 'Visible regions will populate this spread.';
+
+  $('chartCallout').textContent = best && worst
+    ? `${best.label} currently leads at ${fmtMoney(baseSalary, baseRegion.currency)} on the ${mode === 'nominal' ? 'nominal local-salary' : mode === 'fx' ? 'FX-equalized' : 'PPP-equalized'} lens. ${baseRegion.label} sits ${baseRow ? ord(baseIndex + 1) : 'outside the visible set'} out of ${ranked.length}. The spread between the strongest and weakest compared take-home outcomes is ${fmtMoney(best.normalizedNet - worst.normalizedNet, baseRegion.currency)}.\n${best.id === baseRegion.id ? `${baseRegion.label} is the current baseline and also leads, so the leader premium versus the baseline is ${fmtMoney(0, baseRegion.currency)}.` : `${best.label} takes home effectively ${fmtMoney(best.normalizedNet - baseComparisonRow.normalizedNet, baseRegion.currency)} more than the baseline, ${baseRegion.label}.`}`
+    : 'At least one visible jurisdiction is required for the chart summary.';
+
+  $('rankingBody').innerHTML = ranked.map((row, index) => `
+    <tr>
+      <td class="rank">${index + 1}</td>
+      <td><span class="dot" style="background:${row.color};margin-right:8px"></span>${row.label}</td>
+      <td>${fmtMoney(row.salary, row.currency)}</td>
+      <td>${fmtMoney(row.netAnnual, row.currency)}</td>
+      <td>${fmtMoney(row.normalizedNet, baseRegion.currency)}</td>
+      <td>${fmtPercent(row.effectiveTaxRate)}</td>
+    </tr>
+  `).join('');
+
+  renderChart(mode, baseSalary, baseRegion, assumptions);
+}
+function handleStaticInput(event){
+  const target = event.target;
+  if (!target) return;
+  if (target.id === 'salarySlider') {
+    $('salaryBox').value = target.value;
+    render();
+    return;
+  }
+  if (target.id === 'salaryBox') {
+    $('salarySlider').value = target.value;
+    render();
+    return;
+  }
+  if (target.id === 'baseRegion') {
+    const oldBaseRegion = REGION_MAP[previousBaseId];
+    const newBaseRegion = getBaseRegion();
+    convertBaseInputs(oldBaseRegion, newBaseRegion);
+    previousBaseId = newBaseRegion.id;
+    syncSalaryInputs(true);
+    buildLegend();
+    render();
+    return;
+  }
+  render();
+}
+function init(){
+  $('baseRegion').innerHTML = REGIONS.map(region => `
+    <option value="${region.id}"${region.id === DEFAULT_BASE_ID ? ' selected' : ''}>${region.label} (${region.currency})</option>
+  `).join('');
+  previousBaseId = $('baseRegion').value;
+  syncSalaryInputs(false);
+  $('salaryBox').value = String(defaultSalaryFor(REGION_MAP[DEFAULT_BASE_ID]));
+  $('salarySlider').value = $('salaryBox').value;
+  buildLegend();
+
+  ['mode','baseRegion','salarySlider','salaryBox','bonus','otherDeductions','wfh','mlsRate','usStandardDeduction']
+    .forEach(id => $(id).addEventListener('input', handleStaticInput));
+  $('baseRegion').addEventListener('change', handleStaticInput);
+
+  $('legend').addEventListener('click', event => {
+    const button = event.target.closest('[data-legend-id]');
+    if (!button) return;
+    const id = button.dataset.legendId;
+    vis[id] = !vis[id];
+    button.classList.toggle('off', !vis[id]);
+    render();
+  });
+
+  render();
+}
+
+init();
+</script>
+</body>
+</html>

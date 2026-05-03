@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australian Take-Home and Property Lab</title>
+<style>
+:root{
+  --bg:#07101d;
+  --panel:#0d1729;
+  --text:#e6edf7;
+  --muted:#a8b8cf;
+  --border:rgba(148,163,184,.2);
+  --border-strong:rgba(148,163,184,.34);
+  --accent:#67e8f9;
+  --accent-2:#86efac;
+  --warning:#fbbf24;
+  --danger:#f87171;
+  --shadow:0 24px 48px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:24px;
+  min-height:100vh;
+  font:17px/1.55 "Segoe UI",Inter,system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(56,189,248,.12),transparent 30%),
+    radial-gradient(circle at top right,rgba(34,197,94,.08),transparent 24%),
+    linear-gradient(180deg,#050d18 0%,var(--bg) 100%);
+}
+.wrap{max-width:1560px;margin:0 auto;display:grid;gap:18px}
+.hero,.panel{
+  background:linear-gradient(180deg,rgba(13,23,41,.96),rgba(9,18,34,.98));
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.hero{padding:30px}
+.panel{padding:22px}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(2.2rem,3vw,3.4rem);line-height:1.03;margin-bottom:14px}
+h2{font-size:1.14rem;margin-bottom:14px}
+h3{font-size:1rem}
+.sub,.small,.foot{color:var(--muted)}
+.sub{max-width:1260px}
+.small,.foot{font-size:.97rem;line-height:1.64}
+.pillrow,.linkrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pill,.nav-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.8);
+  color:#e5eef9;
+  font-size:.94rem;
+}
+.nav-pill{text-decoration:none}
+.nav-pill:focus-visible,.field input:focus-visible,.field select:focus-visible,.btn:focus-visible,.remove-btn:focus-visible{
+  outline:2px solid rgba(103,232,249,.7);
+  outline-offset:2px;
+}
+.grid{display:grid;grid-template-columns:440px 1fr;gap:18px}
+@media(max-width:1240px){.grid{grid-template-columns:1fr}}
+.stack{display:grid;gap:16px}
+.two,.cards,.property-grid,.split,.toolbar{display:grid;gap:12px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.property-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.split{grid-template-columns:repeat(2,minmax(0,1fr))}
+.toolbar{grid-template-columns:1fr auto}
+@media(max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){.property-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.two,.cards,.property-grid,.split,.toolbar{grid-template-columns:1fr}}
+.field label{display:block;color:var(--muted);font-size:.95rem;margin-bottom:7px}
+.field input,.field select{
+  width:100%;
+  min-height:48px;
+  padding:12px 13px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:rgba(15,23,42,.88);
+  color:var(--text);
+  font:inherit;
+}
+.field input[type=range]{min-height:auto;padding:0}
+.range-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:10px;
+  font-size:.92rem;
+  color:var(--muted);
+}
+.hint{
+  margin-top:14px;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.56);
+}
+.hint strong{color:#f5fbff}
+.btn,.remove-btn{
+  font:inherit;
+  border-radius:13px;
+  cursor:pointer;
+  transition:transform .14s ease,background .14s ease,border-color .14s ease,opacity .14s ease;
+}
+.btn:hover,.remove-btn:hover{transform:translateY(-1px)}
+.btn{
+  min-height:46px;
+  padding:0 15px;
+  color:#051019;
+  background:linear-gradient(180deg,#9be9f7,#67e8f9);
+  border:1px solid rgba(103,232,249,.7);
+  font-weight:700;
+}
+.remove-btn{
+  min-height:42px;
+  padding:0 14px;
+  background:rgba(11,20,36,.72);
+  color:#f5c4c4;
+  border:1px solid var(--border);
+}
+details{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  background:rgba(11,20,36,.56);
+}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700}
+.card{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(11,20,36,.62);
+}
+.eyebrow{color:var(--muted);font-size:.92rem;margin-bottom:8px}
+.value{font-size:clamp(1.5rem,2vw,2.2rem);font-weight:800;line-height:1.04}
+.mono{font-variant-numeric:tabular-nums}
+.callout{
+  padding:15px 16px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:rgba(11,20,36,.56);
+  white-space:pre-line;
+}
+.property-list{display:grid;gap:12px;margin-top:12px}
+.property-card{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  background:rgba(10,18,33,.72);
+}
+.property-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.property-meta{
+  color:var(--muted);
+  font-size:.92rem;
+  margin-top:12px;
+}
+.property-empty{
+  margin-top:12px;
+  padding:16px;
+  border:1px dashed var(--border-strong);
+  border-radius:16px;
+  color:var(--muted);
+  background:rgba(8,14,26,.42);
+}
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:12px 14px;border-bottom:1px solid rgba(148,163,184,.14);text-align:left}
+th{
+  font-size:.92rem;
+  color:#eef5ff;
+  background:rgba(8,14,26,.82);
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+td{font-size:.96rem}
+.number{text-align:right}
+.positive{color:var(--accent-2)}
+.negative{color:var(--danger)}
+.foot strong{color:#f4fbff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Australian take-home and property lab</h1>
+    <p class="sub">
+      This page focuses on the Australia-only income story: salaried income, resident tax, Medicare settings,
+      and zero or more investment properties with ownership share. It distinguishes between the cash that reaches
+      your bank account and the taxable income position used to calculate Australian tax.
+    </p>
+    <div class="pillrow">
+      <div class="pill">Australia resident tax brackets</div>
+      <div class="pill">Rental cash flow vs taxable result</div>
+      <div class="pill">Per-property ownership share</div>
+    </div>
+    <div class="linkrow">
+      <a class="nav-pill" href="./tax_takehome_global_comparison.html">Open the cross-region comparison page</a>
+    </div>
+  </section>
+
+  <div class="grid">
+    <aside class="stack">
+      <section class="panel">
+        <h2>Income controls</h2>
+        <div class="field">
+          <label for="salarySlider">Base salary</label>
+          <input id="salarySlider" type="range" min="0" max="600000" step="1000" value="200000">
+          <div class="range-meta">
+            <span>A$0</span>
+            <span>A$600,000</span>
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="salaryBox">Salary amount</label>
+          <input id="salaryBox" type="number" min="0" max="600000" step="1000" value="200000">
+        </div>
+        <div class="hint">
+          <strong id="selectedSalaryDisplay"></strong>
+          <p class="small" style="margin-top:8px">This page estimates Australian resident income tax and shows both after-tax cash and taxable income.</p>
+        </div>
+
+        <div class="two" style="margin-top:14px">
+          <div class="field">
+            <label for="bonus">Bonus / extra wage income</label>
+            <input id="bonus" type="number" min="0" step="1000" value="0">
+          </div>
+          <div class="field">
+            <label for="otherDeductions">Other deductions / claims</label>
+            <input id="otherDeductions" type="number" min="0" step="1000" value="0">
+          </div>
+        </div>
+        <div class="two" style="margin-top:12px">
+          <div class="field">
+            <label for="wfh">Work-from-home deduction</label>
+            <input id="wfh" type="number" min="0" step="100" value="0">
+          </div>
+          <div class="field">
+            <label for="medicareLevyRate">Medicare levy</label>
+            <select id="medicareLevyRate">
+              <option value="0.02">2.00%</option>
+              <option value="0.015">1.50%</option>
+              <option value="0.01">1.00%</option>
+              <option value="0">0.00%</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="mlsRate">Medicare Levy Surcharge override</label>
+          <select id="mlsRate">
+            <option value="0">0.00%</option>
+            <option value="0.01">1.00%</option>
+            <option value="0.0125">1.25%</option>
+            <option value="0.015">1.50%</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Rental properties</h2>
+        <div class="toolbar">
+          <div class="small" id="propertySummary"></div>
+          <button class="btn" id="addPropertyBtn" type="button">Add rental property</button>
+        </div>
+        <div class="property-list" id="propertyList"></div>
+        <div class="property-empty" id="propertyEmpty">No rental properties yet. Add one when you want to include Australian investment-property cash flow and deductions.</div>
+        <p class="small" style="margin-top:12px">
+          Ownership share is applied symmetrically to rent, interest, other cash costs, and capital-works / depreciation claims.
+        </p>
+      </section>
+    </aside>
+
+    <main class="stack">
+      <section class="panel">
+        <div class="cards">
+          <div class="card">
+            <div class="eyebrow">After-tax cash to bank</div>
+            <div class="value mono" id="statAfterTaxCash"></div>
+            <div class="small" id="statAfterTaxCashSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Taxable income</div>
+            <div class="value mono" id="statTaxableIncome"></div>
+            <div class="small" id="statTaxableIncomeSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Total tax and levies</div>
+            <div class="value mono" id="statTotalTax"></div>
+            <div class="small" id="statTotalTaxSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Rental cash flow (your share)</div>
+            <div class="value mono" id="statRentalCash"></div>
+            <div class="small" id="statRentalCashSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Rental taxable result</div>
+            <div class="value mono" id="statRentalTaxable"></div>
+            <div class="small" id="statRentalTaxableSub" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <div class="eyebrow">After-tax lift vs wages only</div>
+            <div class="value mono" id="statPropertyLift"></div>
+            <div class="small" id="statPropertyLiftSub" style="margin-top:10px"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="callout small" id="scenarioCallout"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Breakdown</h2>
+        <div class="split">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cash view</th>
+                  <th class="number">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="cashBreakdownBody"></tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tax view</th>
+                  <th class="number">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="taxBreakdownBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Property breakdown</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th class="number">Your share</th>
+                <th class="number">Rent</th>
+                <th class="number">Interest</th>
+                <th class="number">Other cash costs</th>
+                <th class="number">Capital works / depreciation</th>
+                <th class="number">Cash flow</th>
+                <th class="number">Taxable result</th>
+              </tr>
+            </thead>
+            <tbody id="propertyTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Method notes</h2>
+        <p class="foot">
+          The page uses Australian resident income-tax brackets plus the selected Medicare levy and MLS override.
+          Capital works / depreciation is treated as a non-cash tax deduction: it reduces taxable income but does not
+          reduce the cash-flow figure. This tool does not attempt to model every Australian edge case, including HELP,
+          carry-forward losses, tax offsets, Division 293, land tax, trust structures, or CGT outcomes.
+        </p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const SALARY_MAX = 600000;
+const DEFAULT_SALARY = 200000;
+let nextPropertyId = 1;
+
+function n(value){ return Number(value || 0); }
+function clamp(value, min = 0, max = Infinity){
+  const num = Number.isFinite(value) ? value : Number(value || 0);
+  return Math.min(max, Math.max(min, Number.isFinite(num) ? num : 0));
+}
+function roundToStep(value, step){
+  if (!step || !Number.isFinite(step)) return Math.round(value);
+  return Math.round(value / step) * step;
+}
+function fmtMoney(value){
+  return new Intl.NumberFormat('en', { style:'currency', currency:'AUD', maximumFractionDigits:0 }).format(value);
+}
+function fmtSignedMoney(value){
+  return `${value >= 0 ? '' : '-'}${fmtMoney(Math.abs(value))}`;
+}
+function fmtPercent(value){
+  return `${value.toFixed(1)}%`;
+}
+function toneClass(value){
+  return value > 0.5 ? 'positive' : value < -0.5 ? 'negative' : '';
+}
+
+function taxAU(i){
+  if (i <= 18200) return 0;
+  if (i <= 45000) return (i - 18200) * 0.16;
+  if (i <= 135000) return 4288 + (i - 45000) * 0.30;
+  if (i <= 190000) return 31288 + (i - 135000) * 0.37;
+  return 51638 + (i - 190000) * 0.45;
+}
+
+function propertyFieldsMarkup(id){
+  return `
+    <div class="property-grid">
+      <div class="field">
+        <label for="property-name-${id}">Property label</label>
+        <input id="property-name-${id}" data-field="name" type="text" value="Property ${id}">
+      </div>
+      <div class="field">
+        <label for="property-share-${id}">Your ownership share (%)</label>
+        <input id="property-share-${id}" data-field="ownershipShare" type="number" min="0" max="100" step="1" value="100">
+      </div>
+      <div class="field">
+        <label for="property-rent-${id}">Rent per week</label>
+        <input id="property-rent-${id}" data-field="rentPerWeek" type="number" min="0" step="10" value="0">
+      </div>
+      <div class="field">
+        <label for="property-weeks-${id}">Weeks rented</label>
+        <input id="property-weeks-${id}" data-field="weeksRented" type="number" min="0" max="52" step="1" value="52">
+      </div>
+      <div class="field">
+        <label for="property-debt-${id}">Outstanding debt</label>
+        <input id="property-debt-${id}" data-field="debtOutstanding" type="number" min="0" step="1000" value="0">
+      </div>
+      <div class="field">
+        <label for="property-rate-${id}">Interest rate (%)</label>
+        <input id="property-rate-${id}" data-field="interestRate" type="number" min="0" step="0.1" value="6.5">
+      </div>
+      <div class="field">
+        <label for="property-costs-${id}">Other annual cash property costs</label>
+        <input id="property-costs-${id}" data-field="otherCashCosts" type="number" min="0" step="1000" value="0">
+      </div>
+      <div class="field">
+        <label for="property-capital-${id}">Capital works / depreciation estimate (annual)</label>
+        <input id="property-capital-${id}" data-field="capitalWorks" type="number" min="0" step="1000" value="0">
+      </div>
+    </div>
+  `;
+}
+
+function addPropertyCard(initial = {}){
+  const id = nextPropertyId++;
+  const card = document.createElement('article');
+  card.className = 'property-card';
+  card.dataset.propertyId = String(id);
+  card.innerHTML = `
+    <div class="property-head">
+      <div>
+        <h3>Property ${id}</h3>
+        <div class="small">Whole-property numbers go in the inputs below. The ownership share then allocates your portion.</div>
+      </div>
+      <button class="remove-btn" type="button" data-remove-property="${id}">Remove</button>
+    </div>
+    ${propertyFieldsMarkup(id)}
+    <div class="property-meta" data-property-meta>Your share cash flow: ${fmtMoney(0)} | taxable result: ${fmtMoney(0)}</div>
+  `;
+  $('propertyList').appendChild(card);
+  Object.entries(initial).forEach(([field, value]) => {
+    const input = card.querySelector(`[data-field="${field}"]`);
+    if (input) input.value = value;
+  });
+}
+
+function gatherProperties(){
+  return [...document.querySelectorAll('.property-card')].map(card => ({
+    id: Number(card.dataset.propertyId),
+    name: (card.querySelector('[data-field="name"]').value || '').trim() || `Property ${card.dataset.propertyId}`,
+    ownershipShare: clamp(n(card.querySelector('[data-field="ownershipShare"]').value), 0, 100),
+    rentPerWeek: clamp(n(card.querySelector('[data-field="rentPerWeek"]').value)),
+    weeksRented: clamp(n(card.querySelector('[data-field="weeksRented"]').value), 0, 52),
+    debtOutstanding: clamp(n(card.querySelector('[data-field="debtOutstanding"]').value)),
+    interestRate: clamp(n(card.querySelector('[data-field="interestRate"]').value)) / 100,
+    otherCashCosts: clamp(n(card.querySelector('[data-field="otherCashCosts"]').value)),
+    capitalWorks: clamp(n(card.querySelector('[data-field="capitalWorks"]').value))
+  }));
+}
+
+function calculateProperty(property){
+  const share = property.ownershipShare / 100;
+  const annualRentWhole = property.rentPerWeek * property.weeksRented;
+  const annualInterestWhole = property.debtOutstanding * property.interestRate;
+  const shareRent = annualRentWhole * share;
+  const shareInterest = annualInterestWhole * share;
+  const shareOtherCashCosts = property.otherCashCosts * share;
+  const shareCapitalWorks = property.capitalWorks * share;
+  const shareCashFlow = shareRent - shareInterest - shareOtherCashCosts;
+  const shareTaxableResult = shareCashFlow - shareCapitalWorks;
+  return {
+    ...property,
+    share,
+    annualRentWhole,
+    annualInterestWhole,
+    shareRent,
+    shareInterest,
+    shareOtherCashCosts,
+    shareCapitalWorks,
+    shareCashFlow,
+    shareTaxableResult
+  };
+}
+
+function sumBy(items, getter){
+  return items.reduce((total, item) => total + getter(item), 0);
+}
+
+function calculateScenario(){
+  const salary = clamp(n($('salaryBox').value), 0, SALARY_MAX);
+  const bonus = clamp(n($('bonus').value));
+  const wages = salary + bonus;
+  const wfh = clamp(n($('wfh').value));
+  const otherDeductions = clamp(n($('otherDeductions').value));
+  const medicareLevyRate = parseFloat($('medicareLevyRate').value || '0');
+  const mlsRate = parseFloat($('mlsRate').value || '0');
+  const properties = gatherProperties().map(calculateProperty);
+
+  const rentalCashFlow = sumBy(properties, property => property.shareCashFlow);
+  const rentalTaxableResult = sumBy(properties, property => property.shareTaxableResult);
+  const rentShare = sumBy(properties, property => property.shareRent);
+  const interestShare = sumBy(properties, property => property.shareInterest);
+  const otherCashCostsShare = sumBy(properties, property => property.shareOtherCashCosts);
+  const capitalWorksShare = sumBy(properties, property => property.shareCapitalWorks);
+
+  const taxableIncome = Math.max(0, wages + rentalTaxableResult - wfh - otherDeductions);
+  const taxableIncomeNoProperties = Math.max(0, wages - wfh - otherDeductions);
+
+  const incomeTax = taxAU(taxableIncome);
+  const medicareLevy = taxableIncome * medicareLevyRate;
+  const mls = taxableIncome * mlsRate;
+  const totalTax = incomeTax + medicareLevy + mls;
+
+  const incomeTaxNoProperties = taxAU(taxableIncomeNoProperties);
+  const medicareNoProperties = taxableIncomeNoProperties * medicareLevyRate;
+  const mlsNoProperties = taxableIncomeNoProperties * mlsRate;
+  const totalTaxNoProperties = incomeTaxNoProperties + medicareNoProperties + mlsNoProperties;
+
+  const cashBeforeTax = wages + rentalCashFlow;
+  const afterTaxCash = cashBeforeTax - totalTax;
+  const afterTaxCashNoProperties = wages - totalTaxNoProperties;
+  const propertyLiftAfterTax = afterTaxCash - afterTaxCashNoProperties;
+  const effectiveTaxRate = totalTax / Math.max(cashBeforeTax, 1);
+
+  return {
+    salary,
+    bonus,
+    wages,
+    wfh,
+    otherDeductions,
+    medicareLevyRate,
+    mlsRate,
+    properties,
+    rentalCashFlow,
+    rentalTaxableResult,
+    rentShare,
+    interestShare,
+    otherCashCostsShare,
+    capitalWorksShare,
+    taxableIncome,
+    incomeTax,
+    medicareLevy,
+    mls,
+    totalTax,
+    taxableIncomeNoProperties,
+    totalTaxNoProperties,
+    cashBeforeTax,
+    afterTaxCash,
+    afterTaxCashNoProperties,
+    propertyLiftAfterTax,
+    effectiveTaxRate
+  };
+}
+
+function refreshPropertyState(scenario){
+  const current = scenario || calculateScenario();
+  document.querySelectorAll('.property-card').forEach((card, index) => {
+    const property = current.properties[index];
+    const meta = card.querySelector('[data-property-meta]');
+    if (property) {
+      meta.textContent = `Your share cash flow: ${fmtSignedMoney(property.shareCashFlow)} | taxable result: ${fmtSignedMoney(property.shareTaxableResult)}`;
+    }
+  });
+  $('propertyEmpty').hidden = current.properties.length > 0;
+  $('propertySummary').textContent = current.properties.length
+    ? `${current.properties.length} ${current.properties.length === 1 ? 'property' : 'properties'} loaded. Combined cash flow: ${fmtSignedMoney(current.rentalCashFlow)} | taxable result: ${fmtSignedMoney(current.rentalTaxableResult)}.`
+    : 'No property amounts are currently included.';
+}
+
+function renderBreakdownTables(scenario){
+  const cashRows = [
+    ['Gross salary', scenario.salary],
+    ['Bonus / extra wage income', scenario.bonus],
+    ['Rental cash flow (your share)', scenario.rentalCashFlow],
+    ['Cash before tax', scenario.cashBeforeTax],
+    ['Total tax and levies', -scenario.totalTax],
+    ['After-tax cash to bank', scenario.afterTaxCash]
+  ];
+  const taxRows = [
+    ['Wage income', scenario.wages],
+    ['Rental taxable result (your share)', scenario.rentalTaxableResult],
+    ['Work-from-home deduction', -scenario.wfh],
+    ['Other deductions', -scenario.otherDeductions],
+    ['Taxable income', scenario.taxableIncome],
+    ['Income tax', scenario.incomeTax],
+    ['Medicare levy', scenario.medicareLevy],
+    ['MLS', scenario.mls]
+  ];
+
+  $('cashBreakdownBody').innerHTML = cashRows.map(([label, value]) => `
+    <tr>
+      <td>${label}</td>
+      <td class="number ${toneClass(value)}">${fmtSignedMoney(value)}</td>
+    </tr>
+  `).join('');
+
+  $('taxBreakdownBody').innerHTML = taxRows.map(([label, value]) => `
+    <tr>
+      <td>${label}</td>
+      <td class="number ${toneClass(value)}">${fmtSignedMoney(value)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderPropertyTable(scenario){
+  if (!scenario.properties.length) {
+    $('propertyTableBody').innerHTML = `
+      <tr>
+        <td colspan="8">No properties loaded. Add one to see rent, interest, cash-flow, and taxable-result detail.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  $('propertyTableBody').innerHTML = scenario.properties.map(property => `
+    <tr>
+      <td>${property.name}</td>
+      <td class="number">${fmtPercent(property.ownershipShare)}</td>
+      <td class="number">${fmtMoney(property.shareRent)}</td>
+      <td class="number">${fmtMoney(property.shareInterest)}</td>
+      <td class="number">${fmtMoney(property.shareOtherCashCosts)}</td>
+      <td class="number">${fmtMoney(property.shareCapitalWorks)}</td>
+      <td class="number ${toneClass(property.shareCashFlow)}">${fmtSignedMoney(property.shareCashFlow)}</td>
+      <td class="number ${toneClass(property.shareTaxableResult)}">${fmtSignedMoney(property.shareTaxableResult)}</td>
+    </tr>
+  `).join('');
+}
+
+function render(){
+  const salary = clamp(roundToStep(n($('salaryBox').value), 1000), 0, SALARY_MAX);
+  $('salaryBox').value = String(salary);
+  $('salarySlider').value = String(salary);
+
+  const scenario = calculateScenario();
+
+  $('selectedSalaryDisplay').textContent = fmtMoney(salary);
+  $('statAfterTaxCash').textContent = fmtMoney(scenario.afterTaxCash);
+  $('statAfterTaxCashSub').textContent = `${fmtMoney(scenario.afterTaxCash / 12)} per month after Australian tax.`;
+  $('statTaxableIncome').textContent = fmtMoney(scenario.taxableIncome);
+  $('statTaxableIncomeSub').textContent = `${fmtSignedMoney(scenario.rentalTaxableResult)} of rental taxable result is flowing into the tax calculation.`;
+  $('statTotalTax').textContent = fmtMoney(scenario.totalTax);
+  $('statTotalTaxSub').textContent = `${(scenario.effectiveTaxRate * 100).toFixed(1)}% of pre-tax cash inflow under these settings.`;
+  $('statRentalCash').textContent = fmtSignedMoney(scenario.rentalCashFlow);
+  $('statRentalCashSub').textContent = `${fmtMoney(scenario.rentShare)} rent less ${fmtMoney(scenario.interestShare + scenario.otherCashCostsShare)} of interest and cash costs.`;
+  $('statRentalTaxable').textContent = fmtSignedMoney(scenario.rentalTaxableResult);
+  $('statRentalTaxableSub').textContent = `${fmtMoney(scenario.capitalWorksShare)} of capital works / depreciation is reducing taxable income only.`;
+  $('statPropertyLift').textContent = fmtSignedMoney(scenario.propertyLiftAfterTax);
+  $('statPropertyLiftSub').textContent = `Compared with a wages-only Australian scenario at the same salary and deductions.`;
+
+  $('scenarioCallout').textContent = scenario.properties.length
+    ? `Under these settings, ${fmtMoney(scenario.wages)} of wages plus ${fmtSignedMoney(scenario.rentalCashFlow)} of rental cash flow turns into ${fmtMoney(scenario.afterTaxCash)} after Australian tax and levies.\nThe property settings move taxable income by ${fmtSignedMoney(scenario.rentalTaxableResult)} and move annual after-tax cash by ${fmtSignedMoney(scenario.propertyLiftAfterTax)} relative to wages alone.`
+    : `With no properties loaded, this is a wages-only Australian take-home estimate. ${fmtMoney(scenario.wages)} of wage income turns into ${fmtMoney(scenario.afterTaxCash)} after resident tax, Medicare levy, and the selected MLS setting.`;
+
+  refreshPropertyState(scenario);
+  renderBreakdownTables(scenario);
+  renderPropertyTable(scenario);
+}
+
+function init(){
+  $('salaryBox').value = String(DEFAULT_SALARY);
+  $('salarySlider').value = String(DEFAULT_SALARY);
+
+  ['salarySlider','salaryBox','bonus','otherDeductions','wfh','medicareLevyRate','mlsRate'].forEach(id => {
+    $(id).addEventListener('input', event => {
+      if (event.target.id === 'salarySlider') $('salaryBox').value = event.target.value;
+      if (event.target.id === 'salaryBox') $('salarySlider').value = event.target.value;
+      render();
+    });
+  });
+
+  $('addPropertyBtn').addEventListener('click', () => {
+    addPropertyCard();
+    render();
+  });
+
+  $('propertyList').addEventListener('click', event => {
+    const button = event.target.closest('[data-remove-property]');
+    if (!button) return;
+    button.closest('.property-card').remove();
+    render();
+  });
+
+  $('propertyList').addEventListener('input', event => {
+    if (event.target.matches('input')) render();
+  });
+
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
