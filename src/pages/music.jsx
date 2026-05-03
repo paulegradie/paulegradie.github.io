@@ -4,6 +4,7 @@ import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import Link from 'next/link'
 import { SoundCloudIcon } from '@/components/SocialIcons'
+import { Button } from '@/components/Button'
 
 const playlists = [
   {
@@ -15,6 +16,9 @@ const playlists = [
 ]
 
 const soundCloud = 'https://soundcloud.com/paulgradie'
+const appleMusic = 'https://music.apple.com/us/artist/paul-gradie/1654189380'
+const spotifySearch = 'https://open.spotify.com/search/Paul%20Gradie'
+const amazonMusic = 'https://music.amazon.com/albums/B0CTKMLWB4'
 
 function MusicSection({ children, ...props }) {
   return (
@@ -42,17 +46,50 @@ function Appearance({ title, src: iframeSrc }) {
   )
 }
 
-function SoundCloudLink() {
+function StreamingAvailability() {
   return (
-    <li className="flex">
-      <Link
-        href={soundCloud}
-        className="glass-panel group inline-flex items-center rounded-2xl px-4 py-3 text-sm font-semibold text-muted transition hover:-translate-y-0.5 hover:text-[color:var(--brand-b)] dark:text-slate-200 dark:hover:text-cyan-300"
-      >
-        <SoundCloudIcon className="h-6 w-6 flex-none fill-[color:var(--ink-muted)] transition group-hover:fill-[color:var(--brand-a)] dark:group-hover:fill-cyan-300" />
-        <span className="ml-3">Paul Gradie on SoundCloud</span>
-      </Link>
-    </li>
+    <div className="glass-panel rounded-3xl p-6 sm:p-7">
+      <div className="max-w-2xl">
+          <p className="eyebrow-label">Streaming</p>
+          <h2 className="mt-2 font-display text-2xl text-ink">Available on major streaming platforms</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+            You can find my releases on Apple Music, Spotify, SoundCloud, Amazon Music, and
+            other major streaming services.
+          </p>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-3">
+          <Button href={appleMusic} target="_blank" rel="noreferrer" className="rounded-2xl px-5 py-3">
+            Apple Music
+          </Button>
+          <Button
+            href={spotifySearch}
+            target="_blank"
+            rel="noreferrer"
+            variant="secondary"
+            className="rounded-2xl px-5 py-3"
+          >
+            Spotify
+          </Button>
+          <Button
+            href={amazonMusic}
+            target="_blank"
+            rel="noreferrer"
+            variant="secondary"
+            className="rounded-2xl px-5 py-3"
+          >
+            Amazon Music
+          </Button>
+          <Link
+            href={soundCloud}
+            target="_blank"
+            rel="noreferrer"
+            className="glass-panel group inline-flex items-center rounded-2xl px-4 py-3 text-sm font-semibold text-muted transition hover:-translate-y-0.5 hover:text-[color:var(--brand-b)] dark:text-slate-200 dark:hover:text-cyan-300"
+          >
+            <SoundCloudIcon className="h-6 w-6 flex-none fill-[color:var(--ink-muted)] transition group-hover:fill-[color:var(--brand-a)] dark:group-hover:fill-cyan-300" />
+            <span className="ml-3">SoundCloud</span>
+          </Link>
+      </div>
+    </div>
   )
 }
 
@@ -70,7 +107,7 @@ export default function Music() {
         title="My Music"
         intro="I compose electronic music as a creative outlet and a way to keep the maker side of my brain active. Every year I release a small set of tracks that reflect a different creative mood."
       >
-        <SoundCloudLink />
+        <StreamingAvailability />
         <div className="mt-10 space-y-16">
           {playlists.map((playlist, index) => (
             <MusicSection key={index} title={playlist.year}>
