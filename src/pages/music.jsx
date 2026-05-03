@@ -8,7 +8,7 @@ import { SoundCloudIcon } from '@/components/SocialIcons'
 const playlists = [
   {
     year: '2023',
-    title: 'Around the Sun',
+    title: 'Shoot for the Stars - Nostalgic Electronic',
     iframeSrc:
       'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1622034748&color=%232a3d4d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true',
   },
