@@ -15,7 +15,7 @@ const highlights = [
 ]
 
 const metrics = [
-  { label: 'Years in software', value: '9+' },
+  { label: 'Years in software', value: '12+' },
   { label: 'Core domains', value: 'Platform, Product, and Applied AI Engineering' },
   { label: 'Remote collaboration', value: 'US-facing and cross-time-zone proven' },
   { label: 'Leadership scope', value: 'Staff / Principal IC with delivery and architecture influence' },

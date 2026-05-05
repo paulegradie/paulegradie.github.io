@@ -232,7 +232,7 @@ Suggested headline:
 > Staff-level engineer operating across platform architecture, production reliability, applied AI systems, and product delivery.
 
 Suggested proof bands:
-- 9+ years software experience.
+- 12+ years software experience.
 - PhD-trained scientist.
 - Published research + AI/ML patent.
 - Platform/team leadership.
