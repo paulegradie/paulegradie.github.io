@@ -6,7 +6,7 @@ import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import { SocialLink } from '@/components/SocialLink'
-import portraitImage from '@/images/portrait.jpg'
+import portraitImage from '@/images/photos/PaulG.png'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
 

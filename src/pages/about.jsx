@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { SocialLink } from '@/components/SocialLink'
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
-import portraitImage from '@/images/portrait.jpg'
+import portraitImage from '@/images/photos/PaulG.png'
 
 export default function About() {
   return (
