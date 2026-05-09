@@ -1,0 +1,299 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint } from '@/components/blog/Callout'
+import { Quote } from '@/components/blog/Quote'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-05-09',
+  title: 'Prompting Is Context Engineering, Not Magic',
+  description:
+    'A good prompt does not trick an AI model into being smart. It builds the temporary world the model has to reason inside.',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+### A good prompt is not magic
+
+I think we have collectively done ourselves a small disservice by talking about "prompting" as if it were a bag of tricks.
+
+You have probably seen some version of this already. Use this phrase. Add this role. Tell the model to take a deep breath. Ask it to think step by step. Offer it imaginary money. Whatever the current folk recipe happens to be.
+
+Some of those tricks work some of the time, which is part of why the topic gets confusing. But I do not think that is the useful way to understand what is happening. A good prompt is not a spell. It is not a secret password that unlocks the smart part of the model. It is something much more ordinary than that.
+
+A good prompt builds context.
+
+It tells the model what kind of situation it is in. It says what kind of work belongs there, what constraints matter, what the output is for, what tone is appropriate, what evidence counts, what should be avoided, and what sort of answer would actually be useful.
+
+That is why prompting matters. Not because the model needs to be manipulated, but because the model is deeply conditional. It does not answer from nowhere. It answers from inside the temporary world we construct around it.
+
+<KeyPoint>Prompting is not about tricking the model. It is about constructing the model's temporary world.</KeyPoint>
+
+When we write a prompt, we are not simply asking a question. We are shaping the space of possible answers. We are narrowing ambiguity. We are telling the model which region of its learned behavior is relevant and which region is not.
+
+A terse prompt leaves too much of that work implicit. A better prompt makes the world clearer. And for an attention-based language model, clarity is not just politeness. It is part of how you steer the computation.
+
+## The model is not looking up your answer
+
+The first mental model to throw away is that ChatGPT is a database with a conversational skin.
+
+That is not really what these systems are.
+
+Modern language models take your prompt, break it into tokens, transform those tokens into high-dimensional numerical representations, pass those representations through many layers of computation, and then predict likely continuations one token at a time. The Transformer architecture that made this style of system dominant is built around attention: a mechanism that lets tokens condition their representation on other tokens in the context [1].
+
+That sounds very computer-sciencey, but the practical implication is simple: the prompt is not just the thing you type before the answer. The prompt is part of the computation that produces the answer.
+
+Every token you include can influence what the model attends to. Every phrase can bias the model toward a task, a style, a domain, a level of technicality, a genre, or a set of assumptions. Every missing detail leaves the model to infer something from its priors.
+
+This is why two prompts that appear to ask for the same thing can produce wildly different outputs.
+
+Compare this:
+
+<Quote>Write about AI.</Quote>
+
+With this:
+
+<Quote>Write a 1,500-word blog post for senior software engineers arguing that AI does not remove the need for software fundamentals, because models can generate code but still need humans to supply judgement, architectural taste, local context, and evaluation criteria. Use a conversational but serious tone. Avoid generic AI hype.</Quote>
+
+The second prompt is not better because it is longer in some brute-force sense. It is better because it supplies coordinates.
+
+It defines the audience, the thesis, the tone, the examples that probably belong, and the failure mode to avoid. The model has fewer plausible worlds to choose from.
+
+## The manifold metaphor
+
+People sometimes describe prompting as steering a model through a manifold. I like that metaphor, as long as we do not let it become mystical.
+
+In machine learning, the manifold hypothesis is the idea that high-dimensional data often concentrates around lower-dimensional structure. Real-world data can be represented in enormous numerical spaces, but the meaningful variation inside that data is not random. It tends to organize around coherent structure: images of faces, shapes of objects, grammatical patterns, topics, styles, domains, genres, and concepts [2].
+
+Language models learn representations of text inside these high-dimensional spaces. They learn relationships between words, phrases, documents, arguments, styles, tasks, and patterns of response. They do not contain one tidy little object called "the meaning manifold", but they do learn geometries of association that make some continuations more natural than others.
+
+So when I say a prompt steers the model through a manifold, I mean something like this:
+
+<Callout label={'The useful version of the metaphor'}>A prompt gives the model coordinates that bias its movement through a learned space of possible meanings, tasks, styles, arguments, and continuations.</Callout>
+
+A vague prompt drops the model into a broad region. A precise prompt places the model somewhere more specific. A precise prompt with examples, constraints, audience, and success criteria does something even stronger: it gives the model a path.
+
+This is not deterministic, of course. The model can still surprise you. It can still make mistakes. It can overfit to the wrong cue, wander into the wrong register, or confidently explain something it has misunderstood. But the prompt changes the probability landscape. It makes some continuations more likely and others less likely.
+
+## Terse prompts ask the model to guess the world
+
+Terse prompts are not always bad. Sometimes they are exactly enough.
+
+"Translate this into Spanish" is clear if the text is simple and the desired output is obvious.
+
+"Summarize this in three bullets" can work perfectly well.
+
+But as the task becomes more complex, terse prompts become underdetermined. They ask the model to infer too many things that the user has not said.
+
+Take a prompt like this:
+
+<Quote>Make this better.</Quote>
+
+What does "better" mean?
+
+Does it mean shorter? More persuasive? More technical? More emotional? More executive-friendly? More casual? More rigorous? Less verbose? More like the original voice? Less like the original voice? Should the model preserve the structure, rewrite the whole thing, fix grammar only, sharpen the argument, add evidence, remove hedging, make it funny, make it serious, or make it publishable?
+
+The model can still respond, of course. It will infer a likely meaning from context. But if the context does not contain enough signal, the model falls back on generic priors.
+
+That is one reason AI output so often feels bland. The model was not necessarily incapable of producing something sharper. It was not given enough of a world to reason inside.
+
+<KeyPoint>Terse prompts often produce generic answers because they leave the model to infer the missing world from generic priors.</KeyPoint>
+
+This is not only a writing problem. It shows up in software design, code review, product planning, strategy, debugging, research synthesis, and career advice.
+
+If you say, "Design this service," the model can produce a service. It will probably produce the sort of service-shaped answer that lives in blog posts and documentation examples.
+
+If you say, "Design this service for a .NET backend inside a legacy codebase with weak transactional boundaries, high operational risk, fragile integration tests, and a team that needs to maintain it without a platform rewrite," you have given the model a different world.
+
+And that world matters.
+
+## Prompting works because models can learn from context
+
+One of the important findings from the large-language-model era is that models can adapt to tasks through the prompt itself.
+
+The GPT-3 paper made this especially visible. It showed that large language models could perform tasks from natural-language instructions and a small number of examples in the context, without updating the model's weights [3]. In other words, the model could infer the task from the prompt.
+
+It means the context window is not just a place to put input. It is a temporary programming surface. You can describe a task. You can show examples. You can establish a style. You can define a schema. You can provide constraints. You can give the model a miniature world and ask it to continue according to the rules of that world.
+
+Chain-of-thought prompting demonstrated another version of this. By including examples that show intermediate reasoning steps, researchers were able to improve performance on arithmetic, commonsense, and symbolic reasoning tasks [4]. The model was not merely receiving the final answer pattern. It was being shown the kind of reasoning trace that belonged in the task.
+
+Automatic Prompt Engineer took this further by treating prompts themselves as optimizable natural-language instructions, showing that different phrasings can produce materially different task performance [5].
+
+None of this means prompts are magic. It means prompts are data. And the model is sensitive to data.
+
+## Attention makes context operational
+
+The word "attention" gets used loosely now, but it is worth remembering what it buys us conceptually.
+
+In a Transformer, tokens do not merely flow through a sentence from left to right as if each word only inherits from the word before it. Attention allows the model to relate tokens to other tokens in the sequence [1]. The representation of one token can be influenced by many other tokens in the prompt.
+
+That is why context matters so much. If your prompt says "write for senior software engineers," that phrase can influence the level of explanation. If your prompt says "avoid hype," that phrase can influence word choice. If your prompt says "use concrete examples from legacy-code modernization," that phrase can influence the examples the model selects. If your prompt says "include citations," that phrase can influence the structure of the final document.
+
+The prompt is not a preamble. It is part of the machinery.
+
+This is also why context engineering has become such an important discipline. Anthropic describes context engineering as the practice of choosing what tokens are included when an LLM samples a response, and emphasizes that the central challenge is deciding what information belongs in the model's limited context [6].
+
+Prompting is not merely wordsmithing. It is information architecture. You are deciding what the model gets to know, what it should care about, and how the task should be framed before generation begins.
+
+## Verbosity helps when it adds coordinates
+
+The argument gets sloppy when it becomes "longer prompts are better." That is false.
+
+Longer prompts are better only when the extra words add useful signal.
+
+A verbose prompt can help when it provides context, examples, definitions, constraints, tradeoffs, audience, tone, success criteria, source material, edge cases, or failure modes. Those details give the model more coordinates.
+
+A verbose prompt can hurt when it contains irrelevant background, contradictory goals, too many low-priority preferences, unnecessary process instructions, or examples pointing in different directions.
+
+There is a difference between rich context and noise.
+
+<Callout label={'The rule'}>More words do not automatically produce better results. More relevant coordinates do.</Callout>
+
+This matters because attention is powerful, but not free. Long contexts can dilute relevance. Research on long-context language models has shown that models may struggle to use relevant information when it is buried in the middle of a long context [7]. In practical terms, dumping everything into the prompt is not the same thing as helping the model.
+
+The best prompt is not the longest prompt. The best prompt is the clearest temporary world.
+
+## Examples are landmarks
+
+Examples are one of the strongest ways to steer a model because they do not merely describe the desired behavior. They demonstrate it.
+
+You can tell a model:
+
+<Quote>Use a thoughtful, serious, conversational style.</Quote>
+
+That helps.
+
+But if you also give it a paragraph written in that style, you have done something stronger. You have given it a local pattern to continue.
+
+Examples are landmarks on the manifold. They say: this is the neighborhood. Continue from here.
+
+That is why few-shot prompting works so well in many cases. The examples define the mapping from input to output, the expected level of detail, the output format, and often the hidden criteria that would be tedious to state explicitly [3].
+
+This is especially valuable for work where the desired output is hard to define abstractly.
+
+"Make it sound like me" is vague.
+
+"Here are three things I wrote that have the tone I want" is much better.
+
+"Classify these customer issues correctly" is vague.
+
+"Here are eight examples of customer issues and the categories I assigned them to" is better.
+
+"Write a high-quality technical blog post" is vague.
+
+"Here is the thesis, here is the intended reader, here is the posture, here is the kind of citation style I want, and here is a previous post whose rhythm I like" is better.
+
+Examples reduce ambiguity because they let the model infer structure from demonstration. If the thing is hard to define, show what you mean.
+
+## Good prompting resembles good collaboration
+
+The best prompting does not feel like commanding a machine. It feels more like briefing a capable collaborator.
+
+If you were working with a thoughtful human, you would not expect them to read your mind. You would explain the situation. You would tell them what you are trying to accomplish. You would share the constraints. You would say what kind of answer would be useful. You would warn them about the traps. You would give examples if the style mattered. You would correct course when they misunderstood.
+
+The model is not human, but the interaction is context-sensitive enough that many of the same communication skills now matter.
+
+The person who uses AI well is often the person who can see what context is missing. They can notice when the model is answering a different question than the one they intended. They can clarify the real objective. They can separate essential constraints from incidental preferences. They can describe the shape of success. They can iterate.
+
+In that sense, prompting is not only a technical skill. It is a communication skill. It rewards the ability to build shared context, notice ambiguity, and guide an intelligence-like system through a problem without assuming that your first instruction was sufficient.
+
+## The model does not know what you care about
+
+A model may know a lot about software architecture in general: design patterns, dependency injection, distributed systems, testing strategies, observability patterns, and the textbook version of many things.
+
+But it does not automatically know what you care about in this situation.
+
+It does not know that your team is weak on operational follow-through. It does not know that the test suite is brittle. It does not know that the codebase has a false abstraction everyone is afraid to touch. It does not know that the business needs a reversible decision this quarter and a cleaner architectural direction next quarter.
+
+It does not know that a technically elegant solution will fail politically because nobody will maintain it.
+
+Unless you tell it.
+
+That is the real reason richer prompting produces better outcomes. The model may have broad general capability, but the value often comes from local context.
+
+The more local context matters, the more terse prompting fails.
+
+## Prompting as temporary architecture
+
+Here is the thesis I keep coming back to:
+
+<Quote>A prompt is the temporary architecture of the model's reasoning environment.</Quote>
+
+It establishes boundaries. It creates interfaces. It defines inputs and outputs. It names constraints. It encodes priorities. It decides what is in scope and out of scope.
+
+A weak prompt creates a messy architecture. The model can still build something inside it, but the result is often generic, misaligned, or structurally confused.
+
+A strong prompt creates a cleaner architecture. The model has a clearer space to operate within. It can spend less effort guessing the task and more effort solving it.
+
+This is why the quality of the prompt often shows up as quality in the answer.
+
+Not always. Models still make mistakes. They hallucinate. They overgeneralize. They comply too eagerly. They sometimes produce confident nonsense. Prompt quality does not remove the need for human judgement.
+
+But it changes the odds, and for serious work, that matters.
+
+## A practical prompting frame
+
+When I want better output from a model, I do not start by asking, "How can I make this prompt longer?"
+
+I ask, "What is the model missing?"
+
+Usually the missing pieces fall into a few categories.
+
+First, the task. What exactly are we doing?
+
+Second, the audience. Who is this for, and what do they already understand?
+
+Third, the goal. What should be different after this output exists?
+
+Fourth, the constraints. What must the answer preserve, avoid, include, or respect?
+
+Fifth, the evidence standard. Should the model reason from provided material, cite external sources, use only known facts, or clearly mark uncertainty?
+
+Sixth, the style. Should it sound academic, conversational, executive, skeptical, warm, direct, funny, serious, or technical?
+
+Seventh, the failure mode. What would make the answer bad?
+
+That last one is underrated.
+
+A prompt gets much stronger when you tell the model what not to do. Do not make it generic. Do not over-explain beginner concepts. Do not rewrite my voice into corporate mush. Do not invent citations. Do not optimize for elegance at the expense of operational safety. Do not give me a toy example when the problem is production architecture.
+
+Those negative constraints are part of the path.
+
+## The future is not prompt incantations
+
+I do not think the future of AI work is everyone carrying around giant prompt templates. That is probably a transitional behavior.
+
+As models improve, they get better at inferring intent from less explicit input. The interaction becomes more natural. Some heavy prompt scaffolding becomes unnecessary. Some old prompting tricks become counterproductive.
+
+But that does not make prompting irrelevant. It changes what good prompting means.
+
+The future is not "write the longest prompt." The future is "give the model the right context at the right time."
+
+That is why context engineering is a better phrase than prompt engineering for a lot of serious work. The question is not merely what words to type. The question is what information the model needs in order to act intelligently in this moment.
+
+Sometimes that is a one-line request. Sometimes it is a careful brief. Sometimes it is a set of examples. Sometimes it is a design document. Sometimes it is the relevant files from a repository. Sometimes it is a conversation where the model helps you discover the prompt you should have written in the first place.
+
+## Final thought
+
+Prompting is the human act of constructing the model's temporary world.
+
+Every prompt tells the model what kind of situation it is in, what kind of answer belongs there, what constraints matter, and what path through its learned space of possibilities is worth taking.
+
+Terse prompts fail when they ask the model to guess the world. Precise prompts succeed when they build the world first.
+
+That is why better prompting works. Not because the model is conscious, or because there are magic words, or because verbosity itself is virtuous. It works because modern attention-based models are context-sensitive systems, and context is the thing we actually get to shape.
+
+<KeyPoint>The real skill is not writing longer prompts. The real skill is knowing which context changes the answer.</KeyPoint>
+
+## References
+
+1. Vaswani et al., "Attention Is All You Need," 2017. [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
+2. Fefferman, Mitter, and Narayanan, "Testing the Manifold Hypothesis," Journal of the American Mathematical Society, 2016. [https://www.jmlr.org/papers/v17/14-513.html](https://www.jmlr.org/papers/v17/14-513.html)
+3. Brown et al., "Language Models are Few-Shot Learners," 2020. [https://arxiv.org/abs/2005.14165](https://arxiv.org/abs/2005.14165)
+4. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," 2022. [https://arxiv.org/abs/2201.11903](https://arxiv.org/abs/2201.11903)
+5. Zhou et al., "Large Language Models Are Human-Level Prompt Engineers," 2022. [https://openreview.net/forum?id=92gvk82DE-](https://openreview.net/forum?id=92gvk82DE-)
+6. Anthropic Engineering, "Effective context engineering for AI agents," 2025. [https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+7. Liu et al., "Lost in the Middle: How Language Models Use Long Contexts," 2023. [https://arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)
