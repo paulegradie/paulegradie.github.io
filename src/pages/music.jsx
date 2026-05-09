@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { Card } from '@/components/Card'
-import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import Link from 'next/link'
 import { SoundCloudIcon } from '@/components/SocialIcons'
@@ -20,11 +19,17 @@ const appleMusic = 'https://music.apple.com/us/artist/paul-gradie/1654189380'
 const spotifySearch = 'https://open.spotify.com/search/Paul%20Gradie'
 const amazonMusic = 'https://music.amazon.com/albums/B0CTKMLWB4'
 
-function MusicSection({ children, ...props }) {
+function MusicSection({ title, children }) {
   return (
-    <Section {...props}>
+    <section className="space-y-5">
+      <div>
+        <div className="flex items-center gap-4">
+          <h2 className="font-display shrink-0 text-2xl text-ink">{title}</h2>
+          <div className="h-px flex-grow border-t border-slate-300 dark:border-slate-600/70" />
+        </div>
+      </div>
       <div className="space-y-12">{children}</div>
-    </Section>
+    </section>
   )
 }
 

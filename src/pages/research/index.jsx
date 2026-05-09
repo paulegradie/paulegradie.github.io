@@ -167,7 +167,7 @@ export default function ResearchIndex({ publications }) {
                 <div>
                   <div className="flex items-center gap-4">
                     <h2 className="font-display shrink-0 text-2xl text-ink">{sectionLabels[status]}</h2>
-                    <div className="h-px flex-grow border-t dark:border-slate-600/70" />
+                    <div className="h-px flex-grow border-t border-slate-300 dark:border-slate-600/70" />
                   </div>
                   <p className="mt-2 text-sm text-muted">{sectionDescriptions[status]}</p>
                 </div>

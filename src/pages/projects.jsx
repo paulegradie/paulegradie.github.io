@@ -125,9 +125,12 @@ export default function Projects() {
         <div className="space-y-16">
           {projectGroups.map((group) => (
             <section key={group.title} className="space-y-6">
-              <div className="glass-panel-strong rounded-3xl p-6">
-                <h2 className="font-display text-2xl text-ink">{group.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{group.description}</p>
+              <div>
+                <div className="flex items-center gap-4">
+                  <h2 className="font-display shrink-0 text-2xl text-ink">{group.title}</h2>
+                  <div className="h-px flex-grow border-t border-slate-300 dark:border-slate-600/70" />
+                </div>
+                <p className="mt-2 text-sm text-muted">{group.description}</p>
               </div>
               <ul role="list" className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((project) => (

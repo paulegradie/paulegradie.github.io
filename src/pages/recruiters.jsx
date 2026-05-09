@@ -143,6 +143,17 @@ function RecruiterContent() {
             AI-native workflows, and high-trust technical leadership.
           </p>
         </div>
+
+        <div className="glass-panel rounded-2xl p-6 md:col-span-2">
+          <div className="mb-4 flex items-center">
+            <CheckIcon className="mr-3 h-6 w-6 text-[color:var(--brand-b)] dark:text-cyan-300" />
+            <h3 className="text-xl font-semibold text-ink dark:text-slate-100">Compensation Expectations</h3>
+          </div>
+          <p className="text-lg font-semibold text-ink dark:text-slate-100">$265,000 base salary — minimum to open negotiations</p>
+          <p className="mt-2 text-muted dark:text-slate-300">
+            Base salary only, not all-inclusive. Please do not reach out with roles that cannot meet this floor.
+          </p>
+        </div>
       </div>
 
       <div className="glass-panel-strong rounded-3xl p-7 sm:p-8">
