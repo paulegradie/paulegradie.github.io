@@ -1,0 +1,60 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'Semi-Supervised, Deep-Learning Approach for Removing Irrelevant Sentences from Text in a Customer-Support System',
+  year: 2022,
+  date: '2022-07-26',
+  venue: 'United States Patent Office',
+  status: 'patent',
+  authors: ['Anh Thien Dinh', 'Wei Chu', 'Paul E. Gradie'],
+  abstract:
+    'A system and method for processing customer support requests by segmenting text into sentences, encoding each sentence with contextual information from prior sentences, and computing per-sentence relevance probabilities. Relevant sentences are extracted using bidirectional RNNs, feed-forward networks, Sparsemax activation, and CNNs to filter noise such as salutations and signatures. The extracted content is then matched against candidate agent responses to surface the most appropriate reply.',
+  links: {
+    preprint: null,
+    paper: 'https://patents.google.com/patent/US11397952B2/en',
+    repo: null,
+    posts: [],
+  },
+  citation: `Dinh, A.T., Chu, W., & Gradie, P.E. (2022). Semi-supervised, deep-learning approach for removing irrelevant sentences from text in a customer-support system. US Patent 11,397,952 B2. Assigned to Zendesk Inc. Filed: March 29, 2019. Granted: July 26, 2022.`,
+  description:
+    'Granted US patent for a semi-supervised deep learning system that filters irrelevant sentences from customer support messages to improve automated response matching.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Overview
+
+**Patent number:** US 11,397,952 B2  
+**Assignee:** Zendesk Inc.  
+**Filed:** March 29, 2019  
+**Granted:** July 26, 2022
+
+This patent describes a production-grade system for improving automated response quality in customer support platforms by identifying and discarding irrelevant text — salutations, signatures, pleasantries, repeated history — before matching a customer message against a candidate answer corpus.
+
+## Problem
+
+Customer support messages are noisy. A message like:
+
+> *"Hi there, hope you're well! I've been using your product for a while now. Anyway, I can't log in to my account. Thanks so much!"*
+
+contains only one actionable sentence. A naive system that encodes the full message conflates the signal with noise, degrading retrieval and response quality.
+
+## Technical Approach
+
+The system segments each incoming message into sentences, then assigns each sentence a relevance score using a semi-supervised model. The architecture:
+
+1. **Sentence encoding** — Each sentence is encoded with context from preceding sentences using a bidirectional RNN, capturing discourse-level coherence signals
+2. **Relevance scoring** — A feed-forward network with **Sparsemax activation** produces a sparse probability distribution over sentences, naturally zeroing out low-relevance content
+3. **Feature extraction** — A CNN extracts local n-gram features from the highest-scoring sentences
+4. **Response matching** — The filtered sentence embedding is matched against candidate agent responses to surface the best reply
+
+The use of Sparsemax rather than Softmax is a key design choice: it produces exactly-zero probabilities for irrelevant sentences, giving the system a hard filtering property rather than a soft re-weighting.
+
+## Semi-Supervised Training
+
+Labelling every sentence in a support corpus for relevance is expensive. The approach uses a small labelled seed set combined with a large unlabelled corpus, with the model bootstrapping relevance labels from its own predictions — a semi-supervised loop that scales well to production data volumes.
+
+This work was developed during my time on the AI team at Zendesk, Melbourne (2017–2020).

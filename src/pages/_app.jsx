@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 
 import '@/styles/tailwind.css'
+import 'katex/dist/katex.min.css'
 import 'focus-visible'
 
 const sans = Sora({

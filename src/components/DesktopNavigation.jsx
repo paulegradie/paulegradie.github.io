@@ -7,6 +7,7 @@ export function DesktopNavigation(props) {
         <NavItem href="/">Home</NavItem>
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
+        <NavItem href="/research">Research</NavItem>
         <NavItem href="/projects">Projects</NavItem>
         <NavItem href="/resume">Resume</NavItem>
         <NavItem href="/music">Music</NavItem>

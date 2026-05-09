@@ -1,0 +1,47 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'A Comprehensive Atlas of the Adult Mouse Penis',
+  year: 2015,
+  date: '2015-01-01',
+  venue: 'Sexual Development',
+  status: 'published',
+  authors: ['Tiffany Phillips', 'Danielle Wright', 'Paul E. Gradie', 'Lindsey Johnston', 'Andrew J. Pask'],
+  abstract:
+    'A comprehensive anatomical and histological reference atlas of the adult mouse penis, providing systematic characterisation of penile tissue types, structural layers, vascular architecture, and innervation patterns. This atlas serves as a reference standard for studies of urogenital development, reproductive biology, and the long-term consequences of developmental perturbations on adult penile morphology.',
+  links: {
+    preprint: null,
+    paper: 'https://doi.org/10.1159/000431010',
+    repo: null,
+    posts: [],
+  },
+  citation: `Phillips, T., Wright, D., Gradie, P.E., Johnston, L., & Pask, A.J. (2015). A Comprehensive Atlas of the Adult Mouse Penis. Sexual Development, 9(3), 162–172. https://doi.org/10.1159/000431010`,
+  description:
+    'A systematic anatomical and histological reference atlas of the adult mouse penis, characterising tissue layers, vascular architecture, and innervation patterns.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Overview
+
+This paper, published in *Sexual Development*, provides a reference atlas for the adult mouse penis — filling a gap in the published literature on urogenital anatomy that had complicated interpretation of developmental perturbation studies.
+
+Mouse models are widely used to study congenital urogenital anomalies such as hypospadias and cryptorchidism, as well as long-term reproductive outcomes. However, a comprehensive, systematically annotated anatomical reference for the adult mouse penis was lacking. Studies examining the consequences of genetic or endocrine disruption on penile morphology relied on heterogeneous, incompatible descriptions of normal anatomy.
+
+## Contribution
+
+This atlas provides:
+
+- **Histological characterisation** of penile tissue layers using multiple staining modalities
+- **Vascular mapping** of the erectile tissue compartments
+- **Innervation patterns** of the dorsal nerve and associated structures
+- **Systematic nomenclature** for penile anatomical regions, standardising terminology for the field
+
+The atlas has since served as a reference standard in studies of developmental disruption, endocrine-disrupting chemical exposure, and reproductive phenotyping in mouse models.
+
+## Context
+
+This work was conducted during my doctoral research in the Pask Laboratory at the University of Melbourne, as part of a broader programme characterising the mouse urogenital system at developmental and adult stages.

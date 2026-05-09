@@ -1,0 +1,48 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'Morus murrayana (Moraceae): A New Mulberry from Eastern North America',
+  year: 2009,
+  date: '2009-01-01',
+  venue: 'Phytologia',
+  status: 'published',
+  authors: ['S.J. Galla', 'B.L. Viers', 'P. Gradie', 'L. de Saar'],
+  abstract:
+    'We describe Morus murrayana, a new species of mulberry (Moraceae) from eastern North America. Morphological characterisation distinguishes M. murrayana from related taxa in the genus Morus through a combination of leaf morphology, fruit characters, and geographic distribution. A formal taxonomic description, synonymy, and notes on ecology and distribution are provided.',
+  links: {
+    preprint: null,
+    paper: 'https://www.biodiversitylibrary.org/part/220370',
+    repo: null,
+    posts: [],
+  },
+  citation: `Galla, S.J., Viers, B.L., Gradie, P., & de Saar, L. (2009). Morus murrayana (Moraceae): A new mulberry from eastern North America. Phytologia, 91(1), 105–116.`,
+  description:
+    'Taxonomic description of Morus murrayana, a new species of mulberry (Moraceae) from eastern North America, with morphological characterisation and distribution notes.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Overview
+
+This paper, published in *Phytologia*, describes a new species of mulberry — *Morus murrayana* — from eastern North America. The work is a contribution to the systematics of the genus *Morus* (family Moraceae), which includes the commercially important white mulberry (*M. alba*) and red mulberry (*M. rubra*), as well as several cryptic or recently described taxa in North America.
+
+## Taxonomic Context
+
+The genus *Morus* in North America has a complex taxonomic history. Hybridisation between native and introduced species (particularly the introduced *M. alba* from East Asia) has produced populations with intermediate morphologies that complicate species delimitation. *M. murrayana* is distinguished from congeners by a specific combination of leaf shape, margin characters, fruit morphology, and regional distribution.
+
+## Formal Description
+
+The paper provides:
+
+- Full Latin diagnosis and English description of *Morus murrayana*
+- Comparative morphology distinguishing the species from *M. alba*, *M. rubra*, and related taxa
+- Type specimen designation and repository information
+- Notes on habitat, distribution, and phenology
+- A key to eastern North American *Morus* taxa incorporating the new species
+
+## Context
+
+This work was completed during my undergraduate studies at the University of Connecticut (2007–2010), representing an early engagement with systematic biology and formal taxonomic methodology before my focus shifted to molecular developmental genetics.

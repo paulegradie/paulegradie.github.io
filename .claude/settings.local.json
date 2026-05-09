@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(npm install *)",
+      "Bash(node -e \"require\\('remark-math'\\); require\\('rehype-katex'\\); require\\('katex'\\); console.log\\('all installed'\\)\")",
+      "Bash(npm run *)",
+      "WebFetch(domain:doi.org)",
+      "WebFetch(domain:www.nature.com)",
+      "WebFetch(domain:api.crossref.org)",
+      "WebFetch(domain:patents.google.com)",
+      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
+      "WebFetch(domain:minerva-access.unimelb.edu.au)",
+      "WebSearch",
+      "WebFetch(domain:www.biodiversitylibrary.org)",
+      "WebFetch(domain:www.researchgate.net)"
+    ]
+  }
+}

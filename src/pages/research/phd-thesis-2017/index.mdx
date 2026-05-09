@@ -1,0 +1,55 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'Defining the Master Regulator of Urethral Closure in Mouse',
+  year: 2017,
+  date: '2017-01-01',
+  venue: 'University of Melbourne',
+  status: 'thesis',
+  authors: ['Paul Gradie'],
+  abstract:
+    'This doctoral dissertation investigates the molecular regulation of urethral closure in mouse, with the goal of identifying the master transcriptional regulator that drives the fusion of urethral folds during male development. Using genetic, genomic, and molecular approaches, the work characterises the gene regulatory networks governing a critical developmental process whose disruption causes hypospadias — one of the most common congenital anomalies in males.',
+  links: {
+    preprint: null,
+    paper: 'https://minerva-access.unimelb.edu.au/handle/11343/198127',
+    repo: null,
+    posts: [],
+  },
+  citation: `Gradie, P.E. (2017). Defining the Master Regulator of Urethral Closure in Mouse [Doctoral dissertation]. University of Melbourne.`,
+  description:
+    'Doctoral dissertation on the molecular regulation of urethral closure in mouse, investigating transcription factors and signalling pathways underlying a key developmental process.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Overview
+
+This dissertation was completed in the laboratory of Professor Andrew Pask at the University of Melbourne (2014–2017). The central aim was to identify and characterise the transcriptional regulator(s) responsible for driving urethral closure during mammalian male development.
+
+Urethral closure — the fusion of the urethral folds along the ventral aspect of the developing penis — is one of the most precisely timed events in male organogenesis. Its failure produces hypospadias, a spectrum of congenital anomalies affecting approximately 1 in 200 male births globally, with prevalence rising alongside increasing environmental exposures to endocrine-disrupting compounds.
+
+## Research Aims
+
+1. Identify transcription factors with urethral fold-specific expression during the critical window of fusion
+2. Characterise the androgen-dependent regulatory networks driving urethral fold closure
+3. Determine the functional requirement for candidate regulators using mouse genetic models
+4. Establish the relationship between hormone signalling, lncRNA expression, and downstream effectors of tissue fusion
+
+## Methods
+
+- **RNA-seq** of staged urethral tissue across the closure window
+- **ChIP-seq** for androgen receptor binding in urethral tissue
+- **Mouse knockout models** to assess loss-of-function phenotypes
+- **In situ hybridisation** and **immunofluorescence** for spatial expression mapping
+- **Comparative genomics** for cross-species conservation analysis
+
+## Outcomes
+
+The dissertation established foundational gene regulatory maps of the developing mouse urethra and identified key regulators of the closure process — work that directly contributed to the later identification of Leat1 as a hormone-responsive lncRNA mediating EfnB2 expression (published in *Communications Biology*, 2025).
+
+## Supervisors
+
+- Professor Andrew J. Pask (University of Melbourne / University of Connecticut)

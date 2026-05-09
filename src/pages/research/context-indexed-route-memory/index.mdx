@@ -1,0 +1,61 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'Context-Indexed Route Memory: Non-Destructive Storage and Compositional Execution of Incompatible Transition Systems',
+  year: 2025,
+  date: '2025-01-01',
+  venue: 'Working Paper',
+  status: 'working-paper',
+  authors: ['Paul Gradie'],
+  abstract:
+    'We study a controlled continual compositional route-memory benchmark where models must store and execute multiple incompatible transition systems over the same state and action space. The central question is whether context-indexed structural plasticity combined with recurrent execution supports non-destructive storage and compositional execution of such incompatible route systems. Across a suite of controlled experiments, we investigate the conditions under which models can store and retrieve distinct route memories without interference.',
+  links: {
+    preprint: null,
+    paper: null,
+    repo: 'https://github.com/GradieResearch/context-indexed-route-memory',
+    posts: [],
+  },
+  citation: null,
+  description:
+    'Working paper on context-indexed route memory: studying non-destructive storage and compositional execution of incompatible transition systems.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Motivation
+
+A longstanding challenge in continual learning is *catastrophic forgetting* — the tendency for neural networks to overwrite previously learned behaviors when trained on new tasks. Most approaches address this at the parameter level (e.g., regularisation, replay, dynamic architectures). This work explores a different framing: **can context signals alone route a single model through distinct, incompatible behaviors without destructive interference?**
+
+The setting is deliberately minimal. We construct a controlled benchmark of route-memory tasks where the state space and action space are shared across all tasks, but the correct transition function differs per context. The model must learn to distinguish which route to execute based solely on a context index.
+
+## Research Questions
+
+1. Does context-indexed structural plasticity (e.g., context-gated modules) support non-destructive co-storage of incompatible transition systems?
+2. Does recurrent execution (carrying state across steps) improve compositional retrieval compared to feedforward alternatives?
+3. What is the capacity limit — how many incompatible route systems can be stored before interference dominates?
+
+## Benchmark Design
+
+The benchmark is a sequence of route-memory tasks. Each task defines a transition system $T_i : S \times A \to S$ over a shared state space $S$ and action space $A$. Tasks are designed to be maximally incompatible: the optimal action in any given state differs across tasks.
+
+A model is presented with a context token $c_i$ at the start of each episode and must execute the correct transition system for that context across a multi-step trajectory.
+
+## Experimental Status
+
+This is active research. Results are preliminary and the experimental design is evolving. See the [repository](https://github.com/GradieResearch/context-indexed-route-memory) for current experiment status and findings.
+
+| Experiment | Description | Status |
+|---|---|---|
+| Exp 1–4 | Baseline route memory without context indexing | Complete |
+| Exp 5–8 | Context-indexed gating mechanisms | In progress |
+| Exp 9–11 | Recurrent execution variants | Planned |
+| Exp 12–13 | Capacity and interference analysis | Planned |
+
+## Preliminary Observations
+
+Early results suggest that naive context conditioning is insufficient for reliable non-destructive storage beyond a small number of incompatible systems. Structural gating mechanisms show promise but introduce their own tradeoffs in generalisation.
+
+*This page will be updated as the research progresses.*

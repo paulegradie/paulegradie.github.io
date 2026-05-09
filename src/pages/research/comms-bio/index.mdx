@@ -1,0 +1,61 @@
+import { ResearchLayout } from '@/components/ResearchLayout'
+import { getPublicationsProps } from '@/lib/getPublicationsProps'
+
+export const getStaticProps = async () => await getPublicationsProps()
+
+export const meta = {
+  title: 'A long non-coding RNA Leat1 mediates the hormone responsiveness of EfnB2 during male urogenital development',
+  year: 2025,
+  date: '2025-01-01',
+  venue: 'Communications Biology',
+  status: 'published',
+  authors: [
+    'Deidre Mattiske',
+    'Pascal Bernard',
+    'Paul E. Gradie',
+    'Richard R. Behringer',
+    'Paul A. Overbeek',
+    'Rachel J. O\'Neill',
+    'Tiffany Phillips',
+    'Melanie Stewart',
+    'Neil Youngson',
+    'Gerard Tarulli',
+    'Andrew J. Pask',
+  ],
+  abstract:
+    'We identify Leat1 as a conserved long non-coding RNA that regulates urethral development through its interaction with EfnB2. Testosterone upregulates Leat1 expression while estrogen suppresses it, and loss-of-function of Leat1 results in a severe hypospadias phenotype. These findings identify Leat1 as a novel molecular regulator of urethral closure and a potential target through which endocrine disruption may cause congenital urogenital anomalies.',
+  links: {
+    preprint: null,
+    paper: 'https://doi.org/10.1038/s42003-025-09322-y',
+    repo: null,
+    posts: [],
+  },
+  citation: `Mattiske, D., Bernard, P., Gradie, P.E., Behringer, R.R., Overbeek, P.A., O'Neill, R.J., Phillips, T., Stewart, M., Youngson, N., Tarulli, G., & Pask, A.J. (2025). A long non-coding RNA Leat1 mediates the hormone responsiveness of EfnB2 during male urogenital development. Communications Biology. https://doi.org/10.1038/s42003-025-09322-y`,
+  description:
+    'We identify Leat1 as a conserved long non-coding RNA that regulates urethral development through its interaction with EfnB2, establishing a novel molecular regulator of urethral closure.',
+}
+
+export default (props) => <ResearchLayout meta={meta} {...props} />
+
+## Background
+
+Hypospadias — a congenital anomaly in which the urethral opening is displaced along the ventral penis — affects approximately 1 in 200 male births and has increased in prevalence in recent decades, likely reflecting rising environmental exposures to endocrine-disrupting chemicals. Despite its frequency, the molecular regulation of normal urethral closure remains poorly understood.
+
+The **Ephrin-B2** receptor ligand (EfnB2) is a known mediator of tissue boundary formation and cell migration, and its expression in the developing urethra makes it a candidate regulator of urethral closure. However, how hormonal signals — particularly androgen and estrogen — converge on EfnB2 to direct development was unknown.
+
+## Key Findings
+
+This study identifies **Leat1** (Lncrna EfnB2-associated transcript 1), a conserved long non-coding RNA, as a hormone-responsive regulator acting upstream of EfnB2 in the developing male urethra:
+
+- Testosterone **upregulates** Leat1 expression in urethral tissue
+- Estrogen **suppresses** Leat1 expression
+- Loss-of-function of Leat1 produces a **severe hypospadias phenotype** in mice
+- Leat1 modulates EfnB2 expression in a hormone-dependent manner
+
+These findings place Leat1 as a critical node linking the androgen/estrogen balance to the transcriptional program that drives urethral closure.
+
+## Significance
+
+This work identifies the first lncRNA regulator of urethral development, providing a mechanistic explanation for how endocrine disruption — exposure to exogenous estrogens or anti-androgens during gestation — can produce hypospadias. Leat1 and its regulation of EfnB2 represent candidate targets for future studies of environmentally induced congenital anomalies.
+
+This paper represents work from my doctoral research at the University of Melbourne under the supervision of Professor Andrew Pask, published collaboratively with colleagues at the University of Connecticut, MD Anderson Cancer Center, Baylor College of Medicine, and the University of Adelaide.

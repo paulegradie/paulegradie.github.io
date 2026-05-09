@@ -49,6 +49,7 @@ export function MobileNavigation(props) {
                 <MobileNavItem href="/">Home</MobileNavItem>
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
+                <MobileNavItem href="/research">Research</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/resume">Resume</MobileNavItem>
                 <MobileNavItem href="/music">Music</MobileNavItem>
