@@ -42,7 +42,7 @@ The first mental model to throw away is that ChatGPT is a database with a conver
 
 That is not really what these systems are.
 
-Modern language models take your prompt, break it into tokens, transform those tokens into high-dimensional numerical representations, pass those representations through many layers of computation, and then predict likely continuations one token at a time. The Transformer architecture that made this style of system dominant is built around attention: a mechanism that lets tokens condition their representation on other tokens in the context [1].
+Modern language models take your prompt, break it into tokens, transform those tokens into high-dimensional numerical representations, pass those representations through many layers of computation, and then predict likely continuations one token at a time. The Transformer architecture that made this style of system dominant is built around attention: a mechanism that lets tokens condition their representation on other tokens in the context [[1]](#ref-1).
 
 That sounds very computer-sciencey, but the practical implication is simple: the prompt is not just the thing you type before the answer. The prompt is part of the computation that produces the answer.
 
@@ -66,7 +66,7 @@ It defines the audience, the thesis, the tone, the examples that probably belong
 
 People sometimes describe prompting as steering a model through a manifold. I like that metaphor, as long as we do not let it become mystical.
 
-In machine learning, the manifold hypothesis is the idea that high-dimensional data often concentrates around lower-dimensional structure. Real-world data can be represented in enormous numerical spaces, but the meaningful variation inside that data is not random. It tends to organize around coherent structure: images of faces, shapes of objects, grammatical patterns, topics, styles, domains, genres, and concepts [2].
+In machine learning, the manifold hypothesis is the idea that high-dimensional data often concentrates around lower-dimensional structure. Real-world data can be represented in enormous numerical spaces, but the meaningful variation inside that data is not random. It tends to organize around coherent structure: images of faces, shapes of objects, grammatical patterns, topics, styles, domains, genres, and concepts [[2]](#ref-2).
 
 Language models learn representations of text inside these high-dimensional spaces. They learn relationships between words, phrases, documents, arguments, styles, tasks, and patterns of response. They do not contain one tidy little object called "the meaning manifold", but they do learn geometries of association that make some continuations more natural than others.
 
@@ -114,13 +114,13 @@ And that world matters.
 
 One of the important findings from the large-language-model era is that models can adapt to tasks through the prompt itself.
 
-The GPT-3 paper made this especially visible. It showed that large language models could perform tasks from natural-language instructions and a small number of examples in the context, without updating the model's weights [3]. In other words, the model could infer the task from the prompt.
+The GPT-3 paper made this especially visible. It showed that large language models could perform tasks from natural-language instructions and a small number of examples in the context, without updating the model's weights [[3]](#ref-3). In other words, the model could infer the task from the prompt.
 
 It means the context window is not just a place to put input. It is a temporary programming surface. You can describe a task. You can show examples. You can establish a style. You can define a schema. You can provide constraints. You can give the model a miniature world and ask it to continue according to the rules of that world.
 
-Chain-of-thought prompting demonstrated another version of this. By including examples that show intermediate reasoning steps, researchers were able to improve performance on arithmetic, commonsense, and symbolic reasoning tasks [4]. The model was not merely receiving the final answer pattern. It was being shown the kind of reasoning trace that belonged in the task.
+Chain-of-thought prompting demonstrated another version of this. By including examples that show intermediate reasoning steps, researchers were able to improve performance on arithmetic, commonsense, and symbolic reasoning tasks [[4]](#ref-4). The model was not merely receiving the final answer pattern. It was being shown the kind of reasoning trace that belonged in the task.
 
-Automatic Prompt Engineer took this further by treating prompts themselves as optimizable natural-language instructions, showing that different phrasings can produce materially different task performance [5].
+Automatic Prompt Engineer took this further by treating prompts themselves as optimizable natural-language instructions, showing that different phrasings can produce materially different task performance [[5]](#ref-5).
 
 None of this means prompts are magic. It means prompts are data. And the model is sensitive to data.
 
@@ -128,13 +128,13 @@ None of this means prompts are magic. It means prompts are data. And the model i
 
 The word "attention" gets used loosely now, but it is worth remembering what it buys us conceptually.
 
-In a Transformer, tokens do not merely flow through a sentence from left to right as if each word only inherits from the word before it. Attention allows the model to relate tokens to other tokens in the sequence [1]. The representation of one token can be influenced by many other tokens in the prompt.
+In a Transformer, tokens do not merely flow through a sentence from left to right as if each word only inherits from the word before it. Attention allows the model to relate tokens to other tokens in the sequence [[1]](#ref-1). The representation of one token can be influenced by many other tokens in the prompt.
 
 That is why context matters so much. If your prompt says "write for senior software engineers," that phrase can influence the level of explanation. If your prompt says "avoid hype," that phrase can influence word choice. If your prompt says "use concrete examples from legacy-code modernization," that phrase can influence the examples the model selects. If your prompt says "include citations," that phrase can influence the structure of the final document.
 
 The prompt is not a preamble. It is part of the machinery.
 
-This is also why context engineering has become such an important discipline. Anthropic describes context engineering as the practice of choosing what tokens are included when an LLM samples a response, and emphasizes that the central challenge is deciding what information belongs in the model's limited context [6].
+This is also why context engineering has become such an important discipline. Anthropic describes context engineering as the practice of choosing what tokens are included when an LLM samples a response, and emphasizes that the central challenge is deciding what information belongs in the model's limited context [[6]](#ref-6).
 
 Prompting is not merely wordsmithing. It is information architecture. You are deciding what the model gets to know, what it should care about, and how the task should be framed before generation begins.
 
@@ -152,7 +152,7 @@ There is a difference between rich context and noise.
 
 <Callout label={'The rule'}>More words do not automatically produce better results. More relevant coordinates do.</Callout>
 
-This matters because attention is powerful, but not free. Long contexts can dilute relevance. Research on long-context language models has shown that models may struggle to use relevant information when it is buried in the middle of a long context [7]. In practical terms, dumping everything into the prompt is not the same thing as helping the model.
+This matters because attention is powerful, but not free. Long contexts can dilute relevance. Research on long-context language models has shown that models may struggle to use relevant information when it is buried in the middle of a long context [[7]](#ref-7). In practical terms, dumping everything into the prompt is not the same thing as helping the model.
 
 The best prompt is not the longest prompt. The best prompt is the clearest temporary world.
 
@@ -170,7 +170,7 @@ But if you also give it a paragraph written in that style, you have done somethi
 
 Examples are landmarks on the manifold. They say: this is the neighborhood. Continue from here.
 
-That is why few-shot prompting works so well in many cases. The examples define the mapping from input to output, the expected level of detail, the output format, and often the hidden criteria that would be tedious to state explicitly [3].
+That is why few-shot prompting works so well in many cases. The examples define the mapping from input to output, the expected level of detail, the output format, and often the hidden criteria that would be tedious to state explicitly [[3]](#ref-3).
 
 This is especially valuable for work where the desired output is hard to define abstractly.
 
@@ -236,27 +236,11 @@ But it changes the odds, and for serious work, that matters.
 
 ## A practical prompting frame
 
-When I want better output from a model, I do not start by asking, "How can I make this prompt longer?"
+When I want better output from a model, I do not start by asking, "How can I make this prompt longer?" I ask, "What is the model missing?" Usually the missing pieces fall into a few categories. 
 
-I ask, "What is the model missing?"
+**First**, the task. What exactly are we doing? **Second**, the audience. Who is this for, and what do they already understand? **Third**, the goal. What should be different after this output exists? **Fourth**, the constraints. What must the answer preserve, avoid, include, or respect? **Fifth**, the evidence standard. Should the model reason from provided material, cite external sources, use only known facts, or clearly mark uncertainty? **Sixth**, the style. Should it sound academic, conversational, executive, skeptical, warm, direct, funny, serious, or technical? **Seventh**, the failure mode. What would make the answer bad?
 
-Usually the missing pieces fall into a few categories.
-
-First, the task. What exactly are we doing?
-
-Second, the audience. Who is this for, and what do they already understand?
-
-Third, the goal. What should be different after this output exists?
-
-Fourth, the constraints. What must the answer preserve, avoid, include, or respect?
-
-Fifth, the evidence standard. Should the model reason from provided material, cite external sources, use only known facts, or clearly mark uncertainty?
-
-Sixth, the style. Should it sound academic, conversational, executive, skeptical, warm, direct, funny, serious, or technical?
-
-Seventh, the failure mode. What would make the answer bad?
-
-That last one is underrated.
+(*That last one is underrated.*)
 
 A prompt gets much stronger when you tell the model what not to do. Do not make it generic. Do not over-explain beginner concepts. Do not rewrite my voice into corporate mush. Do not invent citations. Do not optimize for elegance at the expense of operational safety. Do not give me a toy example when the problem is production architecture.
 
@@ -266,11 +250,13 @@ Those negative constraints are part of the path.
 
 I do not think the future of AI work is everyone carrying around giant prompt templates. That is probably a transitional behavior.
 
-As models improve, they get better at inferring intent from less explicit input. The interaction becomes more natural. Some heavy prompt scaffolding becomes unnecessary. Some old prompting tricks become counterproductive.
+As models improve, they get better at inferring intent from less explicit input. The interaction becomes more natural and some heavy prompt scaffolding becomes unnecessary. Ultimately, s ome old prompting tricks will probably become counterproductive.
 
-But that does not make prompting irrelevant. It changes what good prompting means.
+That does not make prompting irrelevant, but it does change what good prompting means.
 
+<KeyPoint>
 The future is not "write the longest prompt." The future is "give the model the right context at the right time."
+</KeyPoint>
 
 That is why context engineering is a better phrase than prompt engineering for a lot of serious work. The question is not merely what words to type. The question is what information the model needs in order to act intelligently in this moment.
 
@@ -289,11 +275,10 @@ That is why better prompting works. Not because the model is conscious, or becau
 <KeyPoint>The real skill is not writing longer prompts. The real skill is knowing which context changes the answer.</KeyPoint>
 
 ## References
-
-1. Vaswani et al., "Attention Is All You Need," 2017. [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
-2. Fefferman, Mitter, and Narayanan, "Testing the Manifold Hypothesis," Journal of the American Mathematical Society, 2016. [https://www.jmlr.org/papers/v17/14-513.html](https://www.jmlr.org/papers/v17/14-513.html)
-3. Brown et al., "Language Models are Few-Shot Learners," 2020. [https://arxiv.org/abs/2005.14165](https://arxiv.org/abs/2005.14165)
-4. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," 2022. [https://arxiv.org/abs/2201.11903](https://arxiv.org/abs/2201.11903)
-5. Zhou et al., "Large Language Models Are Human-Level Prompt Engineers," 2022. [https://openreview.net/forum?id=92gvk82DE-](https://openreview.net/forum?id=92gvk82DE-)
-6. Anthropic Engineering, "Effective context engineering for AI agents," 2025. [https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
-7. Liu et al., "Lost in the Middle: How Language Models Use Long Contexts," 2023. [https://arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)
+1. <span id="ref-1"></span>Vaswani et al., "Attention Is All You Need," 2017. [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
+2. <span id="ref-2"></span>Fefferman, Mitter, and Narayanan, "Testing the Manifold Hypothesis," Journal of the American Mathematical Society, 2016. [https://www.jmlr.org/papers/v17/14-513.html](https://www.jmlr.org/papers/v17/14-513.html)
+3. <span id="ref-3"></span>Brown et al., "Language Models are Few-Shot Learners," 2020. [https://arxiv.org/abs/2005.14165](https://arxiv.org/abs/2005.14165)
+4. <span id="ref-4"></span>Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," 2022. [https://arxiv.org/abs/2201.11903](https://arxiv.org/abs/2201.11903)
+5. <span id="ref-5"></span>Zhou et al., "Large Language Models Are Human-Level Prompt Engineers," 2022. [https://openreview.net/forum?id=92gvk82DE-](https://openreview.net/forum?id=92gvk82DE-)
+6. <span id="ref-6"></span>Anthropic Engineering, "Effective context engineering for AI agents," 2025. [https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+7. <span id="ref-7"></span>Liu et al., "Lost in the Middle: How Language Models Use Long Contexts," 2023. [https://arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)

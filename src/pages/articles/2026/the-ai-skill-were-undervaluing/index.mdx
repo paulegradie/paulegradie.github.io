@@ -8,15 +8,17 @@ export const getStaticProps = async () => await getArticlesProps()
 export const meta = {
   author: 'Paul Gradie',
   date: '2026-05-09',
-  title: 'The AI Skill We’re Undervaluing',
+  title: "The AI Skill We're Undervaluing",
   description:
     'Emotional intelligence may become one of the most important ways humans learn to work with machines.',
+  series: 'Emotional Intelligence in the AI Era',
+  seriesPart: 1,
   tightSectionSpacing: true,
 }
 
 export default (props) => <ArticleLayout meta={meta} {...props} />
 
-### Emotional intelligence may become one of the most important ways humans learn to work with machines.
+### Emotional intelligence may become one of the most important ways humans learn to work with machines
 
 When people talk about getting better at AI, they usually talk about tools.
 
@@ -24,13 +26,13 @@ They talk about which model to use. They talk about prompt templates. They talk 
 
 Those things matter. But I think they miss something deeper.
 
-The people who become genuinely good at using AI will not only be the people who memorize the best prompts. They will be the people who know how to collaborate well under uncertainty.
+The people who become good at using AI will not only be the people who memorize prompts. They will be the people who know how to collaborate under uncertainty.
 
-That sounds almost too human for a conversation about machines, but that is exactly the point. The interface to modern AI is not a dashboard full of buttons. It is language. And language is not just a way of transmitting instructions. Language is how humans clarify intent, share context, negotiate meaning, repair misunderstandings, test assumptions, and build a shared view of a problem.
+That sounds almost too human for a conversation about machines, but the interface to modern AI is language. And language is not just a way of transmitting instructions. Language is how humans clarify intent, share context, negotiate meaning, repair misunderstandings, test assumptions, and build a shared view of a problem.
 
 In other words, advanced AI use is not merely a technical skill. It is an interaction skill.
 
-And that means some of the capabilities we usually associate with emotional intelligence — communication, perspective-taking, self-regulation, patience, trust calibration, and social awareness — may become surprisingly important in the AI era.
+And that means some of the capabilities we usually associate with emotional intelligence - communication, perspective-taking, self-regulation, patience, trust calibration, and social awareness - may become surprisingly important in the AI era.
 
 Not because AI has feelings. It does not need to have feelings for this to matter.
 
@@ -44,23 +46,21 @@ A large language model is not a coworker, a friend, a therapist, or a conscious 
 
 But it also is not a calculator in the old sense. It does not simply receive a command and return a deterministic result. It responds to framing. It responds to context. It responds to specificity, tone, examples, constraints, and feedback. It performs differently when we ask vague questions than when we explain what we are trying to accomplish, what we already know, what we are uncertain about, and what kind of output we need.
 
-That is why official prompting guidance keeps returning to the same basic principles: be clear, give context, specify the desired outcome, iterate, and refine [1][2]. Those are technical recommendations, but they are also communication recommendations.
+That is why official prompting guidance keeps returning to the same basic principles: be clear, give context, specify the desired outcome, iterate, and refine [[1]](#ref-1)[[2]](#ref-2). Those are technical recommendations, but they are also communication recommendations.
 
 The best AI users do something very similar to what effective human collaborators do. They brief well. They notice when the other party has misunderstood the assignment. They ask follow-up questions. They reframe the problem. They challenge weak answers. They know when to zoom in, when to zoom out, and when to stop accepting a fluent answer just because it sounds plausible.
 
-This is where the emotional-intelligence lens becomes useful.
-
-The point is not that high-EQ people are magically better with AI. That claim is too broad and not yet directly proven. The better claim is narrower and stronger:
+The point is not that high-EQ people are automatically better with AI. That claim is too broad and not yet directly proven. The better claim is narrower:
 
 <Quote>People who communicate clearly, regulate their reactions, understand perspective and context, calibrate trust, and repair conversations are likely to be better positioned to use AI in advanced ways.</Quote>
 
-That is not mysticism. That is just what complex collaboration requires.
+That is what complex collaboration requires.
 
 ## Good AI use begins with knowing who knows what
 
-One of the most underrated skills in any conversation is tracking who knows what.
+One underrated skill in any conversation is tracking who knows what.
 
-When you talk to another person, you are constantly estimating what they understand, what they are missing, what they are assuming, and what they need from you. You do this almost automatically. If someone looks confused, you slow down. If they jump to the wrong conclusion, you correct the frame. If they have expertise you lack, you ask a more open-ended question. If they are overconfident, you probe.
+When you talk to another person, you are constantly estimating what they understand, what they are missing, what they are assuming, and what they need from you. If someone looks confused, you slow down. If they jump to the wrong conclusion, you correct the frame. If they have expertise you lack, you ask a more open-ended question. If they are overconfident, you probe.
 
 Advanced AI use requires a version of this same skill.
 
@@ -68,9 +68,7 @@ The user has to build a working model of the model.
 
 What is it likely to know? What is it likely to invent? What context have I failed to provide? What assumptions is it making? Is it answering the literal question, or the real task? Is it being useful, or merely agreeable? Is it giving me a serious answer, or a polished-sounding average of internet-shaped text?
 
-People who are good at this do not treat the model like an oracle. But they also do not treat it like a dumb autocomplete box. They treat it as a powerful, alien collaborator whose output depends heavily on the quality of the interaction.
-
-That distinction matters.
+People who are good at this do not treat the model like an oracle. But they also do not treat it like a dumb autocomplete box. They treat it as a powerful, alien collaborator whose output depends on the quality of the interaction.
 
 A weak user says:
 
@@ -82,11 +80,11 @@ A stronger user says:
 
 The second prompt is not better because it uses a magic formula. It is better because the user has done the social and cognitive work of orienting the other party.
 
-That is a deeply human skill.
+That is a human skill.
 
 ## The important skill is calibrated collaboration
 
-When people hear “emotional intelligence,” they sometimes think of warmth, empathy, or being nice. Those things have their place, but they are not the heart of the AI argument.
+When people hear "emotional intelligence," they sometimes think of warmth, empathy, or being nice. Those things have their place, but they are not the heart of the AI argument.
 
 The skill that matters most is calibrated collaboration.
 
@@ -94,9 +92,7 @@ Calibrated collaboration means knowing how to work with a system that is useful 
 
 It means you can give the model enough context to be useful without drowning it in noise. It means you can ask for help without outsourcing judgment. It means you can push back when an answer feels too confident. It means you can ask the model to surface assumptions, name uncertainties, consider alternatives, and tell you what would change its conclusion.
 
-It also means you can manage yourself during the interaction.
-
-That part is easy to overlook. A lot of poor AI use comes from human impatience. The first answer is bad, so the user gives up. Or the first answer is fluent, so the user accepts it. Or the model misses the point, so the user restarts with another vague prompt instead of diagnosing what went wrong.
+It also means you can manage yourself during the interaction. A lot of poor AI use comes from human impatience. The first answer is bad, so the user gives up. Or the first answer is fluent, so the user accepts it. Or the model misses the point, so the user restarts with another vague prompt instead of diagnosing what went wrong.
 
 A more skilled user repairs the exchange.
 
@@ -118,29 +114,25 @@ This is not prompt hacking. It is conversational discipline.
 
 ## The research points in this direction
 
-The direct evidence that standardized emotional-intelligence scores predict advanced AI performance is still limited. That exact question has not been settled.
+The direct evidence that standardized emotional-intelligence scores predict advanced AI performance is still limited.
 
-But the surrounding evidence is already suggestive.
+But the surrounding evidence is suggestive.
 
-Research on AI literacy and prompt engineering has found that better prompt-engineering skill predicts better LLM output quality [3]. Studies of ChatGPT use in creative problem solving have found that context, multiple prompts, and a critical attitude toward the model can improve outcomes [4]. Research on real-world LLM conversations suggests that users often shift from machine-like prompting toward more natural, conversational behavior after interacting with the model [5].
+Research on AI literacy and prompt engineering has found that better prompt-engineering skill predicts better LLM output quality [[3]](#ref-3). Studies of ChatGPT use in creative problem solving have found that context, multiple prompts, and a critical attitude toward the model can improve outcomes [[4]](#ref-4). Research on real-world LLM conversations suggests that users often shift from machine-like prompting toward more natural, conversational behavior after interacting with the model [[5]](#ref-5).
 
-That matters because these are not merely technical moves. They are interactional moves.
+These are not merely technical moves. They are interactional moves.
 
-Giving better context is communication.
-
-Iterating instead of quitting is self-regulation.
-
-Asking for alternative explanations is perspective-taking.
-
-Requesting uncertainty is trust calibration.
-
-Repairing a weak response is conversational skill.
+- Giving better context is communication.
+- Iterating instead of quitting is self-regulation.
+- Asking for alternative explanations is perspective-taking.
+- Requesting uncertainty is trust calibration.
+- Repairing a weak response is conversational skill.
 
 The best users are not just issuing better commands. They are building better thinking loops.
 
 ## Domain expertise still matters
 
-There is a trap here. If we argue that emotional intelligence helps with AI, we might accidentally imply that communication skill can replace expertise.
+There is a trap here: if we argue that emotional intelligence helps with AI, we might imply that communication skill can replace expertise.
 
 It cannot.
 
@@ -148,15 +140,13 @@ A person who knows nothing about medicine cannot safely become a doctor by promp
 
 Domain knowledge still matters because the human has to evaluate the output.
 
-This is where advanced AI use becomes almost paradoxical. AI can help you move faster in a domain, but the faster you move, the more you need judgment. You need to know which parts are routine, which parts are risky, which claims require verification, and which outputs merely sound plausible.
+AI can help you move faster in a domain, but the faster you move, the more you need judgment. You need to know which parts are routine, which parts are risky, which claims require verification, and which outputs merely sound plausible.
 
-This caveat is not hypothetical. Research on persona prompting suggests that simply giving a model a role or persona does not necessarily improve factual performance [6]. Clinical NLP prompting work similarly shows that task-specific prompt tailoring matters in expert domains [7]. Good interaction helps, but it does not replace knowledge.
+This caveat is not hypothetical. Research on persona prompting suggests that simply giving a model a role or persona does not necessarily improve factual performance [[6]](#ref-6). Clinical NLP prompting work similarly shows that task-specific prompt tailoring matters in expert domains [[7]](#ref-7). Good interaction helps, but it does not replace knowledge.
 
-So the real advantage is not EQ alone.
+So the real advantage is not EQ alone. It is EQ plus expertise.
 
-It is EQ plus expertise.
-
-The expert with poor collaboration skills may underuse the model, get frustrated with it, or accept mediocre outputs. The socially skilled non-expert may produce polished nonsense. But the expert who can communicate, calibrate, critique, and repair? That person becomes dangerous in the best sense.
+The expert with poor collaboration skills may underuse the model, get frustrated with it, or accept mediocre outputs. The socially skilled non-expert may produce polished nonsense. But the expert who can communicate, calibrate, critique, and repair becomes dangerous in the best sense.
 
 They are not just asking the model for answers. They are building a thinking loop.
 
@@ -164,29 +154,32 @@ They are not just asking the model for answers. They are building a thinking loo
 
 One of the biggest differences between novice and advanced AI users is what happens after the first response.
 
+<KeyPoint>
 Novices often judge the tool by the first answer. If it is good, they are impressed. If it is bad, they are disappointed.
-
+</KeyPoint>
 Advanced users know the first answer is often just the opening move.
 
 They ask better second questions.
 
 They say:
 
-<Quote>What are the assumptions behind this?</Quote>
+<Quote>
+What are the assumptions behind this?
 
-<Quote>What would a skeptical expert object to?</Quote>
+What would a skeptical expert object to?
 
-<Quote>Which parts of this are strongest, and which are weakest?</Quote>
+Which parts of this are strongest, and which are weakest?
 
-<Quote>What facts would we need to verify before acting on this?</Quote>
+What facts would we need to verify before acting on this?
 
-<Quote>Rewrite this for a different audience.</Quote>
+Rewrite this for a different audience.
 
-<Quote>Give me the boring operational version, not the inspirational version.</Quote>
+Give me the boring operational version, not the inspirational version.
 
-<Quote>Now argue against your own recommendation.</Quote>
+Now argue against your own recommendation.
+</Quote>
 
-The second question is where the real work begins. It is where the user starts transforming AI from a content generator into a thinking partner.
+The second question is where the user starts transforming AI from a content generator into a thinking partner.
 
 That ability depends on more than knowing commands. It depends on self-awareness, patience, curiosity, and the willingness to stay in the conversation long enough to improve it.
 
@@ -194,53 +187,38 @@ That ability depends on more than knowing commands. It depends on self-awareness
 
 Most AI training is too tool-focused.
 
-It teaches people where to click, which model to choose, and which prompts to copy. That is useful, but it is not enough. If we want people to become genuinely capable with AI, we need to teach the human side of the interaction.
+It teaches people where to click, which model to choose, and which prompts to copy. That is useful, but it is not enough. If we want people to become capable with AI, we need to teach the interaction.
 
-We should teach people how to brief an AI system clearly.
-
-We should teach them how to ask for uncertainty.
-
-We should teach them how to request counterarguments.
-
-We should teach them how to repair a bad response instead of throwing the whole interaction away.
-
-We should teach them how to decide what the model knows, what the human knows, and what must be checked elsewhere.
+- We should teach people how to brief an AI system clearly.
+- We should teach them how to ask for uncertainty.
+- We should teach them how to request counterarguments.
+- We should teach them how to repair a bad response instead of throwing the whole interaction away.
+- We should teach them how to decide what the model knows, what the human knows, and what must be checked elsewhere.
 
 In other words, AI literacy should include collaboration literacy.
 
 That collaboration literacy will look a lot like emotional intelligence in practice. Not the corporate buzzword version of emotional intelligence. Not the vague idea that being personable solves everything. But the grounded version: understanding context, regulating your reactions, communicating intent, tracking uncertainty, reading the interaction, and repairing the exchange when it goes wrong.
 
-Microsoft Research has described critical thinking with generative AI as involving practices like revising queries, steering outputs, comparing alternatives, and validating responses [8]. That is exactly the cluster of human habits I am pointing at.
+Microsoft Research has described critical thinking with generative AI as involving practices like revising queries, steering outputs, comparing alternatives, and validating responses [[8]](#ref-8). That is the cluster of human habits I am pointing at.
 
-The future power user of AI may not be the person with the longest prompt template library.
-
-It may be the person who can think clearly with a machine.
-
-The person who knows how to explain the problem.
-
-The person who notices when the answer is subtly misaligned.
-
-The person who can invite disagreement.
-
-The person who knows when to trust, when to doubt, and when to change the frame entirely.
+The future power user of AI may not be the person with the longest prompt template library. It may be the person who can think clearly with a machine: the person who knows how to explain the problem, notices when the answer is subtly misaligned, invites disagreement, and knows when to trust, when to doubt, and when to change the frame entirely.
 
 Once, software rewarded people who could think like machines.
 
 AI may reward people who can converse, critique, and collaborate with them.
 
-That is why developing these skills is not a soft extra. It is part of becoming competent in the age of AI.
+Developing these skills is not a soft extra. It is part of becoming competent in the age of AI.
 
-<Callout label={'Next in this series'}>There is also a shadow side to this argument. If AI feels conversational, it can also feel more trustworthy than it deserves. In the next piece, I’ll argue that the same emotional intelligence that helps us collaborate with AI also has to protect us from being flattered, validated, and quietly misled by it.</Callout>
+<Callout label={'Next in this series'}>There is also a shadow side to this argument. If AI feels conversational, it can also feel more trustworthy than it deserves. In the next piece, I'll argue that the same emotional intelligence that helps us collaborate with AI also has to protect us from being flattered, validated, and quietly misled by it.</Callout>
 
 ## References
-
 I am keeping these references as explicit numbered links so they remain readable when the article is copied, exported, or moved between tools.
 
-1. OpenAI Help Center, “Prompt engineering best practices for ChatGPT.” [https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt](https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt)
-2. OpenAI Help Center, “Best practices for prompt engineering with the OpenAI API.” [https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api)
-3. Ng et al., “AI literacy and its implications for prompt engineering strategies,” Computers and Education: Artificial Intelligence, 2024. [https://www.sciencedirect.com/science/article/pii/S2666920X24000262](https://www.sciencedirect.com/science/article/pii/S2666920X24000262)
-4. “Effects of Prompt Elements on Problem-Solving Performance and User Experience: Insights from ChatGPT Interactions,” Sage Open, 2025. [https://journals.sagepub.com/doi/10.1177/21582440251381680](https://journals.sagepub.com/doi/10.1177/21582440251381680)
-5. “Mental model shifts in human-LLM interactions,” Journal of Intelligent Information Systems, 2025. [https://link.springer.com/article/10.1007/s10844-025-00960-6](https://link.springer.com/article/10.1007/s10844-025-00960-6)
-6. Gupta et al., “Is persona all you need? No. A study on persona-based prompting for large language models,” Findings of EMNLP, 2024. [https://aclanthology.org/2024.findings-emnlp.888/](https://aclanthology.org/2024.findings-emnlp.888/)
-7. Sivarajkumar and Wang, “An Empirical Evaluation of Prompting Strategies for Large Language Models in Zero-Shot Clinical Natural Language Processing,” JMIR Medical Informatics, 2024. [https://medinform.jmir.org/2024/1/e55318/](https://medinform.jmir.org/2024/1/e55318/)
-8. Lee et al., “The Impact of Generative AI on Critical Thinking,” Microsoft Research, 2025. [https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
+1. <span id="ref-1"></span>OpenAI Help Center, "Prompt engineering best practices for ChatGPT." [https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt](https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt)
+2. <span id="ref-2"></span>OpenAI Help Center, "Best practices for prompt engineering with the OpenAI API." [https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api)
+3. <span id="ref-3"></span>Ng et al., "AI literacy and its implications for prompt engineering strategies," Computers and Education: Artificial Intelligence, 2024. [https://www.sciencedirect.com/science/article/pii/S2666920X24000262](https://www.sciencedirect.com/science/article/pii/S2666920X24000262)
+4. <span id="ref-4"></span>"Effects of Prompt Elements on Problem-Solving Performance and User Experience: Insights from ChatGPT Interactions," Sage Open, 2025. [https://journals.sagepub.com/doi/10.1177/21582440251381680](https://journals.sagepub.com/doi/10.1177/21582440251381680)
+5. <span id="ref-5"></span>"Mental model shifts in human-LLM interactions," Journal of Intelligent Information Systems, 2025. [https://link.springer.com/article/10.1007/s10844-025-00960-6](https://link.springer.com/article/10.1007/s10844-025-00960-6)
+6. <span id="ref-6"></span>Gupta et al., "Is persona all you need? No. A study on persona-based prompting for large language models," Findings of EMNLP, 2024. [https://aclanthology.org/2024.findings-emnlp.888/](https://aclanthology.org/2024.findings-emnlp.888/)
+7. <span id="ref-7"></span>Sivarajkumar and Wang, "An Empirical Evaluation of Prompting Strategies for Large Language Models in Zero-Shot Clinical Natural Language Processing," JMIR Medical Informatics, 2024. [https://medinform.jmir.org/2024/1/e55318/](https://medinform.jmir.org/2024/1/e55318/)
+8. <span id="ref-8"></span>Lee et al., "The Impact of Generative AI on Critical Thinking," Microsoft Research, 2025. [https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
