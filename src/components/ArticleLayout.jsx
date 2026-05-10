@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { floor, round } from 'lodash'
@@ -41,6 +42,19 @@ function ArrowRightIcon(props) {
 export function ArticleLayout({ children, meta, previousPathname: _previousPathname, articles }) {
   const router = useRouter()
   const { previousArticle, nextArticle } = findPreviousAndNext(articles, meta.date)
+  const currentArticle = articles.find((article) => article.title === meta.title && article.date === meta.date)
+  const seriesArticles = meta.series
+    ? articles
+        .filter((article) => article.series === meta.series)
+        .sort((a, b) => {
+          const partA = Number.isFinite(a.seriesPart) ? a.seriesPart : Number.MAX_SAFE_INTEGER
+          const partB = Number.isFinite(b.seriesPart) ? b.seriesPart : Number.MAX_SAFE_INTEGER
+
+          if (partA !== partB) return partA - partB
+          return new Date(a.date) - new Date(b.date)
+        })
+    : []
+  const hasSeriesLinks = seriesArticles.length > 1
 
   const contentRef = useRef(null)
   const bottomRef = useRef(null)
@@ -127,6 +141,7 @@ export function ArticleLayout({ children, meta, previousPathname: _previousPathn
               >
                 {children}
               </Prose>
+              {hasSeriesLinks && <SeriesNav articles={seriesArticles} currentSlug={currentArticle?.slug} />}
               <div ref={bottomRef} className="h-px w-full" aria-hidden="true" />
             </article>
           </div>
@@ -155,7 +170,7 @@ export function ArticleLayout({ children, meta, previousPathname: _previousPathn
 
       <BlogDrawer
         articles={articles}
-        currentArticle={meta}
+        currentArticle={currentArticle ?? meta}
         isVisible={drawerVisible}
         isOpen={drawerOpen}
         onOpen={() => setDrawerOpen(true)}
@@ -165,6 +180,46 @@ export function ArticleLayout({ children, meta, previousPathname: _previousPathn
         }}
       />
     </>
+  )
+}
+
+function SeriesNav({ articles, currentSlug }) {
+  return (
+    <aside className="surface-card-strong mt-12 rounded-2xl p-5">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h2 className="text-sm font-semibold text-ink dark:text-slate-100">This series</h2>
+        <span className="text-xs text-muted dark:text-slate-400">{articles.length} parts</span>
+      </div>
+      <ol className="space-y-3">
+        {articles.map((article) => {
+          const isCurrent = article.slug === currentSlug
+          const partLabel = Number.isFinite(article.seriesPart) ? `Part ${article.seriesPart}` : 'Series'
+
+          return (
+            <li key={article.slug}>
+              {isCurrent ? (
+                <div className="rounded-xl border border-[color:var(--line)] bg-white/55 p-3 dark:border-slate-600/60 dark:bg-slate-800/60">
+                  <div className="eyebrow-label mb-1 text-xs dark:text-slate-400">{partLabel}</div>
+                  <div className="text-sm font-semibold text-ink dark:text-slate-100">{article.title}</div>
+                </div>
+              ) : (
+                <Link
+                  href={`/articles/${article.slug}`}
+                  className="group block rounded-xl border border-transparent p-3 transition hover:border-[color:var(--line)] hover:bg-white/65 dark:hover:border-slate-600/60 dark:hover:bg-slate-700/40"
+                >
+                  <div className="eyebrow-label mb-1 text-xs transition group-hover:text-[color:var(--ink)] dark:text-slate-400 dark:group-hover:text-slate-200">
+                    {partLabel}
+                  </div>
+                  <div className="text-sm font-semibold text-[color:var(--brand-b)] transition group-hover:text-[color:var(--brand-a)] dark:text-cyan-300 dark:group-hover:text-blue-300">
+                    {article.title}
+                  </div>
+                </Link>
+              )}
+            </li>
+          )
+        })}
+      </ol>
+    </aside>
   )
 }
 
