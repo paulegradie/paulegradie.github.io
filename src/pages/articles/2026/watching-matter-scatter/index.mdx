@@ -1,0 +1,85 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint } from '@/components/blog/Callout'
+import { Quote } from '@/components/blog/Quote'
+import { InteractiveEmbed } from '@/components/blog/InteractiveEmbed'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-06-13',
+  title: 'Watching Matter Scatter',
+  description:
+    'Three years ago I wrote an essay arguing that the Big Bang scattered matter across the universe without anything ever moving faster than light — space itself inflated. Back then all I had were words. Here is the same argument as an interactive animation you can scrub through.',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+### In 2023 I tried to explain how matter scattered across the universe. All I had were words. Now you can watch it.
+
+Back in 2023 I answered a question on Quora that went on to become one of my more-read posts:
+
+> If the Big Bang took only milliseconds to disperse all the galaxies light years apart, then how did the matter get there faster than the speed of light?
+
+[My answer](/articles/2023/how-did-matter-scatter/) — the one that, years earlier, had given me my own small epiphany about the universe — was that it didn't. Nothing outran light. What we call the Big Bang is not matter being flung across a pre-existing void; it is the creation and sudden inflation of spacetime *itself*, which stretched and carried everything sitting on it along for the ride.
+
+I believed every word of it. But I was stuck trying to explain a deeply visual idea with prose and the tired old balloon analogy, and I ended that post half-wishing I could simply *show* you.
+
+This is me, three years later, showing you.
+
+<KeyPoint>Matter never moved faster than light. Space did something the speed limit has nothing to say about: it expanded.</KeyPoint>
+
+## The same trick as the black holes
+
+In my last post I described a [litmus test I have used on AI for years](/articles/2026/the-spacetime-litmus-test/): hand a frontier model a loose, two-sentence prompt about warping spacetime and see whether it can turn the idea into a working, animated artifact. It can now. So I pointed the same approach at my own 2023 essay and asked it to dramatize the argument directly.
+
+What came back is below. It is the same toolchain and the same visual language as the black-hole animations from that post — and it even reuses their spacetime-warping for the final act. Drag it around, and scrub the **story timeline** slider to move through cosmic history by hand.
+
+<InteractiveEmbed
+  src="/inflation/how-matter-scattered.html"
+  title="Inflation — How Did Matter Scatter?"
+  tall={true}
+  caption="Spacetime as an expanding lattice, in four acts. Scrub the story-timeline slider to move through cosmic history, and keep your eye on dots A and B: they hold their grid positions the whole time, yet recede faster than light. Drag to orbit, scroll to zoom, space to play/pause."
+/>
+
+## What you are watching
+
+The lattice is spacetime — the substrate, the "3-D surface" everything sits on. Two dots, **A** and **B**, are pinned to that grid. Keep your eye on them, because they are the entire argument. It plays in four acts.
+
+### 1 · Pure energy
+
+All of spacetime is a single speck, dense with energy — the "super dense, non-homogeneous, super hot ball of pure energy" from the original essay. Quantum fluctuations wrinkle the fabric. A and B sit quietly at their grid positions, doing nothing.
+
+### 2 · Inflation
+
+Space expands. Not *into* anything — there is no outside, and the black around the lattice is not a place. The grid itself swells, and A and B ride along, holding their grid coordinates the entire time. And yet the live readout clocks them receding from one another at well past **1c**, with the line that matters most: *carried by space — their motion through space: 0c.*
+
+That single annotation is the thing I spent five paragraphs circling in 2023:
+
+<Quote>
+  It was space-time itself that inflated, increasing the amount of space-time between the matter — the matter need not have necessarily even moved at all.
+</Quote>
+
+"Faster than light" is a rule about moving *through* space. It says nothing about how quickly space itself can grow between two points that are each sitting perfectly still.
+
+### 3 · Expansion and cooling
+
+Inflation eases off, and the universe cools and dims, sliding from white-hot toward ember. The quantum wrinkles from the first act — now stretched to enormous scale — do not vanish. They linger as faint over-densities: the seeds of every structure that will ever exist. In 2023 I waved at this with a single line about it taking 380,000 years for the first atoms to precipitate; here you can actually watch the seeds being laid down.
+
+### 4 · Matter and gravity
+
+Now, and only now, does anything truly move *through* space. Cooled energy precipitates into matter — $E = mc^2$ read in reverse — mass curves the spacetime around it (the very same warping you can grab in the black-hole pages), and gravity slowly draws matter along those ancient seeds into clumps, filaments, the cosmic web. This motion is sub-light, gentle, and local. It is the only "scattering" that was ever really a movement at all, and it happens *after* expansion has already done the heavy lifting.
+
+<Callout label="The whole point in one sentence">
+A and B fly apart without ever taking a step. Their separation grows because the space between them grows — not because they move through it. Once you can <i>see</i> that, the original question quietly dissolves: there was never any matter that needed to outrun light.
+</Callout>
+
+## Why this one matters to me
+
+The balloon analogy finally has teeth when you can watch the dots stay fixed to the grid while hurtling apart. That was always the hard part to convey in writing — people would nod along and then ask, reasonably, "but where did the air come from, and what is it expanding into?" The animation sidesteps the whole confusion by just showing you: the dots don't move, the grid does.
+
+I should be honest about what it is. Like the black-hole pages, it is exaggerated and compressed — forty-odd seconds standing in for 13.8 billion years, the eras stylized, the warping cranked up so your eye can catch it. It is a visualization, not a solution of the Friedmann equations. A cosmologist would have notes. But it makes the one genuinely counterintuitive idea *click* in a way that, for me, a decade of words never quite managed.
+
+In 2023 I signed off by inviting people to confirm the story against the original publications, and linked to NASA's WMAP inflation page. That invitation still stands. But now there is a second way to check your intuition against the universe: scrub the timeline, pin your eyes to A and B, and watch them scatter across the cosmos without a single one of them ever moving.

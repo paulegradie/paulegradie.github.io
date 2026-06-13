@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inflation — How Did Matter Scatter?</title>
+<style>
+  :root{ --accent:#6fd3ff; }
+  html,body{margin:0;height:100%;overflow:hidden;background:#04060c;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#cfe6f5;}
+  canvas{position:fixed;inset:0;display:block;}
+  .panel{position:fixed;background:rgba(10,14,24,.74);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);border:1px solid rgba(140,200,255,.16);
+    border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5;z-index:5;}
+  #title{position:fixed;top:14px;left:50%;transform:translateX(-50%);text-align:center;
+    pointer-events:none;width:max-content;z-index:5;}
+  #title h1{margin:0;font-size:16px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:#eaf6ff;text-shadow:0 0 14px rgba(110,200,255,.5);}
+  #title p{margin:3px 0 0;font-size:12px;color:#8fb4cc;}
+  #controls{top:14px;left:14px;width:228px;}
+  label.row{display:block;margin:9px 0 2px;color:#9fc6dd;}
+  label.row:first-child{margin-top:0;}
+  .val{float:right;color:#eaf6ff;font-variant-numeric:tabular-nums;}
+  input[type=range]{width:100%;accent-color:var(--accent);margin:0;display:block;}
+  input[type=checkbox]{accent-color:var(--accent);}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;margin-top:11px;}
+  .checks label{display:flex;align-items:center;gap:6px;color:#9fc6dd;cursor:pointer;}
+  .btns{display:flex;gap:8px;margin-top:12px;}
+  button{flex:1;background:rgba(110,200,255,.10);border:1px solid rgba(110,200,255,.35);
+    color:#dff2ff;border-radius:8px;padding:6px 0;font-size:12px;cursor:pointer;}
+  button:hover{background:rgba(110,200,255,.22);}
+  #story{bottom:16px;left:50%;transform:translateX(-50%);width:min(620px,86vw);text-align:center;}
+  #era{font-size:13px;font-weight:700;letter-spacing:.18em;color:#ffd9a0;
+    text-transform:uppercase;margin-bottom:4px;}
+  #caption{color:#b9d6e8;min-height:34px;}
+  #metrics{margin-top:7px;font-size:12px;color:#9fc6dd;font-variant-numeric:tabular-nums;}
+  #metrics .fast{color:#ff9f6a;font-weight:700;}
+  #metrics .peak{color:#86abc2;}
+  #info{bottom:14px;left:14px;max-width:330px;}
+  #info summary{cursor:pointer;font-weight:600;color:#eaf6ff;}
+  #info ul{margin:8px 0 0;padding-left:17px;}
+  #info li{margin:5px 0;color:#a9c9dc;}
+  #info a{color:var(--accent);}
+  #hint{position:fixed;bottom:14px;right:14px;font-size:11px;color:#86abc2;
+    background:rgba(10,14,24,.6);border:1px solid rgba(140,200,255,.12);
+    border-radius:8px;padding:6px 10px;pointer-events:none;z-index:5;}
+  #loaderr{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+    z-index:10;text-align:center;max-width:380px;}
+  b{color:#dff2ff;font-weight:600;}
+  .dotA{color:#7fe3ff;font-weight:700;}
+  .dotB{color:#ff9fe0;font-weight:700;}
+  @media (max-width:900px){ #info{display:none;} #controls{width:195px;} }
+</style>
+</head>
+<body>
+
+<div id="title">
+  <h1>Inflation — How Did Matter Scatter?</h1>
+  <p>matter never outran light — spacetime itself expanded, carrying everything with it</p>
+</div>
+
+<div class="panel" id="controls">
+  <label class="row">story timeline <span class="val" id="uV"></span></label>
+  <input type="range" id="u" min="0" max="1" step="0.0005">
+  <label class="row">playback speed <span class="val" id="spdV"></span></label>
+  <input type="range" id="spd" min="0.25" max="3" step="0.05">
+  <label class="row">gravity warp <span class="val" id="warpV"></span></label>
+  <input type="range" id="warp" min="0.3" max="2.2" step="0.05">
+  <div class="checks">
+    <label><input type="checkbox" id="gridOn"> grid</label>
+    <label><input type="checkbox" id="matter"> matter</label>
+    <label><input type="checkbox" id="trackers"> A &amp; B</label>
+    <label><input type="checkbox" id="spin"> auto-rotate</label>
+  </div>
+  <div class="btns">
+    <button id="btnPlay">Pause</button>
+    <button id="btnReplay">Replay</button>
+    <button id="btnCam">Reset view</button>
+  </div>
+</div>
+
+<div class="panel" id="story">
+  <div id="era"></div>
+  <div id="caption"></div>
+  <div id="metrics"></div>
+</div>
+
+<details class="panel" id="info">
+  <summary>What you're seeing</summary>
+  <ul>
+    <li>The lattice is <b>spacetime itself</b> — the substrate everything sits on. It begins
+        as a speck "dense with pure energy", then <b>space expands</b>; nothing here is an
+        explosion <i>into</i> space.</li>
+    <li>Dots <span class="dotA">A</span> and <span class="dotB">B</span> never move through
+        the grid — they keep their grid positions for the whole story, like dots drawn on
+        an inflating balloon. Yet during inflation they <b>recede faster than light</b>,
+        because there is no speed limit on the expansion of space itself.</li>
+    <li>The early jitter is <b>quantum fluctuation</b> wrinkling the fabric; inflation
+        stretches those wrinkles to enormous scales, where they become the faint seeds
+        of structure.</li>
+    <li>Once things cool, <b>matter precipitates</b> — and only then does anything move
+        <i>through</i> space: mass curves spacetime (same warping as the black-hole pages)
+        and gravity slowly gathers matter into clumps and webs.</li>
+    <li>The black void around the lattice isn't "outside the universe" — the lattice is
+        just the patch of space we're watching.</li>
+    <li>Based on <a href="https://paulgradie.com/articles/2023/how-did-matter-scatter/"
+        target="_blank" rel="noopener">How did matter scatter?</a> — exaggerated and
+        compressed for visibility, as ever.</li>
+  </ul>
+</details>
+
+<div id="hint">drag — orbit &nbsp;·&nbsp; scroll — zoom &nbsp;·&nbsp; space — play / pause</div>
+
+<div class="panel" id="loaderr">
+  <b>Couldn't load three.js.</b><br>
+  This page pulls the 3-D engine from a CDN, so it needs an internet connection
+  the first time it loads. Check the connection and refresh.
+</div>
+
+<script>
+  setTimeout(function(){
+    if (!window.__bh3dReady) document.getElementById('loaderr').style.display = 'block';
+  }, 6000);
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ---------- story parameters ---------- */
+const P = { speed: 1, warp: 1, gridOn: true, matter: true, trackers: true, spin: true };
+let u = 0, playing = true;
+const STORY_SECONDS = 42;               // full story at ×1 speed
+const E0 = 0.15, E1 = 0.38, E2 = 0.75;  // era boundaries
+const A0 = 0.04, A1 = 1.4, A2 = 1.9, A3 = 2.05;
+const KINF = Math.log(A1 / A0);
+const LIGHT = 60;                       // "c" in world units / second
+
+const CUBE = 1500, SPACING = 125, SUBS = 40;   // comoving lattice
+const NDOTS = 420, BALL = 620;                  // comoving matter ball
+
+/* a(u): scale factor of space */
+function scaleAt(x){
+  if (x < E0) return A0;
+  if (x < E1) return A0 * Math.exp(KINF * (x - E0) / (E1 - E0));
+  if (x < E2){ const s = (x - E1) / (E2 - E1); return A1 + (A2 - A1) * Math.sqrt(s); }
+  return A2 + (A3 - A2) * (x - E2) / (1 - E2);
+}
+function dadu(x){
+  if (x < E0) return 0;
+  if (x < E1) return scaleAt(x) * KINF / (E1 - E0);
+  if (x < E2){ const s = Math.max(.002, (x - E1) / (E2 - E1));
+               return (A2 - A1) * .5 / Math.sqrt(s) / (E2 - E1); }
+  return (A3 - A2) / (1 - E2);
+}
+function temp(x){            // 1 = white hot, 0 = cold
+  if (x < E1) return 1;
+  if (x < E2) return Math.max(0, 1 - (x - E1) / (E2 - E1) * 1.25);
+  return 0;
+}
+function jitterAmp(x){       // quantum wrinkles, stretched smooth by inflation
+  if (x < E0) return 6;
+  return Math.max(0, 6 * (1 - (x - E0) / .12));
+}
+function clumpT(x){          // gravity era progress
+  if (x < E2) return 0;
+  const s = Math.min(1, (x - E2) / .19);
+  return s * s * (3 - 2 * s);
+}
+function dotGlow(x){         // matter brightness through the story
+  if (x < E1) return 1;
+  if (x < E2) return Math.max(.14, 1 - (x - E1) / (E2 - E1) * 1.1);
+  return Math.min(1, .14 + clumpT(x) * .9 + (x - E2) * .5);
+}
+const ERAS = [
+  ['Pure energy',
+   'All of spacetime — a speck, dense with pure energy. Quantum fluctuations wrinkle the ' +
+   'fabric. Watch dots <span class="dotA">A</span> and <span class="dotB">B</span>: they ' +
+   'will never move through the grid.'],
+  ['Inflation',
+   'Spacetime itself expands — there is no speed limit on space. Every dot keeps its grid ' +
+   'position, yet <span class="dotA">A</span> and <span class="dotB">B</span> recede from ' +
+   'each other faster than light.'],
+  ['Expansion &amp; cooling',
+   'Expansion slows and the universe cools and dims. The quantum wrinkles — now stretched ' +
+   'to enormous scale — linger as faint seeds of structure.'],
+  ['Matter &amp; gravity',
+   'Cooled energy precipitates into matter. Mass curves spacetime — and now matter really ' +
+   'does move <i>through</i> space: slowly, sub-light, gathering along the seeds.']
+];
+const eraIndex = x => x < E0 ? 0 : x < E1 ? 1 : x < E2 ? 2 : 3;
+
+/* ---------- renderer / scene / camera ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x04060c);
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 1, 14000);
+camera.position.set(720, 560, 1400);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0, 0);
+controls.enableDamping = true; controls.dampingFactor = .06;
+controls.minDistance = 100; controls.maxDistance = 5200;
+controls.autoRotate = P.spin; controls.autoRotateSpeed = .4;
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ---------- the expanding lattice ---------- */
+function buildLattice(size, spacing, subs){
+  const half = size / 2;
+  const n = Math.round(size / spacing);
+  const coords = [];
+  for (let i = 0; i <= n; i++) coords.push(-half + i * spacing);
+  const segLen = size / subs;
+  const pts = [];
+  for (const a of coords) for (const b of coords)
+    for (let i = 0; i < subs; i++){
+      const t0 = -half + i * segLen, t1 = t0 + segLen;
+      pts.push(t0, a, b,  t1, a, b);
+      pts.push(a, t0, b,  a, t1, b);
+      pts.push(a, b, t0,  a, b, t1);
+    }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  return g;
+}
+const NCLUMP = 8;
+const uniforms = {
+  uScale:  { value: A0 },
+  uJitter: { value: 6 },
+  uTime:   { value: 0 },
+  uTemp:   { value: 1 },
+  uClumpPos: { value: Array.from({ length: NCLUMP }, () => new THREE.Vector3()) },
+  uClumpS:   { value: 0 },
+  uFog:    { value: 0.0005 }
+};
+const latticeMat = new THREE.ShaderMaterial({
+  uniforms,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  vertexShader: `
+    uniform float uScale;
+    uniform float uJitter;
+    uniform float uTime;
+    uniform vec3 uClumpPos[${NCLUMP}];
+    uniform float uClumpS;
+    varying float vWarp;
+    varying float vViewZ;
+    void main(){
+      vec3 c = position;                 // comoving coordinates — fixed forever
+      vec3 wp = c * uScale;              // space itself expands
+      // quantum wrinkles: fixed comoving wavelength, so inflation stretches them smooth
+      wp += uJitter * vec3(
+        sin(c.x * 0.021 + uTime * 7.0) + 0.5 * sin(c.y * 0.043 - uTime * 9.0),
+        sin(c.y * 0.019 - uTime * 8.0) + 0.5 * sin(c.z * 0.037 + uTime * 6.0),
+        sin(c.z * 0.023 + uTime * 7.5) + 0.5 * sin(c.x * 0.041 - uTime * 8.5));
+      // once matter precipitates, its mass curves space toward the clumps
+      float warpAcc = 0.0;
+      for (int i = 0; i < ${NCLUMP}; i++){
+        vec3 d = uClumpPos[i] - wp;
+        float r = length(d) + 0.0001;
+        float pull = min(uClumpS / (r + 25.0), r * 0.9);
+        wp += d / r * pull;
+        warpAcc += pull;
+      }
+      vWarp = clamp(warpAcc / 30.0, 0.0, 1.0);
+      vec4 mv = modelViewMatrix * vec4(wp, 1.0);
+      vViewZ = -mv.z;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: `
+    uniform float uFog;
+    uniform float uTemp;
+    varying float vWarp;
+    varying float vViewZ;
+    void main(){
+      vec3 cold = mix(vec3(0.13, 0.45, 0.85), vec3(0.88, 0.66, 1.0), vWarp);
+      vec3 hot  = mix(vec3(1.0, 0.4, 0.18), vec3(1.0, 0.93, 0.78), uTemp);
+      vec3 base = mix(cold, hot, uTemp);
+      float fog = exp(-vViewZ * uFog);
+      float lum = 0.22 + 0.78 * max(vWarp, uTemp * 0.85);
+      gl_FragColor = vec4(base * lum * fog, 0.85);
+    }`
+});
+const lattice = new THREE.LineSegments(buildLattice(CUBE, SPACING, SUBS), latticeMat);
+lattice.frustumCulled = false;
+scene.add(lattice);
+
+/* ---------- glow sprite helper ---------- */
+function glowTexture(){
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, 'rgba(255,255,255,1)');
+  grad.addColorStop(.35, 'rgba(255,255,255,.45)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+}
+const glowTex = glowTexture();
+function makeGlow(color, scale, opacity){
+  const m = new THREE.SpriteMaterial({ map: glowTex, color, transparent: true,
+    opacity, blending: THREE.AdditiveBlending, depthWrite: false });
+  const s = new THREE.Sprite(m);
+  s.scale.set(scale, scale, 1);
+  return s;
+}
+
+/* ---------- matter: comoving dots carried by space ---------- */
+const seeds = [
+  [380, 120, -260], [-420, -80, 300], [150, -260, 420], [-300, 240, -380],
+  [480, -40, 180], [-180, 60, -480], [60, 330, 240], [-480, -200, -140]
+].map(v => new THREE.Vector3(...v));
+
+const dotsC = [], dotsTarget = [];
+for (let i = 0; i < NDOTS; i++){
+  const dir = new THREE.Vector3().randomDirection();
+  const c = dir.multiplyScalar(BALL * Math.cbrt(Math.random()));
+  dotsC.push(c);
+  // each dot will eventually fall toward its nearest over-density seed
+  let best = 0, bestD = 1e9;
+  seeds.forEach((s, j) => { const d = c.distanceTo(s); if (d < bestD){ bestD = d; best = j; } });
+  const off = new THREE.Vector3().randomDirection().multiplyScalar(25 + Math.random() * 45);
+  dotsTarget.push(seeds[best].clone().add(off));
+}
+// trackers A and B: ordinary dots we keep an eye on
+const IA = 0, IB = 1;
+dotsC[IA] = new THREE.Vector3(-280, 30, -180);
+dotsC[IB] = new THREE.Vector3(320, -40, 260);
+[IA, IB].forEach(i => {
+  let best = 0, bestD = 1e9;
+  seeds.forEach((s, j) => { const d = dotsC[i].distanceTo(s); if (d < bestD){ bestD = d; best = j; } });
+  dotsTarget[i] = seeds[best].clone().add(
+    new THREE.Vector3().randomDirection().multiplyScalar(30));
+});
+const D_COMOVING = dotsC[IA].distanceTo(dotsC[IB]);
+
+const dotPos = new Float32Array(NDOTS * 3);
+const dotGeo = new THREE.BufferGeometry();
+dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPos, 3));
+dotGeo.setDrawRange(0, NDOTS);
+const dotMat = new THREE.PointsMaterial({ map: glowTex, color: 0xfff2dd, size: 15,
+  sizeAttenuation: true, transparent: true, opacity: 1,
+  blending: THREE.AdditiveBlending, depthWrite: false });
+const dots = new THREE.Points(dotGeo, dotMat);
+dots.frustumCulled = false;
+scene.add(dots);
+
+const trackA = makeGlow(0x7fe3ff, 64, 1);
+const trackB = makeGlow(0xff9fe0, 64, 1);
+scene.add(trackA, trackB);
+const abGeo = new THREE.BufferGeometry();
+abGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+const abLine = new THREE.Line(abGeo, new THREE.LineBasicMaterial({
+  color: 0xbfe6ff, transparent: true, opacity: .4,
+  blending: THREE.AdditiveBlending, depthWrite: false }));
+abLine.frustumCulled = false;
+scene.add(abLine);
+
+const coreGlow = makeGlow(0xfff0d0, 140, .95);   // the white-hot beginning
+scene.add(coreGlow);
+
+/* ---------- per-frame story evaluation (pure function of u → fully scrubbable) ---------- */
+const tmpV = new THREE.Vector3();
+let peakC = 0;
+function evaluate(time){
+  const a = scaleAt(u), ct = clumpT(u), T = temp(u), glow = dotGlow(u);
+
+  uniforms.uScale.value = a;
+  uniforms.uJitter.value = jitterAmp(u);
+  uniforms.uTime.value = time;
+  uniforms.uTemp.value = T;
+  uniforms.uClumpS.value = 3400 * ct * P.warp;
+  for (let i = 0; i < NCLUMP; i++)
+    uniforms.uClumpPos.value[i].copy(seeds[i]).multiplyScalar(a);
+  lattice.visible = P.gridOn;
+
+  for (let i = 0; i < NDOTS; i++){
+    tmpV.copy(dotsC[i]).lerp(dotsTarget[i], ct).multiplyScalar(a);
+    dotPos[i * 3] = tmpV.x; dotPos[i * 3 + 1] = tmpV.y; dotPos[i * 3 + 2] = tmpV.z;
+  }
+  dotGeo.attributes.position.needsUpdate = true;
+  dots.visible = P.matter;
+  dotMat.size = 11 + glow * 6;
+  dotMat.opacity = .3 + glow * .7;
+  const warm = Math.min(1, T + ct);            // white-hot → ember red → starlight
+  dotMat.color.setRGB(1, .35 + .6 * warm, .2 + .65 * warm);
+
+  trackA.position.set(dotPos[IA * 3], dotPos[IA * 3 + 1], dotPos[IA * 3 + 2]);
+  trackB.position.set(dotPos[IB * 3], dotPos[IB * 3 + 1], dotPos[IB * 3 + 2]);
+  const ab = abGeo.attributes.position.array;
+  ab[0] = trackA.position.x; ab[1] = trackA.position.y; ab[2] = trackA.position.z;
+  ab[3] = trackB.position.x; ab[4] = trackB.position.y; ab[5] = trackB.position.z;
+  abGeo.attributes.position.needsUpdate = true;
+  trackA.visible = trackB.visible = abLine.visible = P.trackers;
+  const tScale = 26 + 26 * glow;
+  trackA.scale.set(tScale, tScale, 1); trackB.scale.set(tScale, tScale, 1);
+
+  coreGlow.material.opacity = Math.max(0, .95 * (1 - Math.max(0, u - .17) / .13));
+  const cs = 90 + a * 300;
+  coreGlow.scale.set(cs, cs, 1);
+
+  // story panel
+  const idx = eraIndex(u);
+  const eraEl = document.getElementById('era');
+  if (eraEl.dataset.idx !== String(idx)){
+    eraEl.dataset.idx = String(idx);
+    eraEl.innerHTML = (idx + 1) + ' · ' + ERAS[idx][0];
+    document.getElementById('caption').innerHTML = ERAS[idx][1];
+  }
+  const sep = trackA.position.distanceTo(trackB.position);
+  const vRec = dadu(u) / STORY_SECONDS * P.speed * D_COMOVING;
+  const vC = vRec / LIGHT;
+  if (playing && u < E2) peakC = Math.max(peakC, vC);
+  let m = '<span class="dotA">A</span> ↔ <span class="dotB">B</span> : ' +
+          (sep / LIGHT).toFixed(1) + ' light-seconds apart';
+  if (idx < 3){
+    m += ' · receding at <span class="' + (vC > 1 ? 'fast' : '') + '">' +
+         vC.toFixed(2) + 'c</span> (carried by space — their motion through space: 0c)';
+  } else {
+    m += ' · expansion is gentle now; gravity pulls them through space (sub-light)';
+  }
+  if (peakC > 1) m += ' <span class="peak">· peak recession ' + peakC.toFixed(1) + 'c</span>';
+  document.getElementById('metrics').innerHTML = m;
+}
+
+/* ---------- main loop ---------- */
+let last = performance.now();
+function setPlaying(p){
+  playing = p;
+  document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
+}
+function frame(now){
+  const dt = Math.min(.033, (now - last) / 1000); last = now;
+  if (playing){
+    u = Math.min(1, u + dt * P.speed / STORY_SECONDS);
+    if (u >= 1) setPlaying(false);
+    const el = document.getElementById('u');
+    el.value = u;
+    document.getElementById('uV').textContent = Math.round(u * 100) + '%';
+  }
+  evaluate(now / 1000);
+  controls.autoRotate = P.spin;
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(frame);
+}
+
+/* ---------- UI wiring ---------- */
+const $ = id => document.getElementById(id);
+function bindRange(id, get, set, fmt){
+  const el = $(id), lab = $(id + 'V');
+  el.value = get(); lab.textContent = fmt(get());
+  el.addEventListener('input', () => { set(+el.value); lab.textContent = fmt(+el.value); });
+}
+bindRange('u',    () => u,       v => { u = v; },      v => Math.round(v * 100) + '%');
+bindRange('spd',  () => P.speed, v => P.speed = v,     v => '×' + v.toFixed(2));
+bindRange('warp', () => P.warp,  v => P.warp = v,      v => '×' + v.toFixed(2));
+['gridOn', 'matter', 'trackers', 'spin'].forEach(k => {
+  const el = $(k);
+  el.checked = P[k];
+  el.addEventListener('change', () => P[k] = el.checked);
+});
+$('btnPlay').addEventListener('click', () => setPlaying(!playing));
+$('btnReplay').addEventListener('click', () => { u = 0; peakC = 0; setPlaying(true); });
+$('btnCam').addEventListener('click', () => {
+  camera.position.set(720, 560, 1400);
+  controls.target.set(0, 0, 0);
+});
+addEventListener('keydown', e => {
+  if (e.code === 'Space'){ e.preventDefault(); setPlaying(!playing); }
+});
+
+window.__bh3dReady = true;
+window.__cosmoState = () => ({ u, playing, a: scaleAt(u), era: ERAS[eraIndex(u)][0],
+  recessionC: dadu(u) / STORY_SECONDS * P.speed * D_COMOVING / LIGHT, peakC });
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
