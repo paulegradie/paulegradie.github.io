@@ -1,0 +1,193 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import { getArticlesProps } from '@/lib/getArticlesProps'
+import { Callout, KeyPoint, Objection } from '@/components/blog/Callout'
+import { InteractiveEmbed } from '@/components/blog/InteractiveEmbed'
+
+export const getStaticProps = async () => await getArticlesProps()
+
+export const meta = {
+  author: 'Paul Gradie',
+  date: '2026-06-13',
+  title: 'The Spacetime Litmus Test',
+  description:
+    'Since GPT-3 I have handed every new AI model the same hard problem: animate a black hole warping a grid of spacetime, with a star orbiting through it. Here is how that test went from a static matplotlib plot in 2023 to something Fable 5 basically solved — featuring the three interactive animations it produced.',
+  tightSectionSpacing: true,
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+### I have asked every frontier model the same physics question for three years. This is the first time the answer was right.
+
+Everybody has a personal benchmark for AI. A coding kata they re-run on each new release. A riddle. A spreadsheet. Mine is a black hole.
+
+Since the GPT-3 days I have handed every new model the same prompt: make me an animation of spacetime being warped by a black hole, with a second massive object orbiting it, so I can *see* the geometry of space bend as mass moves through it. Then I sit back and watch what comes out.
+
+It is a deceptively good test, and it has quietly tracked the entire arc of the last three years for me. This week, with Fable 5, it finally passed — and not by a hair. So I want to show you the before and the after, with the actual animations embedded so you can grab them yourself.
+
+## Why a black hole is a good test
+
+The prompt I use is intentionally vague:
+
+```text
+I want you to create an html page that presents an animation of a black hole
+where you can see visually the distortion of spacetime bc there is a grid over
+space time that is being warped by the mass of the black hold and then you have
+a stellar body of some kind (a non-black hole center of mass) that is orbiting
+the black hole and you can see the spacetime grid get distorted as well by the
+orbiting object. The point and objective of the animation is to show what a
+black hole really does to space time and then show the bending of space time as
+mass moves through it.
+```
+
+I keep it loose on purpose. I am not testing whether the model can follow a spec — I am testing whether it can cross the gap between a hand-wavy human intention and a working artifact that demonstrates the idea. To do that in one shot, a model has to chain together a surprising number of unrelated skills:
+
+- **Physics.** Know what "distortion of spacetime" should actually look like, and that orbits are paths *through* that curved geometry rather than lines drawn on top of it.
+- **Metaphor.** Pick a way to render an invisible 4-dimensional thing — a grid, a sheet, a lattice — and commit to it.
+- **Maths.** Turn that metaphor into a numerical model: a gravitational well, a stable two-body orbit, a way to displace grid points.
+- **Graphics.** Animate it in real time in a browser, which today means reaching for canvas or WebGL.
+- **Taste.** Choose masses, distances, colours, exaggeration factors, and controls with essentially no guidance, and have the result be legible.
+
+None of those is hard in isolation. Doing all of them at once, from two sloppy sentences, with nobody to correct you halfway, is the whole game.
+
+<KeyPoint>The interesting part was never the code. It is whether the model can turn a vague human intention about physics into something that actually demonstrates the physics.</KeyPoint>
+
+## 2023: the matplotlib era
+
+Here is the same idea, run against GPT-4 in 2023. That year I gave it a far more prescriptive version of the prompt — I told it the metaphor, the coordinate limits, the cube size, and which equation to use. I was trying to make it easy:
+
+```text
+Gravity is the warping of space time such that - for a body of large mass -
+space time is drawn into the center of the body of mass. Space-time effectively
+stretches in 3 dimensions in towards the center of the body of mass in space. I
+believe this can be represented visually using a sphere placed in a 3dimensional
+animation, where the space is quantized using cubes, which all site next to
+eachother.
+
+Write a python program that create a 3d plot, and creates a mesh that overlays
+that space. You can use xlim = (-100, 100) ylim=(-100, 100) and zlim=(-100,100)
+where a cube formed by the mesh is 5x5. Then in the program draw a sphere in the
+center of the plot with diameter 1. Finaly, use the equation for gravity to
+compute the stretching of mesh towards the sphere such that when I rotate the
+plot, the lines of the cube mesh closer to the sphere are elongated due to the
+gravity of the sphere. Use whatever mass you'd like for the sphere when
+calculating the stretch.
+```
+
+And here is what came back — a tidy, runnable `matplotlib` program:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def gravity_warp(x, y, z, sphere_pos, sphere_mass):
+    # Compute the distance between each mesh point and the sphere
+    r = np.sqrt((x - sphere_pos[0])**2 + (y - sphere_pos[1])**2 + (z - sphere_pos[2])**2)
+    # Compute the gravitational stretching factor based on the sphere's mass
+    stretching_factor = sphere_mass / r
+    return stretching_factor
+
+# Define the mesh grid
+x = np.arange(-100, 101, 5)
+y = np.arange(-100, 101, 5)
+z = np.arange(-100, 101, 5)
+xx, yy, zz = np.meshgrid(x, y, z)
+
+# Define the sphere parameters
+sphere_pos = (0, 0, 0)
+sphere_mass = 10
+
+# Compute the stretching factor for each mesh point
+stretching_factor = gravity_warp(xx, yy, zz, sphere_pos, sphere_mass)
+
+# Create the 3D plot
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot the mesh, coloured by the "stretching" factor
+ax.scatter(xx, yy, zz, c=stretching_factor, cmap='coolwarm', marker='o')
+# ... plus a small sphere at the centre and axis limits
+plt.show()
+```
+
+For 2023, this was genuinely impressive. It ran. It understood that gravity falls off with distance. It produced a plausible-looking picture. If you squinted, it looked like it had done the job.
+
+It had not. Look closely at what the code actually does:
+
+- The "stretching" is `sphere_mass / r`, and that number is only ever fed to `c=` — the **colour** of each point. The grid points never move. Nothing is drawn inward, nothing is elongated. The warping I asked for is faked with a colormap.
+- There is **no orbit**, no second body, and no time at all. It is a static scatter plot you rotate by hand.
+- It quietly steps on the singularity: at the centre `r → 0`, so `sphere_mass / r` blows up to infinity, and nothing handles it.
+
+So the model answered the *literal* request — mesh, sphere, gravity equation, matplotlib — and missed the *point*. It conflated "shade the points by gravitational potential" with "bend the geometry," which are completely different things. I had spelled out the metaphor, the limits, and the equation, and it still only gestured at the phenomenon instead of modelling it.
+
+That was the signature of the era: pattern-match the request into code that compiles and looks right, without actually simulating the thing being asked about.
+
+## 2026: Fable 5
+
+This year I went back to the *loose* prompt — the two-sentence one at the top, with none of the hand-holding — and pointed Fable 5 at it.
+
+What came back was not a gesture. It was a self-contained, animated, interactive artifact that actually does the thing. And then it kept going: I ended up with three of them, each more honest than the last about what curved spacetime really is. They are embedded live below — drag the sliders, click around, and hit fullscreen for the full effect.
+
+### One: the slice
+
+Start flat. This is a single 2D slice of space drawn as a grid, and crucially, every line is *displaced* toward mass — not coloured, actually moved. There is a black hole with an event horizon, a glowing photon ring, and lensed accretion light; an orange star that is explicitly *not* a black hole, dragging its own smaller dent through the grid as it goes; and both bodies orbiting their common centre of mass. The orbit precesses into a rosette — the same perihelion precession general relativity predicts for Mercury — and faint spiral gravitational waves ripple outward from the pair.
+
+<InteractiveEmbed
+  src="/black-hole/2d.html"
+  title="Curved Spacetime — 2D slice"
+  caption="A 2D slice of space as a grid. Every line is genuinely displaced toward mass, not just coloured. Drag the mass and time sliders, or click anywhere to fling the star onto a new orbit — get too close and the black hole swallows it."
+/>
+
+Everything the 2023 attempt only implied, this one shows: the geometry moves, mass moves through it, and time runs.
+
+### Two: the rubber sheet
+
+Now lift that slice into three dimensions and let curvature show up as *depth*. This is the embedding diagram you have seen on every space documentary — the bowling-ball-on-a-trampoline picture — except it is running in real time, it is a real two-body system, and you can grab the camera and fly around it. The black hole digs a deep, narrow throat; the star carves a shallow bowl that slides across the sheet as it orbits; gravitational waves travel through the surface as visible undulations.
+
+<InteractiveEmbed
+  src="/black-hole/sheet.html"
+  title="Curved Spacetime — 3D rubber sheet"
+  caption="The classic embedding diagram, live and in 3D: curvature becomes depth. Drag to orbit the camera, scroll to zoom, and use 'warp depth' to exaggerate the dip."
+/>
+
+The rubber sheet is beautiful, but it is a bit of a cheat — it is still only a 2D slice of space, bent into a third dimension so our eyes can read the curvature. Real space does not have a spare dimension to sag into. Which brings us to the one that actually closes the loop with 2023.
+
+### Three: the volumetric lattice
+
+Here space is a *volume* of grid lines — running in X, Y, and Z — and every single line, including the vertical ones, is drawn inward toward the masses. The cells compress in all three dimensions around the bodies. This is much closer to what gravity really does to space, and it is almost exactly the thing I was clumsily trying to describe to GPT-4 back in 2023: *"the space is quantized using cubes, which all sit next to each other."*
+
+Back then I asked for a warped 3D cube lattice and got coloured dots. Here it is, three years later, for real — with a star orbiting through the volume, GR precession, gravitational waves breathing through the whole lattice, and a "grid slab" slider that thins the volume down to just the orbital plane when the full 3D grid gets too busy to read.
+
+<InteractiveEmbed
+  src="/black-hole/lattice.html"
+  title="Curved Spacetime — 3D volumetric lattice"
+  tall={true}
+  caption="Space as a volume. Every line — including the vertical ones — contracts toward mass in all three dimensions, so the lattice cells compress around each body. Drag to orbit, and use the 'grid slab' slider to thin the volume down to the orbital plane."
+/>
+
+<KeyPoint>This is the picture I was trying to pull out of a model in 2023. The difference between then and now is not polish. It is that the model now actually models the thing.</KeyPoint>
+
+## What actually changed
+
+It is tempting to summarise this as "the code got better." That badly undersells it.
+
+What changed is the model's ability to carry a single idea across a chain of unrelated domains without supervision: physics, then a choice of metaphor, then a numerical method, then real-time rendering, then sensible defaults and interaction design — right down to a graceful "couldn't load three.js" message if the CDN is unreachable. In 2023 I specified the mesh, the limits, and the equation, and the result still only gestured. In 2026 I wrote two loose sentences and the model made every engineering decision itself, chose the metaphor, and got the physics qualitatively right on the first try.
+
+Look at the inversion that represents:
+
+<Callout label="The shift">
+The 2023 model did what I <b>said</b> — mesh, sphere, gravity equation — and missed what I meant. The 2026 model ignored the literal mechanics I might have specified and delivered what I <b>meant</b>. "Does what you said" became "does what you meant." That, more than any benchmark score, is what three years of progress feels like from the driver's seat.
+</Callout>
+
+None of this is about one model being magic. The climb was gradual — the releases in between got steadily better at turning this prompt into something that actually moved — and I would happily bet that several of today's frontier models clear the same bar. I happened to run it against Fable 5; I did not test, say, Opus, but it may well do just as well. The point was never the brand on the box. It is that the capability now exists at all.
+
+I should be honest about the limits, because the model was not pretending otherwise. None of this is a solution of the Einstein field equations. The dynamics are essentially Newtonian gravity with a small fudge term bolted on to produce the precession, the warping is hugely exaggerated so your eye can catch it, and even the lattice is a visual metaphor rather than literal spacetime. A physicist would have notes.
+
+But the *objective* was never a physics engine. The objective was to let a person see what mass does to the geometry of space, and watch it evolve as mass moves through it. On that, it delivers — and if you would rather not think in terms of a rubber sheet at all, you can read the same animation as the aggregate quantum field responding to a couple of excitations and lose nothing.
+
+<Objection question="Isn't this just a fancier party trick than the 2023 one?">
+The 2023 version produced a picture that looked like the answer. This version produces a system that behaves like the answer — the grid moves because something with mass is there, the orbit precesses because of how the force law is shaped, the waves appear because two bodies are spiralling around each other. You can interrogate it by dragging a slider and watching the geometry respond correctly. That is the difference between a screenshot of physics and a little working model of it.
+</Objection>
+
+A litmus test is only useful for as long as it still discriminates. For three years, this one cleanly separated models that could produce plausible code from models that could actually solve a problem nobody had handed them the recipe for. It separated "looks right" from "is right." Fable 5 walked straight through it.
+
+So I am going to need a harder test. If you have a genuinely difficult *"make me see it"* prompt — something that still reliably breaks frontier models — I would love to hear it. Mine just retired.

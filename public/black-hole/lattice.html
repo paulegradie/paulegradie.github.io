@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curved Spacetime — 3-D Lattice</title>
+<style>
+  :root{ --accent:#6fd3ff; }
+  html,body{margin:0;height:100%;overflow:hidden;background:#04060c;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#cfe6f5;}
+  canvas{position:fixed;inset:0;display:block;}
+  .panel{position:fixed;background:rgba(10,14,24,.74);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);border:1px solid rgba(140,200,255,.16);
+    border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5;z-index:5;}
+  #title{position:fixed;top:14px;left:50%;transform:translateX(-50%);text-align:center;
+    pointer-events:none;width:max-content;z-index:5;}
+  #title h1{margin:0;font-size:16px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:#eaf6ff;text-shadow:0 0 14px rgba(110,200,255,.5);}
+  #title p{margin:3px 0 0;font-size:12px;color:#8fb4cc;}
+  #controls{top:14px;left:14px;width:225px;}
+  label.row{display:block;margin:9px 0 2px;color:#9fc6dd;}
+  label.row:first-child{margin-top:0;}
+  .val{float:right;color:#eaf6ff;font-variant-numeric:tabular-nums;}
+  input[type=range]{width:100%;accent-color:var(--accent);margin:0;display:block;}
+  input[type=checkbox]{accent-color:var(--accent);}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;margin-top:11px;}
+  .checks label{display:flex;align-items:center;gap:6px;color:#9fc6dd;cursor:pointer;}
+  .btns{display:flex;gap:8px;margin-top:12px;}
+  button{flex:1;background:rgba(110,200,255,.10);border:1px solid rgba(110,200,255,.35);
+    color:#dff2ff;border-radius:8px;padding:6px 0;font-size:12px;cursor:pointer;}
+  button:hover{background:rgba(110,200,255,.22);}
+  #info{bottom:14px;left:14px;max-width:360px;}
+  #info summary{cursor:pointer;font-weight:600;color:#eaf6ff;}
+  #info ul{margin:8px 0 0;padding-left:17px;}
+  #info li{margin:5px 0;color:#a9c9dc;}
+  #hint{position:fixed;bottom:14px;right:14px;font-size:11px;color:#86abc2;
+    background:rgba(10,14,24,.6);border:1px solid rgba(140,200,255,.12);
+    border-radius:8px;padding:6px 10px;pointer-events:none;z-index:5;}
+  #loaderr{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+    z-index:10;text-align:center;max-width:380px;}
+  b{color:#dff2ff;font-weight:600;}
+  @media (max-width:820px){ #info{display:none;} #controls{width:190px;} }
+</style>
+</head>
+<body>
+
+<div id="title">
+  <h1>Curved Spacetime — 3-D Lattice</h1>
+  <p>space as a volumetric grid, drawn inward by mass in all three dimensions</p>
+</div>
+
+<div class="panel" id="controls">
+  <label class="row">black hole mass <span class="val" id="mBHV"></span></label>
+  <input type="range" id="mBH" min="2000000" max="20000000" step="100000">
+  <label class="row">star mass <span class="val" id="mStarV"></span></label>
+  <input type="range" id="mStar" min="100000" max="3000000" step="50000">
+  <label class="row">time speed <span class="val" id="spdV"></span></label>
+  <input type="range" id="spd" min="0" max="3" step="0.05">
+  <label class="row">warp strength <span class="val" id="warpV"></span></label>
+  <input type="range" id="warp" min="0.3" max="2.2" step="0.05">
+  <label class="row">grid slab <span class="val" id="slabV"></span></label>
+  <input type="range" id="slab" min="75" max="850" step="25">
+  <div class="checks">
+    <label><input type="checkbox" id="gw"> grav. waves</label>
+    <label><input type="checkbox" id="trail"> orbit trail</label>
+    <label><input type="checkbox" id="gridOn"> grid</label>
+    <label><input type="checkbox" id="spin"> auto-rotate</label>
+  </div>
+  <div class="btns">
+    <button id="btnPause">Pause</button>
+    <button id="btnReset">Reset orbit</button>
+    <button id="btnCam">Reset view</button>
+  </div>
+</div>
+
+<details class="panel" id="info" open>
+  <summary>What you're seeing</summary>
+  <ul>
+    <li>This time the grid is a <b>volume of space</b>, not a rubber sheet. Every line —
+        including the vertical ones — is drawn inward toward mass, so cells compress
+        around the bodies. This is much closer to what gravity really does to space.
+        (Still hugely exaggerated.)</li>
+    <li>The black sphere is the <b>event horizon</b>; lattice lines that pass close to it
+        converge into the hole from every direction. The ring is light at the
+        <b>photon sphere</b>.</li>
+    <li>The orange star is an ordinary <b>stellar body</b> — smaller mass, smaller warp —
+        and it carries its own distortion with it as it orbits. The black hole wobbles
+        too: both orbit their common centre of mass.</li>
+    <li>The orbit precesses into a rosette — the same general-relativity effect as
+        Mercury's perihelion precession.</li>
+    <li>With <b>grav. waves</b> on, ripples radiated by the pair breathe through the whole
+        lattice, strongest when the orbit is tight and fast.</li>
+    <li>Use the <b>grid slab</b> slider to thin the volume down to the orbital plane when
+        you want a clearer view. <b>Click</b> to relocate the star; if it crosses the
+        horizon it is swallowed and a new star appears.</li>
+  </ul>
+</details>
+
+<div id="hint">drag — orbit &nbsp;·&nbsp; scroll — zoom &nbsp;·&nbsp; click — move the star &nbsp;·&nbsp; space — pause</div>
+
+<div class="panel" id="loaderr">
+  <b>Couldn't load three.js.</b><br>
+  This page pulls the 3-D engine from a CDN, so it needs an internet connection
+  the first time it loads. Check the connection and refresh.
+</div>
+
+<script>
+  setTimeout(function(){
+    if (!window.__bh3dReady) document.getElementById('loaderr').style.display = 'block';
+  }, 6000);
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ---------- parameters ---------- */
+const P = { Mbh: 8e6, Mstar: 8e5, speed: 1, warp: 1, slab: 850,
+            gw: true, trail: true, gridOn: true, spin: true };
+const G = 1, SOFT = 30, WELL = 8e-4, GRK = 2500, WAVE_SPEED = 90;
+const CUBE = 1500, SPACING = 125, SUBS = 40;
+const horizonR = () => P.Mbh / 4e5;
+const starR    = () => Math.min(16, 5 + P.Mstar / 3.2e5 * 3);
+const mu       = () => G * (P.Mbh + P.Mstar);
+const Sbh      = () => P.Mbh   * WELL * P.warp;
+const Sstar    = () => P.Mstar * WELL * P.warp;
+
+/* ---------- two-body physics (rel = star − black hole, orbital plane y = 0) ---------- */
+const rel = { x: 0, y: 0, vx: 0, vy: 0 };           // .y here is the world Z axis
+const bhP = { x: 0, y: 0 }, starP = { x: 0, y: 0 };
+let orbitPhase = 0, omega = 0;
+
+function resetOrbit(angle = Math.PI * .25){
+  const r0 = 300, v0 = .82 * Math.sqrt(mu() / r0);
+  rel.x = Math.cos(angle) * r0;   rel.y = Math.sin(angle) * r0;
+  rel.vx = -Math.sin(angle) * v0; rel.vy = Math.cos(angle) * v0;
+  clearTrail();
+}
+function setMasses(M, m){
+  const old = mu();
+  P.Mbh = M; P.Mstar = m;
+  const k = Math.sqrt(mu() / old);   // keep orbit shape when mass changes
+  rel.vx *= k; rel.vy *= k;
+}
+function accel(x, y){
+  const r2 = x * x + y * y, r = Math.sqrt(r2);
+  const f = mu() / r2 * (1 + GRK / r2);   // pseudo-GR term → perihelion precession
+  return [-f * x / r, -f * y / r];
+}
+let captured = false;
+function physics(dt){
+  captured = false;
+  const n = 8, h = dt / n;
+  for (let i = 0; i < n; i++){
+    let [ax, ay] = accel(rel.x, rel.y);
+    rel.vx += ax * h / 2; rel.vy += ay * h / 2;
+    rel.x  += rel.vx * h; rel.y  += rel.vy * h;
+    [ax, ay] = accel(rel.x, rel.y);
+    rel.vx += ax * h / 2; rel.vy += ay * h / 2;
+    const r2 = rel.x * rel.x + rel.y * rel.y;
+    omega = (rel.x * rel.vy - rel.y * rel.vx) / r2;
+    orbitPhase += omega * h;
+  }
+  const q = P.Mstar / (P.Mbh + P.Mstar);
+  bhP.x   = -rel.x * q;        bhP.y   = -rel.y * q;
+  starP.x =  rel.x * (1 - q);  starP.y =  rel.y * (1 - q);
+
+  const r = Math.hypot(rel.x, rel.y);
+  if (r < horizonR() * 1.5){ captured = true; resetOrbit(Math.random() * Math.PI * 2); }
+  else if (r > 1000){ resetOrbit(Math.random() * Math.PI * 2); }
+}
+function gwAmp(){
+  const q = P.Mstar / (P.Mbh + P.Mstar);
+  return P.gw ? Math.min(18, 6 * Math.pow(Math.abs(omega) / .6, 2) * q / .1) * P.warp : 0;
+}
+
+/* ---------- renderer / scene / camera ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x04060c);
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 1, 12000);
+camera.position.set(620, 540, 1280);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0, 0);
+controls.enableDamping = true; controls.dampingFactor = .06;
+controls.minDistance = 120; controls.maxDistance = 4000;
+controls.autoRotate = P.spin; controls.autoRotateSpeed = .5;
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* ---------- the volumetric lattice (warped in a vertex shader) ---------- */
+function buildLattice(size, spacing, subs){
+  const half = size / 2;
+  const nLines = Math.round(size / spacing);          // intervals per axis
+  const coords = [];
+  for (let i = 0; i <= nLines; i++) coords.push(-half + i * spacing);
+  const segLen = size / subs;
+  const pts = [];
+  for (const a of coords){
+    for (const b of coords){
+      for (let i = 0; i < subs; i++){
+        const t0 = -half + i * segLen, t1 = t0 + segLen;
+        pts.push(t0, a, b,  t1, a, b);   // lines along X
+        pts.push(a, t0, b,  a, t1, b);   // lines along Y
+        pts.push(a, b, t0,  a, b, t1);   // lines along Z
+      }
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  return g;
+}
+const uniforms = {
+  uBH:    { value: new THREE.Vector3() },
+  uStar:  { value: new THREE.Vector3() },
+  uSbh:   { value: 0 },
+  uSstar: { value: 0 },
+  uSoft:  { value: SOFT },
+  uGwAmp: { value: 0 },
+  uPhase: { value: 0 },
+  uK:     { value: 0 },
+  uFog:   { value: 0.0005 },
+  uSlab:  { value: P.slab }
+};
+const latticeMat = new THREE.ShaderMaterial({
+  uniforms,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  vertexShader: `
+    uniform vec3 uBH;
+    uniform vec3 uStar;
+    uniform float uSbh;
+    uniform float uSstar;
+    uniform float uSoft;
+    uniform float uGwAmp;
+    uniform float uPhase;
+    uniform float uK;
+    uniform float uSlab;
+    varying float vWarp;
+    varying float vViewZ;
+    varying float vSlab;
+    void main(){
+      vec3 p = position;
+      // space contracts toward each mass, in all three dimensions
+      vec3 d1 = uBH - p;   float r1 = length(d1) + 0.0001;
+      vec3 d2 = uStar - p; float r2 = length(d2) + 0.0001;
+      float pull1 = min(uSbh / (r1 + uSoft), r1 * 0.93);
+      float pull2 = min(uSstar / (r2 + uSoft * 0.5), r2 * 0.93);
+      vec3 np = p + d1 / r1 * pull1 + d2 / r2 * pull2;
+      // gravitational waves: quadrupole ripple breathing radially outward
+      float rr = length(p) + 0.0001;
+      float th = atan(p.z, p.x);
+      float env = (rr / (rr + 130.0)) * (320.0 / (rr + 320.0));
+      np += (p / rr) * (uGwAmp * env * cos(2.0 * th - 2.0 * uPhase + uK * rr));
+      vWarp = clamp(pull1 / 55.0 + pull2 / 14.0, 0.0, 1.0);
+      vSlab = 1.0 - smoothstep(uSlab - 60.0, uSlab + 60.0, abs(position.y));
+      vec4 mv = modelViewMatrix * vec4(np, 1.0);
+      vViewZ = -mv.z;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: `
+    uniform float uFog;
+    varying float vWarp;
+    varying float vViewZ;
+    varying float vSlab;
+    void main(){
+      vec3 base = mix(vec3(0.13, 0.45, 0.85), vec3(0.88, 0.66, 1.0), vWarp);
+      float fog = exp(-vViewZ * uFog);
+      gl_FragColor = vec4(base * (0.22 + 0.78 * vWarp) * fog * vSlab, 0.85);
+    }`
+});
+const lattice = new THREE.LineSegments(buildLattice(CUBE, SPACING, SUBS), latticeMat);
+lattice.frustumCulled = false;
+scene.add(lattice);
+
+/* ---------- glow sprite helper ---------- */
+function glowTexture(){
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, 'rgba(255,255,255,1)');
+  grad.addColorStop(.35, 'rgba(255,255,255,.45)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+}
+const glowTex = glowTexture();
+function makeGlow(color, scale, opacity){
+  const m = new THREE.SpriteMaterial({ map: glowTex, color, transparent: true,
+    opacity, blending: THREE.AdditiveBlending, depthWrite: false });
+  const s = new THREE.Sprite(m);
+  s.scale.set(scale, scale, 1);
+  return s;
+}
+
+/* ---------- black hole ---------- */
+const bhGroup = new THREE.Group();
+bhGroup.add(new THREE.Mesh(
+  new THREE.SphereGeometry(1, 48, 32),
+  new THREE.MeshBasicMaterial({ color: 0x000000 })));
+const ring = new THREE.Mesh(
+  new THREE.TorusGeometry(1.45, .055, 12, 96),
+  new THREE.MeshBasicMaterial({ color: 0xffdfae, transparent: true, opacity: .95,
+    blending: THREE.AdditiveBlending, depthWrite: false }));
+ring.rotation.x = Math.PI / 2;
+bhGroup.add(ring);
+bhGroup.add(makeGlow(0xff9a3c, 7, .5));      // lensed accretion glow
+bhGroup.add(makeGlow(0x7850ff, 14, .2));     // curvature halo
+scene.add(bhGroup);
+
+/* ---------- star ---------- */
+const starGroup = new THREE.Group();
+starGroup.add(new THREE.Mesh(
+  new THREE.SphereGeometry(1, 32, 24),
+  new THREE.MeshBasicMaterial({ color: 0xfff1d6 })));
+starGroup.add(makeGlow(0xffb45a, 7, .8));
+scene.add(starGroup);
+
+/* ---------- orbit trail ---------- */
+const TRAIL_MAX = 500;
+const trailPts = [];
+const trailPos = new Float32Array(TRAIL_MAX * 3);
+const trailCol = new Float32Array(TRAIL_MAX * 3);
+const trailGeo = new THREE.BufferGeometry();
+trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+trailGeo.setAttribute('color', new THREE.BufferAttribute(trailCol, 3));
+trailGeo.setDrawRange(0, 0);
+const trailLine = new THREE.Line(trailGeo, new THREE.LineBasicMaterial({
+  vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+trailLine.frustumCulled = false;
+scene.add(trailLine);
+function clearTrail(){ trailPts.length = 0; trailGeo.setDrawRange(0, 0); }
+function pushTrail(x, y, z){
+  trailPts.push([x, y, z]);
+  if (trailPts.length > TRAIL_MAX) trailPts.shift();
+  const n = trailPts.length;
+  for (let i = 0; i < n; i++){
+    const t = i / n, p = trailPts[i];
+    trailPos[i * 3] = p[0]; trailPos[i * 3 + 1] = p[1]; trailPos[i * 3 + 2] = p[2];
+    trailCol[i * 3] = t * .95; trailCol[i * 3 + 1] = t * .7; trailCol[i * 3 + 2] = t * .42;
+  }
+  trailGeo.attributes.position.needsUpdate = true;
+  trailGeo.attributes.color.needsUpdate = true;
+  trailGeo.setDrawRange(0, n);
+}
+
+/* ---------- capture flashes ---------- */
+const flashes = [];
+function spawnFlash(x, y, z){
+  const s = makeGlow(0xffd28a, horizonR() * 4, .9);
+  s.position.set(x, y, z);
+  scene.add(s);
+  flashes.push({ s, age: 0 });
+}
+function updateFlashes(dt){
+  for (let i = flashes.length - 1; i >= 0; i--){
+    const f = flashes[i];
+    f.age += dt;
+    const k = horizonR() * (4 + f.age * 26);
+    f.s.scale.set(k, k, 1);
+    f.s.material.opacity = Math.max(0, .9 - f.age * 1.1);
+    if (f.age > .9){ scene.remove(f.s); f.s.material.dispose(); flashes.splice(i, 1); }
+  }
+}
+
+/* ---------- starfield ---------- */
+{
+  const pts = [];
+  for (let i = 0; i < 1500; i++){
+    const u = Math.random() * 2 - 1, ph = Math.random() * Math.PI * 2;
+    const s = Math.sqrt(1 - u * u), R = 3200 + Math.random() * 2800;
+    pts.push(R * s * Math.cos(ph), R * u, R * s * Math.sin(ph));
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({
+    color: 0x9db8d8, size: 3, transparent: true, opacity: .7,
+    sizeAttenuation: true, depthWrite: false })));
+}
+
+/* ---------- click (not drag) to relocate the star ---------- */
+const raycaster = new THREE.Raycaster();
+const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+let downX = 0, downY = 0, downT = 0;
+renderer.domElement.addEventListener('pointerdown', e => {
+  downX = e.clientX; downY = e.clientY; downT = performance.now();
+});
+renderer.domElement.addEventListener('pointerup', e => {
+  if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;   // was a drag
+  if (performance.now() - downT > 400) return;
+  const ndc = new THREE.Vector2(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  raycaster.setFromCamera(ndc, camera);
+  const hit = new THREE.Vector3();
+  if (!raycaster.ray.intersectPlane(groundPlane, hit)) return;
+  const q = P.Mstar / (P.Mbh + P.Mstar);
+  const nx = hit.x / (1 - q), ny = hit.z / (1 - q);
+  const r = Math.hypot(nx, ny);
+  if (r < horizonR() * 1.8 || r > 650) return;
+  const sgn = (rel.x * rel.vy - rel.y * rel.vx) >= 0 ? 1 : -1;
+  const v = .9 * Math.sqrt(mu() / r);
+  rel.x = nx; rel.y = ny;
+  rel.vx = -ny / r * v * sgn; rel.vy = nx / r * v * sgn;
+  clearTrail();
+});
+
+/* ---------- main loop ---------- */
+let paused = false, last = performance.now();
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btnPause').textContent = paused ? 'Play' : 'Pause';
+}
+function frame(now){
+  const dtReal = Math.min(.033, (now - last) / 1000); last = now;
+  const dt = paused ? 0 : dtReal * P.speed;
+  physics(dt);
+  if (captured) spawnFlash(bhGroup.position.x, bhGroup.position.y, bhGroup.position.z);
+
+  // lattice uniforms
+  uniforms.uBH.value.set(bhP.x, 0, bhP.y);
+  uniforms.uStar.value.set(starP.x, 0, starP.y);
+  uniforms.uSbh.value = Sbh();
+  uniforms.uSstar.value = Sstar();
+  uniforms.uGwAmp.value = gwAmp();
+  uniforms.uPhase.value = orbitPhase;
+  uniforms.uK.value = 2 * omega / WAVE_SPEED;
+  uniforms.uSlab.value = P.slab;
+  lattice.visible = P.gridOn;
+
+  // bodies live inside the lattice, on the orbital plane
+  const rh = horizonR(), rs = starR();
+  bhGroup.scale.setScalar(rh);
+  bhGroup.position.set(bhP.x, 0, bhP.y);
+  starGroup.scale.setScalar(rs);
+  starGroup.position.set(starP.x, 0, starP.y);
+
+  trailLine.visible = P.trail;
+  if (dt > 0 && P.trail)
+    pushTrail(starGroup.position.x, 2, starGroup.position.z);
+
+  updateFlashes(dt);
+  controls.autoRotate = P.spin;
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(frame);
+}
+
+/* ---------- UI wiring ---------- */
+const $ = id => document.getElementById(id);
+function bindRange(id, get, set, fmt){
+  const el = $(id), lab = $(id + 'V');
+  el.value = get(); lab.textContent = fmt(get());
+  el.addEventListener('input', () => { set(+el.value); lab.textContent = fmt(+el.value); });
+}
+bindRange('mBH',   () => P.Mbh,   v => setMasses(v, P.Mstar), v => (v / 1e6).toFixed(1));
+bindRange('mStar', () => P.Mstar, v => setMasses(P.Mbh, v),   v => (v / 1e6).toFixed(2));
+bindRange('spd',   () => P.speed, v => P.speed = v,           v => '×' + v.toFixed(2));
+bindRange('warp',  () => P.warp,  v => P.warp = v,            v => '×' + v.toFixed(2));
+bindRange('slab',  () => P.slab,  v => P.slab = v,            v => v >= 850 ? 'full' : '±' + v);
+['gw', 'trail', 'gridOn', 'spin'].forEach(k => {
+  const el = $(k);
+  el.checked = P[k];
+  el.addEventListener('change', () => {
+    P[k] = el.checked;
+    if (k === 'trail' && !el.checked) clearTrail();
+  });
+});
+$('btnPause').addEventListener('click', togglePause);
+$('btnReset').addEventListener('click', () => resetOrbit(Math.random() * Math.PI * 2));
+$('btnCam').addEventListener('click', () => {
+  camera.position.set(620, 540, 1280);
+  controls.target.set(0, 0, 0);
+});
+addEventListener('keydown', e => {
+  if (e.code === 'Space'){ e.preventDefault(); togglePause(); }
+});
+
+resetOrbit();
+physics(0);
+window.__bh3dReady = true;
+window.__bhState = () => ({ phase: orbitPhase, omega, star: { ...starP }, bh: { ...bhP } });
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
