@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 
-const RESUME_URL =
-  'https://docs.google.com/document/d/1ZGeHJqQbX38He0TcC9hepM6w2rRRd-gM2HD4IrjfT3U/edit?usp=sharing'
+const RESUME_URL = 'https://docs.google.com/document/d/1DhHe9liRNDSwlyfW7psj7ijUk1YZVsOt4v7mET4OHf0/edit?usp=sharing'
 
 const highlights = [
   'Published in Nature: Comms Bio with an issued AI/ML patent',

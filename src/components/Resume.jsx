@@ -161,7 +161,7 @@ export function Resume() {
                 ))}
             </ol>
             <Button
-                href="https://docs.google.com/document/d/1IP06d5ijENUG5MEslJsDj1-fTkG3pMK7SgOPqfDPUzU/edit?usp=sharing"
+                href="https://docs.google.com/document/d/1DhHe9liRNDSwlyfW7psj7ijUk1YZVsOt4v7mET4OHf0/edit?usp=sharing"
                 target="_blank"
                 variant="secondary"
                 className="group mt-6 w-full"
